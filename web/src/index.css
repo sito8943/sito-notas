@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+textarea {
+  resize: none;
+}
+
+input[type="file"] {
+  visibility: hidden;
+}
+
+input:focus-visible,
+input {
+  outline: none !important;
+}
+
+.primary.icon-button {
+  @apply text-primary hover:bg-pdark-hover;
+}
+.secondary.icon-button {
+  @apply text-secondary hover:bg-pdark-hover;
+}
+
+.icon-button {
+  @apply w-10 h-10 rounded-full flex items-center justify-center text-xl transition;
+}
+
+.submit {
+  @apply border-2 transition font-semibold;
+}
+.secondary.submit {
+  @apply border-secondary bg-secondary  hover:bg-sdark hover:border-sdark text-dark-background2;
+}
+.primary.submit {
+  @apply border-primary bg-primary  hover:bg-pdark hover:border-pdark text-white;
+}
+
+.outlined {
+  @apply border-2 border-primary transition hover:bg-primary dark:text-white;
+}
+
+.input-control {
+  @apply relative w-full flex flex-col items-start justify-start gap-2;
+}
+
+.input,
+.button {
+  @apply px-5 py-2 rounded-3xl cursor-default;
+}

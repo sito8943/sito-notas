@@ -1,0 +1,30 @@
+.check-input {
+  height: 0;
+  width: 0;
+  display: none !important;
+}
+
+.switcher {
+  width: 55px;
+  height: 25px;
+  border-radius: 100px;
+  position: relative;
+}
+
+.ball {
+  width: 20px;
+  height: 15px;
+  position: absolute;
+  border-radius: 20px;
+  top: 50%;
+  transition: all 500ms ease;
+  @apply bg-white;
+}
+
+.deactivated {
+  transform: translate(20%, -50%);
+}
+
+.activated {
+  transform: translate(150%, -50%);
+}
