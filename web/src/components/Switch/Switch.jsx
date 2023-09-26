@@ -4,9 +4,12 @@ import PropTypes from "prop-types";
 // styles
 import "./style.css";
 
-function Switch({ label, value, onChange, id }) {
+function Switch({ label, value, onChange, id, className }) {
   return (
-    <div className="flex gap-3 cursor-pointer items-center justify-start" onClick={onChange}>
+    <div
+      className={`flex gap-3 items-center justify-start ${className}`}
+      onClick={onChange}
+    >
       <input
         id={id}
         checked={value}
@@ -19,7 +22,7 @@ function Switch({ label, value, onChange, id }) {
       >
         <div className={`ball ${value ? "activated" : "deactivated"}`} />
       </div>
-      <label className="cursor-pointer">{label}</label>
+      <label className="">{label}</label>
     </div>
   );
 }
@@ -29,6 +32,7 @@ Switch.propTypes = {
   value: PropTypes.bool,
   id: PropTypes.string,
   onChange: PropTypes.func,
+  className: PropTypes.string,
 };
 
 const SwitchMemo = memo((props) => <Switch {...props} />, arePropsEqual);
@@ -39,7 +43,8 @@ function arePropsEqual(oldProps, newProps) {
     oldProps.label === newProps.label &&
     oldProps.value === newProps.value &&
     oldProps.onChange === newProps.onChange &&
-    oldProps.id === newProps.id
+    oldProps.id === newProps.id &&
+    oldProps.className === newProps.className
   );
 }
 

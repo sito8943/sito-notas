@@ -31,6 +31,7 @@ export default {
       info: "#0099CC",
     },
     minHeight: {
+      screen: "100vh",
       "40": "80px"
     }
   },

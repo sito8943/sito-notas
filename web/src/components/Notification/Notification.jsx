@@ -8,9 +8,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { css } from "@emotion/css";
 
 // contexts
-import { useLanguage } from "../../contexts/LanguageProvider";
-
-// contexts
 import { useNotification } from "../../contexts/NotificationProvider";
 
 // styles
@@ -18,8 +15,6 @@ import "./styles.css";
 
 export default function Notification() {
   const { notificationState, setNotificationState } = useNotification();
-
-  const { languageState } = useLanguage();
 
   const [open, setOpen] = useState(false);
   const [openR, setOpenR] = useState(false);
@@ -81,7 +76,7 @@ export default function Notification() {
             onClick={handleClose}
             name="close-notification"
             className="absolute top-1 right-2"
-            aria-label={languageState.texts.ariaLabels.closeNotification}
+            aria-label="Click para cerrar la notificación"
           >
             <FontAwesomeIcon className="text-white" icon={faClose} />
           </button>

@@ -1,7 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-// components
+// contexts
+import { ModeProvider } from "./contexts/ModeProvider";
+import { UserProvider } from "./contexts/UserProvider";
 import { NotificationProvider } from "./contexts/NotificationProvider";
 
 // app
@@ -13,9 +15,17 @@ import "./index.css";
 import "./assets/animations/appear.css";
 import "./assets/animations/grow.css";
 import "./assets/animations/shake.css";
+// Import css files
+import "tippy.js/dist/tippy.css"; // optional
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <NotificationProvider>
-    <App />
-  </NotificationProvider>
+  <ModeProvider>
+    <NotificationProvider>
+      <NotificationProvider>
+        <UserProvider>
+          <App />
+        </UserProvider>
+      </NotificationProvider>
+    </NotificationProvider>
+  </ModeProvider>
 );

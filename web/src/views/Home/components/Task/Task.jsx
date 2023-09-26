@@ -69,26 +69,28 @@ function Task({ id, onDelete }) {
   return (
     <article
       id={id}
-      className={`${bgColor} relative p-5 pt-10 rounded-xl min-h-[150px] min-w-[216px] max-w-[${windowWidth}]`}
+      className={`group ${bgColor} p-5 rounded-xl min-h-[150px] min-w-[216px] max-w-[${windowWidth}]`}
     >
-      <button
-        type="button"
-        name="delete-task"
-        onClick={() => onDelete(id)}
-        aria-label="click to delete task"
-        className="secondary icon-button absolute top-1 right-1"
-      >
-        <FontAwesomeIcon icon={faTrash} />
-      </button>
-      <h3
-        id={`${id}[!]title`}
-        contentEditable
-        className={`text-xl font-semibold ${css({
-          maxWidth: `calc(${windowWidth}px - 80px)`,
-        })}`}
-      >
-        {data?.title}
-      </h3>
+      <div className="flex items-center justify-between w-full gap-4">
+        <h3
+          id={`${id}[!]title`}
+          contentEditable
+          className={`text-xl font-semibold ${css({
+            maxWidth: `calc(${windowWidth}px - 80px)`,
+          })}`}
+        >
+          {data?.title}
+        </h3>
+        <button
+          type="button"
+          name="delete-task"
+          onClick={() => onDelete(id)}
+          aria-label="click to delete task"
+          className="pointer-events-none opacity-0 group-hover:opacity-[1] group-hover:pointer-events-auto secondary icon-button"
+        >
+          <FontAwesomeIcon icon={faTrash} />
+        </button>
+      </div>
       <p
         id={`${id}[!]content`}
         contentEditable

@@ -2,6 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
+.dark body {
+  background-image: linear-gradient(
+    174.2deg,
+    rgba(12, 12, 12) 7.1%,
+    rgba(17, 17, 17) 67.4%
+  );
+}
+.light body {
+  background-image: linear-gradient(
+    174.2deg,
+    rgba(255, 244, 228, 1) 7.1%,
+    rgba(240, 246, 238, 1) 67.4%
+  );
+}
+
+* {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
 textarea {
   resize: none;
 }
@@ -26,18 +55,40 @@ input {
   @apply w-10 h-10 rounded-full flex items-center justify-center text-xl transition;
 }
 
-.submit {
-  @apply border-2 transition font-semibold;
-}
 .secondary.submit {
-  @apply border-secondary bg-secondary  hover:bg-sdark hover:border-sdark text-dark-background2;
-}
-.primary.submit {
-  @apply border-primary bg-primary  hover:bg-pdark hover:border-pdark text-white;
+  @apply border-secondary bg-secondary hover:bg-sdark hover:border-sdark text-white;
 }
 
+.primary.submit {
+  @apply border-primary bg-primary hover:bg-pdark hover:border-pdark text-white;
+}
+
+.submit {
+  @apply border-2;
+}
+
+.primary.outlined {
+  @apply border-primary hover:bg-primary text-white;
+}
+.secondary.outlined {
+  @apply border-secondary hover:bg-primary text-white;
+}
+.primary.link {
+  @apply hover:bg-primary text-white;
+}
+.secondary.link {
+  @apply hover:bg-secondary text-white;
+}
 .outlined {
-  @apply border-2 border-primary transition hover:bg-primary dark:text-white;
+  @apply border-2;
+}
+
+button {
+  @apply transition duration-300 font-semibold cursor-default;
+}
+
+.link {
+  @apply transition;
 }
 
 .input-control {
@@ -45,6 +96,10 @@ input {
 }
 
 .input,
-.button {
-  @apply px-5 py-2 rounded-3xl cursor-default;
+button {
+  @apply px-5 py-2 rounded-3xl transition duration-300;
+}
+
+.input:disabled {
+  @apply cursor-auto;
 }

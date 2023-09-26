@@ -8,7 +8,7 @@ const Loading = (props) => {
 
   return (
     <div
-      className={`flex w-full h-full items-center justify-center type-${type} ${className}`}
+      className={`bg-dark-background flex w-full h-full items-center justify-center type-${type} ${className}`}
     >
       <div className="loader-container">
         <div className="loader">
