@@ -66,10 +66,17 @@ function Task({ id, onDelete }) {
     };
   }, []);
 
+  const onLocalDelete = () => {
+    document.getElementById(id)?.classList.add("aShrink");
+    setTimeout(() => {
+      onDelete(id);
+    }, 400);
+  };
+
   return (
     <article
       id={id}
-      className={`group ${bgColor} p-5 rounded-xl min-h-[150px] min-w-[216px] max-w-[${windowWidth}]`}
+      className={`group ${bgColor} shadow-md shadow-[black] p-5 rounded-sm min-h-[150px] min-w-[216px] max-w-[${windowWidth}]`}
     >
       <div className="flex items-center justify-between w-full gap-4">
         <h3
@@ -84,7 +91,7 @@ function Task({ id, onDelete }) {
         <button
           type="button"
           name="delete-task"
-          onClick={() => onDelete(id)}
+          onClick={onLocalDelete}
           aria-label="click to delete task"
           className="pointer-events-none opacity-0 group-hover:opacity-[1] group-hover:pointer-events-auto secondary icon-button"
         >

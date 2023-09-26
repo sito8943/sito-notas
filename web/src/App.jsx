@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // layouts
 import Auth from "./layouts/Auth";
-import View from "./layouts/View";
+import View from "./layouts/View/View";
 
 // views
 import NotFound from "./views/NotFound/NotFound";

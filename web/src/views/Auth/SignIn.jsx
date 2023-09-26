@@ -141,7 +141,7 @@ function SignIn() {
       ) : (
         <form
           onSubmit={onSubmit}
-          className="appear relative bg-light-background dark:bg-dark-background2 p-10 min-w-[440px] flex flex-col gap-3 shadow-xl shadow-dark-[black]"
+          className="rounded-sm appear relative bg-light-background dark:bg-dark-background2 p-10 min-w-[440px] flex flex-col gap-3 shadow-xl shadow-dark-[black]"
         >
           <h1 className="text-3xl dark:text-white font-bold">
             <FontAwesomeIcon icon={faNoteSticky} className="rotate-[30deg]" />{" "}

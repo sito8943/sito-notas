@@ -46,13 +46,13 @@ function Home() {
   }, []);
 
   return (
-    <main className="relative flex h-screen w-full bg-dark-background2 p-5 overflow-auto">
+    <main className="relative flex h-screen w-full p-5 overflow-auto">
       <FloatingButton
         icon={faAdd}
         type="button"
         name="add-task"
         onClick={addTask}
-        className="primary"
+        className="secondary submit border-none"
         aria-label="click to add a new task"
       />
 
