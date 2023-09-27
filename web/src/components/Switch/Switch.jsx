@@ -18,7 +18,7 @@ function Switch({ label, value, onChange, id, className }) {
         type="checkbox"
       />
       <div
-        className={`switcher ${value ? "bg-success" : "bg-placeholder-dark"}`}
+        className={`switcher ${value ? "bg-primary" : "bg-secondary"}`}
       >
         <div className={`ball ${value ? "activated" : "deactivated"}`} />
       </div>

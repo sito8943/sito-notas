@@ -143,7 +143,7 @@ function SignIn() {
           onSubmit={onSubmit}
           className="rounded-sm appear relative bg-light-background dark:bg-dark-background2 p-10 min-w-[440px] flex flex-col gap-3 shadow-xl shadow-dark-[black]"
         >
-          <h1 className="text-3xl dark:text-white font-bold">
+          <h1 className="text-3xl text-sdark dark:text-secondary font-bold">
             <FontAwesomeIcon icon={faNoteSticky} className="rotate-[30deg]" />{" "}
             TEAM WORK
           </h1>
@@ -152,14 +152,14 @@ function SignIn() {
             className="input-control dark:text-white"
             label="Usuario"
             inputProps={{
-              className: "input primary submit !pl-8 w-full",
+              className: "input border-none submit !pl-8 w-full",
               value: user,
               onChange: handleUser,
               type: "string",
             }}
             leftIcon={
               <FontAwesomeIcon
-                className="absolute dark:text-white top-[50%] -translate-y-[50%] left-3"
+                className="absolute text-secondary top-[50%] -translate-y-[50%] left-3"
                 icon={faUser}
               />
             }
@@ -170,7 +170,7 @@ function SignIn() {
             className="input-control dark:text-white"
             label="Contraseña"
             inputProps={{
-              className: "input primary submit !pl-8 w-full",
+              className: "input border-none submit !pl-8 w-full",
               value: password,
               onChange: handlePassword,
               type: !showPassword ? "password" : "string",
@@ -181,7 +181,7 @@ function SignIn() {
                 type="button"
                 name="toggle-see-password"
                 onClick={toggleShowPassword}
-                className="absolute dark:text-white top-[50%] -translate-y-[50%] left-3 !p-0"
+                className="absolute text-secondary top-[50%] -translate-y-[50%] left-3 !p-0"
                 aria-label="click para alternar ver/ocultar contraseña"
               >
                 <FontAwesomeIcon icon={showPassword ? faLockOpen : faLock} />
@@ -202,7 +202,7 @@ function SignIn() {
               name="login"
               type="submit"
               aria-label="Click para entrar"
-              className="primary submit"
+              className="secondary submit"
             >
               Siguiente
             </button>

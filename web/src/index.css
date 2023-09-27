@@ -3,9 +3,10 @@
 @tailwind utilities;
 
 body {
-  @apply transition duration-300;
+  @apply transition-all duration-300;
 }
 .dark body {
+  background: rgba(12, 12, 12);
   background-image: linear-gradient(
     174.2deg,
     rgba(12, 12, 12) 7.1%,
@@ -13,6 +14,7 @@ body {
   );
 }
 .light body {
+  background: rgba(255, 244, 228, 1);
   background-image: linear-gradient(
     174.2deg,
     rgba(255, 244, 228, 1) 7.1%,
