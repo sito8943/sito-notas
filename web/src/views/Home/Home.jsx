@@ -9,17 +9,13 @@ import Masonry from "./components/Masonry/Masonry";
 import Loading from "../../components/Loading/Loading";
 
 // manager
-import { createTask, initTasks, deleteTask } from "./components/Task/local";
+import { removeNotesOfTag, createTask, initTasks, deleteTask } from "./components/Task/local";
 
 function Home() {
   const [tags, setTags] = useState(["Tareas"]);
   const [tasks, setTasks] = useState([]);
 
   const [loading, setLoading] = useState(false);
-
-  const onChangeTag = (newValue, oldValue) => {
-    console.log(newValue, oldValue);
-  };
 
   const onDelete = useCallback(
     (id) => {
@@ -47,6 +43,24 @@ function Home() {
     [tasks]
   );
 
+  const onChangeTag = (newValue, oldValue) => {
+    console.log(newValue, oldValue);
+  };
+
+  const onDeleteTag = useCallback(
+    (tag) => {
+      console.log(tag);
+      const newTags = [...tags];
+      // removing tag
+      newTags.splice(newTags.indexOf(tag), 1);
+      // removing notes of that tag
+      removeNotesOfTag(tag);
+      setTasks(initTasks());
+      setTags(newTags);
+    },
+    [tags]
+  );
+
   useEffect(() => {
     setTasks(initTasks());
   }, []);
@@ -59,6 +73,7 @@ function Home() {
         onAdd={addTask}
         onAddTag={onAddTag}
         onDelete={onDelete}
+        onDeleteTag={onDeleteTag}
         onChangeTag={onChangeTag}
       />
       {loading ? (

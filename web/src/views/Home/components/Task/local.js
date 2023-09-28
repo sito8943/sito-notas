@@ -1,13 +1,14 @@
 // utils
-import config from "../../../../config";
 import { decrypt, encrypt } from "../../../../utils/crypto";
+
+import config from "../../../../config";
 
 export const createTask = (id, tag) => {
   const tasks = decrypt(localStorage.getItem(config.tasks));
   tasks[id] = {
     id,
     tag,
-    content: `# Nueva Tarea ${
+    content: `# Nota ${tag} ${
       Object.keys(tasks).length + 1
     } \n Escribe el contenido aquí`,
   };
@@ -29,6 +30,17 @@ export const updateTask = (id, key, value) => {
 export const deleteTask = (id) => {
   const tasks = decrypt(localStorage.getItem(config.tasks));
   delete tasks[id];
+  localStorage.setItem(config.tasks, encrypt(tasks));
+};
+
+export const removeNotesOfTag = (tag) => {
+  const tasks = decrypt(localStorage.getItem(config.tasks));
+  const idsToDelete = Object.values(tasks).filter((task) => task.tag === tag);
+  console.log(idsToDelete);
+  console.log(Object.keys(tasks));
+  idsToDelete.forEach((task) => {
+    delete tasks[task.id];
+  });
   localStorage.setItem(config.tasks, encrypt(tasks));
 };
 

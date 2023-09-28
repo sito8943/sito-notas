@@ -5,7 +5,7 @@ import { faAdd } from "@fortawesome/free-solid-svg-icons";
 
 function NewTag({ onAddTag }) {
   return (
-    <div className="min-w-[300px] p-3 pt-10 flex items-center justify-center flex-col h-10">
+    <div className="appear min-w-[300px] p-3 pt-10 flex items-center justify-center flex-col h-10">
       <p className="text-secondary">Nueva etiqueta</p>
       <button
         type="button"
