@@ -4,7 +4,8 @@ import { decrypt, encrypt } from "../../../../utils/crypto";
 
 export const createTask = (id) => {
     const tasks = decrypt(localStorage.getItem(config.tasks))
-    tasks[id] = { id, title: `Nueva Tarea ${Object.keys(tasks).length + 1}`, content: "Escribe el contenido aquí" }
+    tasks[id] = { id, content: `# Nueva Tarea ${Object.keys(tasks).length + 1} \n Escribe el contenido aquí` }
+
     localStorage.setItem(config.tasks, encrypt(tasks))
 }
 
@@ -34,3 +35,4 @@ export const initTasks = () => {
 
     return Object.keys(tasks)
 }
+

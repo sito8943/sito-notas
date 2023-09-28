@@ -18,6 +18,9 @@ import "./assets/animations/shake.css";
 // Import css files
 import "tippy.js/dist/tippy.css"; // optional
 
+// fonts
+import "@fontsource/poppins";
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <ModeProvider>
     <NotificationProvider>

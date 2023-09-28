@@ -1,8 +1,12 @@
 import React, { memo, useMemo, useState, useEffect, useCallback } from "react";
+
 import PropTypes from "prop-types";
 
+import MDEditor, { commands } from "@uiw/react-md-editor";
+import MarkdownPreview from "@uiw/react-markdown-preview";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faSave, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 // css
 import { css } from "@emotion/css";
@@ -12,6 +16,8 @@ import { getTask, updateTask } from "./local";
 
 function Task({ id, onDelete }) {
   const [color, setColor] = useState("primary");
+
+  const [value, setValue] = React.useState("");
 
   const bgColor = useMemo(() => {
     switch (color) {
@@ -25,7 +31,9 @@ function Task({ id, onDelete }) {
   }, [color]);
 
   const data = useMemo(() => {
-    return getTask(id);
+    const localData = getTask(id);
+    setValue(localData?.content);
+    return localData;
   }, [id]);
 
   const update = useCallback(
@@ -39,16 +47,9 @@ function Task({ id, onDelete }) {
 
   useEffect(() => {
     document.getElementById(`${id}[!]title`)?.addEventListener("input", update);
-    document
-      .getElementById(`${id}[!]content`)
-      ?.addEventListener("input", update);
-
     return () => {
       document
         .getElementById(`${id}[!]title`)
-        ?.removeEventListener("input", update);
-      document
-        .getElementById(`${id}[!]content`)
         ?.removeEventListener("input", update);
     };
   }, [id]);
@@ -73,7 +74,14 @@ function Task({ id, onDelete }) {
     }, 400);
   };
 
-  const onLocalEdit = () => {};
+  const [editing, setEditing] = useState(false);
+
+  const onLocalEdit = () => setEditing(true);
+
+  const onLocalSave = () => {
+    updateTask(id, "content", value);
+    setEditing(false);
+  };
 
   return (
     <article
@@ -84,17 +92,19 @@ function Task({ id, onDelete }) {
         className={`grid ${css({
           transition: "all 500ms ease",
           gridTemplateRows: "0fr",
-        })} group-hover:grid-rows-[1fr] pointer-events-none group-hover:pointer-events-auto`}
+        })} group-hover:grid-rows-[1fr] ${
+          editing ? "!grid-rows-[1fr]" : ""
+        } pointer-events-none group-hover:pointer-events-auto`}
       >
         <div className="flex overflow-hidden bg-dark-drawer-background w-full justify-end">
           <button
             type="button"
             name="edit-task"
-            onClick={onLocalEdit}
+            onClick={editing ? onLocalSave : onLocalEdit}
             aria-label="click to edit task"
             className="text-secondary p-3 hover:text-primary hover:bg-sdark"
           >
-            <FontAwesomeIcon icon={faEdit} />
+            <FontAwesomeIcon icon={editing ? faSave : faEdit} />
           </button>
           <button
             type="button"
@@ -107,23 +117,21 @@ function Task({ id, onDelete }) {
           </button>
         </div>
       </div>
-      <div className="p-5 ">
-        <h3
-          id={`${id}[!]title`}
-          contentEditable
-          className={`text-xl font-semibold ${css({
-            maxWidth: `calc(${windowWidth}px - 80px)`,
-          })}`}
-        >
-          {data?.title}
-        </h3>
-        <p
-          id={`${id}[!]content`}
-          contentEditable
-          className={css({ maxWidth: `calc(${windowWidth}px - 80px)` })}
-        >
-          {data?.content}
-        </p>
+      <div className="p-5">
+        <div className="mt-2">
+          {!editing ? (
+            <MarkdownPreview
+              source={value}
+              className={`${css({
+                maxWidth: `calc(${windowWidth}px - 80px)`,
+                backgroundColor: "initial",
+                color: "#222",
+              })}`}
+            />
+          ) : (
+            <MDEditor value={value} onChange={setValue} />
+          )}
+        </div>
       </div>
     </article>
   );
