@@ -5,6 +5,7 @@ import { faAdd, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 // components
 import Task from "../Task/Task";
+import NoNotes from "../NoNotes";
 import PrintAfter from "../../../../components/PrintAfter/PrintAfter";
 
 function Masonry({
@@ -15,18 +16,19 @@ function Masonry({
   onAdd,
   onChangeTag,
 }) {
-  console.log(elements);
   const element = useCallback(
-    (tag) =>
-      elements
-        .filter((element) => element.tag === tag)
-        .map((item) => (
+    (tag) => {
+      const filteredByTags = elements.filter((element) => element.tag === tag);
+      if (filteredByTags.length)
+        return filteredByTags.map((item) => (
           <li key={item.id}>
             <PrintAfter delay={150} animation="aGrow">
               <Task id={item.id} onDelete={onDelete} />
             </PrintAfter>
           </li>
-        )),
+        ));
+      return <NoNotes />;
+    },
     [elements, tags, onDelete]
   );
 
@@ -68,7 +70,7 @@ function Masonry({
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-2">{element(tag)}</div>
+        <div className="flex flex-col gap-2 w-full">{element(tag)}</div>
       </div>
     ));
   }, [element]);

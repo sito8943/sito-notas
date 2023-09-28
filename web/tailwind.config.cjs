@@ -1,9 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   darkMode: "class",
   theme: {
     extend: {},
@@ -11,6 +8,7 @@ export default {
       white: "#f0f0f0",
       "white-hover": "#c2c7cc",
       "placeholder-dark": "#636362",
+      "dark-gray": "#333",
       "dark-background2": "#222333",
       "dark-background": "#1b1b1b",
       "light-background2": "#f0f0f0",
@@ -32,8 +30,8 @@ export default {
     },
     minHeight: {
       screen: "100vh",
-      "40": "80px"
-    }
+      40: "80px",
+    },
   },
   plugins: [],
 };
