@@ -101,7 +101,8 @@ button {
 }
 
 .input,
-button {
+button.primary,
+button.secondary {
   @apply px-5 py-2 rounded-3xl transition duration-300;
 }
 

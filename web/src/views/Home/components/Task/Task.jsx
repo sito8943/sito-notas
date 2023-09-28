@@ -2,7 +2,7 @@ import React, { memo, useMemo, useState, useEffect, useCallback } from "react";
 import PropTypes from "prop-types";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 // css
 import { css } from "@emotion/css";
@@ -73,12 +73,41 @@ function Task({ id, onDelete }) {
     }, 400);
   };
 
+  const onLocalEdit = () => {};
+
   return (
     <article
       id={id}
-      className={`group ${bgColor} shadow-md shadow-[black] p-5 rounded-sm min-h-[150px] min-w-[216px] max-w-[${windowWidth}]`}
+      className={`group ${bgColor} shadow-md shadow-[black] rounded-sm min-h-[150px] min-w-[216px] max-w-[${windowWidth}]`}
     >
-      <div className="flex items-center justify-between w-full gap-4">
+      <div
+        className={`grid ${css({
+          transition: "all 500ms ease",
+          gridTemplateRows: "0fr",
+        })} group-hover:grid-rows-[1fr] pointer-events-none group-hover:pointer-events-auto`}
+      >
+        <div className="flex overflow-hidden bg-dark-drawer-background w-full justify-end">
+          <button
+            type="button"
+            name="edit-task"
+            onClick={onLocalEdit}
+            aria-label="click to edit task"
+            className="text-secondary p-3 hover:text-primary hover:bg-sdark"
+          >
+            <FontAwesomeIcon icon={faEdit} />
+          </button>
+          <button
+            type="button"
+            name="delete-task"
+            onClick={onLocalDelete}
+            aria-label="click to delete task"
+            className="text-error p-3 hover:text-primary hover:bg-sdark"
+          >
+            <FontAwesomeIcon icon={faTrash} />
+          </button>
+        </div>
+      </div>
+      <div className="p-5 ">
         <h3
           id={`${id}[!]title`}
           contentEditable
@@ -88,23 +117,14 @@ function Task({ id, onDelete }) {
         >
           {data?.title}
         </h3>
-        <button
-          type="button"
-          name="delete-task"
-          onClick={onLocalDelete}
-          aria-label="click to delete task"
-          className="pointer-events-none opacity-0 group-hover:opacity-[1] group-hover:pointer-events-auto secondary icon-button"
+        <p
+          id={`${id}[!]content`}
+          contentEditable
+          className={css({ maxWidth: `calc(${windowWidth}px - 80px)` })}
         >
-          <FontAwesomeIcon icon={faTrash} />
-        </button>
+          {data?.content}
+        </p>
       </div>
-      <p
-        id={`${id}[!]content`}
-        contentEditable
-        className={css({ maxWidth: `calc(${windowWidth}px - 80px)` })}
-      >
-        {data?.content}
-      </p>
     </article>
   );
 }
