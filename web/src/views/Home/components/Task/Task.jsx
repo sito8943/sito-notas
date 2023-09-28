@@ -33,24 +33,6 @@ function Task({ id, onDelete }) {
     }
   }, [color]);
 
-  const update = useCallback(
-    (e) => {
-      const { innerText } = e.target;
-      const [, key] = e.target.id.split("[!]");
-      updateTask(id, key, innerText);
-    },
-    [id]
-  );
-
-  useEffect(() => {
-    document.getElementById(`${id}[!]title`)?.addEventListener("input", update);
-    return () => {
-      document
-        .getElementById(`${id}[!]title`)
-        ?.removeEventListener("input", update);
-    };
-  }, [id]);
-
   const onLocalDelete = () => {
     document.getElementById(id)?.classList.add("aShrink");
     setTimeout(() => {

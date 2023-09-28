@@ -36,7 +36,7 @@ export const deleteTask = (id) => {
 export const removeNotesOfTag = (tag) => {
   const tasks = decrypt(localStorage.getItem(config.tasks));
   const idsToDelete = Object.values(tasks).filter((task) => task.tag === tag);
-  
+
   idsToDelete.forEach((task) => {
     delete tasks[task.id];
   });

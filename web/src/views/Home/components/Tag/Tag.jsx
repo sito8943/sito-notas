@@ -25,7 +25,7 @@ function Tag({ tag, elements, onAdd, onDelete, onChangeTag, onDeleteTag }) {
   return (
     <div
       key={tag}
-      className="appear min-w-[300px] border-dashed rounded-xl border-dark-gray border-[1px] p-3"
+      className="appear min-w-[300px] max-w-[400px] border-dashed rounded-xl border-dark-gray border-[1px] p-3"
     >
       <div className="group flex flex-col">
         <div className="flex gap-3 items-center">
