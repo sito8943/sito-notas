@@ -2,10 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+.w-md-editor-text-pre,
+.w-md-editor-text-input,
+.w-md-editor-text > .w-md-editor-text-pre {
+  font-family: inherit !important;
+}
+
 * {
   font-family: "Poppins", sans-serif;
 }
-
 
 body {
   @apply transition-all duration-300;

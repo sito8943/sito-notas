@@ -13,7 +13,7 @@ export default function Navbar() {
   const { modeState, toggleModeState } = useMode();
 
   return (
-    <header className="w-full dark:bg-dark-background2 bg-light-background">
+    <header className="w-full fixed top-0 left-0 z-50 dark:bg-dark-background2 bg-light-background">
       <nav className="w-full flex items-center h-full py-5 px-5 justify-between">
         <h1 className="text-3xl text-sdark dark:text-secondary font-bold">
           <FontAwesomeIcon icon={faNoteSticky} className="rotate-[30deg]" />{" "}

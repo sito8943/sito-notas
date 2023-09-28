@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+
 import { v4 } from "uuid";
 
 import { css } from "@emotion/css";
@@ -7,63 +8,61 @@ import { css } from "@emotion/css";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
 
 // components
-import Task from "./components/Task/Task";
 import Loading from "../../components/Loading/Loading";
 import FloatingButton from "../../components/FAB/FAB";
-import PrintAfter from "../../components/PrintAfter/PrintAfter";
 
 // manager
 import { createTask, initTasks, deleteTask } from "./components/Task/local";
+import Masonry from "./components/Masonry/Masonry";
+
+import config from "../../config";
 
 function Home() {
+  const [tags, setTags] = useState(["Tareas"]);
   const [tasks, setTasks] = useState([]);
 
   const [loading, setLoading] = useState(false);
 
+  const onChangeTag = (newValue, oldValue) => {
+    console.log(newValue, oldValue);
+  };
+
   const onDelete = useCallback(
     (id) => {
       const newTasks = [...tasks];
-      newTasks.splice(newTasks.indexOf(id), 1);
+      newTasks.splice(
+        newTasks.findIndex((task) => task.id === id),
+        1
+      );
       setTasks(newTasks);
       deleteTask(id);
     },
     [tasks]
   );
 
-  const tasksMemo = useMemo(() => {
-    return tasks.map((task, i) => (
-      <li key={task}>
-        <PrintAfter delay={150} animation="aGrow">
-          <Task id={task} onDelete={onDelete} />
-        </PrintAfter>
-      </li>
-    ));
-  }, [tasks, onDelete]);
-
-  const addTask = useCallback(() => {
-    const id = v4();
-    createTask(id);
-    setTasks([...tasks, id]);
-  }, [tasks]);
+  const addTask = useCallback(
+    (tag) => {
+      const id = v4();
+      createTask(id, tag);
+      console.log(id, tag);
+      setTasks([...tasks, { id, tag }]);
+    },
+    [tasks]
+  );
 
   useEffect(() => {
     setTasks(initTasks());
   }, []);
 
   return (
-    <main className="flex min-h-screen w-full p-5 overflow-auto">
-      <FloatingButton
-        icon={faAdd}
-        type="button"
-        name="add-task"
-        onClick={addTask}
-        className="secondary submit border-none fixed bottom-5 right-5"
-        aria-label="click to add a new task"
+    <main className="flex min-h-screen w-full p-5 mt-20 overflow-auto">
+      <Masonry
+        elements={tasks}
+        tags={tags}
+        onAdd={addTask}
+        onDelete={onDelete}
+        onChangeTag={onChangeTag}
       />
-
-      <div className="">
-        <ul className="flex flex-wrap gap-4 w-full">{tasksMemo}</ul>
-      </div>
       {loading ? (
         <div
           className={`${

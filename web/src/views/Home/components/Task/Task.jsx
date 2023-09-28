@@ -2,7 +2,7 @@ import React, { memo, useMemo, useState, useEffect, useCallback } from "react";
 
 import PropTypes from "prop-types";
 
-import MDEditor, { commands } from "@uiw/react-md-editor";
+import MDEditor from "@uiw/react-md-editor";
 import MarkdownPreview from "@uiw/react-markdown-preview";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,13 +11,16 @@ import { faEdit, faSave, faTrash } from "@fortawesome/free-solid-svg-icons";
 // css
 import { css } from "@emotion/css";
 
+// components
+import FloatingButton from "../../../../components/FAB/FAB";
+
 // manager
 import { getTask, updateTask } from "./local";
 
 function Task({ id, onDelete }) {
   const [color, setColor] = useState("primary");
 
-  const [value, setValue] = React.useState("");
+  const [value, setValue] = useState(getTask(id)?.content);
 
   const bgColor = useMemo(() => {
     switch (color) {
@@ -29,12 +32,6 @@ function Task({ id, onDelete }) {
         return `bg-[${color}]`;
     }
   }, [color]);
-
-  const data = useMemo(() => {
-    const localData = getTask(id);
-    setValue(localData?.content);
-    return localData;
-  }, [id]);
 
   const update = useCallback(
     (e) => {
@@ -54,19 +51,6 @@ function Task({ id, onDelete }) {
     };
   }, [id]);
 
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  const onResizeWindow = useCallback(() => {
-    setWindowWidth(window.innerWidth);
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener("resize", onResizeWindow);
-    return () => {
-      window.removeEventListener("resize", onResizeWindow);
-    };
-  }, []);
-
   const onLocalDelete = () => {
     document.getElementById(id)?.classList.add("aShrink");
     setTimeout(() => {
@@ -78,16 +62,50 @@ function Task({ id, onDelete }) {
 
   const onLocalEdit = () => setEditing(true);
 
-  const onLocalSave = () => {
+  const onLocalSave = useCallback(() => {
     updateTask(id, "content", value);
     setEditing(false);
-  };
+  }, [value, id]);
+
+  const onEscapePress = useCallback(
+    (e) => {
+      if (e.key === "Escape") {
+        onLocalSave();
+        e.target.blur();
+      }
+    },
+    [onLocalSave]
+  );
+
+  useEffect(() => {
+    window.addEventListener("keydown", onEscapePress);
+    const fullscreenButton = document.querySelectorAll(
+      '[data-name="fullscreen"]'
+    )[0];
+    if (fullscreenButton)
+      fullscreenButton.addEventListener("click", onLocalSave);
+    return () => {
+      window.removeEventListener("keydown", onEscapePress);
+      const fullscreenButton = document.querySelectorAll(
+        '[data-name="fullscreen"]'
+      )[0];
+      if (fullscreenButton)
+        fullscreenButton.removeEventListener("click", onLocalSave);
+    };
+  }, [editing]);
 
   return (
     <article
       id={id}
-      className={`group ${bgColor} shadow-md shadow-[black] rounded-sm min-h-[150px] min-w-[216px] max-w-[${windowWidth}]`}
+      className={`m-2 group ${bgColor} shadow-md shadow-[black] rounded-sm min-h-[350px] w-full`}
     >
+      {editing ? (
+        <FloatingButton
+          icon={faSave}
+          onClick={onLocalSave}
+          className="primary !fixed z-[999999]"
+        />
+      ) : null}
       <div
         className={`grid ${css({
           transition: "all 500ms ease",
@@ -101,7 +119,7 @@ function Task({ id, onDelete }) {
             type="button"
             name="edit-task"
             onClick={editing ? onLocalSave : onLocalEdit}
-            aria-label="click to edit task"
+            aria-label="click para editar"
             className="text-secondary p-3 hover:text-primary hover:bg-sdark"
           >
             <FontAwesomeIcon icon={editing ? faSave : faEdit} />
@@ -110,7 +128,7 @@ function Task({ id, onDelete }) {
             type="button"
             name="delete-task"
             onClick={onLocalDelete}
-            aria-label="click to delete task"
+            aria-label="click para borrar"
             className="text-error p-3 hover:text-primary hover:bg-sdark"
           >
             <FontAwesomeIcon icon={faTrash} />
@@ -122,14 +140,13 @@ function Task({ id, onDelete }) {
           {!editing ? (
             <MarkdownPreview
               source={value}
-              className={`${css({
-                maxWidth: `calc(${windowWidth}px - 80px)`,
+              className={`w-full ${css({
                 backgroundColor: "initial",
                 color: "#222",
               })}`}
             />
           ) : (
-            <MDEditor value={value} onChange={setValue} />
+            <MDEditor value={value} onChange={setValue} fullscreen />
           )}
         </div>
       </div>
