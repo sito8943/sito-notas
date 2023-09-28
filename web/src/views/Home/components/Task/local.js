@@ -36,10 +36,21 @@ export const deleteTask = (id) => {
 export const removeNotesOfTag = (tag) => {
   const tasks = decrypt(localStorage.getItem(config.tasks));
   const idsToDelete = Object.values(tasks).filter((task) => task.tag === tag);
-  console.log(idsToDelete);
-  console.log(Object.keys(tasks));
+  
   idsToDelete.forEach((task) => {
     delete tasks[task.id];
+  });
+  localStorage.setItem(config.tasks, encrypt(tasks));
+};
+
+export const updateNotesTags = (newValue, oldValue) => {
+  const tasks = decrypt(localStorage.getItem(config.tasks));
+  const idsToDelete = Object.values(tasks).filter(
+    (task) => task.tag === oldValue
+  );
+
+  idsToDelete.forEach((task) => {
+    tasks[task.id].tag = newValue;
   });
   localStorage.setItem(config.tasks, encrypt(tasks));
 };

@@ -9,7 +9,13 @@ import Masonry from "./components/Masonry/Masonry";
 import Loading from "../../components/Loading/Loading";
 
 // manager
-import { removeNotesOfTag, createTask, initTasks, deleteTask } from "./components/Task/local";
+import {
+  updateNotesTags,
+  removeNotesOfTag,
+  createTask,
+  initTasks,
+  deleteTask,
+} from "./components/Task/local";
 
 function Home() {
   const [tags, setTags] = useState(["Tareas"]);
@@ -45,11 +51,17 @@ function Home() {
 
   const onChangeTag = (newValue, oldValue) => {
     console.log(newValue, oldValue);
+    const newTags = [...tags];
+    // removing tag
+    newTags.splice(newTags.indexOf(oldValue), 1, newValue);
+    // updating notes of that tag
+    updateNotesTags(newValue, oldValue);
+    setTasks(initTasks());
+    setTags(newTags);
   };
 
   const onDeleteTag = useCallback(
     (tag) => {
-      console.log(tag);
       const newTags = [...tags];
       // removing tag
       newTags.splice(newTags.indexOf(tag), 1);
