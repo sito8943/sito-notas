@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 // components
+import NewTag from "../NewTag";
 import Task from "../Task/Task";
 import NoNotes from "../NoNotes";
 import PrintAfter from "../../../../components/PrintAfter/PrintAfter";
@@ -14,6 +15,7 @@ function Masonry({
   onDelete,
   onDeleteTag,
   onAdd,
+  onAddTag,
   onChangeTag,
 }) {
   const element = useCallback(
@@ -36,7 +38,7 @@ function Masonry({
     return tags.map((tag) => (
       <div
         key={tag}
-        className="w-[300px] border-dashed rounded-xl border-dark-gray border-[1px] p-3"
+        className="min-w-[300px] border-dashed rounded-xl border-dark-gray border-[1px] p-3"
       >
         <div className="group flex flex-col">
           <div className="flex gap-3 items-center">
@@ -59,7 +61,7 @@ function Masonry({
           </div>
           <div className="w-full grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-all duration-300">
             <div className="overflow-hidden transition duration-300 opacity-0 group-hover:opacity-[1] items-center flex justify-center w-full">
-              <div className="w-full border-dashed border-secondary border-[1px]" />
+              <div className="secondary dashed-border" />
               <button
                 type="button"
                 name="add-task"
@@ -69,7 +71,7 @@ function Masonry({
               >
                 <FontAwesomeIcon icon={faAdd} />
               </button>
-              <div className="w-full border-dashed border-secondary border-[1px]" />
+              <div className="secondary dashed-border" />
             </div>
           </div>
         </div>
@@ -79,9 +81,9 @@ function Masonry({
   }, [element]);
 
   return (
-    <ul className="flex w-full">
+    <ul className="flex w-full gap-2">
       {cols}
-      <div></div>
+      <NewTag onAddTag={onAddTag} />
     </ul>
   );
 }

@@ -4,18 +4,12 @@ import { v4 } from "uuid";
 
 import { css } from "@emotion/css";
 
-// font awesome
-import { faAdd } from "@fortawesome/free-solid-svg-icons";
-
 // components
+import Masonry from "./components/Masonry/Masonry";
 import Loading from "../../components/Loading/Loading";
-import FloatingButton from "../../components/FAB/FAB";
 
 // manager
 import { createTask, initTasks, deleteTask } from "./components/Task/local";
-import Masonry from "./components/Masonry/Masonry";
-
-import config from "../../config";
 
 function Home() {
   const [tags, setTags] = useState(["Tareas"]);
@@ -40,11 +34,14 @@ function Home() {
     [tasks]
   );
 
+  const onAddTag = useCallback(() => {
+    setTags([...tags, `Nueva etiqueta ${tags.length}`]);
+  }, [tags]);
+
   const addTask = useCallback(
     (tag) => {
       const id = v4();
       createTask(id, tag);
-      console.log(id, tag);
       setTasks([...tasks, { id, tag }]);
     },
     [tasks]
@@ -55,11 +52,12 @@ function Home() {
   }, []);
 
   return (
-    <main className="flex min-h-screen w-full p-5 mt-20 overflow-auto">
+    <main className="main flex w-full p-5 mt-20 overflow-auto">
       <Masonry
         elements={tasks}
         tags={tags}
         onAdd={addTask}
+        onAddTag={onAddTag}
         onDelete={onDelete}
         onChangeTag={onChangeTag}
       />

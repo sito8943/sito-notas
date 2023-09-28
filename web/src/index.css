@@ -2,10 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+.main {
+  min-height: calc(100vh - 80px);
+}
+
 .w-md-editor-text-pre,
 .w-md-editor-text-input,
 .w-md-editor-text > .w-md-editor-text-pre {
   font-family: inherit !important;
+}
+
+.secondary.dashed-border {
+  @apply border-secondary;
+}
+.dashed-border {
+  @apply w-full border-[1px] border-dashed;
 }
 
 * {
