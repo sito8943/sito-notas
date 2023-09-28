@@ -50,7 +50,6 @@ function Home() {
   );
 
   const onChangeTag = (newValue, oldValue) => {
-    console.log(newValue, oldValue);
     const newTags = [...tags];
     // removing tag
     newTags.splice(newTags.indexOf(oldValue), 1, newValue);
