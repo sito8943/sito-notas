@@ -34,7 +34,10 @@ function Masonry({
 
   const cols = useMemo(() => {
     return tags.map((tag) => (
-      <div key={tag} className="w-[300px]">
+      <div
+        key={tag}
+        className="w-[300px] border-dashed rounded-xl border-dark-gray border-[1px] p-3"
+      >
         <div className="group flex flex-col">
           <div className="flex gap-3 items-center">
             <h2
