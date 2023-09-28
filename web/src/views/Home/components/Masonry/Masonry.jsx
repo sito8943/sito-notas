@@ -68,14 +68,15 @@ function Masonry({
             </div>
           </div>
         </div>
-        <div className="flex flex-col">{element(tag)}</div>
+        <div className="flex flex-col gap-2">{element(tag)}</div>
       </div>
     ));
   }, [element]);
 
   return (
-    <ul className="grid w-full grid-cols-3 grid-rows-[1fr 1.5fr 1fr]">
+    <ul className="flex w-full">
       {cols}
+      <div></div>
     </ul>
   );
 }

@@ -97,7 +97,7 @@ function Task({ id, onDelete }) {
   return (
     <article
       id={id}
-      className={`m-2 group ${bgColor} shadow-md shadow-[black] rounded-sm min-h-[350px] w-full`}
+      className={`group ${bgColor} shadow-md shadow-[black] rounded-sm min-h-[350px] w-full`}
     >
       {editing ? (
         <FloatingButton
