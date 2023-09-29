@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { useDebounce } from "use-lodash-debounce";
 
 import { v4 } from "uuid";
 
@@ -34,16 +35,26 @@ function Home() {
       setTags([...tags, `Nueva etiqueta ${tags.length}`]);
   }, [tags]);
 
-  const onChangeTag = (newValue, oldValue) => {
-    const newTags = [...tags];
-    // removing tag
-    newTags.splice(newTags.indexOf(oldValue), 1, newValue);
-    // updating notes of that tag
-    updateNotesTags(newValue, oldValue);
-    updateTag(newValue, oldValue);
-    setTasks(initTasks());
-    setTags(newTags);
-  };
+  const [tagNameToDebounce, setTagNameToDebounce] = useState({});
+  const debouncedValue = useDebounce(tagNameToDebounce, 500);
+
+  useEffect(() => {
+    console.log(tagNameToDebounce);
+    if (tagNameToDebounce.newValue && tagNameToDebounce.oldValue) {
+      const { newValue, oldValue } = tagNameToDebounce;
+      const newTags = [...tags];
+      // removing tag
+      newTags.splice(newTags.indexOf(oldValue), 1, newValue);
+      // updating notes of that tag
+      updateNotesTags(newValue, oldValue);
+      updateTag(newValue, oldValue);
+      setTasks(initTasks());
+      setTags(newTags);
+    }
+  }, [debouncedValue]);
+
+  const onChangeTag = (newValue, oldValue) =>
+    setTagNameToDebounce({ newValue, oldValue });
 
   const onDeleteTag = useCallback(
     (tag) => {
