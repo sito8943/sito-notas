@@ -16,12 +16,57 @@ import {
   initTasks,
   deleteTask,
 } from "./components/Task/local";
+import {
+  initTags,
+  deleteTag,
+  createTag,
+  updateTag,
+} from "./components/Tag/local";
 
 function Home() {
-  const [tags, setTags] = useState(["Tareas"]);
+  const [tags, setTags] = useState([]);
   const [tasks, setTasks] = useState([]);
 
   const [loading, setLoading] = useState(false);
+
+  const onAddTag = useCallback(() => {
+    if (createTag(`Nueva etiqueta ${tags.length}`))
+      setTags([...tags, `Nueva etiqueta ${tags.length}`]);
+  }, [tags]);
+
+  const onChangeTag = (newValue, oldValue) => {
+    const newTags = [...tags];
+    // removing tag
+    newTags.splice(newTags.indexOf(oldValue), 1, newValue);
+    // updating notes of that tag
+    updateNotesTags(newValue, oldValue);
+    updateTag(newValue, oldValue);
+    setTasks(initTasks());
+    setTags(newTags);
+  };
+
+  const onDeleteTag = useCallback(
+    (tag) => {
+      const newTags = [...tags];
+      // removing tag
+      newTags.splice(newTags.indexOf(tag), 1);
+      // removing notes of that tag
+      removeNotesOfTag(tag);
+      deleteTag(tag);
+      setTasks(initTasks());
+      setTags(newTags);
+    },
+    [tags]
+  );
+
+  const addTask = useCallback(
+    (tag) => {
+      const id = v4();
+      createTask(id, tag);
+      setTasks([...tasks, { id, tag }]);
+    },
+    [tasks]
+  );
 
   const onDelete = useCallback(
     (id) => {
@@ -36,44 +81,12 @@ function Home() {
     [tasks]
   );
 
-  const onAddTag = useCallback(() => {
-    setTags([...tags, `Nueva etiqueta ${tags.length}`]);
+  useEffect(() => {
+    if (tags.length) setTasks(initTasks());
   }, [tags]);
 
-  const addTask = useCallback(
-    (tag) => {
-      const id = v4();
-      createTask(id, tag);
-      setTasks([...tasks, { id, tag }]);
-    },
-    [tasks]
-  );
-
-  const onChangeTag = (newValue, oldValue) => {
-    const newTags = [...tags];
-    // removing tag
-    newTags.splice(newTags.indexOf(oldValue), 1, newValue);
-    // updating notes of that tag
-    updateNotesTags(newValue, oldValue);
-    setTasks(initTasks());
-    setTags(newTags);
-  };
-
-  const onDeleteTag = useCallback(
-    (tag) => {
-      const newTags = [...tags];
-      // removing tag
-      newTags.splice(newTags.indexOf(tag), 1);
-      // removing notes of that tag
-      removeNotesOfTag(tag);
-      setTasks(initTasks());
-      setTags(newTags);
-    },
-    [tags]
-  );
-
   useEffect(() => {
-    setTasks(initTasks());
+    setTags(initTags());
   }, []);
 
   return (
