@@ -31,8 +31,8 @@ function Home() {
   const [loading, setLoading] = useState(false);
 
   const onAddTag = useCallback(() => {
-    if (createTag(`Nueva etiqueta ${tags.length}`))
-      setTags([...tags, `Nueva etiqueta ${tags.length}`]);
+    const realName = createTag(`Nueva etiqueta ${tags.length}`);
+    setTags([...tags, realName]);
   }, [tags]);
 
   const [tagNameToDebounce, setTagNameToDebounce] = useState({});
@@ -46,8 +46,8 @@ function Home() {
       // removing tag
       newTags.splice(newTags.indexOf(oldValue), 1, newValue);
       // updating notes of that tag
-      updateNotesTags(newValue, oldValue);
-      updateTag(newValue, oldValue);
+      const realName = updateTag(newValue, oldValue);
+      updateNotesTags(realName, oldValue);
       setTasks(initTasks());
       setTags(newTags);
     }

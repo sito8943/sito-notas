@@ -3,27 +3,39 @@ import { decrypt, encrypt } from "../../../../utils/crypto";
 
 import config from "../../../../config";
 
+/**
+ *
+ * @param {string} tag
+ * @returns available name
+ */
 export const createTag = (tag) => {
   const tags = decrypt(localStorage.getItem(config.tags));
-  if (!tags[tag]) {
-    tags[tag] = tag;
-    localStorage.setItem(config.tags, encrypt(tags));
-    return true;
-  }
-  return false;
+  let parsedTag = tag;
+  while (tags[parsedTag]) parsedTag = `${parsedTag}'`;
+  tags[parsedTag] = parsedTag;
+  localStorage.setItem(config.tags, encrypt(tags));
+  return parsedTag;
 };
 
+/**
+ *
+ * @param {string} tag
+ */
 export const deleteTag = (tag) => {
   const tags = decrypt(localStorage.getItem(config.tags));
   delete tags[tag];
   localStorage.setItem(config.tags, encrypt(tags));
 };
 
+/**
+ * @param {string} newName
+ * @param {string} oldValue
+ * @returns available name
+ */
 export const updateTag = (newName, oldValue) => {
   const tags = decrypt(localStorage.getItem(config.tags));
   if (tags[oldValue]) delete tags[oldValue];
-  tags[newName] = newName;
-  localStorage.setItem(config.tags, encrypt(tags));
+  return createTag(newName);
 };
 
 export const initTags = () => {
