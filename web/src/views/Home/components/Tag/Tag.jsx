@@ -31,7 +31,7 @@ function Tag({ tag, elements, onAdd, onDelete, onChangeTag, onDeleteTag }) {
     <div
       key={tag}
       id={tag}
-      className="appear min-w-[300px] max-w-[400px] border-dashed rounded-xl border-dark-gray border-[1px] p-3"
+      className="appear min-w-[300px] max-w-[400px] border-dashed rounded-xl border-white-hover dark:border-dark-gray border-[1px] p-3"
     >
       <div className="group flex flex-col">
         <h2

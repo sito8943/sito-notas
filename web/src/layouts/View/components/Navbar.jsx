@@ -8,6 +8,7 @@ import { utilsToggleTheme } from "../../../utils/functions";
 
 // contexts
 import { useMode } from "../../../contexts/ModeProvider";
+import SearchWrapper from "./SearchWrapper/SearchWrapper";
 
 export default function Navbar() {
   const { modeState, toggleModeState } = useMode();
@@ -19,17 +20,20 @@ export default function Navbar() {
           <FontAwesomeIcon icon={faNoteSticky} className="rotate-[30deg]" />{" "}
           TEAM WORK
         </h1>
-        <button
-          name="toggle-theme"
-          onClick={() => {
-            toggleModeState();
-            utilsToggleTheme();
-          }}
-          className="icon-button secondary"
-          aria-label="Click para cambiar el tema"
-        >
-          <FontAwesomeIcon icon={modeState ? faSun : faMoon} />
-        </button>
+        <div className="flex gap-3 items-center">
+          <SearchWrapper />
+          <button
+            name="toggle-theme"
+            onClick={() => {
+              toggleModeState();
+              utilsToggleTheme();
+            }}
+            className="icon-button secondary"
+            aria-label="Click para cambiar el tema"
+          >
+            <FontAwesomeIcon icon={modeState ? faSun : faMoon} />
+          </button>
+        </div>
       </nav>
     </header>
   );

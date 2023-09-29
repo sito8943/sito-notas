@@ -8,10 +8,10 @@ function NoNotes() {
   return (
     <div className="mt-2 appear w-full flex flex-col items-center justify-center gap-2">
       <FontAwesomeIcon
-        className="text-dark-gray text-3xl"
+        className="text-white-hover dark:text-dark-gray text-3xl"
         icon={faNoteSticky}
       />
-      <p className="text-dark-gray">No hay notas</p>
+      <p className="text-white-hover dark:text-dark-gray">No hay notas</p>
     </div>
   );
 }
