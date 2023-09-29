@@ -31,6 +31,10 @@ export default {
     minHeight: {
       screen: "100vh",
       40: "80px",
+      10: "40px",
+    },
+    minWidth: {
+      10: "40px",
     },
   },
   plugins: [],

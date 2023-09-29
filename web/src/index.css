@@ -75,7 +75,7 @@ input {
 }
 
 .icon-button {
-  @apply w-10 h-10 rounded-full flex items-center justify-center text-xl transition;
+  @apply w-10 h-10 min-w-10 min-h-10 rounded-full flex items-center justify-center text-xl transition;
 }
 
 .secondary.submit {
