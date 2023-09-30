@@ -13,7 +13,7 @@ export const createTask = (id, tag) => {
   tasks[id] = {
     id,
     tag,
-    content: `# Nota ${tag} ${
+    content: `# ${tag} ${
       Object.keys(tasks).length + 1
     } \n Escribe el contenido aquí`,
   };
