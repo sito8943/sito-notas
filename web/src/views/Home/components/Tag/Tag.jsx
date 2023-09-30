@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from "react";
+import React, { memo, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 
 // @emotion/css
@@ -27,6 +27,8 @@ function Tag({
   onChangeTag,
   onDeleteTag,
 }) {
+  const [deleted, setDeleted] = useState(false);
+
   const onDownload = () => {
     const data = "data:text/json;charset=utf-8,";
     const json = encodeURIComponent(
@@ -59,7 +61,9 @@ function Tag({
     <div
       key={tag.id}
       id={tag.id}
-      className={`appear min-w-[300px] max-w-[400px] border-dashed rounded-xl border-white-hover dark:border-dark-gray border-[1px] p-3 ${css(
+      className={`${
+        deleted ? "disappear" : "appear"
+      } min-w-[300px] max-w-[400px] border-dashed rounded-xl border-white-hover dark:border-dark-gray border-[1px] p-3 ${css(
         { background: `${tag.color}1c` }
       )}`}
     >
@@ -114,7 +118,12 @@ function Tag({
             <button
               type="button"
               name="delete-tag"
-              onClick={() => onDeleteTag(tag.id)}
+              onClick={() => {
+                setDeleted(true);
+                setTimeout(() => {
+                  onDeleteTag(tag.id);
+                }, 450);
+              }}
               className="text-error hover:bg-pdark-hover icon-button"
               aria-label="click para eliminar esta etiqueta con todas sus notas"
             >
@@ -124,7 +133,7 @@ function Tag({
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-2 w-full">{element}</div>
+      <div className="flex flex-col gap-2 w-full mt-2">{element}</div>
     </div>
   );
 }
