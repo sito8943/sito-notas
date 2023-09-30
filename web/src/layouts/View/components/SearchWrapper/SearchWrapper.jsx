@@ -39,15 +39,17 @@ function SearchWrapper() {
           className="input !pl-10 !pr-9 w-full dark:bg-dark-background dark:text-white"
           onChange={(e) => setSearching(e.target.value)}
         />
-        <button
-          type="button"
-          name="clear-search"
-          onClick={() => setSearching("")}
-          aria-label="click para limpiar la búsqueda"
-          className="absolute -translate-y-[50%] top-[50%] right-0 icon-button !text-sm secondary"
-        >
-          <FontAwesomeIcon icon={faClose} />
-        </button>
+        {searching.length ? (
+          <button
+            type="button"
+            name="clear-search"
+            onClick={() => setSearching("")}
+            aria-label="click para limpiar la búsqueda"
+            className="absolute -translate-y-[50%] top-[50%] right-0 icon-button !text-sm secondary"
+          >
+            <FontAwesomeIcon icon={faClose} />
+          </button>
+        ) : null}
       </form>
     </div>
   );
