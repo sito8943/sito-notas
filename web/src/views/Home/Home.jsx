@@ -79,7 +79,7 @@ function Home() {
       const newTags = [...tags];
       // removing tag
       newTags.splice(
-        newTags.find((lTag) => lTag.id === tag),
+        newTags.findIndex((lTag) => lTag.id === tag),
         1
       );
       // removing notes of that tag
