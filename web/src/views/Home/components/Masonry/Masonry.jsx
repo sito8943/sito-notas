@@ -15,6 +15,7 @@ function Masonry({
   onDeleteTag,
   onAdd,
   onAddTag,
+  onBrushTag,
   onChangeTag,
 }) {
   const { searchState } = useSearch();
@@ -23,7 +24,7 @@ function Masonry({
     const lowerCased = searchState.toLowerCase();
     return tags
       .filter((tag) => {
-        const tagLowered = tag.toLowerCase();
+        const tagLowered = tag.id.toLowerCase();
         return searchState.length
           ? stringSimilarity.compareTwoStrings(tagLowered, lowerCased) > 0.25 ||
               tagLowered.indexOf(lowerCased) >= 0
@@ -32,12 +33,13 @@ function Masonry({
       .map((tag) => (
         <Tag
           tag={tag}
-          key={tag}
+          key={tag.id}
           onAdd={onAdd}
           onDelete={onDelete}
+          onBrushTag={onBrushTag}
           onChangeTag={onChangeTag}
           onDeleteTag={onDeleteTag}
-          elements={elements.filter((element) => element.tag === tag)}
+          elements={elements.filter((element) => element.tag === tag.id)}
         />
       ));
   }, [searchState, tags, onAdd, onDelete, onChangeTag, onDeleteTag, elements]);

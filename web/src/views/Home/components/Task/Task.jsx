@@ -18,20 +18,7 @@ import FloatingButton from "../../../../components/FAB/FAB";
 import { getTask, updateTask } from "./local";
 
 function Task({ id, onDelete }) {
-  const [color, setColor] = useState("primary");
-
   const [value, setValue] = useState(getTask(id)?.content);
-
-  const bgColor = useMemo(() => {
-    switch (color) {
-      case "primary":
-        return "bg-primary text-dark-background2";
-      case "secondary":
-        return "bg-primary";
-      default: // any color
-        return `bg-[${color}]`;
-    }
-  }, [color]);
 
   const onLocalDelete = () => {
     document.getElementById(id)?.classList.add("aShrink");
@@ -79,7 +66,7 @@ function Task({ id, onDelete }) {
   return (
     <article
       id={id}
-      className={`group ${bgColor} shadow-md shadow-[black] rounded-sm min-h-[350px] w-full`}
+      className={`group bg-primary shadow-md shadow-[black] rounded-sm min-h-[350px] w-full`}
     >
       {editing ? (
         <FloatingButton

@@ -7,6 +7,7 @@ import { css } from "@emotion/css";
 
 // components
 import Masonry from "./components/Masonry/Masonry";
+import ColorBox from "./components/ColorBox/ColorBox";
 import Loading from "../../components/Loading/Loading";
 
 // manager
@@ -22,11 +23,17 @@ import {
   deleteTag,
   createTag,
   updateTag,
+  updateTagColor,
 } from "./components/Tag/local";
+
+import config from "../../config";
 
 function Home() {
   const [tags, setTags] = useState([]);
   const [tasks, setTasks] = useState([]);
+
+  /* localStorage.removeItem(config.tasks);
+  localStorage.removeItem(config.tags); */
 
   const [loading, setLoading] = useState(false);
 
@@ -39,7 +46,6 @@ function Home() {
   const debouncedValue = useDebounce(tagNameToDebounce, 500);
 
   useEffect(() => {
-    console.log(tagNameToDebounce);
     if (tagNameToDebounce.newValue && tagNameToDebounce.oldValue) {
       const { newValue, oldValue } = tagNameToDebounce;
       const newTags = [...tags];
@@ -56,11 +62,26 @@ function Home() {
   const onChangeTag = (newValue, oldValue) =>
     setTagNameToDebounce({ newValue, oldValue });
 
+  const [showColorBox, setShowBoxColor] = useState(undefined);
+  const onBrushTag = (tag) => setShowBoxColor(tag);
+
+  const setColorToTag = useCallback(
+    (color) => {
+      updateTagColor(showColorBox, color);
+      setTags(initTags());
+      setShowBoxColor(undefined);
+    },
+    [showColorBox]
+  );
+
   const onDeleteTag = useCallback(
     (tag) => {
       const newTags = [...tags];
       // removing tag
-      newTags.splice(newTags.indexOf(tag), 1);
+      newTags.splice(
+        newTags.find((lTag) => lTag.id === tag),
+        1
+      );
       // removing notes of that tag
       removeNotesOfTag(tag);
       deleteTag(tag);
@@ -102,12 +123,19 @@ function Home() {
 
   return (
     <main className="main flex w-full p-5 mt-20 overflow-auto">
+      {showColorBox ? (
+        <ColorBox
+          onColorSelect={(color) => setColorToTag(color)}
+          onClose={() => setShowBoxColor(false)}
+        />
+      ) : null}
       <Masonry
         elements={tasks}
         tags={tags}
         onAdd={addTask}
         onAddTag={onAddTag}
         onDelete={onDelete}
+        onBrushTag={onBrushTag}
         onDeleteTag={onDeleteTag}
         onChangeTag={onChangeTag}
       />

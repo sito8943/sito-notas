@@ -12,9 +12,9 @@ export const createTag = (tag) => {
   const tags = decrypt(localStorage.getItem(config.tags));
   let parsedTag = tag;
   while (tags[parsedTag]) parsedTag = `${parsedTag}'`;
-  tags[parsedTag] = parsedTag;
+  tags[parsedTag] = { id: parsedTag, color: "#00000000" };
   localStorage.setItem(config.tags, encrypt(tags));
-  return parsedTag;
+  return { id: parsedTag, color: "#00000000" };
 };
 
 /**
@@ -38,11 +38,24 @@ export const updateTag = (newName, oldValue) => {
   return createTag(newName);
 };
 
+/**
+ * @param {string} tag
+ * @param {string} color
+ */
+export const updateTagColor = (tag, color) => {
+  const tags = decrypt(localStorage.getItem(config.tags));
+  tags[tag].color = color;
+  localStorage.setItem(config.tags, encrypt(tags));
+};
+
 export const initTags = () => {
   if (localStorage.getItem(config.tags) === null) {
-    localStorage.setItem(config.tags, encrypt({ Tareas: "Tareas" }));
+    localStorage.setItem(
+      config.tags,
+      encrypt({ Tareas: { id: "Tareas", color: "#00000000" } })
+    );
     return [];
   }
   const tags = decrypt(localStorage.getItem(config.tags));
-  return Object.keys(tags);
+  return Object.values(tags);
 };

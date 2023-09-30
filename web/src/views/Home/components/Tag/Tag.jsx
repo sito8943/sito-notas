@@ -1,19 +1,31 @@
-import React, { useMemo } from "react";
+import React, { memo, useMemo } from "react";
+import PropTypes from "prop-types";
+
+// @emotion/css
+import { css } from "@emotion/css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAdd,
-  faShare,
+  faBrush,
   faShareAlt,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 
 // components
-import Task from "../Task/Task";
 import NoNotes from "./NoNotes";
+import Task from "../Task/Task";
 import PrintAfter from "../../../../components/PrintAfter/PrintAfter";
 
-function Tag({ tag, elements, onAdd, onDelete, onChangeTag, onDeleteTag }) {
+function Tag({
+  tag,
+  elements,
+  onAdd,
+  onDelete,
+  onBrushTag,
+  onChangeTag,
+  onDeleteTag,
+}) {
   const element = useMemo(() => {
     const filteredByTags = elements;
     if (filteredByTags.length)
@@ -29,17 +41,19 @@ function Tag({ tag, elements, onAdd, onDelete, onChangeTag, onDeleteTag }) {
 
   return (
     <div
-      key={tag}
-      id={tag}
-      className="appear min-w-[300px] max-w-[400px] border-dashed rounded-xl border-white-hover dark:border-dark-gray border-[1px] p-3"
+      key={tag.id}
+      id={tag.id}
+      className={`appear min-w-[300px] max-w-[400px] border-dashed rounded-xl border-white-hover dark:border-dark-gray border-[1px] p-3 ${css(
+        { background: `${tag.color}1c` }
+      )}`}
     >
       <div className="group flex flex-col">
         <h2
           contentEditable
-          onInput={(e) => onChangeTag(e.target.innerText, tag)}
+          onInput={(e) => onChangeTag(e.target.innerText, tag.id)}
           className="text-2xl font-semibold text-sdark dark:text-secondary "
         >
-          {tag}
+          {tag.id}
         </h2>
 
         <div className="w-full grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-all duration-300">
@@ -48,7 +62,7 @@ function Tag({ tag, elements, onAdd, onDelete, onChangeTag, onDeleteTag }) {
             <button
               type="button"
               name="add-task"
-              onClick={() => onAdd(tag)}
+              onClick={() => onAdd(tag.id)}
               className="secondary icon-button"
               aria-label="click para agregar una nueva nota"
             >
@@ -57,7 +71,7 @@ function Tag({ tag, elements, onAdd, onDelete, onChangeTag, onDeleteTag }) {
             <button
               type="button"
               name="share-tag"
-              onClick={() => onShareTag(tag)}
+              onClick={() => onShareTag(tag.id)}
               className=" text-primary hover:bg-pdark-hover icon-button"
               aria-label="click para compartir esta etiqueta con todas sus notas"
             >
@@ -65,8 +79,17 @@ function Tag({ tag, elements, onAdd, onDelete, onChangeTag, onDeleteTag }) {
             </button>
             <button
               type="button"
+              name="brush-tag"
+              onClick={() => onBrushTag(tag.id)}
+              className="text-primary hover:bg-pdark-hover icon-button"
+              aria-label="click para cambiar el color de esta etiqueta"
+            >
+              <FontAwesomeIcon icon={faBrush} />
+            </button>
+            <button
+              type="button"
               name="delete-tag"
-              onClick={() => onDeleteTag(tag)}
+              onClick={() => onDeleteTag(tag.id)}
               className="text-error hover:bg-pdark-hover icon-button"
               aria-label="click para eliminar esta etiqueta con todas sus notas"
             >
@@ -81,4 +104,35 @@ function Tag({ tag, elements, onAdd, onDelete, onChangeTag, onDeleteTag }) {
   );
 }
 
-export default Tag;
+Tag.propTypes = {
+  tag: PropTypes.shape({ id: PropTypes.string, color: PropTypes.string }),
+  elements: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      tag: PropTypes.string,
+      content: PropTypes.string,
+    })
+  ),
+  onAdd: PropTypes.func,
+  onDelete: PropTypes.func,
+  onBrushTag: PropTypes.func,
+  onChangeTag: PropTypes.func,
+  onDeleteTag: PropTypes.func,
+};
+
+const TagMemo = memo(
+  (props) => <Tag {...props} />,
+  (oldProps, newProps) => {
+    return (
+      oldProps.tag.id === newProps.tag.id &&
+      oldProps.tag.color === newProps.tag.color &&
+      oldProps.elements === newProps.elements &&
+      oldProps.onAdd === newProps.onAdd &&
+      oldProps.onDelete === newProps.onDelete &&
+      oldProps.onBrushTag === newProps.onBrushTag &&
+      oldProps.onChangeTag === newProps.onDeleteTag
+    );
+  }
+);
+
+export default TagMemo;
