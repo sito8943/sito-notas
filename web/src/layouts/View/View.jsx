@@ -3,6 +3,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 
 // contexts
 import { useUser } from "../../contexts/UserProvider";
+import { SearchProvider } from "../../contexts/SearchProvider";
 
 // components
 import Navbar from "./components/Navbar";
@@ -17,10 +18,10 @@ function View() {
   }, [userState]);
 
   return (
-    <Fragment>
+    <SearchProvider>
       <Navbar />
       <Outlet />
-    </Fragment>
+    </SearchProvider>
   );
 }
 

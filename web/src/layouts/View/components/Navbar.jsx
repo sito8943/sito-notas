@@ -8,6 +8,8 @@ import { utilsToggleTheme } from "../../../utils/functions";
 
 // contexts
 import { useMode } from "../../../contexts/ModeProvider";
+
+// components
 import SearchWrapper from "./SearchWrapper/SearchWrapper";
 
 export default function Navbar() {
