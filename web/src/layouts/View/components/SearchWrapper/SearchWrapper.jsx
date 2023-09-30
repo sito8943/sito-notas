@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDebounce } from "use-lodash-debounce";
 
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faClose, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // contexts
@@ -27,6 +27,8 @@ function SearchWrapper() {
       <form onSubmit={onSearch} className="relative w-full">
         <button
           type="submit"
+          name="search"
+          aria-label="click para buscar"
           className="absolute -translate-y-[50%] top-[50%] icon-button secondary"
         >
           <FontAwesomeIcon icon={faSearch} />
@@ -34,9 +36,18 @@ function SearchWrapper() {
         <input
           type="search"
           value={searching}
-          className="input !pl-10 w-full dark:bg-dark-background dark:text-white"
+          className="input !pl-10 !pr-9 w-full dark:bg-dark-background dark:text-white"
           onChange={(e) => setSearching(e.target.value)}
         />
+        <button
+          type="button"
+          name="clear-search"
+          onClick={() => setSearching("")}
+          aria-label="click para limpiar la búsqueda"
+          className="absolute -translate-y-[50%] top-[50%] right-0 icon-button !text-sm secondary"
+        >
+          <FontAwesomeIcon icon={faClose} />
+        </button>
       </form>
     </div>
   );
