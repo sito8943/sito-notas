@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAdd,
   faBrush,
+  faFileDownload,
   faShareAlt,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
@@ -26,6 +27,11 @@ function Tag({
   onChangeTag,
   onDeleteTag,
 }) {
+
+  const onDownload = () => {
+
+  }
+
   const element = useMemo(() => {
     const filteredByTags = elements;
     if (filteredByTags.length)
@@ -85,6 +91,15 @@ function Tag({
               aria-label="click para cambiar el color de esta etiqueta"
             >
               <FontAwesomeIcon icon={faBrush} />
+            </button>
+            <button
+              type="button"
+              name="download-tag"
+              onClick={onDownload}
+              className="text-primary hover:bg-pdark-hover icon-button"
+              aria-label="click para descargar esta etiqueta con todas sus notas"
+            >
+              <FontAwesomeIcon icon={faFileDownload} />
             </button>
             <button
               type="button"

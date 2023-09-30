@@ -6,7 +6,12 @@ import MDEditor from "@uiw/react-md-editor";
 import MarkdownPreview from "@uiw/react-markdown-preview";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faSave, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEdit,
+  faSave,
+  faTrash,
+  faFileDownload,
+} from "@fortawesome/free-solid-svg-icons";
 
 // css
 import { css } from "@emotion/css";
@@ -28,6 +33,8 @@ function Task({ id, onDelete }) {
   };
 
   const [editing, setEditing] = useState(false);
+
+  const onDownload = () => {};
 
   const onLocalEdit = () => setEditing(true);
 
@@ -92,6 +99,15 @@ function Task({ id, onDelete }) {
             className="text-secondary p-3 hover:text-primary hover:bg-sdark"
           >
             <FontAwesomeIcon icon={editing ? faSave : faEdit} />
+          </button>
+          <button
+            type="button"
+            name="download-task"
+            onClick={onDownload}
+            aria-label="click para borrar"
+            className="text-secondary p-3 hover:text-primary hover:bg-sdark"
+          >
+            <FontAwesomeIcon icon={faFileDownload} />
           </button>
           <button
             type="button"
