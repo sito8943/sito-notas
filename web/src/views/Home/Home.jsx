@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDebounce } from "use-lodash-debounce";
+import loadable from "@loadable/component";
 
 import { v4 } from "uuid";
 
@@ -7,7 +8,6 @@ import { css } from "@emotion/css";
 
 // components
 import Masonry from "./components/Masonry/Masonry";
-import ColorBox from "./components/ColorBox/ColorBox";
 import Loading from "../../components/Loading/Loading";
 
 // manager
@@ -26,14 +26,12 @@ import {
   updateTagColor,
 } from "./components/Tag/local";
 
-import config from "../../config";
+// loadables
+const ColorBox = loadable(() => import("./components/ColorBox/ColorBox"));
 
 function Home() {
   const [tags, setTags] = useState([]);
   const [tasks, setTasks] = useState([]);
-
-  /* localStorage.removeItem(config.tasks);
-  localStorage.removeItem(config.tags); */
 
   const [loading, setLoading] = useState(false);
 

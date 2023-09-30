@@ -11,8 +11,15 @@ function NotFound() {
         icon={faSadTear}
         className="dark:text-white text-7xl appear"
       />
-      <h2 className="text-center appear">404 - Página no encontrada</h2>
-      <Link to="/" className="primary button appear">
+      <h2 className="dark:text-white text-center appear">
+        404 - Página no encontrada
+      </h2>
+      <Link
+        name="go-home"
+        aria-label="click para ir al inicio"
+        to="/"
+        className="secondary button submit appear"
+      >
         Ir al inicio
       </Link>
     </main>
