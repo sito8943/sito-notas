@@ -27,10 +27,20 @@ function Tag({
   onChangeTag,
   onDeleteTag,
 }) {
-
   const onDownload = () => {
-
-  }
+    const data = "data:text/json;charset=utf-8,";
+    const json = encodeURIComponent(
+      JSON.stringify({ ...tag, tasks: elements })
+    );
+    const filename = `${tag.id}.json`;
+    const link = document.createElement("a");
+    link.setAttribute("href", data + json);
+    link.setAttribute("download", filename);
+    link.click();
+    setTimeout(() => {
+      link.remove();
+    }, 400);
+  };
 
   const element = useMemo(() => {
     const filteredByTags = elements;

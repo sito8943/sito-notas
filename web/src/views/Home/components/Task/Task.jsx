@@ -43,6 +43,9 @@ function Task({ id, onDelete }) {
     link.setAttribute("href", data + json);
     link.setAttribute("download", filename);
     link.click();
+    setTimeout(() => {
+      link.remove();
+    }, 400);
   };
 
   const onLocalEdit = () => setEditing(true);
