@@ -34,7 +34,16 @@ function Task({ id, onDelete }) {
 
   const [editing, setEditing] = useState(false);
 
-  const onDownload = () => {};
+  const onDownload = () => {
+    const taskToDownload = getTask(id);
+    const data = "data:text/json;charset=utf-8,";
+    const json = encodeURIComponent(JSON.stringify(taskToDownload));
+    const filename = `task-${id}.json`;
+    const link = document.createElement("a");
+    link.setAttribute("href", data + json);
+    link.setAttribute("download", filename);
+    link.click();
+  };
 
   const onLocalEdit = () => setEditing(true);
 
