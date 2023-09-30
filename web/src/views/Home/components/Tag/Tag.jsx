@@ -1,5 +1,6 @@
 import React, { memo, useMemo, useState } from "react";
 import PropTypes from "prop-types";
+import loadable from "@loadable/component";
 
 // @emotion/css
 import { css } from "@emotion/css";
@@ -17,6 +18,10 @@ import {
 import NoNotes from "./NoNotes";
 import Task from "../Task/Task";
 import PrintAfter from "../../../../components/PrintAfter/PrintAfter";
+// loadables
+const ConfirmationModal = loadable(() =>
+  import("../../../../components/ConfirmationModal/ConfirmationModal")
+);
 
 function Tag({
   tag,
@@ -28,6 +33,7 @@ function Tag({
   onDeleteTag,
 }) {
   const [deleted, setDeleted] = useState(false);
+  const [confirmationToDelete, setConfirmationToDelete] = useState(false);
 
   const onDownload = () => {
     const data = "data:text/json;charset=utf-8,";
@@ -67,6 +73,19 @@ function Tag({
         { background: `${tag.color}1c` }
       )}`}
     >
+      {confirmationToDelete ? (
+        <ConfirmationModal
+          onAccept={() => {
+            setConfirmationToDelete(false);
+            setDeleted(true);
+            setTimeout(() => {
+              onDeleteTag(tag.id);
+            }, 450);
+          }}
+          onClose={() => setConfirmationToDelete(false)}
+          visible
+        />
+      ) : null}
       <div className="group flex flex-col">
         <h2
           contentEditable
@@ -118,12 +137,7 @@ function Tag({
             <button
               type="button"
               name="delete-tag"
-              onClick={() => {
-                setDeleted(true);
-                setTimeout(() => {
-                  onDeleteTag(tag.id);
-                }, 450);
-              }}
+              onClick={() => setConfirmationToDelete(true)}
               className="text-error hover:bg-pdark-hover icon-button"
               aria-label="click para eliminar esta etiqueta con todas sus notas"
             >

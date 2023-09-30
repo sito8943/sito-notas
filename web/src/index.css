@@ -101,7 +101,7 @@ input {
   @apply border-primary hover:bg-primary text-white;
 }
 .secondary.outlined {
-  @apply border-secondary hover:bg-primary text-white;
+  @apply border-secondary hover:bg-secondary text-white;
 }
 .primary.link {
   @apply hover:bg-primary text-white;

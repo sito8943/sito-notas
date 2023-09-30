@@ -11,21 +11,21 @@ function ConfirmationModal({ onAccept, visible, onClose }) {
   return (
     <Modal visible={visible} onClose={onClose}>
       <div className="appear flex items-center justify-center w-full h-full">
-        <div className="bg-white py-5 px-10 flex flex-col gap-5">
+        <div className="bg-light-background2 dark:bg-dark-background2 py-5 px-10 flex flex-col gap-5">
           <div className="flex items-start justify-start w-full gap-5">
             <FontAwesomeIcon
               icon={faWarning}
               className="text-warning text-4xl"
             />
-            <h3>Confirmación</h3>
+            <h3 className="text-3xl dark:text-white">Confirmación</h3>
           </div>
-          <p>¿Desea continuar con la operación?</p>
+          <p className="dark:text-white">¿Desea continuar con la operación?</p>
           <div className="flex gap-3">
             <button
               name="confirm"
               type="button"
               aria-label="click para confirmar"
-              className="primary submit button"
+              className="secondary submit button"
               onClick={onAccept}
             >
               Confirmar
@@ -35,7 +35,7 @@ function ConfirmationModal({ onAccept, visible, onClose }) {
               name="cancel"
               aria-label="click para cancelar"
               onClick={onClose}
-              className="button outlined"
+              className="secondary outlined"
             >
               Cancelar
             </button>

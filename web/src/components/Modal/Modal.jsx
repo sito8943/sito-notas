@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 
 // components
-import FloatingButton from "../FloatingButton/FloatingButton";
+import FloatingButton from "../FAB/FAB";
 
 function Modal({ visible, onClose, children }) {
   const onEscapePress = useCallback((e) => {
