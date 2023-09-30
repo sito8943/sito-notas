@@ -16,9 +16,9 @@ export default function Navbar() {
   return (
     <header className="w-full fixed top-0 left-0 z-50 dark:bg-dark-background2 bg-light-background">
       <nav className="w-full flex items-center h-full py-5 px-5 justify-between">
-        <h1 className="text-3xl text-sdark dark:text-secondary font-bold">
+        <h1 className="text-3xl text-sdark dark:text-secondary font-bold uppercase">
           <FontAwesomeIcon icon={faNoteSticky} className="rotate-[30deg]" />{" "}
-          TEAM WORK
+          Sito Notas
         </h1>
         <div className="flex gap-3 items-center">
           <SearchWrapper />

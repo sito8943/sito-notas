@@ -143,9 +143,9 @@ function SignIn() {
           onSubmit={onSubmit}
           className="rounded-sm appear relative bg-light-background dark:bg-dark-background2 p-10 min-w-[440px] flex flex-col gap-3 shadow-xl shadow-dark-[black]"
         >
-          <h1 className="text-3xl text-sdark dark:text-secondary font-bold">
+          <h1 className="text-3xl text-sdark dark:text-secondary font-bold uppercase">
             <FontAwesomeIcon icon={faNoteSticky} className="rotate-[30deg]" />{" "}
-            TEAM WORK
+            Sito Notas
           </h1>
           <SimpleInput
             id="user"
