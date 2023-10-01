@@ -14,6 +14,7 @@ function Masonry({
   onDelete,
   onDeleteTag,
   onAdd,
+  onUploadTag,
   onAddTag,
   onBrushTag,
   onChangeTag,
@@ -47,7 +48,7 @@ function Masonry({
   return (
     <ul className="flex w-full gap-2">
       {cols}
-      <NewTag onAddTag={onAddTag} />
+      <NewTag onAddTag={onAddTag} onUploadTag={onUploadTag} />
     </ul>
   );
 }

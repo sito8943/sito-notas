@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDebounce } from "use-lodash-debounce";
 import loadable from "@loadable/component";
 
@@ -30,6 +30,8 @@ import {
 const ColorBox = loadable(() => import("./components/ColorBox/ColorBox"));
 
 function Home() {
+  const uploadFileRef = useRef(null);
+
   const [tags, setTags] = useState([]);
   const [tasks, setTasks] = useState([]);
 
@@ -70,6 +72,31 @@ function Home() {
       setShowBoxColor(undefined);
     },
     [showColorBox]
+  );
+
+  const [uploadingWhat, setUploadingWhat] = useState("");
+
+  const onUploadTag = useCallback(() => {
+    setUploadingWhat("tag");
+    setTimeout(() => {
+      uploadFileRef.current.click();
+    }, 200);
+  }, [uploadFileRef]);
+
+  const onUploadFile = useCallback(
+    (e) => {
+      const fileReader = new FileReader();
+      fileReader.readAsText(e.target.files[0], "UTF-8");
+      fileReader.onload = (e) => {
+        const obj = JSON.parse(e.target.result);
+
+        switch (uploadingWhat) {
+          default: // tags
+            break;
+        }
+      };
+    },
+    [uploadingWhat]
   );
 
   const onDeleteTag = useCallback(
@@ -121,6 +148,15 @@ function Home() {
 
   return (
     <main className="main flex w-full p-5 mt-20 overflow-auto">
+      {uploadingWhat.length ? (
+        <input
+          type="file"
+          className="z-[-1] fixed"
+          ref={uploadFileRef}
+          onChange={onUploadFile}
+          accept="application/JSON"
+        />
+      ) : null}
       {showColorBox ? (
         <ColorBox
           onColorSelect={(color) => setColorToTag(color)}
@@ -131,6 +167,7 @@ function Home() {
         elements={tasks}
         tags={tags}
         onAdd={addTask}
+        onUploadTag={onUploadTag}
         onAddTag={onAddTag}
         onDelete={onDelete}
         onBrushTag={onBrushTag}
