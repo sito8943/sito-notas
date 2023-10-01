@@ -25,6 +25,7 @@ import { validateBasicKey } from "./services/auth";
 // components
 import Loading from "./components/Loading/Loading";
 import Notification from "./components/Notification/Notification";
+import Handler from "./components/Error/Handler";
 
 function App() {
   const { setModeState } = useMode();
@@ -97,23 +98,25 @@ function App() {
 
   return (
     <Suspense>
-      <Notification />
-      {!loading ? (
-        <BrowserRouter>
-          <Routes>
-            <Route exact path="/auth" element={<Auth />}>
-              <Route index element={<SignIn />} />
-            </Route>
-            <Route path="/" element={<View />}>
-              <Route index element={<Home />} />
-            </Route>
-            <Route exact path="/sign-out" element={<SignOut />} />
-            <Route path="/*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      ) : (
-        <Loading className="w-full h-screen fixed top-0 left-0 z-40" />
-      )}
+      <Handler>
+        <Notification />
+        {!loading ? (
+          <BrowserRouter>
+            <Routes>
+              <Route exact path="/auth" element={<Auth />}>
+                <Route index element={<SignIn />} />
+              </Route>
+              <Route path="/" element={<View />}>
+                <Route index element={<Home />} />
+              </Route>
+              <Route exact path="/sign-out" element={<SignOut />} />
+              <Route path="/*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        ) : (
+          <Loading className="w-full h-screen fixed top-0 left-0 z-40" />
+        )}
+      </Handler>
     </Suspense>
   );
 }
