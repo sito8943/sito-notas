@@ -34,8 +34,12 @@ export const deleteTag = (tag) => {
  */
 export const updateTag = (newName, oldValue) => {
   const tags = decrypt(localStorage.getItem(config.tags));
-  if (tags[oldValue]) delete tags[oldValue];
-  return createTag(newName);
+
+  if (tags[oldValue]) {
+    delete tags[oldValue];
+    localStorage.setItem(config.tags, encrypt(tags));
+    return createTag(newName);
+  }
 };
 
 /**

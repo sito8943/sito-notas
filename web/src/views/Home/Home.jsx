@@ -25,6 +25,7 @@ import {
   updateTag,
   updateTagColor,
 } from "./components/Tag/local";
+import config from "../../config";
 
 // loadables
 const ColorBox = loadable(() => import("./components/ColorBox/ColorBox"));
@@ -34,6 +35,9 @@ function Home() {
 
   const [tags, setTags] = useState([]);
   const [tasks, setTasks] = useState([]);
+
+  /* localStorage.removeItem(config.tags);
+  localStorage.removeItem(config.tasks); */
 
   const [loading, setLoading] = useState(false);
 
@@ -53,9 +57,10 @@ function Home() {
       newTags[newTags.findIndex((tag) => tag.id === oldValue)].id = newValue;
       // updating notes of that tag
       const realName = updateTag(newValue, oldValue);
-      updateNotesTags(realName, oldValue);
+      console.log(realName)
+      updateNotesTags(realName.id, oldValue);
       setTasks(initTasks());
-      setTags(newTags);
+      setTags(initTags());
     }
   }, [debouncedValue]);
 
