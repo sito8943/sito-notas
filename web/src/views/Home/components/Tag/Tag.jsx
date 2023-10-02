@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useState } from "react";
+import React, { memo, useCallback, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import loadable from "@loadable/component";
 
@@ -63,6 +63,19 @@ function Tag({
     return <NoNotes />;
   }, [elements, elements, onAdd, onDelete, onChangeTag, onDeleteTag]);
 
+  const doDelete = useCallback(() => {
+    setConfirmationToDelete(false);
+    setDeleted(true);
+    setTimeout(() => {
+      onDeleteTag(tag.id);
+    }, 450);
+  }, [tag]);
+
+  const onDeleteConfirmation = useCallback(() => {
+    if (elements.length) setConfirmationToDelete(true);
+    else doDelete();
+  }, [elements]);
+
   return (
     <div
       key={tag.id}
@@ -75,13 +88,7 @@ function Tag({
     >
       {confirmationToDelete ? (
         <ConfirmationModal
-          onAccept={() => {
-            setConfirmationToDelete(false);
-            setDeleted(true);
-            setTimeout(() => {
-              onDeleteTag(tag.id);
-            }, 450);
-          }}
+          onAccept={doDelete}
           onClose={() => setConfirmationToDelete(false)}
           visible
         />
@@ -137,7 +144,7 @@ function Tag({
             <button
               type="button"
               name="delete-tag"
-              onClick={() => setConfirmationToDelete(true)}
+              onClick={onDeleteConfirmation}
               className="text-error hover:bg-pdark-hover icon-button"
               aria-label="click para eliminar esta etiqueta con todas sus notas"
             >

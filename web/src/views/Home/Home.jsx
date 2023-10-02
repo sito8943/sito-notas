@@ -50,7 +50,7 @@ function Home() {
       const { newValue, oldValue } = tagNameToDebounce;
       const newTags = [...tags];
       // removing tag
-      newTags.splice(newTags.indexOf(oldValue), 1, newValue);
+      newTags[newTags.findIndex((tag) => tag.id === oldValue)].id = newValue;
       // updating notes of that tag
       const realName = updateTag(newValue, oldValue);
       updateNotesTags(realName, oldValue);

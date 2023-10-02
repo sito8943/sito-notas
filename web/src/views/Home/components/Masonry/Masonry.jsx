@@ -23,6 +23,7 @@ function Masonry({
 
   const cols = useMemo(() => {
     const lowerCased = searchState.toLowerCase();
+
     return tags
       .filter((tag) => {
         const tagLowered = tag.id.toLowerCase();
