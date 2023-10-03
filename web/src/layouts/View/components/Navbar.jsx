@@ -11,6 +11,7 @@ import { useMode } from "../../../contexts/ModeProvider";
 
 // components
 import SearchWrapper from "./SearchWrapper/SearchWrapper";
+import IconButton from "../../../components/IconButton/IconButton";
 
 export default function Navbar() {
   const { modeState, toggleModeState } = useMode();
@@ -24,17 +25,17 @@ export default function Navbar() {
         </h1>
         <div className="flex gap-3 items-center">
           <SearchWrapper />
-          <button
+          <IconButton
             name="toggle-theme"
             onClick={() => {
               toggleModeState();
               utilsToggleTheme();
             }}
+            tooltip={!modeState ? "Tema claro" : "Tema oscuro  "}
+            icon={!modeState ? faSun : faMoon}
             className="icon-button secondary"
             aria-label="Click para cambiar el tema"
-          >
-            <FontAwesomeIcon icon={modeState ? faSun : faMoon} />
-          </button>
+          />
         </div>
       </nav>
     </header>

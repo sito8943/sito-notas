@@ -2,30 +2,31 @@ import React from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd, faFileUpload } from "@fortawesome/free-solid-svg-icons";
+import IconButton from "../../../../components/IconButton/IconButton";
 
 function NewTag({ onAddTag, onUploadTag }) {
   return (
     <div className="appear min-w-[300px] p-3 pt-10 flex items-center justify-center flex-col h-10">
       <p className="text-secondary">Nueva etiqueta</p>
       <div className="flex items-center justify-center">
-        <button
+        <IconButton
           type="button"
+          icon={faAdd}
           name="add-task"
+          tooltip="Nueva etiqueta"
           onClick={onAddTag}
           className="secondary icon-button"
           aria-label="click para agregar una nueva etiqueta"
-        >
-          <FontAwesomeIcon icon={faAdd} />
-        </button>
-        <button
+        />
+        <IconButton
           type="button"
           name="upload-task"
+          icon={faFileUpload}
           onClick={onUploadTag}
+          tooltip="Importar nota"
           className="secondary icon-button"
           aria-label="click para importar una etiqueta"
-        >
-          <FontAwesomeIcon icon={faFileUpload} />
-        </button>
+        />
       </div>
     </div>
   );

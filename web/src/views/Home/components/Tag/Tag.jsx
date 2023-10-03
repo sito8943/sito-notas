@@ -18,6 +18,7 @@ import {
 import NoNotes from "./NoNotes";
 import Task from "../Task/Task";
 import PrintAfter from "../../../../components/PrintAfter/PrintAfter";
+import IconButton from "../../../../components/IconButton/IconButton";
 // loadables
 const ConfirmationModal = loadable(() =>
   import("../../../../components/ConfirmationModal/ConfirmationModal")
@@ -105,51 +106,51 @@ function Tag({
         <div className="w-full grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-all duration-300">
           <div className="overflow-hidden transition duration-300 opacity-0 group-hover:opacity-[1] items-center flex justify-center w-full">
             <div className="secondary dashed-border" />
-            <button
-              type="button"
+            <IconButton
+              icon={faAdd}
               name="add-task"
+              tooltip="Agregar nota"
               onClick={() => onAdd(tag.id)}
               className="secondary icon-button"
               aria-label="click para agregar una nueva nota"
-            >
-              <FontAwesomeIcon icon={faAdd} />
-            </button>
-            <button
+            />
+            <IconButton
               type="button"
               name="share-tag"
+              icon={faShareAlt}
+              tooltip="Compartir"
               onClick={() => onShareTag(tag.id)}
               className=" text-primary hover:bg-pdark-hover icon-button"
               aria-label="click para compartir esta etiqueta con todas sus notas"
-            >
-              <FontAwesomeIcon icon={faShareAlt} />
-            </button>
-            <button
+            />
+            <IconButton
               type="button"
+              icon={faBrush}
               name="brush-tag"
+              tooltip="Colorear"
               onClick={() => onBrushTag(tag.id)}
               className="text-primary hover:bg-pdark-hover icon-button"
               aria-label="click para cambiar el color de esta etiqueta"
-            >
-              <FontAwesomeIcon icon={faBrush} />
-            </button>
-            <button
+            />
+            <IconButton
               type="button"
               name="download-tag"
               onClick={onDownload}
+              tooltip="Descargar"
+              icon={faFileDownload}
               className="text-primary hover:bg-pdark-hover icon-button"
               aria-label="click para descargar esta etiqueta con todas sus notas"
-            >
-              <FontAwesomeIcon icon={faFileDownload} />
-            </button>
-            <button
+            />
+            <IconButton
               type="button"
+              icon={faTrash}
               name="delete-tag"
+              tooltip="Eliminar"
               onClick={onDeleteConfirmation}
               className="text-error hover:bg-pdark-hover icon-button"
               aria-label="click para eliminar esta etiqueta con todas sus notas"
-            >
-              <FontAwesomeIcon icon={faTrash} />
-            </button>
+            />
+
             <div className="secondary dashed-border" />
           </div>
         </div>
