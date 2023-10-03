@@ -16,7 +16,7 @@ function NewTag({ onAddTag, onUploadTag }) {
           tooltip="Nueva etiqueta"
           onClick={onAddTag}
           className="secondary icon-button"
-          aria-label="click para agregar una nueva etiqueta"
+          ariaLabel="click para agregar una nueva etiqueta"
         />
         <IconButton
           type="button"
@@ -25,7 +25,7 @@ function NewTag({ onAddTag, onUploadTag }) {
           onClick={onUploadTag}
           tooltip="Importar nota"
           className="secondary icon-button"
-          aria-label="click para importar una etiqueta"
+          ariaLabel="click para importar una etiqueta"
         />
       </div>
     </div>

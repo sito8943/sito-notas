@@ -2,10 +2,10 @@ import React, { memo, useCallback, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import loadable from "@loadable/component";
 
+
 // @emotion/css
 import { css } from "@emotion/css";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAdd,
   faBrush,
@@ -112,7 +112,7 @@ function Tag({
               tooltip="Agregar nota"
               onClick={() => onAdd(tag.id)}
               className="secondary icon-button"
-              aria-label="click para agregar una nueva nota"
+              ariaLabel="click para agregar una nueva nota"
             />
             <IconButton
               type="button"
@@ -121,7 +121,7 @@ function Tag({
               tooltip="Compartir"
               onClick={() => onShareTag(tag.id)}
               className=" text-primary hover:bg-pdark-hover icon-button"
-              aria-label="click para compartir esta etiqueta con todas sus notas"
+              ariaLabel="click para compartir esta etiqueta con todas sus notas"
             />
             <IconButton
               type="button"
@@ -130,7 +130,7 @@ function Tag({
               tooltip="Colorear"
               onClick={() => onBrushTag(tag.id)}
               className="text-primary hover:bg-pdark-hover icon-button"
-              aria-label="click para cambiar el color de esta etiqueta"
+              ariaLabel="click para cambiar el color de esta etiqueta"
             />
             <IconButton
               type="button"
@@ -139,7 +139,7 @@ function Tag({
               tooltip="Descargar"
               icon={faFileDownload}
               className="text-primary hover:bg-pdark-hover icon-button"
-              aria-label="click para descargar esta etiqueta con todas sus notas"
+              ariaLabel="click para descargar esta etiqueta con todas sus notas"
             />
             <IconButton
               type="button"
@@ -148,7 +148,7 @@ function Tag({
               tooltip="Eliminar"
               onClick={onDeleteConfirmation}
               className="text-error hover:bg-pdark-hover icon-button"
-              aria-label="click para eliminar esta etiqueta con todas sus notas"
+              ariaLabel="click para eliminar esta etiqueta con todas sus notas"
             />
 
             <div className="secondary dashed-border" />

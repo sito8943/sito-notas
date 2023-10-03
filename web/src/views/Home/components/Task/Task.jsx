@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useState, useEffect, useCallback } from "react";
+import React, { memo, useState, useEffect, useCallback } from "react";
 
 import PropTypes from "prop-types";
 
@@ -21,6 +21,7 @@ import FloatingButton from "../../../../components/FAB/FAB";
 
 // manager
 import { getTask, updateTask } from "./local";
+import IconButton from "../../../../components/IconButton/IconButton";
 
 function Task({ id, onDelete }) {
   const [value, setValue] = useState(getTask(id)?.content);
@@ -103,33 +104,33 @@ function Task({ id, onDelete }) {
         } pointer-events-none group-hover:pointer-events-auto`}
       >
         <div className="flex overflow-hidden bg-dark-drawer-background w-full justify-end">
-          <button
+          <IconButton
             type="button"
             name="edit-task"
+            icon={editing ? faSave : faEdit}
+            tooltip={editing ? "Guardar" : "Editar"}
             onClick={editing ? onLocalSave : onLocalEdit}
-            aria-label="click para editar"
-            className="text-secondary p-3 hover:text-primary hover:bg-sdark"
-          >
-            <FontAwesomeIcon icon={editing ? faSave : faEdit} />
-          </button>
-          <button
+            ariaLabel="click para editar"
+            className="text-secondary p-3 hover:text-primary hover:bg-sdark !rounded-0"
+          />
+          <IconButton
             type="button"
             name="download-task"
             onClick={onDownload}
-            aria-label="click para borrar"
-            className="text-secondary p-3 hover:text-primary hover:bg-sdark"
-          >
-            <FontAwesomeIcon icon={faFileDownload} />
-          </button>
-          <button
+            icon={faFileDownload}
+            tooltip="Descargar nota"
+            ariaLabel="click para borrar"
+            className="text-secondary p-3 hover:text-primary hover:bg-sdark !rounded-0"
+          />
+          <IconButton
             type="button"
+            icon={faTrash}
+            tooltip="Eliminar"
             name="delete-task"
             onClick={onLocalDelete}
-            aria-label="click para borrar"
-            className="text-error p-3 hover:text-primary hover:bg-sdark"
-          >
-            <FontAwesomeIcon icon={faTrash} />
-          </button>
+            ariaLabel="click para borrar"
+            className="text-error p-3 hover:text-primary hover:bg-sdark !rounded-0"
+          />
         </div>
       </div>
       <div className="p-5">

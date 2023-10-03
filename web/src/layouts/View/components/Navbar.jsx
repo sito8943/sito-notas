@@ -34,7 +34,7 @@ export default function Navbar() {
             tooltip={!modeState ? "Tema claro" : "Tema oscuro  "}
             icon={!modeState ? faSun : faMoon}
             className="icon-button secondary"
-            aria-label="Click para cambiar el tema"
+            ariaLabel="Click para cambiar el tema"
           />
         </div>
       </nav>
