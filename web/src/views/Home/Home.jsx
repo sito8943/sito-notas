@@ -57,7 +57,6 @@ function Home() {
       newTags[newTags.findIndex((tag) => tag.id === oldValue)].id = newValue;
       // updating notes of that tag
       const realName = updateTag(newValue, oldValue);
-      console.log(realName);
       updateNotesTags(realName.id, oldValue);
       setTasks(initTasks());
       setTags(initTags());

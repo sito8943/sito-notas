@@ -80,7 +80,7 @@ function Task({ id, onDelete, onSave }) {
       if (fullscreenButton)
         fullscreenButton.removeEventListener("click", onLocalSave);
     };
-  }, [editing]);
+  }, [editing, onLocalSave]);
 
   return (
     <article
