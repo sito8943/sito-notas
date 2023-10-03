@@ -6,13 +6,14 @@ import config from "../../../../config";
 /**
  *
  * @param {string} tag
+ * @param {string} color
  * @returns available name
  */
-export const createTag = (tag) => {
+export const createTag = (tag, color) => {
   const tags = decrypt(localStorage.getItem(config.tags));
   let parsedTag = tag;
   while (tags[parsedTag]) parsedTag = `${parsedTag}'`;
-  tags[parsedTag] = { id: parsedTag, color: "#00000000" };
+  tags[parsedTag] = { id: parsedTag, color: color || "#00000000" };
   localStorage.setItem(config.tags, encrypt(tags));
   return { id: parsedTag, color: "#00000000" };
 };

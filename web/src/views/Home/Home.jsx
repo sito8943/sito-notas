@@ -57,7 +57,7 @@ function Home() {
       newTags[newTags.findIndex((tag) => tag.id === oldValue)].id = newValue;
       // updating notes of that tag
       const realName = updateTag(newValue, oldValue);
-      console.log(realName)
+      console.log(realName);
       updateNotesTags(realName.id, oldValue);
       setTasks(initTasks());
       setTags(initTags());
@@ -88,15 +88,30 @@ function Home() {
     }, 200);
   }, [uploadFileRef]);
 
+  const createRemoteTag = (obj) => {
+    try {
+      const { id, tasks, color } = obj;
+      createTag(id, color);
+      tasks.forEach((task) => {
+        const { id, tag, content } = task;
+        createTask(id, tag, content);
+      });
+      setTags(initTags());
+      setTasks(initTasks());
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const onUploadFile = useCallback(
     (e) => {
       const fileReader = new FileReader();
       fileReader.readAsText(e.target.files[0], "UTF-8");
       fileReader.onload = (e) => {
         const obj = JSON.parse(e.target.result);
-
         switch (uploadingWhat) {
           default: // tags
+            createRemoteTag(obj);
             break;
         }
       };

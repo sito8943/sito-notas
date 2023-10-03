@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import MDEditor from "@uiw/react-md-editor";
 import MarkdownPreview from "@uiw/react-markdown-preview";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEdit,
   faSave,
@@ -23,7 +22,7 @@ import FloatingButton from "../../../../components/FAB/FAB";
 import { getTask, updateTask } from "./local";
 import IconButton from "../../../../components/IconButton/IconButton";
 
-function Task({ id, onDelete }) {
+function Task({ id, onDelete, onSave }) {
   const [value, setValue] = useState(getTask(id)?.content);
 
   const onLocalDelete = () => {

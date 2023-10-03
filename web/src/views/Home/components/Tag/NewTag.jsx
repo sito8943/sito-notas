@@ -1,7 +1,8 @@
 import React from "react";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd, faFileUpload } from "@fortawesome/free-solid-svg-icons";
+
+// components
 import IconButton from "../../../../components/IconButton/IconButton";
 
 function NewTag({ onAddTag, onUploadTag }) {

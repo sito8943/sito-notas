@@ -2,7 +2,6 @@ import React, { memo, useCallback, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import loadable from "@loadable/component";
 
-
 // @emotion/css
 import { css } from "@emotion/css";
 
@@ -19,6 +18,7 @@ import NoNotes from "./NoNotes";
 import Task from "../Task/Task";
 import PrintAfter from "../../../../components/PrintAfter/PrintAfter";
 import IconButton from "../../../../components/IconButton/IconButton";
+import { getTasksByTag } from "../Task/local";
 // loadables
 const ConfirmationModal = loadable(() =>
   import("../../../../components/ConfirmationModal/ConfirmationModal")
@@ -39,7 +39,7 @@ function Tag({
   const onDownload = () => {
     const data = "data:text/json;charset=utf-8,";
     const json = encodeURIComponent(
-      JSON.stringify({ ...tag, tasks: elements })
+      JSON.stringify({ ...tag, tasks: getTasksByTag(tag.id) })
     );
     const filename = `${tag.id}.json`;
     const link = document.createElement("a");

@@ -7,15 +7,16 @@ import config from "../../../../config";
  *
  * @param {string} id
  * @param {string} tag
+ * @param {string} content
  */
-export const createTask = (id, tag) => {
+export const createTask = (id, tag, content) => {
   const tasks = decrypt(localStorage.getItem(config.tasks));
   tasks[id] = {
     id,
     tag,
-    content: `# ${tag} ${
-      Object.keys(tasks).length + 1
-    } \n Escribe el contenido aquí`,
+    content:
+      content ||
+      `# ${tag} ${Object.keys(tasks).length + 1} \n Escribe el contenido aquí`,
   };
 
   localStorage.setItem(config.tasks, encrypt(tasks));
@@ -29,6 +30,17 @@ export const createTask = (id, tag) => {
 export const getTask = (id) => {
   const tasks = decrypt(localStorage.getItem(config.tasks));
   return tasks[id];
+};
+
+/**
+ *
+ * @param {string} tag
+ * @returns
+ */
+export const getTasksByTag = (tag) => {
+  const tasks = decrypt(localStorage.getItem(config.tasks));
+  const tasksByTag = Object.values(tasks).filter((task) => task.tag === tag);
+  return tasksByTag;
 };
 
 /**
