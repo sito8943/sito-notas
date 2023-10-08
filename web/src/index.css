@@ -19,6 +19,11 @@ input[type="search"]::-webkit-search-results-decoration {
   font-family: inherit !important;
 }
 
+.wmde-markdown {
+  color: inherit !important;
+  background-color: inherit !important;
+}
+
 .secondary.dashed-border {
   @apply border-secondary;
 }

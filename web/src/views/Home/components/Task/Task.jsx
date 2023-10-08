@@ -3,6 +3,9 @@ import loadable from "@loadable/component";
 
 import PropTypes from "prop-types";
 
+import MDEditor from "@uiw/react-md-editor";
+import MarkdownPreview from "@uiw/react-markdown-preview";
+
 import {
   faEdit,
   faSave,
@@ -21,9 +24,6 @@ const FloatingButton = loadable(() => import("../../../../components/FAB/FAB"));
 const IconButton = loadable(() =>
   import("../../../../components/IconButton/IconButton")
 );
-
-const MDEditor = loadable(() => import("@uiw/react-md-editor"));
-const MarkdownPreview = loadable(() => import("@uiw/react-markdown-preview"));
 
 function Task({ id, onDelete, onSave }) {
   const [value, setValue] = useState(getTask(id)?.content);
@@ -75,6 +75,11 @@ function Task({ id, onDelete, onSave }) {
     )[0];
     if (fullscreenButton)
       fullscreenButton.addEventListener("click", onLocalSave);
+
+    const a = document.getElementsByClassName("w-md-editor-text-input ")[0];
+    if (a) {
+      a.style.cssText = "font-family: inherit !important";
+    }
     return () => {
       window.removeEventListener("keydown", onEscapePress);
       const fullscreenButton = document.querySelectorAll(
