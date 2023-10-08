@@ -1,12 +1,15 @@
 import React, { useMemo } from "react";
 import stringSimilarity from "string-similarity";
+import loadable from "@loadable/component";
 
 // components
 import NewTag from "../Tag/NewTag";
-import Tag from "../Tag/Tag";
 
 // contexts
 import { useSearch } from "../../../../contexts/SearchProvider";
+
+// lazy load
+const Tag = loadable(() => import("../Tag/Tag"));
 
 function Masonry({
   elements,

@@ -1,15 +1,10 @@
 import React, { useState, useEffect, useCallback, Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import loadable from "@loadable/component";
 
 // layouts
 import Auth from "./layouts/Auth";
 import View from "./layouts/View/View";
-
-// views
-import NotFound from "./views/NotFound/NotFound";
-import SignOut from "./views/Auth/SignOut";
-import SignIn from "./views/Auth/SignIn";
-import Home from "./views/Home/Home";
 
 // contexts
 import { useMode } from "./contexts/ModeProvider";
@@ -26,6 +21,12 @@ import { validateBasicKey } from "./services/auth";
 import Loading from "./components/Loading/Loading";
 import Notification from "./components/Notification/Notification";
 import Handler from "./components/Error/Handler";
+
+// lazy load
+const NotFound = loadable(() => import("./views/NotFound/NotFound"));
+const SignOut = loadable(() => import("./views/Auth/SignOut"));
+const SignIn = loadable(() => import("./views/Auth/SignIn"));
+const Home = loadable(() => import("./views/Home/Home"));
 
 function App() {
   const { setModeState } = useMode();

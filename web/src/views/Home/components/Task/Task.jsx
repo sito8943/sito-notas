@@ -1,9 +1,7 @@
 import React, { memo, useState, useEffect, useCallback } from "react";
+import loadable from "@loadable/component";
 
 import PropTypes from "prop-types";
-
-import MDEditor from "@uiw/react-md-editor";
-import MarkdownPreview from "@uiw/react-markdown-preview";
 
 import {
   faEdit,
@@ -15,12 +13,17 @@ import {
 // css
 import { css } from "@emotion/css";
 
-// components
-import FloatingButton from "../../../../components/FAB/FAB";
-
 // manager
 import { getTask, updateTask } from "./local";
-import IconButton from "../../../../components/IconButton/IconButton";
+
+// lazy load
+const FloatingButton = loadable(() => import("../../../../components/FAB/FAB"));
+const IconButton = loadable(() =>
+  import("../../../../components/IconButton/IconButton")
+);
+
+const MDEditor = loadable(() => import("@uiw/react-md-editor"));
+const MarkdownPreview = loadable(() => import("@uiw/react-markdown-preview"));
 
 function Task({ id, onDelete, onSave }) {
   const [value, setValue] = useState(getTask(id)?.content);

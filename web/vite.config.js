@@ -5,7 +5,7 @@ import { VitePWA } from "vite-plugin-pwa";
 // you can copy the base structure of manifest object.
 const manifestForPlugIn = {
   registerType: "prompt",
-  includeAssests: ["favicon.ico", "apple-touc-icon.png", "masked-icon.svg"],
+  includeAssests: ["favicon.ico", "apple-touch-icon.png", "masked-icon.svg"],
   manifest: {
     name: "Sito Notas",
     short_name: "sito-notas",

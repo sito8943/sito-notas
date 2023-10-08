@@ -13,15 +13,21 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 
-// components
-import NoNotes from "./NoNotes";
-import Task from "../Task/Task";
-import PrintAfter from "../../../../components/PrintAfter/PrintAfter";
-import IconButton from "../../../../components/IconButton/IconButton";
+// utils
 import { getTasksByTag } from "../Task/local";
-// loadables
+
+// components
+// lazy load
 const ConfirmationModal = loadable(() =>
   import("../../../../components/ConfirmationModal/ConfirmationModal")
+);
+const NoNotes = loadable(() => import("./NoNotes"));
+const Task = loadable(() => import("../Task/Task"));
+const PrintAfter = loadable(() =>
+  import("../../../../components/PrintAfter/PrintAfter")
+);
+const IconButton = loadable(() =>
+  import("../../../../components/IconButton/IconButton")
 );
 
 function Tag({

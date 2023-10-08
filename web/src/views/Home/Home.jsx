@@ -7,7 +7,6 @@ import { v4 } from "uuid";
 import { css } from "@emotion/css";
 
 // components
-import Masonry from "./components/Masonry/Masonry";
 import Loading from "../../components/Loading/Loading";
 
 // manager
@@ -25,9 +24,9 @@ import {
   updateTag,
   updateTagColor,
 } from "./components/Tag/local";
-import config from "../../config";
 
-// loadables
+// lazy load
+const Masonry = loadable(() => import("./components/Masonry/Masonry"));
 const ColorBox = loadable(() => import("./components/ColorBox/ColorBox"));
 
 function Home() {
