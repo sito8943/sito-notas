@@ -1,0 +1,16 @@
+.search {
+  width: 400px;
+  transition: width 300ms ease;
+}
+
+@media (max-width: 730px) {
+  .search {
+    width: 40px;
+  }
+
+  .search .input {
+    padding: 0 !important;
+    width: 40px;
+    height: 40px;
+  }
+}

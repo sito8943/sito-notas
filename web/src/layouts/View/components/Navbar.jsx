@@ -13,13 +13,16 @@ import { useMode } from "../../../contexts/ModeProvider";
 import SearchWrapper from "./SearchWrapper/SearchWrapper";
 import IconButton from "../../../components/IconButton/IconButton";
 
+// styles
+import "./styles.css";
+
 export default function Navbar() {
   const { modeState, toggleModeState } = useMode();
 
   return (
     <header className="w-full fixed top-0 left-0 z-50 dark:bg-dark-background2 bg-light-background">
-      <nav className="w-full flex items-center h-full py-5 px-5 justify-between">
-        <h1 className="text-3xl text-sdark dark:text-secondary font-bold uppercase">
+      <nav className="w-full flex items-center h-full py-5 px-5 justify-between flex-wrap">
+        <h1 className="text-sdark dark:text-secondary font-bold uppercase">
           <FontAwesomeIcon icon={faNoteSticky} className="rotate-[30deg]" />{" "}
           Sito Notas
         </h1>

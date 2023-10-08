@@ -7,6 +7,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // contexts
 import { useSearch } from "../../../../contexts/SearchProvider";
 
+// styles
+import "./styles.css";
+
 function SearchWrapper() {
   const [searching, setSearching] = useState("");
   const debouncedValue = useDebounce(searching, 500);
@@ -17,13 +20,15 @@ function SearchWrapper() {
     setSearchState(debouncedValue);
   }, [debouncedValue]);
 
+  const [showSearch, setShowSearch] = useState(false);
+
   const onSearch = (e) => {
-    setSearchState(value);
+    setShowSearch(true);
     e.preventDefault();
   };
 
   return (
-    <div role="search" className="w-[400px]">
+    <div role="search" className="search">
       <form onSubmit={onSearch} className="relative w-full">
         <button
           type="submit"

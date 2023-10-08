@@ -1,0 +1,9 @@
+header nav h1 {
+  @apply text-3xl;
+}
+
+@media (max-width: 370px) {
+  header nav h1 {
+    @apply text-xl;
+  }
+}

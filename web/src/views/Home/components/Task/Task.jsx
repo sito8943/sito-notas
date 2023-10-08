@@ -118,7 +118,7 @@ function Task({ id, onDelete, onSave }) {
             tooltip={editing ? "Guardar" : "Editar"}
             onClick={editing ? onLocalSave : onLocalEdit}
             ariaLabel="click para editar"
-            className="text-secondary p-3 hover:text-primary hover:bg-sdark !rounded-0"
+            className="text-secondary p-3 hover:text-primary hover:bg-sdark !rounded-[0px]"
           />
           <IconButton
             type="button"
@@ -127,7 +127,7 @@ function Task({ id, onDelete, onSave }) {
             icon={faFileDownload}
             tooltip="Descargar nota"
             ariaLabel="click para borrar"
-            className="text-secondary p-3 hover:text-primary hover:bg-sdark !rounded-0"
+            className="text-secondary p-3 hover:text-primary hover:bg-sdark !rounded-[0px]"
           />
           <IconButton
             type="button"
@@ -136,7 +136,7 @@ function Task({ id, onDelete, onSave }) {
             name="delete-task"
             onClick={onLocalDelete}
             ariaLabel="click para borrar"
-            className="text-error p-3 hover:text-primary hover:bg-sdark !rounded-0"
+            className="text-error p-3 hover:text-primary hover:bg-sdark !rounded-[0px]"
           />
         </div>
       </div>
