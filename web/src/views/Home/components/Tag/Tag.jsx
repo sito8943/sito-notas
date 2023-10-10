@@ -68,7 +68,7 @@ function Tag({
         </li>
       ));
     return <NoNotes />;
-  }, [elements, elements, onAdd, onDelete, onChangeTag, onDeleteTag]);
+  }, [tag, elements, onAdd, onDelete, onBrushTag, onChangeTag, onDeleteTag]);
 
   const doDelete = useCallback(() => {
     setConfirmationToDelete(false);

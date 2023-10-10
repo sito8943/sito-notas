@@ -24,6 +24,7 @@ export const createTag = (tag, color) => {
  */
 export const deleteTag = (tag) => {
   const tags = decrypt(localStorage.getItem(config.tags));
+  console.log(tag);
   delete tags[tag];
   localStorage.setItem(config.tags, encrypt(tags));
 };

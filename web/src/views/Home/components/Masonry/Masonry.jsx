@@ -47,7 +47,18 @@ function Masonry({
           elements={elements.filter((element) => element.tag === tag.id)}
         />
       ));
-  }, [searchState, tags, onAdd, onDelete, onChangeTag, onDeleteTag, elements]);
+  }, [
+    searchState,
+    elements,
+    tags,
+    onDelete,
+    onDeleteTag,
+    onAdd,
+    onUploadTag,
+    onAddTag,
+    onBrushTag,
+    onChangeTag,
+  ]);
 
   return (
     <ul className="flex w-full gap-2">

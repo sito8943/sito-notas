@@ -14,9 +14,7 @@ export const createTask = (id, tag, content) => {
   tasks[id] = {
     id,
     tag,
-    content:
-      content ||
-      `# ${tag} ${Object.keys(tasks).length + 1} \n Escribe el contenido aquí`,
+    content: content || `# ${tag} \n Escribe el contenido aquí`,
   };
 
   localStorage.setItem(config.tasks, encrypt(tasks));

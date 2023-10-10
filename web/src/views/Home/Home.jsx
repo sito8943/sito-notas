@@ -117,22 +117,13 @@ function Home() {
     [uploadingWhat]
   );
 
-  const onDeleteTag = useCallback(
-    (tag) => {
-      const newTags = [...tags];
-      // removing tag
-      newTags.splice(
-        newTags.findIndex((lTag) => lTag.id === tag),
-        1
-      );
-      // removing notes of that tag
-      removeNotesOfTag(tag);
-      deleteTag(tag);
-      setTasks(initTasks());
-      setTags(newTags);
-    },
-    [tags]
-  );
+  const onDeleteTag = useCallback((tag) => {
+    // removing notes of that tag
+    removeNotesOfTag(tag);
+    deleteTag(tag);
+    setTasks(initTasks());
+    setTags(initTags());
+  }, []);
 
   const addTask = useCallback(
     (tag) => {
