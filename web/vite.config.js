@@ -2,10 +2,9 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
 
-// you can copy the base structure of manifest object.
 const manifestForPlugIn = {
-  registerType: "prompt",
-  includeAssests: ["favicon.ico", "apple-touch-icon.png", "masked-icon.svg"],
+  registerType: "autoUpdate",
+  includeAssets: ["favicon.ico", "robots.txt", "manifest.webmanifest"],
   manifest: {
     name: "Sito Notas",
     short_name: "sito-notas",
@@ -42,6 +41,9 @@ const manifestForPlugIn = {
     scope: "/",
     start_url: "/",
     orientation: "portrait",
+  },
+  devOptions: {
+    enabled: true,
   },
 };
 
