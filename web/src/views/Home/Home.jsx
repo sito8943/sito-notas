@@ -125,27 +125,16 @@ function Home() {
     setTags(initTags());
   }, []);
 
-  const addTask = useCallback(
-    (tag) => {
-      const id = v4();
-      createTask(id, tag);
-      setTasks([...tasks, { id, tag }]);
-    },
-    [tasks]
-  );
+  const addTask = useCallback((tag) => {
+    const id = v4();
+    createTask(id, tag);
+    setTasks(initTasks());
+  }, []);
 
-  const onDelete = useCallback(
-    (id) => {
-      const newTasks = [...tasks];
-      newTasks.splice(
-        newTasks.findIndex((task) => task.id === id),
-        1
-      );
-      setTasks(newTasks);
-      deleteTask(id);
-    },
-    [tasks]
-  );
+  const onDelete = useCallback((id) => {
+    deleteTask(id);
+    setTasks(initTasks());
+  }, []);
 
   useEffect(() => {
     if (tags.length) setTasks(initTasks());

@@ -24,7 +24,7 @@ function NewTag({ onAddTag, onUploadTag }) {
           name="upload-task"
           icon={faFileUpload}
           onClick={onUploadTag}
-          tooltip="Importar nota"
+          tooltip="Importar etiqueta"
           className="secondary icon-button"
           ariaLabel="click para importar una etiqueta"
         />
