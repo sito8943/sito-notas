@@ -1,69 +1,39 @@
 import React, { useMemo } from "react";
 import stringSimilarity from "string-similarity";
-import loadable from "@loadable/component";
 
 // components
-import NewTag from "../Tag/NewTag";
+import Note from "../Note/Note";
+import NewNote from "../Note/NewNote";
 
 // contexts
 import { useSearch } from "../../../../contexts/SearchProvider";
 
-// lazy load
-const Tag = loadable(() => import("../Tag/Tag"));
+// local
+import { getNote } from "../Note/local";
 
-function Masonry({
-  elements,
-  tags,
-  onDelete,
-  onDeleteTag,
-  onAdd,
-  onUploadTag,
-  onAddTag,
-  onBrushTag,
-  onChangeTag,
-}) {
+function Masonry({ notes, onDeleteNote, onAddNote, onUploadNote, onSaveNote }) {
   const { searchState } = useSearch();
 
   const cols = useMemo(() => {
     const lowerCased = searchState.toLowerCase();
 
-    return tags
-      .filter((tag) => {
-        const tagLowered = tag.id.toLowerCase();
+    return notes
+      .filter((note) => {
+        const noteLowered = getNote(note).content.toLowerCase();
         return searchState.length
-          ? stringSimilarity.compareTwoStrings(tagLowered, lowerCased) > 0.25 ||
-              tagLowered.indexOf(lowerCased) >= 0
+          ? stringSimilarity.compareTwoStrings(noteLowered, lowerCased) >
+              0.25 || noteLowered.indexOf(lowerCased) >= 0
           : true;
       })
-      .map((tag) => (
-        <Tag
-          tag={tag}
-          key={tag.id}
-          onAdd={onAdd}
-          onDelete={onDelete}
-          onBrushTag={onBrushTag}
-          onChangeTag={onChangeTag}
-          onDeleteTag={onDeleteTag}
-          elements={elements.filter((element) => element.tag === tag.id)}
-        />
+      .map((note) => (
+        <Note id={note} key={note} onSave={onSaveNote} onDelete={onDeleteNote} />
       ));
-  }, [
-    searchState,
-    elements,
-    tags,
-    onDelete,
-    onDeleteTag,
-    onAdd,
-    onUploadTag,
-    onAddTag,
-    onBrushTag,
-    onChangeTag,
-  ]);
+  }, [searchState, notes, onDeleteNote, onAddNote, onUploadNote]);
 
   return (
     <ul className="flex w-full gap-2">
       {cols}
-      <NewTag onAddTag={onAddTag} onUploadTag={onUploadTag} />
+      <NewNote onAddNote={onAddNote} onUploadNote={onUploadNote} />
     </ul>
   );
 }

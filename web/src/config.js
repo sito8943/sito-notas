@@ -11,9 +11,8 @@ const {
   // COMMUNICATION
   VITE_CRYPTO,
   // MANAGER
-  VITE_TASKS,
-  VITE_TAGS,
-  VITE_EDITED_TASK,
+  VITE_NOTES,
+  VITE_EDITED_NOTE,
 } = import.meta.env;
 
 const config = {
@@ -29,9 +28,8 @@ const config = {
   // COMMUNICATION
   crypto: VITE_CRYPTO,
   // MANAGER
-  tasks: VITE_TASKS,
-  tags: VITE_TAGS,
-  editedTask: VITE_EDITED_TASK,
+  tasks: VITE_NOTES,
+  editedTask: VITE_EDITED_NOTE,
 };
 
 export default config;

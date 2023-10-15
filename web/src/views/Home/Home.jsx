@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useDebounce } from "use-lodash-debounce";
 import loadable from "@loadable/component";
 
 import { v4 } from "uuid";
@@ -10,106 +9,46 @@ import { css } from "@emotion/css";
 import Loading from "../../components/Loading/Loading";
 
 // manager
-import {
-  updateNotesTags,
-  removeNotesOfTag,
-  createTask,
-  initTasks,
-  deleteTask,
-} from "./components/Task/local";
-import {
-  initTags,
-  deleteTag,
-  createTag,
-  updateTag,
-  updateTagColor,
-} from "./components/Tag/local";
+import { createNote, initNotes, removeNote } from "./components/Note/local";
 
 // lazy load
 const Masonry = loadable(() => import("./components/Masonry/Masonry"));
-const ColorBox = loadable(() => import("./components/ColorBox/ColorBox"));
 
 function Home() {
   const uploadFileRef = useRef(null);
 
-  const [tags, setTags] = useState([]);
-  const [tasks, setTasks] = useState([]);
-
-  /* localStorage.removeItem(config.tags);
-  localStorage.removeItem(config.tasks); */
+  const [notes, setNotes] = useState([]);
 
   const [loading, setLoading] = useState(false);
 
-  const onAddTag = useCallback(() => {
-    const realName = createTag(`Nueva etiqueta ${tags.length}`);
-    setTags([...tags, realName]);
-  }, [tags]);
-
-  const [tagNameToDebounce, setTagNameToDebounce] = useState({});
-  const debouncedValue = useDebounce(tagNameToDebounce, 500);
-
-  useEffect(() => {
-    if (tagNameToDebounce.newValue && tagNameToDebounce.oldValue) {
-      const { newValue, oldValue } = tagNameToDebounce;
-      const newTags = [...tags];
-      // removing tag
-      newTags[newTags.findIndex((tag) => tag.id === oldValue)].id = newValue;
-      // updating notes of that tag
-      const realName = updateTag(newValue, oldValue);
-      updateNotesTags(realName.id, oldValue);
-      setTasks(initTasks());
-      setTags(initTags());
-    }
-  }, [debouncedValue]);
-
-  const onChangeTag = (newValue, oldValue) =>
-    setTagNameToDebounce({ newValue, oldValue });
-
-  const [showColorBox, setShowBoxColor] = useState(undefined);
-  const onBrushTag = (tag) => setShowBoxColor(tag);
-
-  const setColorToTag = useCallback(
-    (color) => {
-      updateTagColor(showColorBox, color);
-      setTags(initTags());
-      setShowBoxColor(undefined);
-    },
-    [showColorBox]
-  );
-
   const [uploadingWhat, setUploadingWhat] = useState("");
 
-  const onUploadTag = useCallback(() => {
-    setUploadingWhat("tag");
+  const uploadNote = useCallback(() => {
+    setUploadingWhat("note");
     setTimeout(() => {
       uploadFileRef.current.click();
     }, 200);
   }, [uploadFileRef]);
 
-  const createRemoteTag = (obj) => {
+  const createRemoteNote = (obj) => {
     try {
-      const { id, tasks, color } = obj;
-      createTag(id, color);
-      tasks.forEach((task) => {
-        const { id, tag, content } = task;
-        createTask(id, tag, content);
-      });
-      setTags(initTags());
-      setTasks(initTasks());
+      const { id, content } = obj;
+      createNote(id, content);
+      setNotes(initNotes());
     } catch (err) {
       console.error(err);
     }
   };
 
-  const onUploadFile = useCallback(
+  const uploadFile = useCallback(
     (e) => {
       const fileReader = new FileReader();
       fileReader.readAsText(e.target.files[0], "UTF-8");
       fileReader.onload = (e) => {
         const obj = JSON.parse(e.target.result);
         switch (uploadingWhat) {
-          default: // tags
-            createRemoteTag(obj);
+          default: // note
+            createRemoteNote(obj);
             break;
         }
       };
@@ -117,31 +56,19 @@ function Home() {
     [uploadingWhat]
   );
 
-  const onDeleteTag = useCallback((tag) => {
-    // removing notes of that tag
-    removeNotesOfTag(tag);
-    deleteTag(tag);
-    setTasks(initTasks());
-    setTags(initTags());
-  }, []);
-
-  const addTask = useCallback((tag) => {
+  const addNote = useCallback(() => {
     const id = v4();
-    createTask(id, tag);
-    setTasks(initTasks());
+    createNote(id);
+    setNotes(initNotes());
   }, []);
 
-  const onDelete = useCallback((id) => {
-    deleteTask(id);
-    setTasks(initTasks());
+  const deleteNote = useCallback((id) => {
+    removeNote(id);
+    setNotes(initNotes());
   }, []);
 
   useEffect(() => {
-    if (tags.length) setTasks(initTasks());
-  }, [tags]);
-
-  useEffect(() => {
-    setTags(initTags());
+    setNotes(initNotes());
   }, []);
 
   return (
@@ -151,26 +78,16 @@ function Home() {
           type="file"
           className="z-[-1] fixed"
           ref={uploadFileRef}
-          onChange={onUploadFile}
+          onChange={uploadFile}
           accept="application/JSON"
         />
       ) : null}
-      {showColorBox ? (
-        <ColorBox
-          onColorSelect={(color) => setColorToTag(color)}
-          onClose={() => setShowBoxColor(false)}
-        />
-      ) : null}
+
       <Masonry
-        elements={tasks}
-        tags={tags}
-        onAdd={addTask}
-        onUploadTag={onUploadTag}
-        onAddTag={onAddTag}
-        onDelete={onDelete}
-        onBrushTag={onBrushTag}
-        onDeleteTag={onDeleteTag}
-        onChangeTag={onChangeTag}
+        notes={notes}
+        onAddNote={addNote}
+        onDeleteNote={deleteNote}
+        onUploadNote={uploadNote}
       />
       {loading ? (
         <div

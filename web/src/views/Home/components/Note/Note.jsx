@@ -17,7 +17,7 @@ import {
 import { css } from "@emotion/css";
 
 // manager
-import { getTask, updateTask } from "./local";
+import { getNote, updateNote } from "./local";
 
 // lazy load
 const FloatingButton = loadable(() => import("../../../../components/FAB/FAB"));
@@ -25,8 +25,8 @@ const IconButton = loadable(() =>
   import("../../../../components/IconButton/IconButton")
 );
 
-function Task({ id, onDelete, onSave }) {
-  const [value, setValue] = useState(getTask(id)?.content);
+function Note({ id, onDelete, onSave }) {
+  const [value, setValue] = useState(getNote(id)?.content);
 
   const onLocalDelete = () => {
     document.getElementById(id)?.classList.add("aShrink");
@@ -38,10 +38,10 @@ function Task({ id, onDelete, onSave }) {
   const [editing, setEditing] = useState(false);
 
   const onDownload = () => {
-    const taskToDownload = getTask(id);
+    const noteToDownload = getNote(id);
     const data = "data:text/json;charset=utf-8,";
-    const json = encodeURIComponent(JSON.stringify(taskToDownload));
-    const filename = `task-${id}.json`;
+    const json = encodeURIComponent(JSON.stringify(noteToDownload));
+    const filename = `note-${id}.json`;
     const link = document.createElement("a");
     link.setAttribute("href", data + json);
     link.setAttribute("download", filename);
@@ -54,7 +54,7 @@ function Task({ id, onDelete, onSave }) {
   const onLocalEdit = () => setEditing(true);
 
   const onLocalSave = useCallback(() => {
-    updateTask(id, "content", value);
+    updateNote(id, "content", value);
     setEditing(false);
   }, [value, id]);
 
@@ -93,7 +93,7 @@ function Task({ id, onDelete, onSave }) {
   return (
     <article
       id={id}
-      className={`group bg-primary shadow-md shadow-[black] rounded-sm min-h-[350px] w-full`}
+      className={`group bg-primary shadow-md shadow-[black] rounded-sm min-h-[350px] w-[300px] min-w-[300px]`}
     >
       {editing ? (
         <FloatingButton
@@ -113,7 +113,7 @@ function Task({ id, onDelete, onSave }) {
         <div className="flex overflow-hidden bg-dark-drawer-background w-full justify-end">
           <IconButton
             type="button"
-            name="edit-task"
+            name="edit-note"
             icon={editing ? faSave : faEdit}
             tooltip={editing ? "Guardar" : "Editar"}
             onClick={editing ? onLocalSave : onLocalEdit}
@@ -122,7 +122,7 @@ function Task({ id, onDelete, onSave }) {
           />
           <IconButton
             type="button"
-            name="download-task"
+            name="download-note"
             onClick={onDownload}
             icon={faFileDownload}
             tooltip="Descargar nota"
@@ -133,7 +133,7 @@ function Task({ id, onDelete, onSave }) {
             type="button"
             icon={faTrash}
             tooltip="Eliminar"
-            name="delete-task"
+            name="delete-note"
             onClick={onLocalDelete}
             ariaLabel="click para borrar"
             className="text-error p-3 hover:text-primary hover:bg-sdark !rounded-[0px]"
@@ -159,12 +159,12 @@ function Task({ id, onDelete, onSave }) {
   );
 }
 
-Task.propTypes = {
+Note.propTypes = {
   id: PropTypes.string.isRequired,
 };
 
-const TaskMemo = memo(
-  ({ id, onDelete }) => <Task id={id} onDelete={onDelete} />,
+const NoteMemo = memo(
+  ({ id, onDelete }) => <Note id={id} onDelete={onDelete} />,
   (oldProps, newProps) => {
     return (
       oldProps.id === newProps.id && oldProps.onDelete === newProps.onDelete
@@ -172,6 +172,6 @@ const TaskMemo = memo(
   }
 );
 
-TaskMemo.displayName = "Task";
+NoteMemo.displayName = "Note";
 
-export default TaskMemo;
+export default NoteMemo;
