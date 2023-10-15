@@ -35,6 +35,10 @@ input[type="search"]::-webkit-search-results-decoration {
   font-family: "Poppins", sans-serif;
 }
 
+nav h1 {
+  font-family: "Gabarito", sans-serif;
+}
+
 body {
   @apply transition-all duration-300;
 }
