@@ -30,6 +30,9 @@ const IconButton = loadable(() =>
   import("../../../../components/IconButton/IconButton")
 );
 
+// styles
+import "./styles.css";
+
 function Tag({
   tag,
   elements,
@@ -161,7 +164,9 @@ function Tag({
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-2 w-full mt-2">{element}</div>
+      <div className="flex flex-col gap-2 w-full mt-2 tag-content">
+        {element}
+      </div>
     </div>
   );
 }

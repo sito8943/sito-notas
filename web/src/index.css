@@ -141,3 +141,9 @@ button.secondary {
 .input:disabled {
   @apply cursor-auto;
 }
+
+ol,
+ul,
+menu {
+  list-style: linear-gradient;
+}
