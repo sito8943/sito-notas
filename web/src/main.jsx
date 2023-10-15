@@ -19,6 +19,7 @@ import "./assets/animations/shake.css";
 import "tippy.js/dist/tippy.css"; // optional
 
 // fonts
+import "@fontsource/gabarito";
 import "@fontsource/poppins";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
