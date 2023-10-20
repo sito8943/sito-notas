@@ -12,6 +12,7 @@ import { useNotification } from "../../contexts/NotificationProvider";
 
 // styles
 import "./styles.css";
+import IconButton from "../IconButton/IconButton";
 
 export default function Notification() {
   const { notificationState, setNotificationState } = useNotification();
@@ -72,14 +73,13 @@ export default function Notification() {
             }
           )}`}
         >
-          <button
+          <IconButton
+            icon={faClose}
             onClick={handleClose}
             name="close-notification"
-            className="absolute top-1 right-2"
+            className="absolute top-1 right-2 text-white"
             aria-label="Click para cerrar la notificación"
-          >
-            <FontAwesomeIcon className="text-white" icon={faClose} />
-          </button>
+          />
           <p className="text-body1 text-white">{notificationState.message}</p>
         </div>
       ) : null}

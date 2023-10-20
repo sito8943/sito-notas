@@ -1,8 +1,8 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 
-// font awesome
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// components
+import IconButton from "../IconButton/IconButton";
 
 function FAB(props) {
   const position = useMemo(() => {
@@ -19,12 +19,11 @@ function FAB(props) {
   }, [props.position]);
 
   return (
-    <button
+    <IconButton
       {...props}
-      className={`absolute icon-button ${position} ${props.className}`}
-    >
-      <FontAwesomeIcon icon={props.icon} />
-    </button>
+      className={`absolute ${position} ${props.className}`}
+      icon={props.icon}
+    />
   );
 }
 

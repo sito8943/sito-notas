@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+header nav h1 {
+  @apply text-3xl;
+}
+
+@media (max-width: 370px) {
+  header nav h1 {
+    @apply text-xl;
+  }
+}
+
 input[type="search"]::-webkit-search-decoration,
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-results-button,
@@ -83,48 +93,11 @@ input {
   outline: none !important;
 }
 
-.primary.icon-button {
-  @apply text-primary hover:bg-pdark-hover;
-}
-.secondary.icon-button {
-  @apply text-secondary hover:bg-pdark-hover;
-}
-
-.icon-button {
-  @apply w-10 h-10 min-w-10 min-h-10 rounded-full flex items-center justify-center text-xl transition;
-}
-
-.secondary.submit {
-  @apply border-secondary bg-secondary hover:bg-sdark hover:border-sdark text-white;
-}
-
-.primary.submit {
-  @apply border-primary bg-primary hover:bg-pdark hover:border-pdark text-white;
-}
-
-.submit {
-  @apply border-2;
-}
-
-.primary.outlined {
-  @apply border-primary hover:bg-primary text-white;
-}
-.secondary.outlined {
-  @apply border-secondary hover:bg-secondary text-white;
-}
 .primary.link {
   @apply hover:bg-primary text-white;
 }
 .secondary.link {
   @apply hover:bg-secondary text-white;
-}
-.outlined {
-  @apply border-2;
-}
-
-.button,
-button {
-  @apply transition duration-300 font-semibold cursor-default;
 }
 
 .link {
@@ -135,10 +108,7 @@ button {
   @apply relative w-full flex flex-col items-start justify-start gap-2;
 }
 
-.input,
-.button,
-button.primary,
-button.secondary {
+.input {
   @apply px-5 py-2 rounded-3xl transition duration-300;
 }
 

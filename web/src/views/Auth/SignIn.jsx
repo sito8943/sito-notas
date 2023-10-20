@@ -12,6 +12,7 @@ import { useUser } from "../../contexts/UserProvider";
 import { useNotification } from "../../contexts/NotificationProvider";
 
 // components
+import Button from "../../components/Button/Button";
 import Switch from "../../components/Switch/Switch";
 import Loading from "../../components/Loading/Loading";
 import ModeButton from "../../components/FAB/ModeButton";
@@ -27,6 +28,7 @@ import config from "../../config";
 
 // images
 import noPhoto from "../../assets/images/no-photo.webp";
+import IconButton from "../../components/IconButton/IconButton";
 
 function SignIn() {
   const { setNotificationState } = useNotification();
@@ -176,16 +178,15 @@ function SignIn() {
               type: !showPassword ? "password" : "string",
             }}
             leftIcon={
-              <button
+              <IconButton
                 tabIndex={-1}
                 type="button"
                 name="toggle-see-password"
                 onClick={toggleShowPassword}
+                icon={showPassword ? faLockOpen : faLock}
                 className="absolute text-secondary top-[50%] -translate-y-[50%] left-3 !p-0"
                 aria-label="click para alternar ver/ocultar contraseña"
-              >
-                <FontAwesomeIcon icon={showPassword ? faLockOpen : faLock} />
-              </button>
+              />
             }
             helperText={passwordHelperText}
           />
@@ -198,14 +199,14 @@ function SignIn() {
           />
 
           <div className="w-full flex gap-5 justify-end items-center">
-            <button
+            <Button
               name="login"
               type="submit"
               aria-label="Click para entrar"
               className="secondary submit"
             >
               Siguiente
-            </button>
+            </Button>
           </div>
         </form>
       )}

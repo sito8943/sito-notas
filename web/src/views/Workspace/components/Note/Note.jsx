@@ -117,7 +117,7 @@ function Note({ id, onDelete, onSave }) {
             icon={editing ? faSave : faEdit}
             tooltip={editing ? "Guardar" : "Editar"}
             onClick={editing ? onLocalSave : onLocalEdit}
-            ariaLabel="click para editar"
+            aria-label="click para editar"
             className="text-secondary p-3 hover:text-primary hover:bg-sdark !rounded-[0px]"
           />
           <IconButton
@@ -126,7 +126,7 @@ function Note({ id, onDelete, onSave }) {
             onClick={onDownload}
             icon={faFileDownload}
             tooltip="Descargar nota"
-            ariaLabel="click para borrar"
+            aria-label="click para borrar"
             className="text-secondary p-3 hover:text-primary hover:bg-sdark !rounded-[0px]"
           />
           <IconButton
@@ -135,7 +135,7 @@ function Note({ id, onDelete, onSave }) {
             tooltip="Eliminar"
             name="delete-note"
             onClick={onLocalDelete}
-            ariaLabel="click para borrar"
+            aria-label="click para borrar"
             className="text-error p-3 hover:text-primary hover:bg-sdark !rounded-[0px]"
           />
         </div>

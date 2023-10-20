@@ -9,6 +9,7 @@ import { useSearch } from "../../../../contexts/SearchProvider";
 
 // styles
 import "./styles.css";
+import IconButton from "../../../../components/IconButton/IconButton";
 
 function SearchWrapper() {
   const [searching, setSearching] = useState("");
@@ -30,14 +31,13 @@ function SearchWrapper() {
   return (
     <div role="search" className="search">
       <form onSubmit={onSearch} className="relative w-full">
-        <button
+        <IconButton
+          icon={faSearch}
           type="submit"
           name="search"
           aria-label="click para buscar"
           className="absolute -translate-y-[50%] top-[50%] icon-button secondary"
-        >
-          <FontAwesomeIcon icon={faSearch} />
-        </button>
+        />
         <input
           type="search"
           value={searching}
@@ -45,15 +45,14 @@ function SearchWrapper() {
           onChange={(e) => setSearching(e.target.value)}
         />
         {searching.length ? (
-          <button
+          <IconButton
+            icon={faClose}
             type="button"
             name="clear-search"
             onClick={() => setSearching("")}
             aria-label="click para limpiar la búsqueda"
             className="absolute -translate-y-[50%] top-[50%] right-0 icon-button !text-sm secondary"
-          >
-            <FontAwesomeIcon icon={faClose} />
-          </button>
+          />
         ) : null}
       </form>
     </div>

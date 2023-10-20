@@ -1,0 +1,33 @@
+.primary.icon-button {
+  @apply text-primary hover:bg-pdark-hover;
+}
+.secondary.icon-button {
+  @apply text-secondary hover:bg-pdark-hover;
+}
+
+.secondary.submit {
+  @apply border-secondary bg-secondary hover:bg-sdark hover:border-sdark text-white;
+}
+
+.primary.submit {
+  @apply border-primary bg-primary hover:bg-pdark hover:border-pdark text-white;
+}
+
+.submit {
+  @apply border-2;
+}
+
+.primary.outlined {
+  @apply border-primary hover:bg-primary text-white;
+}
+.secondary.outlined {
+  @apply border-secondary hover:bg-secondary text-white;
+}
+.outlined {
+  @apply border-2;
+}
+
+.button,
+button {
+  @apply px-5 py-2 rounded-3xl transition duration-300 font-semibold cursor-default;
+}

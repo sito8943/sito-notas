@@ -6,6 +6,7 @@ import { faWarning } from "@fortawesome/free-solid-svg-icons";
 
 // components
 import Modal from "../Modal/Modal";
+import Button from "../Button/Button";
 
 function ConfirmationModal({ onAccept, visible, onClose }) {
   return (
@@ -21,7 +22,7 @@ function ConfirmationModal({ onAccept, visible, onClose }) {
           </div>
           <p className="dark:text-white">¿Desea continuar con la operación?</p>
           <div className="flex gap-3">
-            <button
+            <Button
               name="confirm"
               type="button"
               aria-label="click para confirmar"
@@ -29,8 +30,8 @@ function ConfirmationModal({ onAccept, visible, onClose }) {
               onClick={onAccept}
             >
               Confirmar
-            </button>
-            <button
+            </Button>
+            <Button
               type="button"
               name="cancel"
               aria-label="click para cancelar"
@@ -38,7 +39,7 @@ function ConfirmationModal({ onAccept, visible, onClose }) {
               className="secondary outlined"
             >
               Cancelar
-            </button>
+            </Button>
           </div>
         </div>
       </div>

@@ -10,6 +10,9 @@ import { scrollTo } from "some-javascript-utils/browser";
 // contexts
 import { useLanguage } from "../../contexts/LanguageProvider";
 
+// components
+import IconButton from "../IconButton/IconButton";
+
 // styles
 import "./style.css";
 
@@ -47,7 +50,8 @@ const ToTop = ({ parent, className }) => {
   }, [parent]);
 
   return (
-    <button
+    <IconButton
+      icon={faArrowUp}
       type="button"
       name="to-top"
       aria-label={languageState.texts.ariaLabels.toTop}
@@ -58,8 +62,8 @@ const ToTop = ({ parent, className }) => {
       }}
       className={`to-top fixed bottom-5 right-5 rounded-circle w-9 h-9 pt-1 dark:text-primary  dark:hover:bg-primary hover:bg-primary transition hover:text-white dark:hover:text-white ${className}`}
     >
-      <FontAwesomeIcon className="external" icon={faArrowUp} />
-    </button>
+      <FontAwesomeIcon className="external" />
+    </IconButton>
   );
 };
 

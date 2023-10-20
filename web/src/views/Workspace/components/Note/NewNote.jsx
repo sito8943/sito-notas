@@ -17,7 +17,7 @@ function NewNote({ onAddNote, onUploadNote }) {
           tooltip="Nueva nota"
           onClick={onAddNote}
           className="secondary icon-button"
-          ariaLabel="click para agregar una nueva nota"
+          aria-label="click para agregar una nueva nota"
         />
         <IconButton
           type="button"
@@ -26,7 +26,7 @@ function NewNote({ onAddNote, onUploadNote }) {
           onClick={onUploadNote}
           tooltip="Importar nota"
           className="secondary icon-button"
-          ariaLabel="click para importar una nota"
+          aria-label="click para importar una nota"
         />
       </div>
     </div>

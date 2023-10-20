@@ -5,6 +5,9 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 
+// components
+import Button from "../Button/Button";
+
 const Error = (props) => {
   const { onRetry, text } = props;
 
@@ -16,14 +19,14 @@ const Error = (props) => {
       </h3>
       <p className="text-error">{text}</p>
       {onRetry ? (
-        <button
+        <Button
           name="reload"
           onClick={onRetry}
           className="primary submit"
           aria-label="click para recargar"
         >
           Recargar
-        </button>
+        </Button>
       ) : null}
     </div>
   );

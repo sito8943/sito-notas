@@ -20,6 +20,7 @@ function ModeButton({ className }) {
         toggleModeState();
         utilsToggleTheme();
       }}
+      tooltip="Alternar tema (Claro/Oscuro)"
       name="toggle-theme"
       aria-label="Click para cambiar el tema"
       icon={modeState ? faSun : faMoon}

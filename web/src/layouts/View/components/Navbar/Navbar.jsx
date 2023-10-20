@@ -3,19 +3,18 @@ import React from "react";
 import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 
 // utils
-import { utilsToggleTheme } from "../../../utils/functions";
+import { utilsToggleTheme } from "../../../../utils/functions";
 
 // contexts
-import { useMode } from "../../../contexts/ModeProvider";
+import { useMode } from "../../../../contexts/ModeProvider";
 
 // components
-import SearchWrapper from "./SearchWrapper/SearchWrapper";
-import IconButton from "../../../components/IconButton/IconButton";
+import IconButton from "../../../../components/IconButton/IconButton";
 
 // images
-import logo from "../../../assets/images/logo.png";
+import logo from "../../../../assets/images/logo.png";
 
-export default function Navbar() {
+function Navbar() {
   const { modeState, toggleModeState } = useMode();
 
   return (
@@ -28,7 +27,6 @@ export default function Navbar() {
           </h1>
         </div>
         <div className="flex gap-3 items-center">
-          <SearchWrapper />
           <IconButton
             name="toggle-theme"
             onClick={() => {
@@ -45,3 +43,5 @@ export default function Navbar() {
     </header>
   );
 }
+
+export default Navbar;
