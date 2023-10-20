@@ -13,6 +13,9 @@ const {
   // MANAGER
   VITE_NOTES,
   VITE_EDITED_NOTE,
+  // SUPABASE
+  VITE_SUPABASE_CO,
+  VITE_SUPABASE_ANON,
 } = import.meta.env;
 
 const config = {
@@ -30,6 +33,9 @@ const config = {
   // MANAGER
   tasks: VITE_NOTES,
   editedTask: VITE_EDITED_NOTE,
+  // SUPABASE
+  supabaseCO: VITE_SUPABASE_CO,
+  supabaseANON: VITE_SUPABASE_ANON,
 };
 
 export default config;

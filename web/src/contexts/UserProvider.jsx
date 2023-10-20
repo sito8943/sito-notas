@@ -6,27 +6,22 @@ import { createContext, useReducer, useContext } from "react";
 import PropTypes from "prop-types";
 
 // utils
-import { logUser } from "../utils/auth";
+import { logUser, logoutUser } from "../utils/auth";
 
 const UserContext = createContext();
 
 const userReducer = (userState, action) => {
   const { type } = action;
   switch (type) {
-    case "socket": {
-      const { socket } = action;
-      return { ...userState, socket };
-    }
     case "set-photo": {
       if (userState.user) {
         userState.user.photo = action.photo;
-        // update localStorage data
         logUser(userState.user);
       }
       return { ...userState };
     }
     case "logged-out":
-      if (userState.socket) userState.socket.disconnect();
+      logoutUser();
       return {};
     case "logged-in": {
       const { user } = action;

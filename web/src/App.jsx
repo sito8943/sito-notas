@@ -5,6 +5,7 @@ import loadable from "@loadable/component";
 // layouts
 import Auth from "./layouts/Auth";
 import View from "./layouts/View/View";
+import NoteView from "./layouts/NoteView/NoteView";
 
 // contexts
 import { useMode } from "./contexts/ModeProvider";
@@ -23,6 +24,7 @@ import Notification from "./components/Notification/Notification";
 import Handler from "./components/Error/Handler";
 
 // lazy load
+const Workspace = loadable(() => import("./views/Workspace/Workspace"));
 const NotFound = loadable(() => import("./views/NotFound/NotFound"));
 const SignOut = loadable(() => import("./views/Auth/SignOut"));
 const SignIn = loadable(() => import("./views/Auth/SignIn"));
@@ -31,7 +33,7 @@ const Home = loadable(() => import("./views/Home/Home"));
 function App() {
   const { setModeState } = useMode();
   const { setNotificationState } = useNotification();
-  const { setUserState } = useUser();
+  const { userState, setUserState } = useUser();
 
   const [loading, setLoading] = useState(true);
 
@@ -107,9 +109,16 @@ function App() {
               <Route exact path="/auth" element={<Auth />}>
                 <Route index element={<SignIn />} />
               </Route>
-              <Route path="/" element={<View />}>
-                <Route index element={<Home />} />
-              </Route>
+              {userState.user ? (
+                <Route path="/" element={<NoteView />}>
+                  <Route index element={<Workspace />} />
+                </Route>
+              ) : (
+                <Route path="/" element={<View />}>
+                  <Route index element={<Home />} />
+                </Route>
+              )}
+
               <Route exact path="/sign-out" element={<SignOut />} />
               <Route path="/*" element={<NotFound />} />
             </Routes>
