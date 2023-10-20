@@ -2,12 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-header nav h1 {
+h1 {
   @apply text-3xl;
 }
 
 @media (max-width: 370px) {
-  header nav h1 {
+  h1 {
     @apply text-xl;
   }
 }
@@ -45,7 +45,7 @@ input[type="search"]::-webkit-search-results-decoration {
   font-family: "Poppins", sans-serif;
 }
 
-nav h1 {
+h1 {
   font-family: "Gabarito", sans-serif;
 }
 
@@ -109,7 +109,7 @@ input {
 }
 
 .input {
-  @apply px-5 py-2 rounded-3xl transition duration-300;
+  @apply px-5 py-2 rounded-3xl transition duration-300 text-sdark;
 }
 
 .input:disabled {

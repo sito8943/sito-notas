@@ -4,7 +4,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { createCookie } from "some-javascript-utils/browser";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLock, faLockOpen, faUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEnvelope,
+  faLock,
+  faLockOpen,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 
 // contexts
 import { useUser } from "../../contexts/UserProvider";
@@ -32,17 +37,13 @@ import logo from "../../assets/images/logo.png";
 // images
 import noPhoto from "../../assets/images/no-photo.webp";
 
-function SignIn() {
+function SignUp() {
   const { setNotificationState } = useNotification();
 
-  const [user, setUser] = useState("");
-  const [userHelperText, setUserHelperText] = useState("");
+  const [email, setEmail] = useState("");
+  const [emailHelperText, setEmailHelperText] = useState("");
 
-  const handleUser = setUser(e.target.value);
-
-  const [remember, setRemember] = useState(false);
-
-  const handleRemember = setRemember((oldValue) => !oldValue);
+  const handleEmail = setEmail(e.target.value);
 
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -51,6 +52,13 @@ function SignIn() {
   const handlePassword = setPassword(e.target.value);
 
   const toggleShowPassword = setShowPassword((oldValue) => !oldValue);
+
+  const [rPassword, setRPassword] = useState("");
+  const [showRPassword, setShowRPassword] = useState(false);
+
+  const handleRPassword = setRPassword(e.target.value);
+
+  const toggleShowRPassword = setShowRPassword((oldValue) => !oldValue);
 
   const navigate = useNavigate();
 
@@ -70,12 +78,12 @@ function SignIn() {
 
   const onSubmit = useCallback(
     async (e) => {
-      setUserHelperText("");
+      setEmailHelperText("");
       setPasswordHelperText("");
       e.preventDefault();
       if (!user.length) {
-        document.getElementById("user")?.focus();
-        setUserHelperText("Debes introducir un usuario");
+        document.getElementById("email")?.focus();
+        setEmailHelperText("Debes introducir un email");
         return;
       }
       if (!password.length) {
@@ -85,7 +93,7 @@ function SignIn() {
       }
       try {
         setLoading(true);
-        const response = await login(user, password, remember);
+        const response = await login(email, password, remember);
         const { data, error } = response;
         if (!error) {
           const { expiration, token, state, permissions } = data;
@@ -120,7 +128,7 @@ function SignIn() {
           const { status } = response;
           switch (status) {
             case 401:
-              showNotification("error", "Usuario o contraseña incorrecta");
+              showNotification("error", "Ya existe una cuenta con ese email");
               break;
             default:
               showNotification("error", String(err));
@@ -130,7 +138,7 @@ function SignIn() {
       }
       setLoading(false);
     },
-    [user, password, showNotification, navigate, remember, setUserState]
+    [email, password, showNotification, navigate, remember, setUserState]
   );
 
   useEffect(() => {
@@ -154,22 +162,22 @@ function SignIn() {
             </h1>
           </div>
           <SimpleInput
-            id="user"
+            id="email"
             className="input-control dark:text-white"
-            label="Usuario"
+            label="Email"
             inputProps={{
               className: "input border-none submit !pl-8 w-full",
-              value: user,
-              onChange: handleUser,
-              type: "text",
+              value: email,
+              onChange: handleEmail,
+              type: "email",
             }}
             leftIcon={
               <FontAwesomeIcon
                 className="absolute text-secondary top-[50%] -translate-y-[50%] left-3"
-                icon={faUser}
+                icon={faEnvelope}
               />
             }
-            helperText={userHelperText}
+            helperText={emailHelperText}
           />
           <SimpleInput
             id="password"
@@ -179,7 +187,7 @@ function SignIn() {
               className: "input border-none submit !pl-8 w-full",
               value: password,
               onChange: handlePassword,
-              type: !showPassword ? "password" : "text",
+              type: !showPassword ? "password" : "string",
             }}
             leftIcon={
               <IconButton
@@ -194,20 +202,36 @@ function SignIn() {
             }
             helperText={passwordHelperText}
           />
-          <Switch
-            id="remember"
-            value={remember}
-            onChange={handleRemember}
-            label="Recordarme"
-            className="dark:text-white"
+          <SimpleInput
+            id="rPassword"
+            className="input-control dark:text-white"
+            label="Repetir Contraseña"
+            inputProps={{
+              className: "input border-none submit !pl-8 w-full",
+              value: rPassword,
+              onChange: handleRPassword,
+              type: !showRPassword ? "password" : "string",
+            }}
+            leftIcon={
+              <IconButton
+                tabIndex={-1}
+                type="button"
+                name="toggle-see-r-password"
+                onClick={toggleShowRPassword}
+                icon={showRPassword ? faLockOpen : faLock}
+                className="absolute text-secondary top-[50%] -translate-y-[50%] left-3 !p-0 -ml-[12px]"
+                aria-label="click para alternar ver/ocultar repetir contraseña"
+              />
+            }
           />
+
           <p className="dark:text-white">
-            ¿No tienes cuenta?{" "}
+            ¿Ya tienes cuenta?{" "}
             <Link
-              to="/auth/sign-up"
+              to="/auth/"
               className="underline hover:text-sdark dark:hover:text-secondary"
             >
-              Registrarme
+              Iniciar sesión
             </Link>
           </p>
           <div className="w-full flex gap-5 justify-end items-center">
@@ -226,4 +250,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default SignUp;

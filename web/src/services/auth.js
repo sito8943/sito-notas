@@ -8,6 +8,9 @@ import { getCookie } from "some-javascript-utils/browser";
 import md5 from "md5";
 import { getUserName } from "../utils/auth";
 
+// db
+import supabase from "../db/connection";
+
 /**
  *
  * @param {string} type
@@ -30,6 +33,8 @@ export const validateBasicKey = async (type) => {
   return false;
 };
 
+export const signUp = async () => {};
+
 /**
  * Takes a user object and sends it to the backend to be authenticated
  * @param {string} user - the user name
@@ -37,16 +42,11 @@ export const validateBasicKey = async (type) => {
  * @returns The response from the server.
  */
 export const login = async (user, password, remember) => {
-  const response = await axios.post(
-    // @ts-ignore
-    `${config.apiUrl}auth/login`,
-    { user, password: md5(password), remember },
-    {
-      headers: getAuth,
-    }
-  );
-  const data = await response.data;
-  return data;
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: user,
+    password: md5(password),
+  });
+  return { data, error };
 };
 
 /**

@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Tippy from "@tippyjs/react";
 
 // font awesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,14 +12,12 @@ import "./styles.css";
 
 function IconButton(props) {
   return (
-    <Tippy content={props.tooltip}>
-      <Button
-        {...props}
-        className={`hover:bg-pdark-hover icon-button ${props.className}`}
-      >
-        <FontAwesomeIcon icon={props.icon} />
-      </Button>
-    </Tippy>
+    <Button
+      {...props}
+      className={`hover:bg-pdark-hover icon-button ${props.className}`}
+    >
+      <FontAwesomeIcon icon={props.icon} />
+    </Button>
   );
 }
 

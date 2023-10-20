@@ -36,7 +36,7 @@ function SimpleInput({
           <input
             id={id}
             {...inputProps}
-            className={`${inputProps.className} ${
+            className={`input ${inputProps.className} ${
               inputProps.disabled
                 ? "dark:!text-placeholder-dark !text-white-hover"
                 : ""

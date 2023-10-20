@@ -28,6 +28,7 @@ const Workspace = loadable(() => import("./views/Workspace/Workspace"));
 const NotFound = loadable(() => import("./views/NotFound/NotFound"));
 const SignOut = loadable(() => import("./views/Auth/SignOut"));
 const SignIn = loadable(() => import("./views/Auth/SignIn"));
+const SignUp = loadable(() => import("./views/Auth/SignUp"));
 const Home = loadable(() => import("./views/Home/Home"));
 
 function App() {
@@ -108,6 +109,7 @@ function App() {
             <Routes>
               <Route exact path="/auth" element={<Auth />}>
                 <Route index element={<SignIn />} />
+                <Route path="/auth/sign-up" element={<SignUp />} />
               </Route>
               {userState.user ? (
                 <Route path="/" element={<NoteView />}>
