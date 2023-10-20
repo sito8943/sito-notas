@@ -33,7 +33,13 @@ export const validateBasicKey = async (type) => {
   return false;
 };
 
-export const signUp = async () => {};
+export const register = async (email, password) => {
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password: md5(password),
+  });
+  return { data, error };
+};
 
 /**
  * Takes a user object and sends it to the backend to be authenticated

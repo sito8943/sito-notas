@@ -24,7 +24,7 @@ import IconButton from "../../components/IconButton/IconButton";
 import SimpleInput from "../../components/SimpleInput/SimpleInput";
 
 // services
-import { login } from "../../services/auth";
+import { register } from "../../services/auth";
 
 // utils
 import { logUser } from "../../utils/auth";
@@ -43,22 +43,22 @@ function SignUp() {
   const [email, setEmail] = useState("");
   const [emailHelperText, setEmailHelperText] = useState("");
 
-  const handleEmail = setEmail(e.target.value);
+  const handleEmail = (e) => setEmail(e.target.value);
 
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [passwordHelperText, setPasswordHelperText] = useState("");
 
-  const handlePassword = setPassword(e.target.value);
+  const handlePassword = (e) => setPassword(e.target.value);
 
-  const toggleShowPassword = setShowPassword((oldValue) => !oldValue);
+  const toggleShowPassword = () => setShowPassword((oldValue) => !oldValue);
 
   const [rPassword, setRPassword] = useState("");
   const [showRPassword, setShowRPassword] = useState(false);
 
-  const handleRPassword = setRPassword(e.target.value);
+  const handleRPassword = (e) => setRPassword(e.target.value);
 
-  const toggleShowRPassword = setShowRPassword((oldValue) => !oldValue);
+  const toggleShowRPassword = () => setShowRPassword((oldValue) => !oldValue);
 
   const navigate = useNavigate();
 
@@ -81,7 +81,7 @@ function SignUp() {
       setEmailHelperText("");
       setPasswordHelperText("");
       e.preventDefault();
-      if (!user.length) {
+      if (!email.length) {
         document.getElementById("email")?.focus();
         setEmailHelperText("Debes introducir un email");
         return;
@@ -91,10 +91,17 @@ function SignUp() {
         setPasswordHelperText("Debes introducir tu contraseña");
         return;
       }
+      if (password !== rPassword) {
+        document.getElementById("password")?.focus();
+        setPasswordHelperText("No coinciden las contraseñas");
+        return;
+      }
       try {
         setLoading(true);
-        const response = await login(email, password, remember);
+        const response = await register(email, password);
         const { data, error } = response;
+        console.log(data, error);
+        return;
         if (!error) {
           const { expiration, token, state, permissions } = data;
           createCookie(config.basicKey, expiration, token);
@@ -138,7 +145,7 @@ function SignUp() {
       }
       setLoading(false);
     },
-    [email, password, showNotification, navigate, remember, setUserState]
+    [email, password, rPassword, showNotification, navigate, setUserState]
   );
 
   useEffect(() => {
@@ -184,6 +191,7 @@ function SignUp() {
             className="input-control dark:text-white"
             label="Contraseña"
             inputProps={{
+              maxLength: 25,
               className: "input border-none submit !pl-8 w-full",
               value: password,
               onChange: handlePassword,
@@ -207,6 +215,7 @@ function SignUp() {
             className="input-control dark:text-white"
             label="Repetir Contraseña"
             inputProps={{
+              maxLength: 25,
               className: "input border-none submit !pl-8 w-full",
               value: rPassword,
               onChange: handleRPassword,

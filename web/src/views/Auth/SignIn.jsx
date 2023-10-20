@@ -38,19 +38,19 @@ function SignIn() {
   const [user, setUser] = useState("");
   const [userHelperText, setUserHelperText] = useState("");
 
-  const handleUser = setUser(e.target.value);
+  const handleUser = (e) => setUser(e.target.value);
 
   const [remember, setRemember] = useState(false);
 
-  const handleRemember = setRemember((oldValue) => !oldValue);
+  const handleRemember = () => setRemember((oldValue) => !oldValue);
 
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [passwordHelperText, setPasswordHelperText] = useState("");
 
-  const handlePassword = setPassword(e.target.value);
+  const handlePassword = (e) => setPassword(e.target.value);
 
-  const toggleShowPassword = setShowPassword((oldValue) => !oldValue);
+  const toggleShowPassword = () => setShowPassword((oldValue) => !oldValue);
 
   const navigate = useNavigate();
 
