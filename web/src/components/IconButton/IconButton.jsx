@@ -14,7 +14,10 @@ import "./styles.css";
 function IconButton(props) {
   return (
     <Tippy content={props.tooltip}>
-      <Button className={`hover:bg-pdark-hover icon-button ${props.className}`}>
+      <Button
+        {...props}
+        className={`hover:bg-pdark-hover icon-button ${props.className}`}
+      >
         <FontAwesomeIcon icon={props.icon} />
       </Button>
     </Tippy>

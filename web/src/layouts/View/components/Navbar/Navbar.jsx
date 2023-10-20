@@ -37,7 +37,7 @@ function Navbar() {
             icon={!modeState ? faSun : faMoon}
             className="icon-button secondary"
             aria-label="Click para cambiar el tema"
-          />
+            />
         </div>
       </nav>
     </header>
