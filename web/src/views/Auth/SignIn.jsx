@@ -88,14 +88,12 @@ function SignIn() {
         const response = await login(user, password, remember);
         const { data, error } = response;
         if (!error) {
-          const { expiration, token, state, permissions } = data;
-          createCookie(config.basicKey, expiration, token);
+          const { access_token, expires_in } = data.session;
+          createCookie(config.basicKey, expires_in, access_token);
           logUser({
             id: data.id,
             user: data.user,
             photo: `${config.apiPhoto}${data.photo}` || noPhoto,
-            state: data.state,
-            permissions,
           });
           setUserState({
             type: "logged-in",
@@ -103,11 +101,8 @@ function SignIn() {
               id: data.id,
               user: data.user,
               photo: `${config.apiPhoto}${data.photo}` || noPhoto,
-              state,
-              permissions,
             },
           });
-          navigate("/");
         } else throw error;
       } catch (err) {
         console.error(err);
@@ -135,7 +130,7 @@ function SignIn() {
 
   useEffect(() => {
     if (userState.user) navigate("/");
-  }, []);
+  }, [userState]);
 
   return (
     <main className="w-full min-h-screen flex items-center justify-center">

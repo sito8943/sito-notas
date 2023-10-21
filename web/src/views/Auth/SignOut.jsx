@@ -20,20 +20,19 @@ function SignOut() {
 
   const signOut = async () => {
     try {
-      await signOutUser(getUserName());
+      await signOutUser();
     } catch (err) {
       console.error(err);
     }
     setUserState({ type: "logged-out" });
-    logoutUser();
-    navigate("/");
+    // navigate("/");
   };
 
   useEffect(() => {
     signOut();
   }, []);
 
-  return <Loading className="fixed-loading" />;
+  return <Loading className="w-full h-screen" />;
 }
 
 export default SignOut;

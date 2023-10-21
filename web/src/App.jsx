@@ -12,16 +12,12 @@ import { useMode } from "./contexts/ModeProvider";
 import { useUser } from "./contexts/UserProvider.jsx";
 import { useNotification } from "./contexts/NotificationProvider";
 
-// utils
-import { logoutUser, userLogged, fromLocal } from "./utils/auth";
-
-// services
-import { validateBasicKey } from "./services/auth";
-
 // components
 import Loading from "./components/Loading/Loading";
 import Notification from "./components/Notification/Notification";
 import Handler from "./components/Error/Handler";
+import supabase from "./db/connection";
+import { data } from "autoprefixer";
 
 // lazy load
 const Workspace = loadable(() => import("./views/Workspace/Workspace"));
@@ -50,10 +46,9 @@ function App() {
 
   const fetch = async () => {
     try {
-      const value = await validateBasicKey();
-      if (!value) logoutUser();
-      else setUserState({ type: "logged-in", user: fromLocal() });
-      setLoading(false);
+      const { data, error } = await supabase.auth.getUser();
+      if (data.user !== null)
+        setUserState({ type: "logged-in", user: data.user });
     } catch (err) {
       console.error(err);
       if (String(err) === "AxiosError: Network Error")
@@ -64,7 +59,6 @@ function App() {
         switch (status) {
           case 403:
           case 401:
-            logoutUser();
             break;
           default:
             showNotification("error", String(err));
@@ -74,6 +68,7 @@ function App() {
       showNotification("error", String(err));
       setLoading(false);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -96,8 +91,7 @@ function App() {
     } catch (err) {
       console.error(err);
     }
-    if (userLogged()) fetch();
-    else setLoading(false);
+    fetch();
   }, []);
 
   return (

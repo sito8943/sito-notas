@@ -100,8 +100,6 @@ function SignUp() {
         setLoading(true);
         const response = await register(email, password);
         const { data, error } = response;
-        console.log(data, error);
-        return;
         if (!error) {
           const { expiration, token, state, permissions } = data;
           createCookie(config.basicKey, expiration, token);

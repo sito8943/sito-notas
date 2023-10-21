@@ -1,5 +1,6 @@
 const {
   VITE_API_URL,
+  VITE_THIS_URL,
   // cookies
   VITE_LANGUAGE,
   VITE_BASIC_KEY,
@@ -20,6 +21,7 @@ const {
 
 const config = {
   apiUrl: VITE_API_URL,
+  thisUrl: VITE_THIS_URL,
   // cookie
   language: VITE_LANGUAGE,
   basicKey: VITE_BASIC_KEY,

@@ -1,37 +1,9 @@
-import axios from "axios";
-import { getAuth } from "../auth/auth";
 import config from "../config";
 
-// some-javascript-utils
-import { getCookie } from "some-javascript-utils/browser";
-
 import md5 from "md5";
-import { getUserName } from "../utils/auth";
 
 // db
 import supabase from "../db/connection";
-
-/**
- *
- * @param {string} type
- * @returns
- */
-export const validateBasicKey = async (type) => {
-  const response = await axios.post(
-    // @ts-ignore
-    `${config.apiUrl}auth/${type === "admin" ? "is-admin" : "validate"}`,
-    { user: getUserName() },
-    {
-      headers: {
-        ...getAuth,
-        Authorization: `Bearer ${getCookie(config.basicKey)}`,
-      },
-    }
-  );
-  const data = await response.data;
-  if (data.data.user) return data.data.user;
-  return false;
-};
 
 export const register = async (email, password) => {
   const { data, error } = await supabase.auth.signUp({
@@ -47,7 +19,7 @@ export const register = async (email, password) => {
  * @param {string} password - the user password
  * @returns The response from the server.
  */
-export const login = async (user, password, remember) => {
+export const login = async (user, password) => {
   const { data, error } = await supabase.auth.signInWithPassword({
     email: user,
     password: md5(password),
@@ -57,21 +29,11 @@ export const login = async (user, password, remember) => {
 
 /**
  *
- * @param {string} user
+ * @returns
  */
-export const signOutUser = async (user) => {
-  const response = await axios.post(
-    // @ts-ignore
-    `${config.apiUrl}auth/sign-out`,
-    { user },
-    {
-      headers: {
-        ...getAuth,
-        Authorization: `Bearer ${getCookie(config.basicKey)}`,
-      },
-    }
-  );
-  return await response.data;
+export const signOutUser = async () => {
+  const { error } = await supabase.auth.signOut();
+  return error;
 };
 
 /**
@@ -81,43 +43,8 @@ export const signOutUser = async (user) => {
  * @returns The response from the server.
  */
 export const passwordRecovery = async (email) => {
-  const response = await axios.post(
-    // @ts-ignore
-    `${config.apiUrl}user/password-reset`,
-    { email },
-    {
-      headers: getAuth,
-    }
-  );
-  return response;
-};
-
-export const saveInfo = async (attributes, values) => {
-  const response = await axios.post(
-    // @ts-ignore
-    `${config.apiUrl}users/save-info`,
-    { user: getUserName(), attributes, values },
-    {
-      headers: {
-        ...getAuth,
-        Authorization: `Bearer ${getCookie(config.basicKey)}`,
-      },
-    }
-  );
-  return await response.data;
-};
-
-export const loadInfo = async (attributes) => {
-  const response = await axios.post(
-    // @ts-ignore
-    `${config.apiUrl}users/load-info`,
-    { user: getUserName(), attributes },
-    {
-      headers: {
-        ...getAuth,
-        Authorization: `Bearer ${getCookie(config.basicKey)}`,
-      },
-    }
-  );
-  return await response.data;
+  const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${config.thisUrl}reset-password`,
+  });
+  return { data, error };
 };
