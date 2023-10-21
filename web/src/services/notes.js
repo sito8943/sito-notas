@@ -14,3 +14,13 @@ export const createNote = async (note) => {
   const { error } = await supabase.from("notes").insert({ ...note });
   return error;
 };
+
+/**
+ *
+ * @param {string} noteId
+ */
+export const removeNote = async (noteId) => {
+  console.log(noteId);
+  const { error } = await supabase.from("notes").delete().eq("id", noteId);
+  return error;
+};

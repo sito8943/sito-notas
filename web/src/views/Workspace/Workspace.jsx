@@ -9,6 +9,7 @@ import { css } from "@emotion/css";
 import Loading from "../../components/Loading/Loading";
 
 // contexts
+import { useNotification } from "../../contexts/NotificationProvider";
 import { useUser } from "../../contexts/UserProvider";
 
 // manager
@@ -22,12 +23,30 @@ import {
 import {
   fetchNotes,
   createNote as createRemoteNote,
+  removeNote as removeRemoteNote,
 } from "../../services/notes";
 
 // lazy load
 const Masonry = loadable(() => import("./components/Masonry/Masonry"));
 
 function Workspace() {
+  const { setNotificationState } = useNotification();
+
+  const showNotification = useCallback(
+    (ntype, message) =>
+      setNotificationState({
+        type: "set",
+        ntype,
+        message,
+      }),
+    [setNotificationState]
+  );
+
+  const showError = (error) => {
+    console.error(error);
+    showNotification("error", String(error));
+  };
+
   const { userState } = useUser();
 
   const uploadFileRef = useRef(null);
@@ -75,12 +94,16 @@ function Workspace() {
     const id = v4();
     const note = createNote(id);
     const error = await createRemoteNote(note);
-    if (error !== null) console.error(error);
+    if (error !== null) showError(error);
     syncNotes();
   }, []);
 
-  const deleteNote = useCallback((id) => {
-    removeNote(id);
+  const deleteNote = useCallback(async (id) => {
+    const error = await removeRemoteNote(id);
+    if (error !== null) {
+      removeNote(id);
+      showError(error);
+    }
     setNotes(initNotes());
   }, []);
 
