@@ -126,88 +126,87 @@ function SignIn() {
   return (
     <main className="w-full min-h-screen flex items-center justify-center">
       <ModeButton className="top-1 right-1 icon-button primary" />
-      {loading ? (
-        <Loading className="fixed-loading" />
-      ) : (
-        <form
-          onSubmit={onSubmit}
-          className="rounded-sm appear relative bg-light-background dark:bg-dark-background2 p-10 min-w-[440px] flex flex-col gap-3 shadow-xl shadow-dark-[black]"
-        >
-          <div className="flex gap-2 items-center">
-            <img src={logo} alt="stick notes logo" className="w-10 h-10" />
-            <h1 className="text-sdark dark:text-secondary uppercase">
-              Sito Notas
-            </h1>
-          </div>
-          <SimpleInput
-            id="user"
-            className="input-control dark:text-white"
-            label="Usuario"
-            inputProps={{
-              className: "input border-none submit !pl-8 w-full",
-              value: user,
-              onChange: handleUser,
-              type: "text",
-            }}
-            leftIcon={
-              <FontAwesomeIcon
-                className="absolute text-secondary top-[50%] -translate-y-[50%] left-3"
-                icon={faUser}
-              />
-            }
-            helperText={userHelperText}
-          />
-          <SimpleInput
-            id="password"
-            className="input-control dark:text-white"
-            label="Contraseña"
-            inputProps={{
-              className: "input border-none submit !pl-8 w-full",
-              value: password,
-              onChange: handlePassword,
-              type: !showPassword ? "password" : "text",
-            }}
-            leftIcon={
-              <IconButton
-                tabIndex={-1}
-                type="button"
-                name="toggle-see-password"
-                onClick={toggleShowPassword}
-                icon={showPassword ? faLockOpen : faLock}
-                className="absolute text-secondary top-[50%] -translate-y-[50%] left-3 !p-0 -ml-[12px]"
-                aria-label="click para alternar ver/ocultar contraseña"
-              />
-            }
-            helperText={passwordHelperText}
-          />
-          <Switch
-            id="remember"
-            value={remember}
-            onChange={handleRemember}
-            label="Recordarme"
-            className="dark:text-white"
-          />
-          <p className="dark:text-white">
-            ¿No tienes cuenta?{" "}
-            <Link
-              to="/auth/sign-up"
-              className="underline hover:text-sdark dark:hover:text-secondary"
-            >
-              Registrarme
-            </Link>
-          </p>
-          <div className="w-full flex gap-5 justify-end items-center">
-            <Button
-              name="login"
-              type="submit"
-              aria-label="Click para entrar"
-              className="secondary submit"
-            >
-              Siguiente
-            </Button>
-          </div>
-        </form>
-      )}
+      <div>
+        <Loading className="fixed-loading fixed top-0 left-0 z-10 bg-white w-full h-[100px]" />
+      </div>
+      <form
+        onSubmit={onSubmit}
+        className="rounded-sm appear relative bg-light-background dark:bg-dark-background2 p-10 min-w-[440px] flex flex-col gap-3 shadow-xl shadow-dark-[black]"
+      >
+        <div className="flex gap-2 items-center">
+          <img src={logo} alt="stick notes logo" className="w-10 h-10" />
+          <h1 className="text-sdark dark:text-secondary uppercase">
+            Sito Notas
+          </h1>
+        </div>
+        <SimpleInput
+          id="user"
+          className="input-control dark:text-white"
+          label="Usuario"
+          inputProps={{
+            className: "input border-none submit !pl-8 w-full",
+            value: user,
+            onChange: handleUser,
+            type: "text",
+          }}
+          leftIcon={
+            <FontAwesomeIcon
+              className="absolute text-secondary top-[50%] -translate-y-[50%] left-3"
+              icon={faUser}
+            />
+          }
+          helperText={userHelperText}
+        />
+        <SimpleInput
+          id="password"
+          className="input-control dark:text-white"
+          label="Contraseña"
+          inputProps={{
+            className: "input border-none submit !pl-8 w-full",
+            value: password,
+            onChange: handlePassword,
+            type: !showPassword ? "password" : "text",
+          }}
+          leftIcon={
+            <IconButton
+              tabIndex={-1}
+              type="button"
+              name="toggle-see-password"
+              onClick={toggleShowPassword}
+              icon={showPassword ? faLockOpen : faLock}
+              className="absolute text-secondary top-[50%] -translate-y-[50%] left-3 !p-0 -ml-[12px]"
+              aria-label="click para alternar ver/ocultar contraseña"
+            />
+          }
+          helperText={passwordHelperText}
+        />
+        <Switch
+          id="remember"
+          value={remember}
+          onChange={handleRemember}
+          label="Recordarme"
+          className="dark:text-white"
+        />
+        <p className="dark:text-white">
+          ¿No tienes cuenta?{" "}
+          <Link
+            to="/auth/sign-up"
+            className="underline hover:text-sdark dark:hover:text-secondary"
+          >
+            Registrarme
+          </Link>
+        </p>
+        <div className="w-full flex gap-5 justify-end items-center">
+          <Button
+            name="login"
+            type="submit"
+            aria-label="Click para entrar"
+            className="secondary submit"
+          >
+            Siguiente
+          </Button>
+        </div>
+      </form>
     </main>
   );
 }
