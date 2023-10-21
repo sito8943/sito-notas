@@ -87,22 +87,13 @@ function SignIn() {
         setLoading(true);
         const response = await login(user, password, remember);
         const { data, error } = response;
+
         if (!error) {
-          const { access_token, expires_in } = data.session;
-          createCookie(config.basicKey, expires_in, access_token);
-          logUser({
-            id: data.id,
-            user: data.user,
-            photo: `${config.apiPhoto}${data.photo}` || noPhoto,
-          });
           setUserState({
             type: "logged-in",
-            user: {
-              id: data.id,
-              user: data.user,
-              photo: `${config.apiPhoto}${data.photo}` || noPhoto,
-            },
+            user: data.user,
           });
+          navigate("/");
         } else throw error;
       } catch (err) {
         console.error(err);

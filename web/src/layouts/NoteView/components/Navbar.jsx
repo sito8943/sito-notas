@@ -1,6 +1,6 @@
 import React from "react";
-
-import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
+import { faSignOut, faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 
 // utils
 import { utilsToggleTheme } from "../../../utils/functions";
@@ -29,6 +29,15 @@ export default function Navbar() {
         </div>
         <div className="flex gap-3 items-center">
           <SearchWrapper />
+          <Link to="/sign-out">
+            <IconButton
+              name="sign-out"
+              tooltip="Cerrar sesión"
+              icon={faSignOut}
+              className="icon-button secondary"
+              aria-label="Click para cerrar sesión"
+            />
+          </Link>
           <IconButton
             name="toggle-theme"
             onClick={() => {

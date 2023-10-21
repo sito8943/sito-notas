@@ -5,6 +5,16 @@ import md5 from "md5";
 // db
 import supabase from "../db/connection";
 
+export const validateUser = async () => {
+  return await supabase.auth.getUser();
+};
+
+/**
+ *
+ * @param {string} email
+ * @param {string} password
+ * @returns
+ */
 export const register = async (email, password) => {
   const { data, error } = await supabase.auth.signUp({
     email,

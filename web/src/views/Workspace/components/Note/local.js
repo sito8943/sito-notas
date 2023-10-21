@@ -16,6 +16,7 @@ export const createNote = (id, content) => {
   };
 
   localStorage.setItem(config.notes, encrypt(notes));
+  return notes[id];
 };
 
 /**
@@ -51,7 +52,6 @@ export const removeNote = (id) => {
 };
 
 export const initNotes = () => {
-  // localStorage.removeItem(config.notes);
   if (localStorage.getItem(config.notes) === null) {
     localStorage.setItem(config.notes, encrypt({}));
     return [];
@@ -59,4 +59,20 @@ export const initNotes = () => {
   const notes = decrypt(localStorage.getItem(config.notes));
 
   return Object.keys(notes);
+};
+
+export const cleanNotes = () => {
+  localStorage.removeItem(config.notes);
+};
+
+/**
+ *
+ * @param {object[]} notes
+ */
+export const saveOnLocal = (notes) => {
+  const dict = {};
+  notes.forEach((note) => {
+    dict[note.id] = note;
+  });
+  localStorage.setItem(config.notes, encrypt(dict));
 };

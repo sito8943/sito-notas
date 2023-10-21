@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Outlet } from "react-router-dom";
 
 // components
@@ -6,10 +6,10 @@ import Navbar from "./components/Navbar/Navbar";
 
 function View() {
   return (
-    <div>
+    <Fragment>
       <Navbar />
       <Outlet />
-    </div>
+    </Fragment>
   );
 }
 

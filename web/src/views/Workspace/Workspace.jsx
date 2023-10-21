@@ -8,13 +8,28 @@ import { css } from "@emotion/css";
 // components
 import Loading from "../../components/Loading/Loading";
 
+// contexts
+import { useUser } from "../../contexts/UserProvider";
+
 // manager
-import { createNote, initNotes, removeNote } from "./components/Note/local";
+import {
+  cleanNotes,
+  createNote,
+  initNotes,
+  removeNote,
+  saveOnLocal,
+} from "./components/Note/local";
+import {
+  fetchNotes,
+  createNote as createRemoteNote,
+} from "../../services/notes";
 
 // lazy load
 const Masonry = loadable(() => import("./components/Masonry/Masonry"));
 
 function Workspace() {
+  const { userState } = useUser();
+
   const uploadFileRef = useRef(null);
 
   const [notes, setNotes] = useState([]);
@@ -30,7 +45,7 @@ function Workspace() {
     }, 200);
   }, [uploadFileRef]);
 
-  const createRemoteNote = (obj) => {
+  const createLocalNote = (obj) => {
     try {
       const { id, content } = obj;
       createNote(id, content);
@@ -48,7 +63,7 @@ function Workspace() {
         const obj = JSON.parse(e.target.result);
         switch (uploadingWhat) {
           default: // note
-            createRemoteNote(obj);
+            createLocalNote(obj);
             break;
         }
       };
@@ -56,10 +71,12 @@ function Workspace() {
     [uploadingWhat]
   );
 
-  const addNote = useCallback(() => {
+  const addNote = useCallback(async () => {
     const id = v4();
-    createNote(id);
-    setNotes(initNotes());
+    const note = createNote(id);
+    const error = await createRemoteNote(note);
+    if (error !== null) console.error(error);
+    syncNotes();
   }, []);
 
   const deleteNote = useCallback((id) => {
@@ -67,9 +84,28 @@ function Workspace() {
     setNotes(initNotes());
   }, []);
 
+  const syncNotes = async () => {
+    try {
+      const { data, error } = await fetchNotes();
+      if (error !== null) {
+        setNotes(initNotes());
+        console.error(error);
+      } else {
+        const remoteNotes = data;
+        saveOnLocal(remoteNotes);
+        setNotes(initNotes());
+      }
+    } catch (err) {
+      console.error(err);
+      setNotes(initNotes());
+    }
+    setLoading(false);
+  };
+
   useEffect(() => {
-    setNotes(initNotes());
-  }, []);
+    if (userState.user) syncNotes();
+    else cleanNotes();
+  }, [userState]);
 
   return (
     <main className="main flex w-full p-5 mt-20 overflow-auto">

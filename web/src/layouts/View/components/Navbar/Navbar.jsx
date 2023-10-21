@@ -1,6 +1,6 @@
 import React from "react";
-
-import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
+import { faSun, faMoon, faSignIn } from "@fortawesome/free-solid-svg-icons";
 
 // utils
 import { utilsToggleTheme } from "../../../../utils/functions";
@@ -27,6 +27,15 @@ function Navbar() {
           </h1>
         </div>
         <div className="flex gap-3 items-center">
+          <Link to="/auth/">
+            <IconButton
+              name="sign-in"
+              tooltip="Iniciar sesión"
+              icon={faSignIn}
+              className="icon-button secondary"
+              aria-label="Click para iniciar sesión"
+            />
+          </Link>
           <IconButton
             name="toggle-theme"
             onClick={() => {
@@ -37,7 +46,7 @@ function Navbar() {
             icon={!modeState ? faSun : faMoon}
             className="icon-button secondary"
             aria-label="Click para cambiar el tema"
-            />
+          />
         </div>
       </nav>
     </header>

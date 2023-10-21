@@ -25,7 +25,7 @@ function SignOut() {
       console.error(err);
     }
     setUserState({ type: "logged-out" });
-    // navigate("/");
+    navigate("/");
   };
 
   useEffect(() => {

@@ -16,8 +16,9 @@ import { useNotification } from "./contexts/NotificationProvider";
 import Loading from "./components/Loading/Loading";
 import Notification from "./components/Notification/Notification";
 import Handler from "./components/Error/Handler";
-import supabase from "./db/connection";
-import { data } from "autoprefixer";
+
+// services
+import { validateUser } from "./services/auth";
 
 // lazy load
 const Workspace = loadable(() => import("./views/Workspace/Workspace"));
@@ -46,7 +47,7 @@ function App() {
 
   const fetch = async () => {
     try {
-      const { data, error } = await supabase.auth.getUser();
+      const { data, error } = await validateUser();
       if (data.user !== null)
         setUserState({ type: "logged-in", user: data.user });
     } catch (err) {
