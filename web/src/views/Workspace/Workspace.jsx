@@ -53,7 +53,7 @@ function Workspace() {
 
   const [notes, setNotes] = useState([]);
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const [uploadingWhat, setUploadingWhat] = useState("");
 
@@ -108,6 +108,7 @@ function Workspace() {
   }, []);
 
   const syncNotes = async () => {
+    setLoading(true);
     try {
       const { data, error } = await fetchNotes();
       if (error !== null) {
@@ -148,26 +149,28 @@ function Workspace() {
         onDeleteNote={deleteNote}
         onUploadNote={uploadNote}
       />
-      {loading ? (
-        <div
-          className={`${
-            loading ? "aGrow" : ""
-          } grid fixed left-1 bottom-1 p-2 rounded-full bg-dark-background ${css(
-            {
-              gridTemplateColumns: "0.3fr 0fr",
-              transition: "grid-template-columns 300ms ease",
-              "&:hover": { gridTemplateColumns: "0.3fr 1fr" },
-            }
-          )}`}
-        >
-          <div className="w-10">
-            <Loading className="w-10 h-10 rounded-full" />
-          </div>
-          <div className="overflow-hidden flex items-center">
-            <p className="dark:text-white min-w-[110px]">Sincronizando</p>
-          </div>
+      <div
+        className={`${
+          loading ? "aGrow" : "aShrink  opacity-0 pointer-events-none"
+        } transition-all duration-500 grid fixed left-1 bottom-1 p-2 rounded-full dark:bg-dark-background bg-light-background ${css(
+          {
+            gridTemplateColumns: "0.3fr 0fr",
+            transition: "all 300ms ease",
+            "&:hover": { gridTemplateColumns: "0.3fr 1fr" },
+          }
+        )}`}
+      >
+        <div className="w-10">
+          <Loading
+            className="w-10 h-10 rounded-full"
+            loaderClass="!w-[30px]"
+            strokeWidth="6"
+          />
         </div>
-      ) : null}
+        <div className="overflow-hidden flex items-center">
+          <p className="dark:text-white min-w-[110px] pr-2">Sincronizando</p>
+        </div>
+      </div>
     </main>
   );
 }
