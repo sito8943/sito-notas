@@ -13,6 +13,7 @@ export default {
       "dark-background": "#1b1b1b",
       "light-background2": "#f0f0f0",
       "light-background": "#e3e3e3",
+      "light-background-placeholder": "#e3e3e399",
       primary: "#EE964B",
       plight: "#f1ab6f",
       pdark: "#AB570F",

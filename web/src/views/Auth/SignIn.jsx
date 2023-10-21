@@ -70,9 +70,11 @@ function SignIn() {
 
   const onSubmit = useCallback(
     async (e) => {
+      e.preventDefault();
+      setLoading(true);
       setUserHelperText("");
       setPasswordHelperText("");
-      e.preventDefault();
+
       if (!user.length) {
         document.getElementById("user")?.focus();
         setUserHelperText("Debes introducir un usuario");
@@ -126,8 +128,16 @@ function SignIn() {
   return (
     <main className="w-full min-h-screen flex items-center justify-center">
       <ModeButton className="top-1 right-1 icon-button primary" />
-      <div>
-        <Loading className="fixed-loading fixed top-0 left-0 z-10 bg-white w-full h-[100px]" />
+      <div
+        className={`pointer-events-none fixed top-0 left-0 z-10 w-full h-screen flex items-center dark:bg-dark-drawer-background bg-light-background-placeholder backdrop-blur-sm transition-all duration-100 ${
+          loading ? "opacity-100" : "opacity-0"
+        }`}
+      >
+        <Loading
+          className={`bg-white transition-all duration-300 !h-[100px] ${
+            loading ? "scale-y-100" : "scale-y-0"
+          }`}
+        />
       </div>
       <form
         onSubmit={onSubmit}
