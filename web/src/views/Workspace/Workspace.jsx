@@ -64,11 +64,13 @@ function Workspace() {
     }, 200);
   }, [uploadFileRef]);
 
-  const createLocalNote = (obj) => {
+  const createLocalNote = async (obj) => {
     try {
       const { id, content } = obj;
       createNote(id, content);
-      setNotes(initNotes());
+      const error = await createRemoteNote({ id, content });
+      if (error !== null) showError(error);
+      syncNotes();
     } catch (err) {
       console.error(err);
     }
@@ -104,7 +106,7 @@ function Workspace() {
       removeNote(id);
       showError(error);
     }
-    setNotes(initNotes());
+    syncNotes();
   }, []);
 
   const syncNotes = async () => {
