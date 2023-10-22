@@ -13,6 +13,7 @@ export const createNote = (id, content) => {
   notes[id] = {
     id,
     content: content || `# Nueva nota \n Escribe el contenio aquí`,
+    created_at: new Date().getTime(),
   };
 
   localStorage.setItem(config.notes, encrypt(notes));
