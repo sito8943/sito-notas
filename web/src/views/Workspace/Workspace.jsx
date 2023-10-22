@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import loadable from "@loadable/component";
 
 import { v4 } from "uuid";
@@ -6,6 +12,7 @@ import { v4 } from "uuid";
 import { css } from "@emotion/css";
 
 // components
+import Sidebar from "./components/Legacy/Sidebar/Sidebar";
 import Loading from "../../components/Loading/Loading";
 
 // contexts
@@ -20,6 +27,8 @@ import {
   removeNote,
   saveOnLocal,
 } from "./components/Note/local";
+
+// services
 import {
   fetchNotes,
   createNote as createRemoteNote,
@@ -29,6 +38,7 @@ import {
 
 // lazy load
 const Masonry = loadable(() => import("./components/Masonry/Masonry"));
+const Legacy = loadable(() => import("./components/Legacy/Legacy"));
 
 function Workspace() {
   const { setNotificationState } = useNotification();
@@ -141,48 +151,63 @@ function Workspace() {
     else cleanNotes();
   }, [userState]);
 
-  return (
-    <main className="main flex w-full p-5 mt-20 overflow-auto">
-      {uploadingWhat.length ? (
-        <input
-          type="file"
-          className="z-[-1] fixed"
-          ref={uploadFileRef}
-          onChange={uploadFile}
-          accept="application/JSON"
-        />
-      ) : null}
+  const legacy = useMemo(() => userState.user?.legacy === "1", [userState]);
 
-      <Masonry
-        notes={notes}
-        onAddNote={addNote}
-        onSaveNote={saveNote}
-        onDeleteNote={deleteNote}
-        onUploadNote={uploadNote}
-      />
-      <div
-        className={`${
-          loading ? "aGrow" : "aShrink  opacity-0 pointer-events-none"
-        } transition-all duration-500 grid fixed left-1 bottom-1 p-2 rounded-full dark:bg-dark-background bg-light-background ${css(
-          {
-            gridTemplateColumns: "0.3fr 0fr",
-            transition: "all 300ms ease",
-            "&:hover": { gridTemplateColumns: "0.3fr 1fr" },
-          }
-        )}`}
-      >
-        <div className="w-10">
-          <Loading
-            className="w-10 h-10 rounded-full"
-            loaderClass="!w-[30px]"
-            strokeWidth="6"
+  return (
+    <div
+      className={`flex w-full ${
+        legacy ? "pl-0 pr-5" : "p-5"
+      } mt-20 overflow-auto`}
+    >
+      {legacy ? (
+        <Sidebar notes={notes} onAddNote={addNote} onDeleteNote={deleteNote} />
+      ) : null}
+      <main className="main">
+        {uploadingWhat.length ? (
+          <input
+            type="file"
+            className="z-[-1] fixed"
+            ref={uploadFileRef}
+            onChange={uploadFile}
+            accept="application/JSON"
           />
+        ) : null}
+
+        {legacy ? (
+          <Legacy />
+        ) : (
+          <Masonry
+            notes={notes}
+            onAddNote={addNote}
+            onSaveNote={saveNote}
+            onDeleteNote={deleteNote}
+            onUploadNote={uploadNote}
+          />
+        )}
+        <div
+          className={`${
+            loading ? "aGrow" : "aShrink  opacity-0 pointer-events-none"
+          } transition-all duration-500 grid fixed left-1 bottom-1 p-2 rounded-full dark:bg-dark-background bg-light-background ${css(
+            {
+              gridTemplateColumns: "0.3fr 0fr",
+              transition: "all 300ms ease",
+              "&:hover": { gridTemplateColumns: "0.3fr 1fr" },
+            }
+          )}`}
+        >
+          <div className="w-10">
+            <Loading
+              className="w-10 h-10 rounded-full"
+              loaderClass="!w-[30px]"
+              strokeWidth="6"
+            />
+          </div>
+          <div className="overflow-hidden flex items-center">
+            <p className="dark:text-white min-w-[110px] pr-2">Sincronizando</p>
+          </div>
         </div>
-        <div className="overflow-hidden flex items-center">
-          <p className="dark:text-white min-w-[110px] pr-2">Sincronizando</p>
-        </div>
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }
 
