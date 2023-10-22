@@ -1,4 +1,8 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+
+import { sortBy } from "some-javascript-utils/array";
+import { parseQueries } from "some-javascript-utils/browser";
 
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
 
@@ -15,30 +19,40 @@ import { getNote } from "../../Note/local";
 function Sidebar({ notes, onAddNote, onDeleteNote, onDownloadNote }) {
   const { searchState } = useSearch();
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const cols = useMemo(() => {
     const lowerCased = searchState.toLowerCase();
 
-    return notes
-      .filter((note) => {
+    return sortBy(
+      notes.filter((note) => {
         const noteLowered = getNote(note).content.toLowerCase();
         return searchState.length
           ? stringSimilarity.compareTwoStrings(noteLowered, lowerCased) >
               0.25 || noteLowered.indexOf(lowerCased) >= 0
           : true;
-      })
-      .map((note) => (
-        <SideItem
-          id={note}
-          key={note.id}
-          onDeleteNote={onDeleteNote}
-          onDownloadNote={onDownloadNote}
-        />
-      ));
+      }),
+      "created_at"
+    ).map((note) => (
+      <SideItem
+        id={note}
+        key={note.id}
+        onDeleteNote={onDeleteNote}
+        onDownloadNote={onDownloadNote}
+      />
+    ));
   }, [searchState, notes]);
+
+  useEffect(() => {
+    const { search } = location;
+    const query = parseQueries(search);
+    if (!query.note) navigate(`/?note=${notes[0]}`);
+  }, [location]);
 
   return (
     <aside className="py-5 w-[300px] bg-light-background2 dark:bg-dark-background2 flex flex-col justify-start items-start">
-      <div className="px-5 mb-2 w-full flex justify-between">
+      <div className="px-3 mb-2 w-full flex justify-between">
         <h2 className="text-3xl font-bold text-sdark dark:text-slight">
           Mis notas
         </h2>

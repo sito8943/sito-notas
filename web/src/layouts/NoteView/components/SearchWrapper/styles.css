@@ -3,7 +3,7 @@
   transition: width 300ms ease;
 }
 
-@media (max-width: 730px) {
+@media (max-width: 840px) {
   .search {
     width: 40px;
   }
