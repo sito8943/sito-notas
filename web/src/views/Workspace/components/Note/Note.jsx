@@ -56,6 +56,7 @@ function Note({ id, onDelete, onSave }) {
   const onLocalSave = useCallback(() => {
     updateNote(id, "content", value);
     setEditing(false);
+    onSave({ id, content: value });
   }, [value, id]);
 
   const onEscapePress = useCallback(
@@ -164,10 +165,14 @@ Note.propTypes = {
 };
 
 const NoteMemo = memo(
-  ({ id, onDelete }) => <Note id={id} onDelete={onDelete} />,
+  ({ id, onDelete, onSave }) => (
+    <Note id={id} onDelete={onDelete} onSave={onSave} />
+  ),
   (oldProps, newProps) => {
     return (
-      oldProps.id === newProps.id && oldProps.onDelete === newProps.onDelete
+      oldProps.id === newProps.id &&
+      oldProps.onDelete === newProps.onDelete &&
+      oldProps.onSave === newProps.onSave
     );
   }
 );

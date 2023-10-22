@@ -20,7 +20,18 @@ export const createNote = async (note) => {
  * @param {string} noteId
  */
 export const removeNote = async (noteId) => {
-  console.log(noteId);
   const { error } = await supabase.from("notes").delete().eq("id", noteId);
+  return error;
+};
+
+/**
+ *
+ * @param {object} note
+ */
+export const updateNote = async (note) => {
+  const { error } = await supabase
+    .from("notes")
+    .update({ content: note.content, last_update: new Date().getTime() })
+    .eq("id", note.id);
   return error;
 };

@@ -24,6 +24,7 @@ import {
   fetchNotes,
   createNote as createRemoteNote,
   removeNote as removeRemoteNote,
+  updateNote as updateRemoteNote,
 } from "../../services/notes";
 
 // lazy load
@@ -109,6 +110,13 @@ function Workspace() {
     syncNotes();
   }, []);
 
+  const saveNote = async (note) => {
+    setLoading(true);
+    const error = await updateRemoteNote(note);
+    if (error !== null) showError(error);
+    setLoading(false);
+  };
+
   const syncNotes = async () => {
     setLoading(true);
     try {
@@ -148,6 +156,7 @@ function Workspace() {
       <Masonry
         notes={notes}
         onAddNote={addNote}
+        onSaveNote={saveNote}
         onDeleteNote={deleteNote}
         onUploadNote={uploadNote}
       />
