@@ -47,7 +47,6 @@ function SearchWrapper() {
         {searching.length ? (
           <IconButton
             icon={faClose}
-            type="button"
             name="clear-search"
             onClick={() => setSearching("")}
             aria-label="click para limpiar la búsqueda"

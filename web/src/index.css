@@ -20,7 +20,8 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 
 .main {
-  min-height: calc(100vh - 80px);
+  height: calc(100vh - 80px);
+  padding-top: 30px;
 }
 
 .w-md-editor-text-pre,

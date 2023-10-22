@@ -52,7 +52,6 @@ const ToTop = ({ parent, className }) => {
   return (
     <IconButton
       icon={faArrowUp}
-      type="button"
       name="to-top"
       aria-label={languageState.texts.ariaLabels.toTop}
       onClick={handleToTop}

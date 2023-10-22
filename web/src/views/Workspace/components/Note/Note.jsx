@@ -1,4 +1,5 @@
 import React, { memo, useState, useEffect, useCallback } from "react";
+import { Link } from "react-router-dom";
 import loadable from "@loadable/component";
 
 import PropTypes from "prop-types";
@@ -24,6 +25,9 @@ const FloatingButton = loadable(() => import("../../../../components/FAB/FAB"));
 const IconButton = loadable(() =>
   import("../../../../components/IconButton/IconButton")
 );
+
+// styles
+import "./styles.css";
 
 function Note({ id, onDelete, onSave }) {
   const [value, setValue] = useState(getNote(id)?.content);
@@ -96,7 +100,7 @@ function Note({ id, onDelete, onSave }) {
   return (
     <article
       id={id}
-      className={`appear group bg-primary shadow-md shadow-[black] rounded-sm min-h-[350px] w-[300px] min-w-[300px]`}
+      className={`note appear group bg-primary shadow-md shadow-[black] rounded-sm min-h-[350px] w-[300px] min-w-[300px] overflow-auto`}
     >
       {editing ? (
         <FloatingButton
@@ -114,26 +118,26 @@ function Note({ id, onDelete, onSave }) {
         } pointer-events-none group-hover:pointer-events-auto`}
       >
         <div className="flex overflow-hidden bg-dark-drawer-background w-full justify-end">
+          <Link to={`/?note=${id}`}>
+            <IconButton
+              type="button"
+              name="edit-note"
+              icon={editing ? faSave : faEdit}
+              tooltip={editing ? "Guardar" : "Editar"}
+              onClick={editing ? onLocalSave : onLocalEdit}
+              aria-label="click para editar"
+              className="text-secondary p-3 hover:text-primary hover:bg-sdark !rounded-[0px]"
+            />
+          </Link>
           <IconButton
-            type="button"
-            name="edit-note"
-            icon={editing ? faSave : faEdit}
-            tooltip={editing ? "Guardar" : "Editar"}
-            onClick={editing ? onLocalSave : onLocalEdit}
-            aria-label="click para editar"
-            className="text-secondary p-3 hover:text-primary hover:bg-sdark !rounded-[0px]"
-          />
-          <IconButton
-            type="button"
             name="download-note"
             onClick={onDownload}
             icon={faFileDownload}
             tooltip="Descargar nota"
-            aria-label="click para borrar"
+            aria-label="click para descargar"
             className="text-secondary p-3 hover:text-primary hover:bg-sdark !rounded-[0px]"
           />
           <IconButton
-            type="button"
             icon={faTrash}
             tooltip="Eliminar"
             name="delete-note"

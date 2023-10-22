@@ -11,7 +11,6 @@ function NewNote({ onAddNote, onUploadNote }) {
       <p className="text-secondary">Nueva nota</p>
       <div className="flex items-center justify-center">
         <IconButton
-          type="button"
           icon={faAdd}
           name="add-task"
           tooltip="Nueva nota"
@@ -20,7 +19,6 @@ function NewNote({ onAddNote, onUploadNote }) {
           aria-label="click para agregar una nueva nota"
         />
         <IconButton
-          type="button"
           name="upload-task"
           icon={faFileUpload}
           onClick={onUploadNote}

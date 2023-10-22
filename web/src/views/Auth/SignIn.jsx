@@ -180,7 +180,6 @@ function SignIn() {
           leftIcon={
             <IconButton
               tabIndex={-1}
-              type="button"
               name="toggle-see-password"
               onClick={toggleShowPassword}
               icon={showPassword ? faLockOpen : faLock}

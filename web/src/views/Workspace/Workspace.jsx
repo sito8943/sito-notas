@@ -156,7 +156,7 @@ function Workspace() {
   return (
     <div
       className={`flex w-full ${
-        legacy ? "pl-0 pr-5" : "p-5"
+        legacy ? "pl-0 pr-5" : "px-5"
       } mt-20 overflow-auto`}
     >
       {legacy ? (
