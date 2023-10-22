@@ -8,11 +8,20 @@ import PropTypes from "prop-types";
 // utils
 import { logUser, logoutUser } from "../utils/auth";
 
+// config
+import config from "../config";
+
 const UserContext = createContext();
 
 const userReducer = (userState, action) => {
   const { type } = action;
   switch (type) {
+    case "toggle-legacy":
+      if (userState.user) {
+        userState.user.legacy = userState.user.legacy === "1" ? "0" : "1";
+        localStorage.setItem(config.legacy, userState.user.legacy);
+      }
+      return { ...userState };
     case "set-photo": {
       if (userState.user) {
         userState.user.photo = action.photo;

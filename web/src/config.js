@@ -12,6 +12,7 @@ const {
   // COMMUNICATION
   VITE_CRYPTO,
   // MANAGER
+  VITE_LEGACY,
   VITE_NOTES,
   VITE_EDITED_NOTE,
   // SUPABASE
@@ -33,6 +34,7 @@ const config = {
   // COMMUNICATION
   crypto: VITE_CRYPTO,
   // MANAGER
+  legacy: VITE_LEGACY,
   tasks: VITE_NOTES,
   editedTask: VITE_EDITED_NOTE,
   // SUPABASE
