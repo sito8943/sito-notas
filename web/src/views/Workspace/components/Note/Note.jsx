@@ -29,9 +29,11 @@ function Note({ id, onDelete, onSave }) {
   const [value, setValue] = useState(getNote(id)?.content);
 
   const onLocalDelete = () => {
-    document.getElementById(id)?.classList.add("aShrink");
+    onDelete(id);
+    const dom = document.getElementById(id);
+    dom?.classList.add("aShrink");
     setTimeout(() => {
-      onDelete(id);
+      dom.style.display = "none";
     }, 400);
   };
 
@@ -94,7 +96,7 @@ function Note({ id, onDelete, onSave }) {
   return (
     <article
       id={id}
-      className={`group bg-primary shadow-md shadow-[black] rounded-sm min-h-[350px] w-[300px] min-w-[300px]`}
+      className={`appear group bg-primary shadow-md shadow-[black] rounded-sm min-h-[350px] w-[300px] min-w-[300px]`}
     >
       {editing ? (
         <FloatingButton
