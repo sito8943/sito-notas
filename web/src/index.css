@@ -24,6 +24,10 @@ input[type="search"]::-webkit-search-results-decoration {
   padding-top: 30px;
 }
 
+.wmde-markdown a {
+  @apply !text-sdark;
+}
+
 .w-md-editor-text-pre,
 .w-md-editor-text-input,
 .w-md-editor-text > .w-md-editor-text-pre {
