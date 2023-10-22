@@ -10,10 +10,9 @@ import { faFileDownload, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { getNote } from "../../Note/local";
 
 // components
-import Button from "../../../../../components/Button/Button";
 import IconButton from "../../../../../components/IconButton/IconButton";
 
-function SideItem({ id, onSelect, onDelete, onDownload }) {
+function SideItem({ id, onDelete, onDownload }) {
   const location = useLocation();
 
   const startNote = useMemo(() => {
