@@ -5379,6 +5379,11 @@ use-screen-width@^1.0.3:
   dependencies:
     react "^17.0.2"
 
+use-screen-witdh@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/use-screen-witdh/-/use-screen-witdh-0.1.2.tgz#7a9dcea48c37ecc0e6f09cec178e7473648d97de"
+  integrity sha512-EkQl87CPTnBLUCpmqm8fq32oMHjri4oa409i6lRqL0g80GhKCZ7pWAPjkgBrEiP0TtgUStfJyYR21awVceNceQ==
+
 utf-8-validate@^5.0.2:
   version "5.0.10"
   resolved "https://registry.yarnpkg.com/utf-8-validate/-/utf-8-validate-5.0.10.tgz#d7d10ea39318171ca982718b6b96a8d2442571a2"
