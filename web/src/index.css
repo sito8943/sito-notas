@@ -20,6 +20,7 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 
 .main {
+  width: 100%;
   height: calc(100vh - 80px);
   padding-top: 30px;
 }
