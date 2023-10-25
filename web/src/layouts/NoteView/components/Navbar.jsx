@@ -40,7 +40,7 @@ export default function Navbar() {
           </h1>
         </div>
         <div className="flex gap-3 items-center">
-          <SearchWrapper />
+          {!legacy ? <SearchWrapper /> : null}
           <Link to="/sign-out">
             <IconButton
               name="sign-out"

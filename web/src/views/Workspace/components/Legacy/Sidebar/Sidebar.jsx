@@ -16,6 +16,9 @@ import IconButton from "../../../../../components/IconButton/IconButton";
 // manager
 import { getNote } from "../../Note/local";
 
+// styles
+import "./styles.css";
+
 function Sidebar({ notes, onAddNote, onDeleteNote, onDownloadNote }) {
   const { searchState } = useSearch();
 
@@ -51,7 +54,7 @@ function Sidebar({ notes, onAddNote, onDeleteNote, onDownloadNote }) {
   }, [location]);
 
   return (
-    <aside className="py-5 min-w-[300px] w-[300px] bg-light-background2 dark:bg-dark-background2 flex flex-col justify-start items-start">
+    <aside className="sidebar py-5 min-w-[300px] w-[300px] bg-light-background2 dark:bg-dark-background2 flex flex-col justify-start items-start">
       <div className="px-3 mb-2 w-full flex justify-between">
         <h2 className="text-3xl font-bold text-sdark dark:text-slight">
           Mis notas

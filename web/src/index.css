@@ -2,13 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+.operations {
+  @apply flex gap-3 items-center;
+}
+
 h1 {
   @apply text-3xl;
 }
 
-@media (max-width: 370px) {
+@media (max-width: 470px) {
   h1 {
-    @apply text-xl;
+    display: none;
+  }
+
+  .operations {
+    @apply gap-1;
   }
 }
 
