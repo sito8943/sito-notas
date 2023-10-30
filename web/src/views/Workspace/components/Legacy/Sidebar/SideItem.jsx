@@ -27,9 +27,9 @@ function SideItem({ id, onDelete, onDownload }) {
 
   return (
     <li
-      className={`flex items-center justify-between appear group w-full relative text-sdark dark:text-slight  pr-3 ${
+      className={`flex items-center justify-between appear group w-full relative text-sdark dark:text-slight pr-3 ${
         selected
-          ? "bg-dark-background !text-white"
+          ? "bg-light-background dark:bg-dark-background !dark:text-white"
           : "hover:!text-white hover:bg-secondary"
       }`}
     >

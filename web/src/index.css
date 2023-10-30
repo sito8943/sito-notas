@@ -37,6 +37,19 @@ input[type="search"]::-webkit-search-results-decoration {
   @apply !text-sdark;
 }
 
+.w-md-editor-toolbar,
+.w-md-editor {
+  @apply dark:!text-[#c9d1d9] !text-dark-background2 dark:!bg-[#0d1117] !bg-light-background2;
+}
+
+.w-md-editor-toolbar li > button {
+  @apply dark:!text-[#c9d1d9] !text-dark-background2;
+}
+
+.w-md-editor-text-pre .token.title.important {
+  @apply dark:!text-[#c9d1d9] !text-dark-background2;
+}
+
 .w-md-editor-text-pre,
 .w-md-editor-text-input,
 .w-md-editor-text > .w-md-editor-text-pre {
