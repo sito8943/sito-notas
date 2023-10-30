@@ -17,8 +17,11 @@ const userReducer = (userState, action) => {
   const { type } = action;
   switch (type) {
     case "toggle-legacy":
+      const { setTo } = action;
       if (userState.user) {
-        userState.user.legacy = userState.user.legacy === "1" ? "0" : "1";
+        if (!setTo)
+          userState.user.legacy = userState.user.legacy === "1" ? "0" : "1";
+        else userState.user.legacy = setTo;
         localStorage.setItem(config.legacy, userState.user.legacy);
       }
       return { ...userState };

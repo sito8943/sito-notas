@@ -20,6 +20,8 @@ import Handler from "./components/Error/Handler";
 // services
 import { validateUser } from "./services/auth";
 
+import config from "./config";
+
 // lazy load
 const Workspace = loadable(() => import("./views/Workspace/Workspace"));
 const NotFound = loadable(() => import("./views/NotFound/NotFound"));
@@ -48,8 +50,11 @@ function App() {
   const fetch = async () => {
     try {
       const { data, error } = await validateUser();
+      const legacy = localStorage.getItem(config.legacy);
       if (data.user !== null)
         setUserState({ type: "logged-in", user: data.user });
+      if (legacy !== null)
+        setUserState({ type: "toggle-legacy", setTo: legacy });
     } catch (err) {
       console.error(err);
       if (String(err) === "AxiosError: Network Error")

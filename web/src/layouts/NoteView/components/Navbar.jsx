@@ -1,10 +1,12 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   faSignOut,
   faSun,
   faMoon,
   faBars,
+  faListDots,
+  faEllipsisV,
 } from "@fortawesome/free-solid-svg-icons";
 
 // utils
@@ -30,10 +32,13 @@ export default function Navbar() {
 
   const legacy = useMemo(() => userState.user?.legacy === "1", [userState]);
 
+  const [sidebar, setSidebar] = useState(false);
+
   return (
     <header className="w-full fixed top-0 left-0 z-50 dark:bg-dark-background2 bg-light-background">
       <nav className="w-full flex items-center h-full py-5 px-5 justify-between flex-wrap">
         <div className="flex gap-2 items-center">
+          <IconButton icon={sidebar ? faEllipsisV : faListDots} />
           <img src={logo} alt="stick notes logo" className="w-10 h-10" />
           <h1 className="text-sdark dark:text-secondary uppercase">
             Sito Notas
