@@ -10,6 +10,16 @@ h1 {
   @apply text-3xl;
 }
 
+.toggle-sidebar {
+  display: none;
+}
+
+@media (max-width: 840px) {
+  .toggle-sidebar {
+    display: flex;
+  }
+}
+
 @media (max-width: 470px) {
   h1 {
     display: none;

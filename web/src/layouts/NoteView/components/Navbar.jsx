@@ -34,11 +34,20 @@ export default function Navbar() {
 
   const [sidebar, setSidebar] = useState(false);
 
+  const toggleSidebar = () => setSidebar((sidebar) => setSidebar(!sidebar));
+
   return (
     <header className="w-full fixed top-0 left-0 z-50 dark:bg-dark-background2 bg-light-background">
       <nav className="w-full flex items-center h-full py-5 px-5 justify-between flex-wrap">
         <div className="flex gap-2 items-center">
-          <IconButton icon={sidebar ? faEllipsisV : faListDots} />
+          <IconButton
+            name="toggle-sidebar"
+            onClick={toggleSidebar}
+            icon={sidebar ? faEllipsisV : faListDots}
+            tooltip={sidebar ? "Cerrar barra lateral" : "Abrir barra lateral"}
+            className={`icon-button secondary toggle-sidebar`}
+            aria-label="Click para alternar barra lateral"
+          />
           <img src={logo} alt="stick notes logo" className="w-10 h-10" />
           <h1 className="text-sdark dark:text-secondary uppercase">
             Sito Notas
