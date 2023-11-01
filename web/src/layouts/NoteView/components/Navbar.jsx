@@ -37,7 +37,7 @@ export default function Navbar() {
 
   return (
     <header className="w-full fixed top-0 left-0 z-50 dark:bg-dark-background2 bg-light-background">
-      <nav className="w-full flex items-center h-full py-5 px-5 justify-between flex-wrap">
+      <nav className="nav w-full flex items-center h-full py-5 px-3 justify-between flex-wrap">
         <div className="flex gap-2 items-center">
           <IconButton
             name="toggle-sidebar"
