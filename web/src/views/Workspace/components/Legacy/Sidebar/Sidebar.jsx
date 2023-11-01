@@ -1,5 +1,6 @@
 import React, { useMemo, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useScreenWidth } from "use-screen-width";
 
 import { sortBy } from "some-javascript-utils/array";
 import { parseQueries } from "some-javascript-utils/browser";
@@ -8,6 +9,7 @@ import { faAdd } from "@fortawesome/free-solid-svg-icons";
 
 // contexts
 import { useSearch } from "../../../../../contexts/SearchProvider";
+import { useSidebar } from "../../../../../contexts/SidebarProvider";
 
 // components
 import SideItem from "./SideItem";
@@ -21,6 +23,9 @@ import "./styles.css";
 
 function Sidebar({ notes, onAddNote, onDeleteNote, onDownloadNote }) {
   const { searchState } = useSearch();
+
+  const { sidebarState, setSidebarState } = useSidebar();
+  const { screenWidth } = useScreenWidth();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -40,7 +45,7 @@ function Sidebar({ notes, onAddNote, onDeleteNote, onDownloadNote }) {
     ).map((note) => (
       <SideItem
         id={note}
-        key={note.id}
+        key={note}
         onDeleteNote={onDeleteNote}
         onDownloadNote={onDownloadNote}
       />
@@ -50,11 +55,19 @@ function Sidebar({ notes, onAddNote, onDeleteNote, onDownloadNote }) {
   useEffect(() => {
     const { search } = location;
     const query = parseQueries(search);
-    if (!query.note) navigate(`/?note=${notes[0]}`);
-  }, [location]);
+    if (!query.note && notes.length) navigate(`/?note=${notes[0]}`);
+  }, [location, notes]);
+
+  useEffect(() => {
+    setSidebarState(screenWidth > 840);
+  }, [screenWidth]);
 
   return (
-    <aside className="sidebar py-5 min-w-[300px] w-[300px] bg-light-background2 dark:bg-dark-background2 flex flex-col justify-start items-start">
+    <aside
+      className={`sidebar ${
+        sidebarState ? "!translate-x-[0]" : ""
+      } py-5 min-w-[300px] w-[300px] bg-light-background2 dark:bg-dark-background2 flex flex-col justify-start items-start`}
+    >
       <div className="px-3 mb-2 w-full flex justify-between">
         <h2 className="text-3xl font-bold text-sdark dark:text-slight">
           Mis notas

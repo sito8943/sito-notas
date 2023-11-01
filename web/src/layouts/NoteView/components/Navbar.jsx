@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
 import {
   faSignOut,
@@ -15,6 +15,7 @@ import { utilsToggleTheme } from "../../../utils/functions";
 // contexts
 import { useMode } from "../../../contexts/ModeProvider";
 import { useUser } from "../../../contexts/UserProvider";
+import { useSidebar } from "../../../contexts/SidebarProvider";
 
 // components
 import SearchWrapper from "./SearchWrapper/SearchWrapper";
@@ -32,9 +33,7 @@ export default function Navbar() {
 
   const legacy = useMemo(() => userState.user?.legacy === "1", [userState]);
 
-  const [sidebar, setSidebar] = useState(false);
-
-  const toggleSidebar = () => setSidebar((sidebar) => setSidebar(!sidebar));
+  const { sidebarState, toggleSidebarState } = useSidebar();
 
   return (
     <header className="w-full fixed top-0 left-0 z-50 dark:bg-dark-background2 bg-light-background">
@@ -42,9 +41,11 @@ export default function Navbar() {
         <div className="flex gap-2 items-center">
           <IconButton
             name="toggle-sidebar"
-            onClick={toggleSidebar}
-            icon={sidebar ? faEllipsisV : faListDots}
-            tooltip={sidebar ? "Cerrar barra lateral" : "Abrir barra lateral"}
+            onClick={toggleSidebarState}
+            icon={sidebarState ? faEllipsisV : faListDots}
+            tooltip={
+              sidebarState ? "Cerrar barra lateral" : "Abrir barra lateral"
+            }
             className={`icon-button secondary toggle-sidebar`}
             aria-label="Click para alternar barra lateral"
           />

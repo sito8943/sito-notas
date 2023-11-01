@@ -7,6 +7,7 @@ import { SearchProvider } from "../../contexts/SearchProvider";
 
 // components
 import Navbar from "./components/Navbar";
+import { SidebarProvider } from "../../contexts/SidebarProvider";
 
 function NoteView() {
   const navigate = useNavigate();
@@ -19,8 +20,10 @@ function NoteView() {
 
   return (
     <SearchProvider>
-      <Navbar />
-      <Outlet />
+      <SidebarProvider>
+        <Navbar />
+        <Outlet />
+      </SidebarProvider>
     </SearchProvider>
   );
 }
