@@ -7,6 +7,9 @@ import React, {
 } from "react";
 import loadable from "@loadable/component";
 
+import "/node_modules/react-grid-layout/css/styles.css"
+import "/node_modules/react-resizable/css/styles.css"
+
 import { v4 } from "uuid";
 
 import { css } from "@emotion/css";
