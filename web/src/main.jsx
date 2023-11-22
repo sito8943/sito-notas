@@ -1,35 +1,31 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 
-// contexts
-import { ModeProvider } from "./contexts/ModeProvider";
-import { UserProvider } from "./contexts/UserProvider";
-import { NotificationProvider } from "./contexts/NotificationProvider";
+// @sito/ui
+import { StyleProvider, ModeProvider, NotificationProvider } from "@sito/ui";
 
-// app
+// providers
+import { UserProvider } from "./providers/UserProvider.jsx";
+
+// APP
 import App from "./App.jsx";
 
-// styles
+// app styles
 import "./index.css";
-// animations
-import "./assets/animations/appear.css";
-import "./assets/animations/grow.css";
-import "./assets/animations/shake.css";
 // Import css files
 import "tippy.js/dist/tippy.css"; // optional
 
 // fonts
-import "@fontsource/gabarito";
 import "@fontsource/poppins";
+import "@fontsource/roboto";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <ModeProvider>
-    <NotificationProvider>
+  <StyleProvider>
+    <ModeProvider>
       <NotificationProvider>
         <UserProvider>
           <App />
         </UserProvider>
       </NotificationProvider>
-    </NotificationProvider>
-  </ModeProvider>
+    </ModeProvider>
+  </StyleProvider>
 );

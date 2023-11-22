@@ -2,160 +2,78 @@
 @tailwind components;
 @tailwind utilities;
 
-.operations {
-  @apply flex gap-3 items-center;
-}
-
-h1 {
-  @apply text-3xl;
-}
-
-.toggle-sidebar {
-  display: none;
-}
-
-@media (max-width: 840px) {
-  .toggle-sidebar {
-    display: flex;
-  }
-}
-
-@media (max-width: 470px) {
-  h1 {
-    display: none;
-  }
-
-  .operations {
-    @apply gap-1;
-  }
-}
-
-input[type="search"]::-webkit-search-decoration,
-input[type="search"]::-webkit-search-cancel-button,
-input[type="search"]::-webkit-search-results-button,
-input[type="search"]::-webkit-search-results-decoration {
-  -webkit-appearance: none;
-}
-
-.main {
-  width: 100%;
-  height: calc(100vh - 80px);
-  padding-top: 30px;
-}
-
-.wmde-markdown a {
-  @apply !text-sdark;
-}
-
-.w-md-editor-toolbar,
-.w-md-editor {
-  @apply dark:!text-[#c9d1d9] !text-dark-background2 dark:!bg-[#0d1117] !bg-light-background2;
-}
-
-.w-md-editor-toolbar li > button {
-  @apply dark:!text-[#c9d1d9] !text-dark-background2;
-}
-
-.w-md-editor-text-pre .token.title.important {
-  @apply dark:!text-[#c9d1d9] !text-dark-background2;
-}
-
-.w-md-editor-text-pre,
-.w-md-editor-text-input,
-.w-md-editor-text > .w-md-editor-text-pre {
-  font-family: inherit !important;
-}
-
-.wmde-markdown {
-  color: inherit !important;
-  background-color: inherit !important;
-}
-
-.secondary.dashed-border {
-  @apply border-secondary;
-}
-.dashed-border {
-  @apply w-full border-[1px] border-dashed;
-}
-
 * {
+  font-family: "Roboto", sans-serif;
+}
+
+.skeleton-box {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  background-color: #dddbdd;
+  border-radius: 100px;
+  opacity: 0.6;
+}
+
+.skeleton-box::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0,
+    rgba(255, 255, 255, 0.2) 20%,
+    rgba(255, 255, 255, 0.5) 60%,
+    rgba(255, 255, 255, 0)
+  );
+  -webkit-animation: shimmer 5s infinite;
+  animation: shimmer 5s infinite;
+  content: "";
+}
+@-webkit-keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.viewport {
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+h1,
+h2,
+h3 {
   font-family: "Poppins", sans-serif;
+  font-weight: 900;
 }
 
-h1 {
-  font-family: "Gabarito", sans-serif;
+.sync .loader {
+  width: 30px;
 }
 
-body {
-  @apply transition-all duration-300;
+.button-loading .loader {
+  width: 22px;
+}
+.button-loading .loading {
+  background: none !important;
 }
 
-.dark body {
-  background: rgba(12, 12, 12);
-  background-image: linear-gradient(
-    174.2deg,
-    rgba(12, 12, 12) 7.1%,
-    rgba(17, 17, 17) 67.4%
-  );
-}
-.light body {
-  background: rgba(255, 244, 228, 1);
-  background-image: linear-gradient(
-    174.2deg,
-    rgba(255, 244, 228, 1) 7.1%,
-    rgba(240, 246, 238, 1) 67.4%
-  );
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 
-* {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  scroll-behavior: smooth;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-
-textarea {
-  resize: none;
-}
-
-input[type="file"] {
-  visibility: hidden;
-}
-
-input:focus-visible,
-input {
-  outline: none !important;
-}
-
-.primary.link {
-  @apply hover:bg-primary text-white;
-}
-.secondary.link {
-  @apply hover:bg-secondary text-white;
-}
-
-.link {
-  @apply transition;
-}
-
-.input-control {
-  @apply relative w-full flex flex-col items-start justify-start gap-2;
-}
-
-.input {
-  @apply px-5 py-2 rounded-3xl transition duration-300 text-sdark;
-}
-
-.input:disabled {
-  @apply cursor-auto;
-}
-
-ol,
-ul,
-menu {
-  list-style: linear-gradient;
+input[type="number"] {
+  -moz-appearance: textfield;
 }

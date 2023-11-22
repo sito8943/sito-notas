@@ -1,44 +1,46 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import { createCookie } from "some-javascript-utils/browser";
+// @sito/ui
+import {
+  useNotification,
+  InputControl,
+  IconButton,
+  Button,
+  Loading,
+} from "@sito/ui";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEnvelope,
   faLock,
   faLockOpen,
-  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 
 // contexts
-import { useUser } from "../../contexts/UserProvider";
-import { useNotification } from "../../contexts/NotificationProvider";
+import { useUser } from "../../providers/UserProvider";
 
 // components
-import Button from "../../components/Button/Button";
-import Switch from "../../components/Switch/Switch";
-import Loading from "../../components/Loading/Loading";
-import ModeButton from "../../components/FAB/ModeButton";
-import IconButton from "../../components/IconButton/IconButton";
-import SimpleInput from "../../components/SimpleInput/SimpleInput";
+import ModeButton from "../../components/ModeButton/ModeButton";
 
 // services
 import { register } from "../../services/auth";
+import { createSettingsUser } from "../../services/user";
 
-// utils
-import { logUser } from "../../utils/auth";
-
-import config from "../../config";
+// auth
+import { saveUser } from "../../utils/auth";
 
 // images
 import logo from "../../assets/images/logo.png";
 
-// images
-import noPhoto from "../../assets/images/no-photo.webp";
+// lang
+import { showError } from "../../lang/es";
+
+// styles
+import "./styles.css";
 
 function SignUp() {
-  const { setNotificationState } = useNotification();
+  const { setNotification } = useNotification();
 
   const [email, setEmail] = useState("");
   const [emailHelperText, setEmailHelperText] = useState("");
@@ -62,19 +64,10 @@ function SignUp() {
 
   const navigate = useNavigate();
 
-  const { userState, setUserState } = useUser();
+  const { setUserState } = useUser();
 
   const [loading, setLoading] = useState(false);
-
-  const showNotification = useCallback(
-    (ntype, message) =>
-      setNotificationState({
-        type: "set",
-        ntype,
-        message,
-      }),
-    [setNotificationState]
-  );
+  const [goToVerify, setGoToVerify] = useState(false);
 
   const onSubmit = useCallback(
     async (e) => {
@@ -96,135 +89,120 @@ function SignUp() {
         setPasswordHelperText("No coinciden las contraseñas");
         return;
       }
-      try {
-        setLoading(true);
-        const response = await register(email, password);
-        const { data, error } = response;
-        if (!error) {
-          const { expiration, token, state, permissions } = data;
-          createCookie(config.basicKey, expiration, token);
-          logUser({
-            id: data.id,
-            user: data.user,
-            photo: `${config.apiPhoto}${data.photo}` || noPhoto,
-            state: data.state,
-            permissions,
-          });
+      setLoading(true);
+      const response = await register(email, password);
+      const { data, error } = response;
+      if (!error || error === null) {
+        const walletUser = await createSettingsUser(data.user.id);
+        if (walletUser.error && walletUser.user !== null) {
+          console.error(walletUser.error.message);
+          setGoToVerify(true);
+        } else {
           setUserState({
             type: "logged-in",
             user: {
-              id: data.id,
-              user: data.user,
-              photo: `${config.apiPhoto}${data.photo}` || noPhoto,
-              state,
-              permissions,
+              ...data.user,
             },
+            photo: {},
+            cash: 0,
           });
+          saveUser({ user: data.user, photo: {}, cash: 0 });
           navigate("/");
-        } else throw error;
-      } catch (err) {
-        console.error(err);
-        const { response } = err;
-        if (String(err) === "AuthApiError: Invalid login credentials")
-          showNotification("error", "Usuario o contraseña incorrecta");
-        else if (String(err) === "AxiosError: Network Error")
-          showNotification("error", errors.notConnected);
-        else if (response) {
-          const { status } = response;
-          switch (status) {
-            case 401:
-              showNotification("error", "Ya existe una cuenta con ese email");
-              break;
-            default:
-              showNotification("error", String(err));
-              break;
-          }
-        } else showNotification("error", String(err));
-      }
+        }
+      } else
+        setNotification({ type: "error", message: showError(error.message) });
       setLoading(false);
     },
-    [email, password, rPassword, showNotification, navigate, setUserState]
+    [email, password, rPassword, setNotification, navigate, setUserState]
   );
 
-  useEffect(() => {
-    if (userState.user) navigate("/");
-  }, []);
-
   return (
-    <main className="w-full min-h-screen flex items-center justify-center">
+    <main className="w-full viewport flex items-center justify-center">
       <ModeButton className="top-1 right-1 icon-button primary" />
-      {loading ? (
-        <Loading className="fixed-loading" />
+      <div
+        className={`bg-light-alter dark:bg-dark-alter pointer-events-none fixed top-0 left-0 z-10 w-full h-screen flex items-center backdrop-blur-sm transition-all duration-100 ${
+          loading ? "opacity-100" : "opacity-0"
+        }`}
+      >
+        <Loading
+          className={`dark:bg-dark-background transition-all duration-300  ${
+            loading ? "!h-[100px]" : "!h-[0px]"
+          }`}
+        />
+      </div>
+      {goToVerify ? (
+        <div className="form bg-light-alter dark:bg-dark-alter appear items-center">
+          <h1 className="text-success text-center text-4xl">
+            Registrado correctamente
+          </h1>
+          <p className="text-center">
+            Gracias por registrarte. Por favor, valida tu dirección de correo
+            electrónico haciendo clic en el enlace de confirmación que acabamos
+            de enviar a tu dirección.
+          </p>
+          <Link to="/">
+            <Button className="submit primary">Iniciar Sesión</Button>
+          </Link>
+        </div>
       ) : (
         <form
           onSubmit={onSubmit}
-          className="rounded-sm appear relative bg-light-background dark:bg-dark-background2 p-10 min-w-[440px] flex flex-col gap-3 shadow-xl shadow-dark-[black]"
+          className="form bg-light-alter dark:bg-dark-alter appear"
         >
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-2 items-start flex-col">
             <img src={logo} alt="stick notes logo" className="w-10 h-10" />
-            <h1 className="text-sdark dark:text-secondary uppercase">
-              Sito Notas
-            </h1>
+            <h1 className="primary uppercase text-4xl">Sito Notas</h1>
           </div>
-          <SimpleInput
+          <InputControl
             id="email"
-            className="input-control dark:text-white"
             label="Email"
-            inputProps={{
-              className: "input border-none submit !pl-8 w-full",
-              value: email,
-              onChange: handleEmail,
-              type: "email",
-            }}
-            leftIcon={
+            className="sign-in-input"
+            value={email}
+            onChange={handleEmail}
+            type="email"
+            leftComponent={
               <FontAwesomeIcon
-                className="absolute text-secondary top-[50%] -translate-y-[50%] left-3"
+                className="absolute primary top-[50%] -translate-y-[50%] left-3"
                 icon={faEnvelope}
               />
             }
             helperText={emailHelperText}
           />
-          <SimpleInput
+          <InputControl
             id="password"
-            className="input-control dark:text-white"
+            className="sign-in-input"
             label="Contraseña"
-            inputProps={{
-              maxLength: 25,
-              className: "input border-none submit !pl-8 w-full",
-              value: password,
-              onChange: handlePassword,
-              type: !showPassword ? "password" : "string",
-            }}
-            leftIcon={
+            maxLength={25}
+            value={password}
+            onChange={handlePassword}
+            type={!showPassword ? "password" : "string"}
+            leftComponent={
               <IconButton
                 tabIndex={-1}
                 name="toggle-see-password"
                 onClick={toggleShowPassword}
                 icon={showPassword ? faLockOpen : faLock}
-                className="absolute text-secondary top-[50%] -translate-y-[50%] left-3 !p-0 -ml-[12px]"
+                className="absolute primary top-[50%] -translate-y-[50%] left-3 !p-0 -ml-[12px]"
                 aria-label="click para alternar ver/ocultar contraseña"
               />
             }
             helperText={passwordHelperText}
           />
-          <SimpleInput
+          <InputControl
             id="rPassword"
-            className="input-control dark:text-white"
+            className="sign-in-input"
             label="Repetir Contraseña"
-            inputProps={{
-              maxLength: 25,
-              className: "input border-none submit !pl-8 w-full",
-              value: rPassword,
-              onChange: handleRPassword,
-              type: !showRPassword ? "password" : "string",
-            }}
-            leftIcon={
+            maxLength={25}
+            value={rPassword}
+            onChange={handleRPassword}
+            type={!showRPassword ? "password" : "string"}
+            leftComponent={
               <IconButton
                 tabIndex={-1}
                 name="toggle-see-r-password"
                 onClick={toggleShowRPassword}
                 icon={showRPassword ? faLockOpen : faLock}
-                className="absolute text-secondary top-[50%] -translate-y-[50%] left-3 !p-0 -ml-[12px]"
+                className="absolute primary top-[50%] -translate-y-[50%] left-3 !p-0 -ml-[12px]"
                 aria-label="click para alternar ver/ocultar repetir contraseña"
               />
             }
@@ -234,7 +212,7 @@ function SignUp() {
             ¿Ya tienes cuenta?{" "}
             <Link
               to="/auth/"
-              className="underline hover:text-sdark dark:hover:text-secondary"
+              className="underline hover:text-sdark dark:hover:primary"
             >
               Iniciar sesión
             </Link>
@@ -244,7 +222,7 @@ function SignUp() {
               name="login"
               type="submit"
               aria-label="Click para entrar"
-              className="secondary submit"
+              className="primary submit"
             >
               Siguiente
             </Button>

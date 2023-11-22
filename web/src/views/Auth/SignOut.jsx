@@ -1,35 +1,33 @@
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
-// utils
-import { getUserName, logoutUser } from "../../utils/auth";
+// @sito/ui
+import { Loading } from "@sito/ui";
 
 // contexts
-import { useUser } from "../../contexts/UserProvider";
+import { useUser } from "../../providers/UserProvider";
+
+// utils
+import { logoutUser } from "../../utils/auth";
 
 // services
 import { signOutUser } from "../../services/auth";
 
-// components
-import Loading from "../../components/Loading/Loading";
-
 function SignOut() {
   const navigate = useNavigate();
-
   const { setUserState } = useUser();
 
   const signOut = async () => {
-    try {
-      await signOutUser();
-    } catch (err) {
-      console.error(err);
-    }
+    const error = await signOutUser();
+    if (error && error !== null) console.error(error);
+    logoutUser();
     setUserState({ type: "logged-out" });
-    navigate("/");
+    navigate("/auth");
   };
 
   useEffect(() => {
     signOut();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <Loading className="w-full h-screen" />;

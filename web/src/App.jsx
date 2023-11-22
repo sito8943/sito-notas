@@ -1,103 +1,56 @@
-import React, { useState, useEffect, useCallback, Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import loadable from "@loadable/component";
 
 // layouts
 import Auth from "./layouts/Auth";
 import View from "./layouts/View/View";
-import NoteView from "./layouts/NoteView/NoteView";
 
-// contexts
-import { useMode } from "./contexts/ModeProvider";
-import { useUser } from "./contexts/UserProvider.jsx";
-import { useNotification } from "./contexts/NotificationProvider";
-
-// components
-import Loading from "./components/Loading/Loading";
-import Notification from "./components/Notification/Notification";
-import Handler from "./components/Error/Handler";
+// @sito/ui
+import { Handler, Loading, Notification } from "@sito/ui";
 
 // services
 import { validateUser } from "./services/auth";
 
-import config from "./config";
+// context
+import { useUser } from "./providers/UserProvider";
 
-// lazy load
-const Workspace = loadable(() => import("./views/Workspace/Workspace"));
-const NotFound = loadable(() => import("./views/NotFound/NotFound"));
-const SignOut = loadable(() => import("./views/Auth/SignOut"));
+// auth cache
+import { cachedUser, getUser, logoutUser, saveUser } from "./utils/auth";
+
+// views
 const SignIn = loadable(() => import("./views/Auth/SignIn"));
+const SignOut = loadable(() => import("./views/Auth/SignOut"));
 const SignUp = loadable(() => import("./views/Auth/SignUp"));
 const Home = loadable(() => import("./views/Home/Home"));
+const NotFound = loadable(() => import("./views/NotFound/NotFound"));
+const Settings = loadable(() => import("./views/Settings/Settings"));
 
 function App() {
-  const { setModeState } = useMode();
-  const { setNotificationState } = useNotification();
-  const { userState, setUserState } = useUser();
+  const { setUserState } = useUser();
 
   const [loading, setLoading] = useState(true);
-
-  const showNotification = useCallback(
-    (ntype, message) =>
-      setNotificationState({
-        type: "set",
-        ntype,
-        message,
-      }),
-    [setNotificationState]
-  );
 
   const fetch = async () => {
     try {
       const { data, error } = await validateUser();
-      const legacy = localStorage.getItem(config.legacy);
-      if (data.user !== null)
+      if (error && error !== null && cachedUser())
+        setUserState({ type: "logged-in", user: getUser(), cached: true });
+      else {
+        saveUser({ ...getUser(), user: data.user, cached: false });
         setUserState({ type: "logged-in", user: data.user });
-      if (legacy !== null)
-        setUserState({ type: "toggle-legacy", setTo: legacy });
+      }
     } catch (err) {
+      logoutUser();
       console.error(err);
-      if (String(err) === "AxiosError: Network Error")
-        return showNotification("error", errors.notConnected);
-      const { response } = err;
-      if (response) {
-        const { status } = response;
-        switch (status) {
-          case 403:
-          case 401:
-            break;
-          default:
-            showNotification("error", String(err));
-            break;
-        }
-      } else showNotification("error", String(err));
-      showNotification("error", String(err));
-      setLoading(false);
     }
+
     setLoading(false);
   };
 
   useEffect(() => {
-    try {
-      if (
-        localStorage.theme === "dark" ||
-        (!("theme" in localStorage) &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches)
-      ) {
-        document.documentElement.classList.add("dark");
-        document.documentElement.classList.remove("light");
-        localStorage.setItem("theme", "dark");
-        setModeState(false);
-      } else {
-        document.documentElement.classList.add("light");
-        document.documentElement.classList.remove("dark");
-        localStorage.setItem("theme", "light");
-        setModeState(true);
-      }
-    } catch (err) {
-      console.error(err);
-    }
     fetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -111,15 +64,10 @@ function App() {
                 <Route index element={<SignIn />} />
                 <Route path="/auth/sign-up" element={<SignUp />} />
               </Route>
-              {userState.user ? (
-                <Route path="/" element={<NoteView />}>
-                  <Route index element={<Workspace />} />
-                </Route>
-              ) : (
-                <Route path="/" element={<View />}>
-                  <Route index element={<Home />} />
-                </Route>
-              )}
+              <Route path="/" element={<View />}>
+                <Route index element={<Home />} />
+                <Route path="/settings" element={<Settings />} />
+              </Route>
 
               <Route exact path="/sign-out" element={<SignOut />} />
               <Route path="/*" element={<NotFound />} />
