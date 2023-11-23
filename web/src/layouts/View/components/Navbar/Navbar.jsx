@@ -1,54 +1,104 @@
-import React from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { faSun, faMoon, faSignIn } from "@fortawesome/free-solid-svg-icons";
 
-// utils
-import { utilsToggleTheme } from "../../../../utils/functions";
+import {
+  faArrowRightFromBracket,
+  faGear,
+  faMoon,
+  faSun,
+} from "@fortawesome/free-solid-svg-icons";
 
-// contexts
-import { useMode } from "../../../../contexts/ModeProvider";
+// @sito/ui
+import { IconButton, useMode } from "@sito/ui";
 
-// components
-import IconButton from "../../../../components/IconButton/IconButton";
+// providers
+import { useUser } from "../../../providers/UserProvider";
 
 // images
-import logo from "../../../../assets/images/logo.png";
+import noPhoto from "../../../assets/images/no-photo.webp";
+
+// styles
+import "./styles.css";
 
 function Navbar() {
-  const { modeState, toggleModeState } = useMode();
+  const { userState } = useUser();
+  const { toggleMode, mode } = useMode();
+
+  const [transparency, setTransparency] = useState(true);
+
+  const onScroll = useCallback(() => {
+    const top = window.pageYOffset || document.documentElement.scrollTop;
+    if (top > 10) setTransparency(false);
+    else setTransparency(true);
+  }, [setTransparency]);
+
+  useEffect(() => {
+    onScroll();
+    window.addEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [onScroll]);
 
   return (
-    <header className="w-full fixed top-0 left-0 z-50 dark:bg-dark-background2 bg-light-background">
-      <nav className="w-full flex items-center h-full py-5 px-5 justify-between flex-wrap">
-        <div className="flex gap-2 items-center">
-          <img src={logo} alt="stick notes logo" className="w-10 h-10" />
-          <h1 className="text-sdark dark:text-secondary uppercase">
-            Sito Notas
+    <header
+      className={`z-50 fixed top-3 left-[50%] -translate-x-[50%] transition-all duration-300 ease-in-out ${
+        transparency ? "w-[99%]" : "navbar"
+      }`}
+    >
+      <div
+        className={`relative backdrop-blur-[1rem] rounded-[100px] flex w-full justify-between py-3 px-5 xs:px-3 `}
+      >
+        <div
+          className={` absolute w-full h-full top-0 left-0 rounded-[100px] opacity-90 ${
+            transparency ? "" : "blur-background"
+          }`}
+        ></div>
+        <Link
+          aria-label="Ir al inicio"
+          name="go-home"
+          to="/"
+          className="z-10 flex gap-2 items-center primary"
+        >
+          <img
+            src={noPhoto}
+            alt="user-photo"
+            className="rounded-full w-10 h-10 object-contain"
+          />
+          <h1 className="capitalize text-xl">
+            {userState.user?.email?.split("@")[0]}
           </h1>
-        </div>
-        <div className="flex gap-3 items-center">
-          <Link to="/auth/">
+        </Link>
+        <nav className="z-10 flex">
+          <IconButton
+            onClick={() => toggleMode()}
+            tooltip="Alternar tema (Claro/Oscuro)"
+            name="toggle-theme"
+            aria-label="Click para cambiar el tema"
+            icon={mode === "dark" ? faSun : faMoon}
+          />{" "}
+          <Link
+            to="/settings"
+            name="toggle-theme"
+            aria-label="Ir a la configuración"
+          >
             <IconButton
-              name="sign-in"
-              tooltip="Iniciar sesión"
-              icon={faSignIn}
-              className="icon-button secondary"
-              aria-label="Click para iniciar sesión"
+              tooltip="Ir a la configuración"
+              name="toggle-theme"
+              aria-label="Ir a la configuración"
+              icon={faGear}
             />
           </Link>
-          <IconButton
-            name="toggle-theme"
-            onClick={() => {
-              toggleModeState();
-              utilsToggleTheme();
-            }}
-            tooltip={!modeState ? "Tema claro" : "Tema oscuro  "}
-            icon={!modeState ? faSun : faMoon}
-            className="icon-button secondary"
-            aria-label="Click para cambiar el tema"
-          />
-        </div>
-      </nav>
+          <Link to="/sign-out" name="logout" aria-label="Cerrar sesión">
+            <IconButton
+              tooltip="Cerrar sesión"
+              name="logout"
+              aria-label="Cerrar sesión"
+              icon={faArrowRightFromBracket}
+            />
+          </Link>
+        </nav>
+      </div>
     </header>
   );
 }

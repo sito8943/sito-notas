@@ -33,10 +33,6 @@ const config = {
   recovering: VITE_RECOVERING_COOKIE,
   // COMMUNICATION
   crypto: VITE_CRYPTO,
-  // MANAGER
-  legacy: VITE_LEGACY,
-  tasks: VITE_NOTES,
-  editedTask: VITE_EDITED_NOTE,
   // SUPABASE
   supabaseCO: VITE_SUPABASE_CO,
   supabaseANON: VITE_SUPABASE_ANON,

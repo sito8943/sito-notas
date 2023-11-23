@@ -31,7 +31,7 @@ import { createSettingsUser } from "../../services/user";
 import { saveUser } from "../../utils/auth";
 
 // images
-import logo from "../../assets/images/logo.png";
+// import logo from "../../assets/images/logo.png";
 
 // lang
 import { showError } from "../../lang/es";
@@ -93,9 +93,9 @@ function SignUp() {
       const response = await register(email, password);
       const { data, error } = response;
       if (!error || error === null) {
-        const walletUser = await createSettingsUser(data.user.id);
-        if (walletUser.error && walletUser.user !== null) {
-          console.error(walletUser.error.message);
+        const settingUser = await createSettingsUser(data.user.id);
+        if (settingUser.error && settingUser.user !== null) {
+          console.error(settingUser.error.message);
           setGoToVerify(true);
         } else {
           setUserState({
@@ -104,9 +104,8 @@ function SignUp() {
               ...data.user,
             },
             photo: {},
-            cash: 0,
           });
-          saveUser({ user: data.user, photo: {}, cash: 0 });
+          saveUser({ user: data.user, photo: {} });
           navigate("/");
         }
       } else
@@ -120,13 +119,13 @@ function SignUp() {
     <main className="w-full viewport flex items-center justify-center">
       <ModeButton className="top-1 right-1 icon-button primary" />
       <div
-        className={`bg-light-alter dark:bg-dark-alter pointer-events-none fixed top-0 left-0 z-10 w-full h-screen flex items-center backdrop-blur-sm transition-all duration-100 ${
-          loading ? "opacity-100" : "opacity-0"
+        className={`bg-light-alter dark:bg-dark-alter pointer-events-none fixed top-0 left-0 z-10 w-full h-screen flex items-center backdrop-blur-[1rem] transition-all duration-100 ${
+          !loading ? "opacity-100" : "opacity-0"
         }`}
       >
         <Loading
-          className={`dark:bg-dark-background transition-all duration-300  ${
-            loading ? "!h-[100px]" : "!h-[0px]"
+          className={`dark:bg-dark-alter  transition-all duration-300  ${
+            !loading ? "!h-[100px]" : "!h-[0px]"
           }`}
         />
       </div>
@@ -150,8 +149,9 @@ function SignUp() {
           className="form bg-light-alter dark:bg-dark-alter appear"
         >
           <div className="flex gap-2 items-start flex-col">
-            <img src={logo} alt="stick notes logo" className="w-10 h-10" />
-            <h1 className="primary uppercase text-4xl">Sito Notas</h1>
+            {/* <img src={logo} alt="stick notes logo" className="w-10 h-10" /> */}
+            LOGO
+            <h1 className="primary uppercase text-4xl">Sito Wallet</h1>
           </div>
           <InputControl
             id="email"

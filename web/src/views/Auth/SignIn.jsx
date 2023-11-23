@@ -8,6 +8,7 @@ import {
   InputControl,
   IconButton,
   Button,
+  Switcher,
 } from "@sito/ui";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -52,6 +53,8 @@ function SignIn() {
 
   const [loading, setLoading] = useState(false);
 
+  const [remember, setRemember] = useState(true);
+
   const onSubmit = useCallback(
     async (e) => {
       e.preventDefault();
@@ -72,12 +75,14 @@ function SignIn() {
         return;
       }
       setLoading(true);
-      const response = await login(user, password);
+      const response = await login(user, password, remember);
       const { data, error } = response;
+
       if (error && error !== null)
         setNotification({ type: "error", message: showError(error.message) });
       else {
         const userData = await fetchUserData(data.user.id);
+
         if (userData.error && userData.error !== null) {
           setNotification({
             type: "error",
@@ -85,30 +90,28 @@ function SignIn() {
           });
           setLoading(false);
         }
-        if (!data.length) await createSettingsUser(data.user.id);
+        if (!userData.data.length) await createSettingsUser(data.user.id);
         setUserState({
           type: "logged-in",
           user: data.user,
-          photo: userData[0]?.photo ?? {},
-          cash: userData[0]?.cash ?? 0,
+          photo: userData.data[0]?.photo ?? {},
         });
         saveUser({
           user: data.user,
-          photo: userData[0]?.photo ?? {},
-          cash: userData[0]?.photo ?? {},
+          photo: userData.data[0]?.photo ?? {},
         });
         navigate("/");
       }
       setLoading(false);
     },
-    [user, password, setNotification, navigate, setUserState]
+    [user, password, remember, setNotification, setUserState, navigate]
   );
 
   return (
     <main className="w-full viewport flex items-center justify-center">
       <ModeButton className="top-1 right-1 primary" />
       <div
-        className={`bg-light-alter dark:bg-dark-alter pointer-events-none fixed top-0 left-0 z-10 w-full h-screen flex items-center backdrop-blur-sm transition-all duration-100 ${
+        className={`bg-light-alter dark:bg-dark-alter pointer-events-none fixed top-0 left-0 z-10 w-full h-screen flex items-center backdrop-blur-[1rem] transition-all duration-100 ${
           loading ? "opacity-100" : "opacity-0"
         }`}
       >
@@ -123,8 +126,9 @@ function SignIn() {
         className="form bg-light-alter dark:bg-dark-alter appear"
       >
         <div className="flex gap-2 items-start flex-col">
-          <img src={logo} alt="stick notes logo" className="w-10 h-10" />
-          <h1 className="primary uppercase text-4xl">Sito Notas</h1>
+          {/* <img src={logo} alt="stick notes logo" className="w-10 h-10" /> */}
+          LOGO
+          <h1 className="primary uppercase text-4xl">Sito Wallet</h1>
         </div>
         <InputControl
           id="user"
@@ -158,6 +162,11 @@ function SignIn() {
             />
           }
           helperText={passwordHelperText}
+        />
+        <Switcher
+          checked={remember}
+          label="Recordarme"
+          onChange={(e) => setRemember(e.target.checked)}
         />
         <p className="dark:text-white">
           ¿No tienes cuenta?{" "}

@@ -1,8 +1,8 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import PropTypes from "prop-types";
 
-// components
-import IconButton from "../IconButton/IconButton";
+// @sito/ui
+import { IconButton } from "@sito/ui";
 
 function FAB(props) {
   const position = useMemo(() => {
@@ -28,6 +28,7 @@ function FAB(props) {
 }
 
 FAB.propTypes = {
+  className: PropTypes.string,
   icon: PropTypes.object.isRequired,
   position: PropTypes.oneOf([
     "top-left",

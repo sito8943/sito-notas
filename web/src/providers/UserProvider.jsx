@@ -5,39 +5,41 @@ import { createContext, useReducer, useContext } from "react";
 // prop-types is a library for typechecking of props
 import PropTypes from "prop-types";
 
-// utils
-import { logUser, logoutUser } from "../utils/auth";
-
-// config
-import config from "../config";
+import { saveUser } from "../utils/auth";
 
 const UserContext = createContext();
 
 const userReducer = (userState, action) => {
   const { type } = action;
   switch (type) {
-    case "toggle-legacy":
-      const { setTo } = action;
-      if (userState.user) {
-        if (!setTo)
-          userState.user.legacy = userState.user.legacy === "1" ? "0" : "1";
-        else userState.user.legacy = setTo;
-        localStorage.setItem(config.legacy, userState.user.legacy);
-      }
-      return { ...userState };
-    case "set-photo": {
-      if (userState.user) {
-        userState.user.photo = action.photo;
-        logUser(userState.user);
-      }
-      return { ...userState };
+    case "init-log": {
+      const { initial } = action;
+      userState.initial = initial;
+      saveUser(userState);
+      return userState;
+    }
+    case "init-bills": {
+      const { bills } = action;
+      userState.bills = bills;
+      saveUser(userState);
+      return userState;
+    }
+    case "add-bill": {
+      const { bills } = action;
+      saveUser({ ...userState, bills });
+      return { ...userState, bills };
+    }
+    case "init-balances": {
+      const { balances } = action;
+      userState.balances = balances;
+      saveUser(userState);
+      return userState;
     }
     case "logged-out":
-      logoutUser();
       return {};
     case "logged-in": {
-      const { user } = action;
-      return { user };
+      const { user, photo, cached, account } = action;
+      return { user, photo, cached, account };
     }
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
