@@ -1,9 +1,0 @@
-@media (max-width: 840px) {
-  .sidebar {
-    position: absolute;
-    z-index: 99;
-    height: calc(100vh - 80px);
-    transform: translateX(-300px);
-    transition: transform 400ms ease;
-  }
-}
