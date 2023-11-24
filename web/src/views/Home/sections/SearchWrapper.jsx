@@ -1,15 +1,16 @@
-import { useState } from "react";
 import { useDebounce } from "use-lodash-debounce";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/ui
 import { InputControl } from "@sito/ui";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+
+// providers
+import { useSearch } from "../../../providers/SearchProvider";
 
 function SearchWrapper() {
-  const [searchValue, setSearchValue] = useState("");
-  const debounced = useDebounce();
+  const { searchValue, setSearchValue } = useSearch();
 
   return (
     <InputControl

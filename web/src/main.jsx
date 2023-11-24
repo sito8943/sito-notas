@@ -23,7 +23,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <ModeProvider>
       <NotificationProvider>
         <UserProvider>
-          <App />
+          <SearchProvider>
+            <App />
+          </SearchProvider>
         </UserProvider>
       </NotificationProvider>
     </ModeProvider>
