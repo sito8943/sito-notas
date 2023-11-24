@@ -13,8 +13,8 @@ function Home() {
 
   return (
     <main className="flex flex-col viewport">
-      <div className="p-10 sm:p-3 pt-20 mt-20 flex flex-col gap-2 flex-1">
-        <h2 className="text-6xl xs:text-4xl">Mis notas</h2>
+      <div className="p-10 sm:p-3 mt-20 flex flex-col gap-5 flex-1">
+        <h2 className="text-6xl xs:text-4xl -mb-3">Mis notas</h2>
         <SearchWrapper />
         <TypesTabs />
         <Notes />

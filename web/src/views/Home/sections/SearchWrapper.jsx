@@ -14,6 +14,7 @@ function SearchWrapper() {
 
   return (
     <InputControl
+      role="search"
       leftComponent={<FontAwesomeIcon className="opacity-70" icon={faSearch} />}
       value={searchValue}
       onChange={(e) => setSearchValue(e.target.value)}

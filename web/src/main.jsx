@@ -5,6 +5,7 @@ import { StyleProvider, ModeProvider, NotificationProvider } from "@sito/ui";
 
 // providers
 import { UserProvider } from "./providers/UserProvider.jsx";
+import { SearchProvider } from "./providers/SearchProvider.jsx";
 
 // APP
 import App from "./App.jsx";

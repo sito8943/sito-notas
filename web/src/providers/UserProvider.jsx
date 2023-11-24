@@ -12,28 +12,9 @@ const UserContext = createContext();
 const userReducer = (userState, action) => {
   const { type } = action;
   switch (type) {
-    case "init-log": {
-      const { initial } = action;
-      userState.initial = initial;
-      saveUser(userState);
-      return userState;
-    }
-    case "init-bills": {
-      const { bills } = action;
-      userState.bills = bills;
-      saveUser(userState);
-      return userState;
-    }
-    case "add-bill": {
-      const { bills } = action;
-      saveUser({ ...userState, bills });
-      return { ...userState, bills };
-    }
-    case "init-balances": {
-      const { balances } = action;
-      userState.balances = balances;
-      saveUser(userState);
-      return userState;
+    case "set-types": {
+      const { types } = action;
+      return { ...userState, types };
     }
     case "logged-out":
       return {};
