@@ -9,6 +9,7 @@ import { useUser } from "../../../providers/UserProvider";
 
 // services
 import { fetchNotes } from "../../../services/notes";
+import PreviewNote from "../components/PreviewNote";
 
 function Notes() {
   const { userState, setUserState } = useUser();
@@ -30,7 +31,17 @@ function Notes() {
     }
   }, [userState]);
 
-  return <section className=""></section>;
+  return (
+    <section className="">
+      {loading
+        ? [1, 2, 3, 4, 5].map((skeleton) => (
+            <div key={skeleton} className="w-full h-[44px] skeleton-box" />
+          ))
+        : sortBy(userState.notes ?? [], "last_update").map((note, i) => (
+            <PreviewNote {...note}/>
+          ))}
+    </section>
+  );
 }
 
 export default Notes;

@@ -1,9 +1,10 @@
 import supabase from "../db/connection";
 
+// auth
+import { getUser } from "../utils/auth";
+
 export const fetchNotes = async () => {
-  const userData = await supabase.auth.getUser();
-  const { user } = userData.data;
-  return await supabase.from("notes").select("*").eq("user", user.id);
+  return await supabase.from("notes").select("*").eq("user", getUser().user.id);
 };
 
 /**

@@ -1,6 +1,12 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useMemo } from "react";
+import { marked } from "marked";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAdd, faNoteSticky } from "@fortawesome/free-solid-svg-icons";
 
-function PreviewNote({ id, title, content }) {
+// components
+import FAB from "../../../components/FAB/FAB";
+
+function PreviewNote({ id, title, content, last_update }) {
   const contentRef = useRef();
 
   useEffect(() => {
@@ -8,9 +14,35 @@ function PreviewNote({ id, title, content }) {
       contentRef.current.innerHTML = marked.parse(content);
   }, [contentRef, content]);
 
+  const parsedLastDate = useMemo(() => {
+    const date = new Date(last_update);
+
+    const options = {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    };
+
+    return date.toLocaleDateString("en-US", options);
+  }, [last_update]);
+
   return (
-    <div className="flex flex-col gap-3">
-      <div>{title}</div>
+    <div className="flex flex-col gap-3 bg-light-alter dark:bg-dark-alter p-5 rounded-xl card-shadow">
+      <FAB icon={faAdd} className="submit primary" />
+      <div className="flex items-center justify-start gap-5">
+        <FontAwesomeIcon
+          icon={faNoteSticky}
+          className="bg-secondary-default text-2xl py-3 px-[13px] rounded-full text-light-default"
+        />
+        <div>
+          <h3>{title ?? "Nota sin título"}</h3>
+          <p>{parsedLastDate}</p>
+        </div>
+      </div>
+      <hr className="card-divider" />
       <div ref={contentRef} />
     </div>
   );
