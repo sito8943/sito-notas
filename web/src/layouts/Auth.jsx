@@ -1,8 +1,8 @@
-import React, { useEffect, Fragment } from "react";
+import React, { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
 // contexts
-import { useUser } from "../contexts/UserProvider";
+import { useUser } from "../providers/UserProvider";
 
 function Auth() {
   const navigate = useNavigate();

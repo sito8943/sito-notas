@@ -120,12 +120,12 @@ function SignUp() {
       <ModeButton className="top-1 right-1 icon-button primary" />
       <div
         className={`bg-light-alter dark:bg-dark-alter pointer-events-none fixed top-0 left-0 z-10 w-full h-screen flex items-center backdrop-blur-[1rem] transition-all duration-100 ${
-          !loading ? "opacity-100" : "opacity-0"
+          loading ? "opacity-100" : "opacity-0"
         }`}
       >
         <Loading
           className={`dark:bg-dark-alter  transition-all duration-300  ${
-            !loading ? "!h-[100px]" : "!h-[0px]"
+            loading ? "!h-[100px]" : "!h-[0px]"
           }`}
         />
       </div>
@@ -151,7 +151,7 @@ function SignUp() {
           <div className="flex gap-2 items-start flex-col">
             {/* <img src={logo} alt="stick notes logo" className="w-10 h-10" /> */}
             LOGO
-            <h1 className="primary uppercase text-4xl">Sito Wallet</h1>
+            <h1 className="primary uppercase text-4xl">Sito Notas</h1>
           </div>
           <InputControl
             id="email"
@@ -162,7 +162,7 @@ function SignUp() {
             type="email"
             leftComponent={
               <FontAwesomeIcon
-                className="absolute primary top-[50%] -translate-y-[50%] left-3"
+                className="primary"
                 icon={faEnvelope}
               />
             }
@@ -170,7 +170,7 @@ function SignUp() {
           />
           <InputControl
             id="password"
-            className="sign-in-input"
+            className="sign-in-input !pl-0"
             label="Contraseña"
             maxLength={25}
             value={password}
@@ -182,7 +182,7 @@ function SignUp() {
                 name="toggle-see-password"
                 onClick={toggleShowPassword}
                 icon={showPassword ? faLockOpen : faLock}
-                className="absolute primary top-[50%] -translate-y-[50%] left-3 !p-0 -ml-[12px]"
+                className="primary -ml-3"
                 aria-label="click para alternar ver/ocultar contraseña"
               />
             }
@@ -190,7 +190,7 @@ function SignUp() {
           />
           <InputControl
             id="rPassword"
-            className="sign-in-input"
+            className="sign-in-input !pl-0"
             label="Repetir Contraseña"
             maxLength={25}
             value={rPassword}
@@ -202,7 +202,7 @@ function SignUp() {
                 name="toggle-see-r-password"
                 onClick={toggleShowRPassword}
                 icon={showRPassword ? faLockOpen : faLock}
-                className="absolute primary top-[50%] -translate-y-[50%] left-3 !p-0 -ml-[12px]"
+                className="primary -ml-3"
                 aria-label="click para alternar ver/ocultar repetir contraseña"
               />
             }

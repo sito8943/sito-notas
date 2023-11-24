@@ -1,5 +1,5 @@
 // providers
-import { useUser } from "../../../providers/UserProvider";
+import { useUser } from "../../../../providers/UserProvider";
 
 function Footer() {
   const { userState } = useUser();

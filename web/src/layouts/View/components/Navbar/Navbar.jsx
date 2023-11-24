@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 import {
   faArrowRightFromBracket,
-  faGear,
   faMoon,
   faSun,
 } from "@fortawesome/free-solid-svg-icons";
@@ -12,10 +11,10 @@ import {
 import { IconButton, useMode } from "@sito/ui";
 
 // providers
-import { useUser } from "../../../providers/UserProvider";
+import { useUser } from "../../../../providers/UserProvider";
 
 // images
-import noPhoto from "../../../assets/images/no-photo.webp";
+import noPhoto from "../../../../assets/images/no-photo.webp";
 
 // styles
 import "./styles.css";
@@ -77,18 +76,6 @@ function Navbar() {
             aria-label="Click para cambiar el tema"
             icon={mode === "dark" ? faSun : faMoon}
           />{" "}
-          <Link
-            to="/settings"
-            name="toggle-theme"
-            aria-label="Ir a la configuración"
-          >
-            <IconButton
-              tooltip="Ir a la configuración"
-              name="toggle-theme"
-              aria-label="Ir a la configuración"
-              icon={faGear}
-            />
-          </Link>
           <Link to="/sign-out" name="logout" aria-label="Cerrar sesión">
             <IconButton
               tooltip="Cerrar sesión"

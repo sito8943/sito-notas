@@ -4,14 +4,20 @@ import { useState } from "react";
 import { Loading } from "@sito/ui";
 
 // sections
-import Footer from "./sections/Footer";
+import SearchWrapper from "./sections/SearchWrapper";
+import TypesTabs from "./sections/TypesTabs";
+import Notes from "./sections/Notes";
 
 function Home() {
   const [sync, setSync] = useState(false);
 
   return (
     <main className="flex flex-col viewport">
-      <div className="p-10 sm:p-3 pt-20 mt-20 flex flex-col gap-10 flex-1">
+      <div className="p-10 sm:p-3 pt-20 mt-20 flex flex-col gap-2 flex-1">
+        <h2 className="text-6xl xs:text-4xl">Mis notas</h2>
+        <SearchWrapper />
+        <TypesTabs />
+        <Notes />
         <div
           className={`w-10 h-10 fixed bottom-1 left-1 transition-all duration-300 ease-in-out ${
             sync ? "scale-100" : "scale-0"
@@ -20,7 +26,6 @@ function Home() {
           <Loading className="sync rounded-full" strokeWidth="8" />
         </div>
       </div>
-      <Footer />
     </main>
   );
 }

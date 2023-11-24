@@ -24,7 +24,7 @@ const SignOut = loadable(() => import("./views/Auth/SignOut"));
 const SignUp = loadable(() => import("./views/Auth/SignUp"));
 const Home = loadable(() => import("./views/Home/Home"));
 const NotFound = loadable(() => import("./views/NotFound/NotFound"));
-const Settings = loadable(() => import("./views/Settings/Settings"));
+const Note = loadable(() => "./views/Note/Note");
 
 function App() {
   const { setUserState } = useUser();
@@ -66,8 +66,8 @@ function App() {
               </Route>
               <Route path="/" element={<View />}>
                 <Route index element={<Home />} />
-                <Route path="/settings" element={<Settings />} />
               </Route>
+              <Route path="/note/:id" element={<Note />} />
 
               <Route exact path="/sign-out" element={<SignOut />} />
               <Route path="/*" element={<NotFound />} />

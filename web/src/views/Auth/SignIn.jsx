@@ -128,7 +128,7 @@ function SignIn() {
         <div className="flex gap-2 items-start flex-col">
           {/* <img src={logo} alt="stick notes logo" className="w-10 h-10" /> */}
           LOGO
-          <h1 className="primary uppercase text-4xl">Sito Wallet</h1>
+          <h1 className="primary uppercase text-4xl">Sito Notas</h1>
         </div>
         <InputControl
           id="user"
@@ -138,7 +138,7 @@ function SignIn() {
           onChange={handleUser}
           leftComponent={
             <FontAwesomeIcon
-              className="absolute primary top-[50%] -translate-y-[50%] left-3"
+              className="primary"
               icon={faUser}
             />
           }
@@ -146,7 +146,7 @@ function SignIn() {
         />
         <InputControl
           id="password"
-          className="sign-in-input"
+          className="sign-in-input !pl-0"
           value={password}
           onChange={handlePassword}
           type={!showPassword ? "password" : "text"}
@@ -157,7 +157,7 @@ function SignIn() {
               name="toggle-see-password"
               onClick={toggleShowPassword}
               icon={showPassword ? faLockOpen : faLock}
-              className="absolute primary top-[50%] -translate-y-[50%] left-3 !p-0 -ml-[12px]"
+              className="primary -ml-3"
               aria-label="click para alternar ver/ocultar contraseña"
             />
           }

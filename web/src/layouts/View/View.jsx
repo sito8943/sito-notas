@@ -14,7 +14,8 @@ import { Handler } from "@sito/ui";
 import { useUser } from "../../providers/UserProvider";
 
 // components
-import Navbar from "./Navbar/Navbar";
+import Navbar from "./components/Navbar/Navbar";
+import Footer from "./components/Footer/Footer";
 
 function View() {
   const { userState } = useUser();
@@ -44,6 +45,7 @@ function View() {
           </p>
         </div>
       </div>
+      <Footer />
     </Fragment>
   );
 }
