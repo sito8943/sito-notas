@@ -12,6 +12,10 @@ const UserContext = createContext();
 const userReducer = (userState, action) => {
   const { type } = action;
   switch (type) {
+    case "set-notes": {
+      const { notes } = action;
+      return { ...userState, notes };
+    }
     case "set-types": {
       const { types } = action;
       return { ...userState, types };

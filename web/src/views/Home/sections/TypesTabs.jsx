@@ -49,7 +49,7 @@ export default function TypesTabs() {
   }, [userState]);
 
   return (
-    <div className="flex gap-3">
+    <section className="flex gap-3">
       {loading
         ? [1, 2, 3, 4, 5].map((skeleton) => (
             <div key={skeleton} className="w-full h-[44px] skeleton-box" />
@@ -64,6 +64,6 @@ export default function TypesTabs() {
               onClick={toggleButton}
             />
           ))}
-    </div>
+    </section>
   );
 }

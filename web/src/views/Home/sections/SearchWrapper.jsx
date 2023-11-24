@@ -13,12 +13,15 @@ function SearchWrapper() {
   const { searchValue, setSearchValue } = useSearch();
 
   return (
-    <InputControl
-      role="search"
-      leftComponent={<FontAwesomeIcon className="opacity-70" icon={faSearch} />}
-      value={searchValue}
-      onChange={(e) => setSearchValue(e.target.value)}
-    />
+    <section role="search">
+      <InputControl
+        leftComponent={
+          <FontAwesomeIcon className="opacity-70" icon={faSearch} />
+        }
+        value={searchValue}
+        onChange={(e) => setSearchValue(e.target.value)}
+      />
+    </section>
   );
 }
 

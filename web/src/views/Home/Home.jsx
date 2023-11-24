@@ -1,5 +1,9 @@
 import { useState } from "react";
 
+// styles
+import "/node_modules/react-grid-layout/css/styles.css";
+import "/node_modules/react-resizable/css/styles.css";
+
 // @sito/ui
 import { Loading } from "@sito/ui";
 
