@@ -1,55 +1,47 @@
-/* eslint-disable no-use-before-define */
 // @ts-check
-
-import { deleteCookie, getCookie } from "some-javascript-utils/browser";
 
 import config from "../config";
 
-import { decrypt, encrypt } from "./crypto";
-
-export const fromLocal = () => {
-  const data = JSON.parse(decrypt(localStorage.getItem(config.user)));
-  return data;
-};
-
-export const getUserPermissions = () => {
-  const data = JSON.parse(decrypt(localStorage.getItem(config.user)));
-  return data.permissions;
-};
-
-export const getUserPhoto = () => {
-  try {
-    const data = JSON.parse(decrypt(localStorage.getItem(config.user)));
-    return data.photo;
-  } catch (err) {
-    console.error(err)
-  }
-  return undefined
-};
-
-export const getUserName = () => {
-  const data = JSON.parse(decrypt(localStorage.getItem(config.user)));
-  return data.user;
-};
-
-export const getUserId = () => {
-  const data = JSON.parse(decrypt(localStorage.getItem(config.user)));
-  return data.id;
-};
+// crypto
+import { encrypt, decrypt } from "./crypto";
 
 /**
- * If the user is logged in, return true, otherwise return false.
+ *
+ * @param {string} value
+ * @returns
  */
-export const userLogged = () => getCookie(config.basicKey).length > 0;
+export const saveRemember = (value) =>
+  localStorage.setItem(config.remember, value);
 
-export const logoutUser = () => {
-  localStorage.removeItem(config.user);
-  deleteCookie(config.basicKey);
-};
+export const remember = () => localStorage.getItem(config.remember);
 
 /**
- * If remember is true, it stores user data to localStorage, otherwise it stores it in sessionStorage
- * @param {object} data - The user object that you want to store in the browser.
+ *
+ * @param {object} data
+ * @returns saved encrypted user
  */
-export const logUser = (data) =>
+export const saveUser = (data) =>
   localStorage.setItem(config.user, encrypt(data));
+
+/**
+ *
+ * @returns decrypted user
+ */
+export const getUser = () => decrypt(localStorage.getItem(config.user));
+
+/**
+ *
+ * @returns removes user
+ */
+export const logoutUser = () => {
+  localStorage.removeItem("initializing");
+  localStorage.removeItem("basic-balance");
+  localStorage.removeItem(config.remember);
+  return localStorage.removeItem(config.user);
+};
+
+/**
+ *
+ * @returns if an user is cached
+ */
+export const cachedUser = () => localStorage.getItem(config.user) !== null;
