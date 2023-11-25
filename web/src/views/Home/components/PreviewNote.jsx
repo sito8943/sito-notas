@@ -1,10 +1,11 @@
-import { useRef, useEffect, useMemo } from "react";
+import { memo, useRef, useEffect, useMemo } from "react";
 
 import { marked } from "marked";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faNoteSticky } from "@fortawesome/free-solid-svg-icons";
+import { PrintAfter } from "@sito/ui";
 
-function PreviewNote({ id, title, content, last_update }) {
+function PreviewNote({ id, i, title, content, last_update }) {
   const contentRef = useRef();
 
   useEffect(() => {
@@ -28,24 +29,37 @@ function PreviewNote({ id, title, content, last_update }) {
   }, [last_update]);
 
   return (
-    <div className="flex flex-col gap-3 bg-light-alter dark:bg-dark-alter p-5 rounded-xl card-shadow w-full">
-      <div className="flex items-center justify-start gap-5">
-        <FontAwesomeIcon
-          icon={faNoteSticky}
-          className="bg-secondary-default text-2xl py-3 px-[13px] rounded-full text-light-default"
-        />
-        <div>
-          <h3>{title ?? "Nota sin título"}</h3>
-          <p>{parsedLastDate}</p>
+    <PrintAfter animation="appear" delay={i * 100}>
+      <div className="flex flex-col gap-3 bg-light-alter dark:bg-dark-alter p-5 rounded-xl card-shadow w-full">
+        <div className="flex items-center justify-start gap-5">
+          <FontAwesomeIcon
+            icon={faNoteSticky}
+            className="bg-secondary-default text-2xl py-3 px-[13px] rounded-full text-light-default"
+          />
+          <div>
+            <h3>{title ?? "Nota sin título"}</h3>
+            <p>{parsedLastDate}</p>
+          </div>
         </div>
+        <hr className="card-divider" />
+        <div
+          ref={contentRef}
+          className="flex flex-col gap-1 max-h-[300px] overflow-hidden"
+        />
       </div>
-      <hr className="card-divider" />
-      <div
-        ref={contentRef}
-        className="flex flex-col gap-2 max-h-[290px] overflow-hidden"
-      />
-    </div>
+    </PrintAfter>
   );
 }
 
-export default PreviewNote;
+const PreviewNoteMemo = memo(
+  (props) => <PreviewNote {...props} />,
+  (oldProps, newProps) =>
+    oldProps.id === newProps.id &&
+    oldProps.i === newProps.i &&
+    oldProps.content === newProps.content &&
+    oldProps.last_update === newProps.last_update
+);
+
+PreviewNoteMemo.displayName = "PreviewNote";
+
+export default PreviewNoteMemo;
