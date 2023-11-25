@@ -1,10 +1,8 @@
 import { useRef, useEffect, useMemo } from "react";
+
 import { marked } from "marked";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAdd, faNoteSticky } from "@fortawesome/free-solid-svg-icons";
-
-// components
-import FAB from "../../../components/FAB/FAB";
+import { faNoteSticky } from "@fortawesome/free-solid-svg-icons";
 
 function PreviewNote({ id, title, content, last_update }) {
   const contentRef = useRef();
@@ -30,8 +28,7 @@ function PreviewNote({ id, title, content, last_update }) {
   }, [last_update]);
 
   return (
-    <div className="flex flex-col gap-3 bg-light-alter dark:bg-dark-alter p-5 rounded-xl card-shadow">
-      <FAB icon={faAdd} className="submit primary" />
+    <div className="flex flex-col gap-3 bg-light-alter dark:bg-dark-alter p-5 rounded-xl card-shadow w-full">
       <div className="flex items-center justify-start gap-5">
         <FontAwesomeIcon
           icon={faNoteSticky}
@@ -43,7 +40,10 @@ function PreviewNote({ id, title, content, last_update }) {
         </div>
       </div>
       <hr className="card-divider" />
-      <div ref={contentRef} />
+      <div
+        ref={contentRef}
+        className="flex flex-col gap-2 max-h-[290px] overflow-hidden"
+      />
     </div>
   );
 }

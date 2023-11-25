@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { sortBy } from "some-javascript-utils/array";
 
 // @sito/ui
@@ -9,7 +9,12 @@ import { useUser } from "../../../providers/UserProvider";
 
 // services
 import { fetchNotes } from "../../../services/notes";
+
+// components
 import PreviewNote from "../components/PreviewNote";
+
+// styles
+import "./styles.css";
 
 function Notes() {
   const { userState, setUserState } = useUser();
@@ -32,13 +37,13 @@ function Notes() {
   }, [userState]);
 
   return (
-    <section className="">
+    <section className="notes">
       {loading
         ? [1, 2, 3, 4, 5].map((skeleton) => (
             <div key={skeleton} className="w-full h-[44px] skeleton-box" />
           ))
         : sortBy(userState.notes ?? [], "last_update").map((note, i) => (
-            <PreviewNote {...note}/>
+            <PreviewNote key={note.id} i={i} {...note} />
           ))}
     </section>
   );
