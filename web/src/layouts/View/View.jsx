@@ -26,11 +26,13 @@ function View() {
   }, [navigate, userState]);
 
   return (
-    <Fragment>
+    <div>
       <Navbar />
-      <Handler>
-        <Outlet />
-      </Handler>
+      <div className="viewport">
+        <Handler>
+          <Outlet />
+        </Handler>
+      </div>
       <div
         className={`bg-primary-default fixed w-full bottom-0 left-0 z-40 grid ${css(
           {
@@ -46,7 +48,7 @@ function View() {
         </div>
       </div>
       <Footer />
-    </Fragment>
+    </div>
   );
 }
 

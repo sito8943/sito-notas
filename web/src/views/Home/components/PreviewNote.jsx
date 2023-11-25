@@ -2,13 +2,13 @@ import { memo, useRef, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 
 // @sito/ui
-import { PrintAfter } from "@sito/ui";
+import { IconButton, PrintAfter } from "@sito/ui";
 
 import { marked } from "marked";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faNoteSticky } from "@fortawesome/free-solid-svg-icons";
+import { faNoteSticky, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-function PreviewNote({ id, i, title, content, last_update }) {
+function PreviewNote({ id, i, title, content, last_update, onDelete }) {
   const contentRef = useRef();
 
   useEffect(() => {
@@ -33,26 +33,35 @@ function PreviewNote({ id, i, title, content, last_update }) {
 
   return (
     <PrintAfter animation="appear" delay={i * 100}>
-      <Link
-        to={`/note/${id}`}
-        className="flex flex-col gap-3 bg-light-alter dark:bg-dark-alter p-5 rounded-xl card-shadow w-full transition hover:-translate-y-1"
-      >
-        <div className="flex items-center justify-start gap-5">
-          <FontAwesomeIcon
-            icon={faNoteSticky}
-            className="bg-secondary-default text-2xl py-3 px-[13px] rounded-full text-light-default"
+      <div className="relative flex flex-col gap-3 bg-light-alter dark:bg-dark-alter p-5 rounded-xl card-shadow w-full transition hover:-translate-y-1">
+        <div className="flex items-center justify-between w-full">
+          <Link
+            to={`/note/${id}`}
+            className="flex items-center justify-start gap-5"
+          >
+            <FontAwesomeIcon
+              icon={faNoteSticky}
+              className="bg-secondary-default text-2xl py-3 px-[13px] rounded-full text-light-default"
+            />
+            <div>
+              <h3>{title ?? "Nota sin título"}</h3>
+              <p>{parsedLastDate}</p>
+            </div>
+          </Link>
+          <IconButton
+            icon={faTrash}
+            className="primary"
+            onClick={() => onDelete(id)}
           />
-          <div>
-            <h3>{title ?? "Nota sin título"}</h3>
-            <p>{parsedLastDate}</p>
-          </div>
         </div>
+
         <hr className="card-divider" />
         <div
           ref={contentRef}
           className="flex flex-col gap-1 max-h-[300px] overflow-hidden"
         />
-      </Link>
+        <div className="card-overflow-background"></div>
+      </div>
     </PrintAfter>
   );
 }
