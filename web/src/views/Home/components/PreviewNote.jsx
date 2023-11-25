@@ -1,9 +1,12 @@
 import { memo, useRef, useEffect, useMemo } from "react";
+import { Link } from "react-router-dom";
+
+// @sito/ui
+import { PrintAfter } from "@sito/ui";
 
 import { marked } from "marked";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faNoteSticky } from "@fortawesome/free-solid-svg-icons";
-import { PrintAfter } from "@sito/ui";
 
 function PreviewNote({ id, i, title, content, last_update }) {
   const contentRef = useRef();
@@ -30,7 +33,10 @@ function PreviewNote({ id, i, title, content, last_update }) {
 
   return (
     <PrintAfter animation="appear" delay={i * 100}>
-      <div className="flex flex-col gap-3 bg-light-alter dark:bg-dark-alter p-5 rounded-xl card-shadow w-full">
+      <Link
+        to={`/note/${id}`}
+        className="flex flex-col gap-3 bg-light-alter dark:bg-dark-alter p-5 rounded-xl card-shadow w-full transition hover:-translate-y-1"
+      >
         <div className="flex items-center justify-start gap-5">
           <FontAwesomeIcon
             icon={faNoteSticky}
@@ -46,7 +52,7 @@ function PreviewNote({ id, i, title, content, last_update }) {
           ref={contentRef}
           className="flex flex-col gap-1 max-h-[300px] overflow-hidden"
         />
-      </div>
+      </Link>
     </PrintAfter>
   );
 }
