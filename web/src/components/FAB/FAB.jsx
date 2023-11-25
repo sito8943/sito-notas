@@ -8,13 +8,13 @@ function FAB(props) {
   const position = useMemo(() => {
     switch (props.position) {
       case "top-left":
-        return "top-1 left-1";
+        return "top-5 left-5";
       case "top-right":
-        return "top-1 right-1";
+        return "top-5 right-5";
       case "bottom-left":
-        return "bottom-1 left-1";
+        return "bottom-5 left-5";
       default: // bottom - right
-        return "bottom-1 right-1";
+        return "bottom-5 right-5";
     }
   }, [props.position]);
 

@@ -1375,10 +1375,10 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@sito/ui@^0.0.62":
-  version "0.0.62"
-  resolved "https://registry.yarnpkg.com/@sito/ui/-/ui-0.0.62.tgz#01c3672732fd966e372503de42a4165e9044c176"
-  integrity sha512-pM6CY2VlijDIRtGg1yaxDMc/bgKZpc/w76DtRpYsdD7bqyVTZ4wAMoibzbcnLznDbMVoQoW3SJDRUQST62vzCQ==
+"@sito/ui@^0.0.64":
+  version "0.0.64"
+  resolved "https://registry.yarnpkg.com/@sito/ui/-/ui-0.0.64.tgz#210cb93d74c1819bf1693a37f679fd6ba5d6d2fc"
+  integrity sha512-ShJMhsKbHx+1lOEiGZ8W0BzfbJHy8wj78afp+yCEuSWwTA+nayLyecSwMiztYP4Nh5omt+CpsC1M8nPZmPtDeg==
   dependencies:
     react "^18.2.0"
     react-dom "^18.2.0"
