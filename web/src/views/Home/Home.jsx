@@ -21,7 +21,7 @@ function Home() {
         <h2 className="text-6xl xs:text-4xl -mb-3">Mis notas</h2>
         <SearchWrapper />
         <TypesTabs />
-        <Notes />
+        <Notes setSync={setSync} />
         <div
           className={`w-10 h-10 fixed bottom-1 left-1 transition-all duration-300 ease-in-out ${
             sync ? "scale-100" : "scale-0"

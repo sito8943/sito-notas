@@ -16,6 +16,10 @@ const userReducer = (userState, action) => {
       const { notes } = action;
       return { ...userState, notes };
     }
+    case "add-note": {
+      const { newNote } = action;
+      return { ...userState, notes: [...userState.notes, newNote] };
+    }
     case "set-types": {
       const { types } = action;
       return { ...userState, types };

@@ -3,18 +3,15 @@ import supabase from "../db/connection";
 // auth
 import { getUser } from "../utils/auth";
 
-export const fetchNotes = async () => {
-  return await supabase.from("notes").select("*").eq("user", getUser().user.id);
-};
+export const fetchNotes = async () =>
+  await supabase.from("notes").select("*").eq("user", getUser().user.id);
 
 /**
  *
  * @param {object} note
  */
-export const createNote = async (note) => {
-  const { error } = await supabase.from("notes").insert({ ...note });
-  return error;
-};
+export const createNote = async (note) =>
+  await supabase.from("notes").insert({ ...note });
 
 /**
  *

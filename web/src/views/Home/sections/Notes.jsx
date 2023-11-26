@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { sortBy } from "some-javascript-utils/array";
+import { v4 } from "uuid";
+import { faAdd } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/ui
 import { useNotification } from "@sito/ui";
@@ -8,15 +10,16 @@ import { useNotification } from "@sito/ui";
 import { useUser } from "../../../providers/UserProvider";
 
 // services
-import { fetchNotes } from "../../../services/notes";
+import { createNote, fetchNotes } from "../../../services/notes";
 
 // components
+import FAB from "../../../components/FAB/FAB";
 import PreviewNote from "../components/PreviewNote";
 
 // styles
 import "./styles.css";
 
-function Notes() {
+function Notes({ setSync }) {
   const { userState, setUserState } = useUser();
   const { setNotification } = useNotification();
 
@@ -36,13 +39,43 @@ function Notes() {
     }
   }, [userState]);
 
+  const addNote = async () => {
+    setSync(true);
+    const now = new Date().getTime();
+    const newNote = {
+      id: v4(),
+      title: "Nueva nota",
+      content: "",
+      created_at: now,
+      last_update: now,
+    };
+    setUserState({ type: "add-note", newNote });
+    if (!userState.cached) {
+      const { error } = await createNote(newNote);
+      if (error && error !== null) {
+        console.error(error.message);
+        setNotification({ type: "error", message: error.message });
+      }
+    }
+    setSync(false);
+  };
+
   return (
     <section className="notes">
+      <FAB
+        onClick={addNote}
+        position="position-right"
+        icon={faAdd}
+        className="submit z-10"
+      />
       {loading
         ? [1, 2, 3, 4, 5].map((skeleton) => (
-            <div key={skeleton} className="w-full h-[300px] skeleton-box !rounded-xl" />
+            <div
+              key={skeleton}
+              className="w-full h-[300px] skeleton-box !rounded-xl"
+            />
           ))
-        : sortBy(userState.notes ?? [], "last_update").map((note, i) => (
+        : sortBy(userState.notes ?? [], "last_update", false).map((note, i) => (
             <PreviewNote key={note.id} i={i} {...note} />
           ))}
     </section>
