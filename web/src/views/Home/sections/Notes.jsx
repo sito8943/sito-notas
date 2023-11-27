@@ -36,7 +36,7 @@ function Notes({ setSync }) {
         setUserState({ type: "set-notes", notes: data });
         setLoading(false);
       });
-    }
+    } else setLoading(false);
   }, [userState]);
 
   const addNote = async () => {
@@ -64,7 +64,7 @@ function Notes({ setSync }) {
     <section className="notes">
       <FAB
         onClick={addNote}
-        position="position-right"
+        position="bottom-right"
         icon={faAdd}
         className="submit z-10"
       />

@@ -139,8 +139,13 @@ function SignUp() {
             electrónico haciendo clic en el enlace de confirmación que acabamos
             de enviar a tu dirección.
           </p>
-          <Link to="/">
-            <Button className="submit primary">Iniciar Sesión</Button>
+          <Link
+            to="/auth"
+            name="sign-in"
+            aria-label="Iniciar sesión"
+            className="submit primary button"
+          >
+            Iniciar Sesión
           </Link>
         </div>
       ) : (
@@ -161,10 +166,7 @@ function SignUp() {
             onChange={handleEmail}
             type="email"
             leftComponent={
-              <FontAwesomeIcon
-                className="primary"
-                icon={faEnvelope}
-              />
+              <FontAwesomeIcon className="primary" icon={faEnvelope} />
             }
             helperText={emailHelperText}
           />

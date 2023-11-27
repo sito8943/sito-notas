@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 import {
+  faChevronLeft,
+  faSave,
   faArrowRightFromBracket,
   faMoon,
   faSun,
@@ -18,10 +20,13 @@ import noPhoto from "../../../../assets/images/no-photo.webp";
 
 // styles
 import "./styles.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Navbar() {
   const { userState } = useUser();
   const { toggleMode, mode } = useMode();
+
+  const { id } = useParams();
 
   const [transparency, setTransparency] = useState(true);
 
@@ -49,26 +54,39 @@ function Navbar() {
         className={`relative backdrop-blur-[1rem] rounded-[100px] flex w-full justify-between py-3 px-5 xs:px-3 `}
       >
         <div
-          className={` absolute w-full h-full top-0 left-0 rounded-[100px] opacity-90 ${
+          className={` absolute pointer-events-none w-full h-full top-0 left-0 rounded-[100px] opacity-90 ${
             transparency ? "" : "blur-background"
           }`}
         ></div>
-        <Link
-          aria-label="Ir al inicio"
-          name="go-home"
-          to="/"
-          className="z-10 flex gap-2 items-center primary"
-        >
-          <img
-            src={noPhoto}
-            alt="user-photo"
-            className="rounded-full w-10 h-10 object-contain"
-          />
-          <h1 className="capitalize text-xl">
-            {userState.user?.email?.split("@")[0]}
-          </h1>
-        </Link>
+        <div className="flex gap-3">
+          {id ? (
+            <Link
+              to="/"
+              name="to-home"
+              aria-label="Ir al inicio"
+              className="button icon-button primary"
+            >
+              <FontAwesomeIcon icon={faChevronLeft} />
+            </Link>
+          ) : null}
+          <Link
+            aria-label="Ir al inicio"
+            name="go-home"
+            to="/"
+            className="z-10 flex gap-2 items-center primary"
+          >
+            <img
+              src={noPhoto}
+              alt="user-photo"
+              className="rounded-full w-10 h-10 object-contain"
+            />
+            <h1 className="capitalize text-xl">
+              {userState.user?.email?.split("@")[0]}
+            </h1>
+          </Link>
+        </div>
         <nav className="z-10 flex">
+          {id ? <IconButton className="text-xl" icon={faSave} /> : null}
           <IconButton
             onClick={() => toggleMode()}
             tooltip="Alternar tema (Claro/Oscuro)"
@@ -76,13 +94,13 @@ function Navbar() {
             aria-label="Click para cambiar el tema"
             icon={mode === "dark" ? faSun : faMoon}
           />{" "}
-          <Link to="/sign-out" name="logout" aria-label="Cerrar sesión">
-            <IconButton
-              tooltip="Cerrar sesión"
-              name="logout"
-              aria-label="Cerrar sesión"
-              icon={faArrowRightFromBracket}
-            />
+          <Link
+            to="/sign-out"
+            name="logout"
+            aria-label="Cerrar sesión"
+            className="button icon-button primary"
+          >
+            <FontAwesomeIcon icon={faArrowRightFromBracket} />
           </Link>
         </nav>
       </div>
