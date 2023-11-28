@@ -37,7 +37,7 @@ function PreviewNote({ id, i, title, content, last_update, onDelete }) {
         <div className="flex items-center justify-between w-full">
           <Link
             to={`/note/${id}`}
-            className="flex items-center justify-start gap-5"
+            className="flex items-center justify-start gap-4"
           >
             <FontAwesomeIcon
               icon={faNoteSticky}
@@ -45,7 +45,7 @@ function PreviewNote({ id, i, title, content, last_update, onDelete }) {
             />
             <div>
               <h3>{title ?? "Nota sin título"}</h3>
-              <p>{parsedLastDate}</p>
+              <p className="text-sm">{parsedLastDate}</p>
             </div>
           </Link>
           <IconButton

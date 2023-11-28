@@ -66,7 +66,9 @@ function Note() {
     setSync(true);
     const foundIndex = userState.notes.findIndex((noteR) => noteR.id === id);
     if (foundIndex >= 0) {
+      const now = new Date().getTime();
       const theNote = userState.notes[foundIndex];
+      theNote.last_update = now;
       switch (data.attribute) {
         case "title":
           theNote.title = data.value;
@@ -75,7 +77,7 @@ function Note() {
           theNote.content = data.value;
           break;
       }
-      await updateNote({ ...theNote, last_update: new Date().getTime() });
+      await updateNote({ ...theNote, last_update: now });
     }
     setSync(false);
   };

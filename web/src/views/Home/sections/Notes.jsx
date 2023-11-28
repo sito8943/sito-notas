@@ -66,7 +66,7 @@ function Notes({ setSync }) {
         onClick={addNote}
         position="bottom-right"
         icon={faAdd}
-        className="submit z-10"
+        className="submit z-10 text-3xl p-7"
       />
       {loading
         ? [1, 2, 3, 4, 5].map((skeleton) => (
@@ -75,9 +75,10 @@ function Notes({ setSync }) {
               className="w-full h-[300px] skeleton-box !rounded-xl"
             />
           ))
-        : sortBy(userState.notes ?? [], "last_update", false).map((note, i) => (
-            <PreviewNote key={note.id} i={i} {...note} />
-          ))}
+        : sortBy(userState.notes ?? [], "last_update", false).map((note, i) => {
+            console.log(new Date(note.last_update));
+            return <PreviewNote key={note.id} i={i} {...note} />;
+          })}
     </section>
   );
 }

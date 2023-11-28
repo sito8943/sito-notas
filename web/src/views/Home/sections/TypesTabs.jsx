@@ -45,7 +45,7 @@ export default function TypesTabs() {
         setUserState({ type: "set-types", types: data });
         setLoading(false);
       });
-    }
+    } else setLoading(false);
   }, [userState]);
 
   return (
