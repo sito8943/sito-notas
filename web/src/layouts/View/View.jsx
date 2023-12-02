@@ -1,5 +1,6 @@
-import { Fragment, useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { scrollTo } from "some-javascript-utils/browser";
 
 // @emotion/css
 import { css } from "@emotion/css";
@@ -20,10 +21,15 @@ import Footer from "./components/Footer/Footer";
 function View() {
   const { userState } = useUser();
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (!userState.user) navigate("/auth");
   }, [navigate, userState]);
+
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, [location]);
 
   return (
     <div>
