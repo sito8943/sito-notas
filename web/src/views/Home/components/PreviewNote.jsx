@@ -41,7 +41,7 @@ function PreviewNote({ id, i, title, content, last_update, onDelete }) {
           >
             <FontAwesomeIcon
               icon={faNoteSticky}
-              className="bg-secondary-default text-2xl py-3 px-[13px] rounded-full text-light-default"
+              className="bg-secondary-default text-xl py-3 px-[13px] rounded-full text-light-default"
             />
             <div>
               <h3>{title ?? "Nota sin título"}</h3>
