@@ -76,7 +76,6 @@ function Notes({ setSync }) {
             />
           ))
         : sortBy(userState.notes ?? [], "last_update", false).map((note, i) => {
-            console.log(new Date(note.last_update));
             return <PreviewNote key={note.id} i={i} {...note} />;
           })}
     </section>

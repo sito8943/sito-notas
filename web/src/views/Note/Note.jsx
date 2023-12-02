@@ -100,7 +100,7 @@ function Note() {
           <div className="w-full h-[45px] skeleton-box" />
         ) : (
           <InputControl
-            value={note.title}
+            value={note.title ?? ""}
             onChange={handleTitle}
             className="text-2xl"
           />
@@ -110,7 +110,7 @@ function Note() {
         ) : (
           <TextareaControl
             label={""}
-            value={note.content}
+            value={note.content ?? ""}
             onChange={handleContent}
             className="min-h-[300px]"
           />
