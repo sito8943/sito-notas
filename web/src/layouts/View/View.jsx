@@ -28,8 +28,10 @@ function View() {
   }, [navigate, userState]);
 
   useEffect(() => {
-    scrollTo(0, 0);
-  }, [location]);
+    setTimeout(() => {
+      scrollTo(0, 0);
+    }, [200]);
+  }, [location.pathname]);
 
   return (
     <div>
