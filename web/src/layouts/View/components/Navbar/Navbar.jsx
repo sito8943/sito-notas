@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
   faChevronLeft,
@@ -20,7 +21,6 @@ import noPhoto from "../../../../assets/images/no-photo.webp";
 
 // styles
 import "./styles.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Navbar() {
   const { userState } = useUser();
