@@ -17,6 +17,9 @@ import { fetchNotes, updateNote } from "../../services/notes";
 // providers
 import { useUser } from "../../providers/UserProvider";
 
+// styles
+import "./styles.css"
+
 function Note() {
   const [sync, setSync] = useState(false);
   const { id } = useParams();
@@ -95,7 +98,7 @@ function Note() {
       >
         <Loading className="sync rounded-full" strokeWidth="8" />
       </div>
-      <div className="p-10 sm:p-3 mt-20 !pb-10 flex flex-col gap-5 flex-1 appear">
+      <div className="p-10 sm:p-3 mt-20 !pb-10 grid workspace gap-5 flex-1 appear">
         {loading ? (
           <div className="w-full h-[45px] skeleton-box" />
         ) : (
@@ -112,7 +115,7 @@ function Note() {
             label={""}
             value={note.content ?? ""}
             onChange={handleContent}
-            className="min-h-[300px]"
+            className="min-h-[300px] h-full"
           />
         )}
       </div>

@@ -20,6 +20,7 @@ import PreviewNote from "../components/PreviewNote";
 import "./styles.css";
 
 function Notes({ setSync }) {
+  const [error, setError] = useState(false);
   const { userState, setUserState } = useUser();
   const { setNotification } = useNotification();
 
@@ -27,13 +28,14 @@ function Notes({ setSync }) {
 
   useEffect(() => {
     if (!userState.notes) {
+      setError(false);
       setLoading(true);
       fetchNotes().then(({ data, error }) => {
         if (error && error !== null) {
+          setError(true);
           setNotification({ type: "error", message: error.message });
           console.error(error.message);
-        }
-        setUserState({ type: "set-notes", notes: data });
+        } else setUserState({ type: "set-notes", notes: data });
         setLoading(false);
       });
     } else setLoading(false);
@@ -62,12 +64,14 @@ function Notes({ setSync }) {
 
   return (
     <section className="notes">
-      <FAB
-        onClick={addNote}
-        position="bottom-right"
-        icon={faAdd}
-        className="submit z-10 text-3xl p-7"
-      />
+      {!error ? (
+        <FAB
+          onClick={addNote}
+          position="bottom-right"
+          icon={faAdd}
+          className="submit z-10 text-3xl p-7"
+        />
+      ) : null}
       {loading
         ? [1, 2, 3, 4, 5].map((skeleton) => (
             <div

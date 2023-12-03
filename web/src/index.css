@@ -11,7 +11,7 @@
 }
 
 .card-divider {
-  @apply border-light-200 dark:border-dark-200;
+  @apply border-light-extra dark:border-dark-extra;
 }
 
 .card-overflow-background {

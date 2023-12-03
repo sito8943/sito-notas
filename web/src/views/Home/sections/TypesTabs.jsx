@@ -41,8 +41,7 @@ export default function TypesTabs() {
         if (error && error !== null) {
           setNotification({ type: "error", message: error.message });
           console.error(error.message);
-        }
-        setUserState({ type: "set-types", types: data });
+        } else setUserState({ type: "set-types", types: data });
         setLoading(false);
       });
     } else setLoading(false);

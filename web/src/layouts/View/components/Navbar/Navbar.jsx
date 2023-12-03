@@ -8,6 +8,7 @@ import {
   faArrowRightFromBracket,
   faMoon,
   faSun,
+  faGear,
 } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/ui
@@ -68,40 +69,54 @@ function Navbar() {
             >
               <FontAwesomeIcon icon={faChevronLeft} />
             </Link>
-          ) : null}
-          <Link
-            aria-label="Ir al inicio"
-            name="go-home"
-            to="/"
-            className="z-10 flex gap-2 items-center primary"
-          >
-            <img
-              src={noPhoto}
-              alt="user-photo"
-              className="rounded-full w-10 h-10 object-contain"
-            />
-            <h1 className="capitalize text-xl">
-              {userState.user?.email?.split("@")[0]}
-            </h1>
-          </Link>
+          ) : (
+            <Link
+              aria-label="Ir al inicio"
+              name="go-home"
+              to="/"
+              className="z-10 flex gap-2 items-center primary"
+            >
+              <img
+                src={noPhoto}
+                alt="user-photo"
+                className="rounded-full w-10 h-10 object-contain"
+              />
+              <h1 className="capitalize text-xl">
+                {userState.user?.email?.split("@")[0]}
+              </h1>
+            </Link>
+          )}
         </div>
         <nav className="z-10 flex">
-          {id ? <IconButton className="text-xl" icon={faSave} /> : null}
           <IconButton
             onClick={() => toggleMode()}
             tooltip="Alternar tema (Claro/Oscuro)"
             name="toggle-theme"
             aria-label="Click para cambiar el tema"
             icon={mode === "dark" ? faSun : faMoon}
-          />{" "}
-          <Link
-            to="/sign-out"
-            name="logout"
-            aria-label="Cerrar sesión"
-            className="button icon-button primary"
-          >
-            <FontAwesomeIcon icon={faArrowRightFromBracket} />
-          </Link>
+          />
+          {id ? (
+            <IconButton className="text-xl" icon={faSave} />
+          ) : (
+            <>
+              <Link
+                to="/settings"
+                name="toggle-theme"
+                aria-label="Ir a la configuración"
+                className="button icon-button primary"
+              >
+                <FontAwesomeIcon icon={faGear} />
+              </Link>
+              <Link
+                to="/sign-out"
+                name="logout"
+                aria-label="Cerrar sesión"
+                className="button icon-button primary"
+              >
+                <FontAwesomeIcon icon={faArrowRightFromBracket} />
+              </Link>
+            </>
+          )}
         </nav>
       </div>
     </header>
