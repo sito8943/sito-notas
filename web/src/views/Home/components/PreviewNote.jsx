@@ -39,10 +39,6 @@ function PreviewNote({ id, i, title, content, last_update, onDelete }) {
             to={`/note/${id}`}
             className="flex items-center justify-start gap-4"
           >
-            <FontAwesomeIcon
-              icon={faNoteSticky}
-              className="bg-secondary-200 text-xl py-3 px-[13px] rounded-full text-light-default"
-            />
             <div>
               <h3>{title ?? "Nota sin título"}</h3>
               <p className="text-sm">{parsedLastDate}</p>

@@ -1375,10 +1375,8 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@sito/ui@^0.0.64":
-  version "0.0.64"
-  resolved "https://registry.yarnpkg.com/@sito/ui/-/ui-0.0.64.tgz#210cb93d74c1819bf1693a37f679fd6ba5d6d2fc"
-  integrity sha512-ShJMhsKbHx+1lOEiGZ8W0BzfbJHy8wj78afp+yCEuSWwTA+nayLyecSwMiztYP4Nh5omt+CpsC1M8nPZmPtDeg==
+"@sito/ui@C:\\Users\\Sito\\Documents\\Code\\Code\\SiUi\\":
+  version "0.0.72"
   dependencies:
     react "^18.2.0"
     react-dom "^18.2.0"
