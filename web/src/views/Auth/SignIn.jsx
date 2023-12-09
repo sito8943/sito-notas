@@ -27,9 +27,12 @@ import { createSettingsUser, fetchUserData } from "../../services/user";
 // auth
 import { saveUser } from "../../utils/auth";
 
+// lang
+import { showError } from "../../lang/es";
+
 // styles
 import "./styles.css";
-import { showError } from "../../lang/es";
+
 
 function SignIn() {
   const { setNotification } = useNotification();
@@ -82,7 +85,6 @@ function SignIn() {
         setNotification({ type: "error", message: showError(error.message) });
       else {
         const userData = await fetchUserData(data.user.id);
-
         if (userData.error && userData.error !== null) {
           setNotification({
             type: "error",
@@ -168,9 +170,9 @@ function SignIn() {
           label="Recordarme"
           activeColor="primary"
           inactiveColor="basics"
-          onChange={(e) => setRemember((remember) => !remember)}
+          onChange={() => setRemember((remember) => !remember)}
         />
-        <p className="dark:text-white">
+        <p>
           ¿No tienes cuenta?{" "}
           <Link to="/auth/sign-up" className="underline primary">
             Registrarme
@@ -184,7 +186,7 @@ function SignIn() {
             shape="filled"
             aria-label="Click para entrar"
           >
-            Siguiente
+            Entrar
           </Button>
         </div>
       </form>
