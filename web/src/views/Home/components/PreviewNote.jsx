@@ -5,15 +5,14 @@ import { Link } from "react-router-dom";
 import { IconButton, PrintAfter } from "@sito/ui";
 
 import { marked } from "marked";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faNoteSticky, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 function PreviewNote({ id, i, title, content, last_update, onDelete }) {
   const contentRef = useRef();
 
   useEffect(() => {
     if (contentRef !== null && contentRef.current)
-      contentRef.current.innerHTML = marked.parse(content);
+      contentRef.current.innerHTML = marked.parse(content.substring(0, 400));
   }, [contentRef, content]);
 
   const parsedLastDate = useMemo(() => {

@@ -19,7 +19,7 @@ function SearchWrapper() {
           <FontAwesomeIcon className="opacity-70" icon={faSearch} />
         }
         value={searchValue}
-        onChange={(e) => setSearchValue(e.target.value)}
+        onChange={(e) => setSearchValue(e.target.value.toLowerCase())}
       />
     </section>
   );

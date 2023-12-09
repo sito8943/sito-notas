@@ -96,7 +96,7 @@ function Note() {
           sync ? "scale-100" : "scale-0"
         } pointer-events-none`}
       >
-        <Loading className="sync rounded-full" strokeWidth="8" />
+        <Loading className="sync rounded-full" color="secondary" strokeWidth="8" />
       </div>
       <div className="p-10 sm:p-3 mt-20 !pb-10 grid workspace gap-5 flex-1 appear">
         {loading ? (
@@ -109,7 +109,7 @@ function Note() {
           />
         )}
         {loading ? (
-          <div className="w-full h-[300px] skeleton-box !rounded-xl" />
+          <div className="w-full min-h-[300px] h-full skeleton-box !rounded-xl" />
         ) : (
           <TextareaControl
             label={""}

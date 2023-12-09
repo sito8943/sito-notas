@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { sortBy } from "some-javascript-utils/array";
 import { v4 } from "uuid";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
+import stringSimilarity from "string-similarity";
 
 // @sito/ui
 import { useNotification } from "@sito/ui";
 
 // providers
 import { useUser } from "../../../providers/UserProvider";
+import { useSearch } from "../../../providers/SearchProvider";
 
 // services
 import { createNote, fetchNotes } from "../../../services/notes";
@@ -21,6 +23,7 @@ import "./styles.css";
 
 function Notes({ setSync }) {
   const [error, setError] = useState(false);
+  const { searchValue } = useSearch();
   const { userState, setUserState } = useUser();
   const { setNotification } = useNotification();
 
@@ -80,9 +83,24 @@ function Notes({ setSync }) {
               className="w-full h-[300px] skeleton-box !rounded-xl"
             />
           ))
-        : sortBy(userState.notes ?? [], "last_update", false).map((note, i) => {
-            return <PreviewNote key={note.id} i={i} {...note} />;
-          })}
+        : sortBy(userState.notes ?? [], "last_update", false)
+            .filter((note) => {
+              if (!searchValue.length)  return true;
+              if (note.title) {
+                if (
+                  stringSimilarity.compareTwoStrings(
+                    note.title.toLowerCase(),
+                    searchValue
+                  ) > 0.3
+                )
+                  return true;
+              } else if (note.content.toLowerCase().indexOf(searchValue) >= 0)
+                return true;
+              return false;
+            })
+            .map((note, i) => {
+              return <PreviewNote key={note.id} i={i} {...note} />;
+            })}
     </section>
   );
 }
