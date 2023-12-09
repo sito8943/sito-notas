@@ -3,6 +3,7 @@ import { sortBy } from "some-javascript-utils/array";
 import { v4 } from "uuid";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import stringSimilarity from "string-similarity";
+import loadable from "@loadable/component";
 
 // @sito/ui
 import { useNotification } from "@sito/ui";
@@ -16,10 +17,12 @@ import { createNote, fetchNotes } from "../../../services/notes";
 
 // components
 import FAB from "../../../components/FAB/FAB";
-import PreviewNote from "../components/PreviewNote";
 
 // styles
 import "./styles.css";
+
+// lazy
+const PreviewNote = loadable(() => import("../components/PreviewNote"));
 
 function Notes({ setSync }) {
   const [error, setError] = useState(false);
