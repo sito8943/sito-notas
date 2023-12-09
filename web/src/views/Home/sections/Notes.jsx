@@ -85,7 +85,7 @@ function Notes({ setSync }) {
           ))
         : sortBy(userState.notes ?? [], "last_update", false)
             .filter((note) => {
-              if (!searchValue.length)  return true;
+              if (!searchValue.length) return true;
               if (note.title) {
                 if (
                   stringSimilarity.compareTwoStrings(
