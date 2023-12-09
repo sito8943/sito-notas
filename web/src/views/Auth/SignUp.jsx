@@ -129,8 +129,8 @@ function SignUp() {
           }`}
         />
       </div>
-      {goToVerify ? (
-        <div className="form bg-light-alter dark:bg-dark-alter appear items-center">
+      {!goToVerify ? (
+        <div className="form bg-light-dark dark:bg-dark-dark appear items-center">
           <h1 className="text-success text-center text-4xl">
             Registrado correctamente
           </h1>
@@ -143,7 +143,7 @@ function SignUp() {
             to="/auth"
             name="sign-in"
             aria-label="Iniciar sesión"
-            className="submit primary button"
+            className="filled primary button"
           >
             Iniciar Sesión
           </Link>
@@ -219,7 +219,7 @@ function SignUp() {
           </p>
           <div className="w-full flex gap-5 justify-end items-center">
             <Button
-              name="login"
+              name="sign-up"
               type="submit"
               color="primary"
               shape="filled"
