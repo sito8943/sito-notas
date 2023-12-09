@@ -25,6 +25,7 @@ function ModeButton({ className, color = "secondary" }) {
 }
 
 ModeButton.propTypes = {
+  color: PropTypes.oneOf(["primary", "secondary", "error", "success"]),
   className: PropTypes.string,
 };
 
