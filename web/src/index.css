@@ -11,7 +11,8 @@
 }
 
 .card-divider {
-  @apply border-light-light dark:border-dark-light;
+  border-radius: 100%;
+  @apply border-dark-light;
 }
 
 .card-overflow-background {
@@ -41,7 +42,7 @@
   overflow: hidden;
   border-radius: 100px;
   opacity: 0.6;
-  @apply bg-light-light dark:bg-dark-light
+  @apply bg-light-light dark:bg-dark-light;
 }
 
 .skeleton-box::after {
@@ -106,3 +107,4 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
