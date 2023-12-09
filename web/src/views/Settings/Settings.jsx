@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
-
-// @sito/ui
-import { IconButton, useStyle } from "@sito/ui";
 
 // components
 import Syncing from "../../components/Syncing/Syncing";
@@ -14,8 +12,6 @@ import Password from "./sections/Password";
 
 function Settings() {
   const [sync, setSync] = useState(false);
-
-  const { colors } = useStyle();
 
   return (
     <main className="flex flex-col viewport">
@@ -28,13 +24,13 @@ function Settings() {
           <Syncing />
         </div>
         <div className="flex items-center">
-          <Link to="/" name="link-go-back" aria-label="Ir al inicio">
-            <IconButton
-              tooltip="Ir al inicio"
-              name="go-back"
-              aria-label="Ir al inicio"
-              icon={faChevronLeft}
-            />
+          <Link
+            to="/"
+            name="to-home"
+            aria-label="Ir al inicio"
+            className="button icon-button primary"
+          >
+            <FontAwesomeIcon icon={faChevronLeft} />
           </Link>
           <h2 className="text-6xl md:text-5xl sm:text-4xl xs:text-3xl">
             Configuración
