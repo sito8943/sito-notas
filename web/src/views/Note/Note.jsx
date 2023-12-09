@@ -3,15 +3,13 @@ import { useParams } from "react-router-dom";
 import { useDebounce } from "use-lodash-debounce";
 
 // @sito/ui
-import {
-  Loading,
-  InputControl,
-  TextareaControl,
-  useNotification,
-} from "@sito/ui";
+import { InputControl, TextareaControl, useNotification } from "@sito/ui";
 
 // services
 import { fetchNotes, updateNote } from "../../services/notes";
+
+// components
+import Syncing from "../../components/Syncing/Syncing";
 
 // providers
 import { useUser } from "../../providers/UserProvider";
@@ -96,7 +94,7 @@ function Note() {
           sync ? "scale-100" : "scale-0"
         } pointer-events-none`}
       >
-        <Loading className="sync rounded-full" color="secondary" strokeWidth="8" />
+        <Syncing />
       </div>
       <div className="p-10 sm:p-3 mt-20 !pb-10 grid workspace gap-5 flex-1 appear">
         {loading ? (
