@@ -63,6 +63,7 @@
   animation: shimmer 5s infinite;
   content: "";
 }
+
 @-webkit-keyframes shimmer {
   100% {
     transform: translateX(100%);
