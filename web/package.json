@@ -1,6 +1,6 @@
 {
-  "name": "app",
-  "private": true,
+  "name": "sito-notas",
+  "private": false,
   "version": "0.19.29",
   "type": "module",
   "scripts": {
