@@ -69,7 +69,7 @@ function Notes({ setSync }) {
           onClick={addNote}
           position="bottom-right"
           icon={faAdd}
-          className="submit z-10 text-3xl p-7 secondary"
+          className="z-10 text-3xl p-7"
         />
       ) : null}
       {loading

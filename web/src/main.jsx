@@ -20,8 +20,8 @@ import "@fontsource/poppins";
 import "@fontsource/roboto";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <StyleProvider>
-    <ModeProvider>
+  <ModeProvider>
+    <StyleProvider>
       <NotificationProvider>
         <UserProvider>
           <SearchProvider>
@@ -29,6 +29,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           </SearchProvider>
         </UserProvider>
       </NotificationProvider>
-    </ModeProvider>
-  </StyleProvider>
+    </StyleProvider>
+  </ModeProvider>
 );

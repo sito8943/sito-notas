@@ -15,6 +15,7 @@ function ModeButton({ className }) {
       onClick={() => toggleMode()}
       tooltip="Alternar tema (Claro/Oscuro)"
       name="toggle-theme"
+      shape="text"
       aria-label="Click para cambiar el tema"
       icon={mode === "dark" ? faSun : faMoon}
       className={className}

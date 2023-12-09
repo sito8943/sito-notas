@@ -11,25 +11,26 @@
 }
 
 .card-divider {
-  @apply border-light-extra dark:border-dark-extra;
+  @apply border-light-light dark:border-dark-light;
 }
 
 .card-overflow-background {
   left: 0;
   bottom: 0;
   position: absolute;
-  width: calc(100% - 20px);
+  width: 100%;
   height: 50px;
   background-image: linear-gradient(
     0deg,
-    rgba(234 234 234) 50%,
+    rgba(255 255 255) 50%,
     rgba(255, 0, 0, 0)
   );
 }
+
 .dark .card-overflow-background {
   background-image: linear-gradient(
     0deg,
-    rgba(33 33 33) 50%,
+    rgba(16 16 16) 50%,
     rgba(255, 0, 0, 0)
   );
 }

@@ -9,8 +9,8 @@ function TabButton({ i, id, text, active, onClick }) {
     <PrintAfter animation="appear" delay={i * 100}>
       <Button
         onClick={() => onClick(id)}
-        color={active ? "primary" : "inherit"}
-        className={`submit`}
+        color={active ? "primary" : "basics"}
+        shape="filled"
       >
         {text}
       </Button>

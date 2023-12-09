@@ -21,13 +21,20 @@ function FAB(props) {
   return (
     <IconButton
       {...props}
+      color="secondary"
       className={`fixed ${position} ${props.className}`}
       icon={props.icon}
     />
   );
 }
 
+FAB.defaultProps = {
+  shape: "filled",
+  position: "bottom-right",
+};
+
 FAB.propTypes = {
+  shape: PropTypes.oneOf(["filled", "outlined", "text"]),
   className: PropTypes.string,
   icon: PropTypes.object.isRequired,
   position: PropTypes.oneOf([

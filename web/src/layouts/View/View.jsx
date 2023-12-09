@@ -42,15 +42,13 @@ function View() {
         </Handler>
       </div>
       <div
-        className={`bg-primary-400 fixed w-full bottom-0 left-0 z-[1] grid ${css(
-          {
-            gridTemplateRows: userState.cached ? "1fr" : "0fr",
-            transition: "grid-template-rows 400ms ease-in-out",
-          }
-        )}`}
+        className={`secondary filled fixed w-full bottom-0 left-0 z-[1] grid ${css({
+          gridTemplateRows: userState.cached ? "1fr" : "0fr",
+          transition: "grid-template-rows 400ms ease-in-out",
+        })}`}
       >
         <div className="overflow-hidden">
-          <p className="text-light-default text-center p-2">
+          <p className="text-center p-2">
             No hay conexión <FontAwesomeIcon icon={faExclamationCircle} />
           </p>
         </div>
