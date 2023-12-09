@@ -21,7 +21,6 @@ function FAB(props) {
   return (
     <IconButton
       {...props}
-      color="secondary"
       className={`fixed ${position} ${props.className}`}
       icon={props.icon}
     />

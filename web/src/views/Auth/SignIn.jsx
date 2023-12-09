@@ -109,14 +109,14 @@ function SignIn() {
 
   return (
     <main className="w-full viewport flex items-center justify-center">
-      <ModeButton className="top-1 right-1 primary" />
+      <ModeButton color="primary" className="top-1 right-1" />
       <div
-        className={`bg-light-light dark:bg-dark-light pointer-events-none fixed top-0 left-0 z-10 w-full h-screen flex items-center backdrop-blur-[1rem] transition-all duration-100 ${
-          loading ? "opacity-100" : "opacity-0"
+        className={`bg-light-dark dark:bg-dark-dark fixed top-0 left-0 z-10 w-full h-screen flex items-center backdrop-blur-[1rem] transition-all duration-100 ${
+          loading ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       >
         <Loading
-          className={`dark:bg-dark-alter transition-all duration-300  ${
+          className={`bg-light-default dark:bg-dark-default transition-all duration-300  ${
             loading ? "!h-[100px]" : "!h-[0px]"
           }`}
         />
@@ -136,12 +136,16 @@ function SignIn() {
           className="sign-in-input"
           value={user}
           onChange={handleUser}
-          leftComponent={<FontAwesomeIcon className="primary" icon={faUser} />}
+          leftComponent={
+            <div className="icon-button button -ml-3">
+              <FontAwesomeIcon className="primary" icon={faUser} />
+            </div>
+          }
           helperText={userHelperText}
         />
         <InputControl
           id="password"
-          className="sign-in-input !pl-0"
+          className="sign-in-input "
           value={password}
           onChange={handlePassword}
           type={!showPassword ? "password" : "text"}
@@ -152,7 +156,7 @@ function SignIn() {
               name="toggle-see-password"
               onClick={toggleShowPassword}
               icon={showPassword ? faLockOpen : faLock}
-              className="primary -ml-3"
+              className="-ml-3"
               aria-label="click para alternar ver/ocultar contraseña"
             />
           }
@@ -163,8 +167,8 @@ function SignIn() {
           value={remember}
           label="Recordarme"
           activeColor="primary"
-          inactiveColor="secondary"
-          onChange={(e) => setRemember(e.target.checked)}
+          inactiveColor="basics"
+          onChange={(e) => setRemember((remember) => !remember)}
         />
         <p className="dark:text-white">
           ¿No tienes cuenta?{" "}

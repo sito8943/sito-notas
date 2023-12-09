@@ -33,7 +33,7 @@ function PreviewNote({ id, i, title, content, last_update, onDelete }) {
 
   return (
     <PrintAfter animation="appear" delay={i * 100}>
-      <div className="relative flex flex-col gap-3 bg-light-alter dark:bg-dark-alter p-5 rounded-xl card-shadow w-full transition hover:-translate-y-1 h-[400px]">
+      <div className="relative flex flex-col gap-3 bg-light-default dark:bg-dark-default p-5 rounded-xl card-shadow w-full transition hover:-translate-y-1 h-[400px]">
         <div className="flex items-center justify-between w-full">
           <Link
             to={`/note/${id}`}

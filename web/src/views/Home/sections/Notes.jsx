@@ -69,6 +69,7 @@ function Notes({ setSync }) {
           onClick={addNote}
           position="bottom-right"
           icon={faAdd}
+          color="secondary"
           className="z-10 text-3xl p-7"
         />
       ) : null}

@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useDebounce } from "use-lodash-debounce";
 
 // @sito/ui
 import {
   Loading,
-  IconButton,
   InputControl,
   TextareaControl,
   useNotification,
@@ -18,11 +17,12 @@ import { fetchNotes, updateNote } from "../../services/notes";
 import { useUser } from "../../providers/UserProvider";
 
 // styles
-import "./styles.css"
+import "./styles.css";
 
 function Note() {
-  const [sync, setSync] = useState(false);
   const { id } = useParams();
+
+  const [sync, setSync] = useState(false);
 
   const { userState, setUserState } = useUser();
   const { setNotification } = useNotification();
