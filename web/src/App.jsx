@@ -7,7 +7,7 @@ import Auth from "./layouts/Auth";
 import View from "./layouts/View/View";
 
 // @sito/ui
-import { Handler, Loading, Notification, useNotification } from "@sito/ui";
+import { Handler, SplashScreen, Notification, useNotification } from "@sito/ui";
 
 // services
 import { refresh, validateUser } from "./services/auth";
@@ -88,6 +88,7 @@ function App() {
 
   useEffect(() => {
     fetch();
+    setNotification({ type: "info", message: "Hola" });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -95,6 +96,14 @@ function App() {
     <Suspense>
       <Handler>
         <Notification />
+        <SplashScreen
+          visible={loading}
+          logo={
+            <div>
+              <h1>SITO NOTAS</h1>
+            </div>
+          }
+        />
         {!loading ? (
           <BrowserRouter>
             <Routes>
@@ -112,9 +121,7 @@ function App() {
               <Route path="/*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
-        ) : (
-          <Loading className="w-full h-screen bg-light-dark dark:bg-dark-dark" />
-        )}
+        ) : null}
       </Handler>
     </Suspense>
   );
