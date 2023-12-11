@@ -45,15 +45,12 @@ function App() {
   const fetch = async () => {
     try {
       const { data, error } = await validateUser();
-      if (error && error !== null && cachedUser()) {
-        if (
-          error.message === "invalid claim: missing sub claim" &&
-          cachedUser()
-        ) {
+      if (error && cachedUser()) {
+        if (error.message === "invalid claim: missing sub claim") {
           const rememberValue = remember();
           if (rememberValue !== null) {
             const response = await refresh(getUser().user.email, rememberValue);
-            if (response.error && response.error !== null) {
+            if (response.error) {
               logoutUser();
               setNotification({
                 type: "error",
@@ -61,22 +58,23 @@ function App() {
               });
               return;
             }
+            const { user, photo = {} } = response.data;
             setUserState({
               type: "logged-in",
-              user: response.data.user,
-              photo: response.data.photo ?? {},
+              user,
+              photo,
             });
-            saveUser({
-              user: response.data.user,
-              photo: response.data.photo ?? {},
-            });
-          } else logoutUser();
-        } else if (cachedUser())
+            saveUser({ user, photo });
+          } else {
+            logoutUser();
+          }
+        } else {
           setUserState({ type: "logged-in", user: getUser(), cached: true });
-        else logoutUser();
-      } else {
-        saveUser({ ...getUser(), user: data.user, cached: false });
-        setUserState({ type: "logged-in", user: data.user });
+        }
+      } else if (!error) {
+        const user = data.user;
+        saveUser({ ...getUser(), user, cached: false });
+        setUserState({ type: "logged-in", user });
       }
     } catch (err) {
       logoutUser();
@@ -88,7 +86,6 @@ function App() {
 
   useEffect(() => {
     fetch();
-    setNotification({ type: "info", message: "Hola" });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
