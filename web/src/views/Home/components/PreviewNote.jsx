@@ -46,7 +46,7 @@ function PreviewNote({ id, i, title, content, last_update, onDelete }) {
           <IconButton
             icon={faTrash}
             className="primary"
-            onClick={() => onDelete(id)}
+            onClick={() => onDelete(i)}
           />
         </div>
 

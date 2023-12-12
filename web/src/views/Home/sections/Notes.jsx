@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { sortBy } from "some-javascript-utils/array";
 import { v4 } from "uuid";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
@@ -13,7 +13,7 @@ import { useUser } from "../../../providers/UserProvider";
 import { useSearch } from "../../../providers/SearchProvider";
 
 // services
-import { createNote, fetchNotes } from "../../../services/notes";
+import { createNote, fetchNotes, removeNote } from "../../../services/notes";
 
 // components
 import FAB from "../../../components/FAB/FAB";
@@ -68,6 +68,17 @@ function Notes({ setSync }) {
     setSync(false);
   };
 
+  const onDelete = useCallback(
+    async (index) => {
+      const newNotesList = [...userState.notes];
+      const deletedElement = newNotesList.splice(index, 1)[0].id;
+      setUserState({ type: "set-notes", notes: newNotesList });
+      const error  = await removeNote(deletedElement);
+      if (error && error !== null) console.error(error.message);
+    },
+    [userState.notes]
+  );
+
   return (
     <section className="notes">
       {!error ? (
@@ -102,7 +113,14 @@ function Notes({ setSync }) {
               return false;
             })
             .map((note, i) => {
-              return <PreviewNote key={note.id} i={i} {...note} />;
+              return (
+                <PreviewNote
+                  key={note.id}
+                  i={i}
+                  {...note}
+                  onDelete={onDelete}
+                />
+              );
             })}
     </section>
   );
