@@ -29,7 +29,7 @@ export const removeNote = async (noteId) => {
 export const updateNote = async (note) => {
   const { error } = await supabase
     .from("notes")
-    .update({ content: note.content, last_update: new Date().getTime() })
+    .update({ ...note })
     .eq("id", note.id);
   return error;
 };

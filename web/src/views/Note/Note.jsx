@@ -69,16 +69,23 @@ function Note() {
     if (foundIndex >= 0) {
       const now = new Date().getTime();
       const theNote = userState.notes[foundIndex];
+      const toUpdateDto = { id: theNote.id, last_update: now };
       theNote.last_update = now;
       switch (data.attribute) {
         case "title":
+          toUpdateDto.title = data.value;
           theNote.title = data.value;
           break;
         default:
+          toUpdateDto.content = data.value;
           theNote.content = data.value;
           break;
       }
-      await updateNote({ ...theNote, last_update: now });
+      // remote update
+      const error = await updateNote(toUpdateDto);
+      // local update
+      setUserState({ type: "set-notes", notes: [...userState.notes] });
+      if (error && error !== null) console.error(error.message);
     }
     setSync(false);
   };
