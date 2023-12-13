@@ -8,7 +8,7 @@ function Syncing() {
     <Loading
       className="sync rounded-full !bg-[#00000000]"
       strokeWidth="6"
-      color="basics"
+      color="secondary"
     />
   );
 }
