@@ -97,7 +97,7 @@ function Navbar() {
             icon={mode === "dark" ? faSun : faMoon}
           />
           {id ? (
-            <IconButton color="primary" className="text-xl" icon={faSave} />
+            <></>
           ) : (
             <>
               <Link
