@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Tippy from "@tippyjs/react";
 
 import {
   faChevronLeft,
@@ -88,14 +89,15 @@ function Navbar() {
           )}
         </div>
         <nav className="z-10 flex">
-          <IconButton
-            color="primary"
-            onClick={() => toggleMode()}
-            tooltip="Alternar tema (Claro/Oscuro)"
-            name="toggle-theme"
-            aria-label="Click para cambiar el tema"
-            icon={<FontAwesomeIcon icon={mode === "dark" ? faSun : faMoon} />}
-          />
+          <Tippy content="Alternar tema (Claro/Oscuro)">
+            <IconButton
+              color="primary"
+              onClick={() => toggleMode()}
+              name="toggle-theme"
+              aria-label="Click para cambiar el tema"
+              icon={<FontAwesomeIcon icon={mode === "dark" ? faSun : faMoon} />}
+            />
+          </Tippy>
           {id ? (
             <></>
           ) : (
