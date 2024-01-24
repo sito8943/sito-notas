@@ -185,7 +185,9 @@ function SignUp() {
                 tabIndex={-1}
                 name="toggle-see-password"
                 onClick={toggleShowPassword}
-                icon={showPassword ? faLockOpen : faLock}
+                icon={
+                  <FontAwesomeIcon icon={showPassword ? faLockOpen : faLock} />
+                }
                 className="-ml-3"
                 aria-label="click para alternar ver/ocultar contraseña"
               />
@@ -205,7 +207,9 @@ function SignUp() {
                 tabIndex={-1}
                 name="toggle-see-r-password"
                 onClick={toggleShowRPassword}
-                icon={showRPassword ? faLockOpen : faLock}
+                icon={
+                  <FontAwesomeIcon icon={showRPassword ? faLockOpen : faLock} />
+                }
                 className="-ml-3"
                 aria-label="click para alternar ver/ocultar repetir contraseña"
               />

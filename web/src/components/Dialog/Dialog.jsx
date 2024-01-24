@@ -7,6 +7,7 @@ import { IconButton } from "@sito/ui";
 
 // styles
 import "./styles.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Dialog({ visible, onClose, children, canBeClosed }) {
   useEffect(() => {
@@ -23,7 +24,7 @@ function Dialog({ visible, onClose, children, canBeClosed }) {
       {canBeClosed ? (
         <IconButton
           onClick={onClose}
-          icon={faClose}
+          icon={<FontAwesomeIcon icon={faClose} />}
           color="primary"
           shape="filled"
           className="top-1 right-1"

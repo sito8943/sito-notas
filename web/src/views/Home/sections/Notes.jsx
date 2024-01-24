@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { sortBy } from "some-javascript-utils/array";
 import { v4 } from "uuid";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import stringSimilarity from "string-similarity";
 import loadable from "@loadable/component";
@@ -73,7 +74,7 @@ function Notes({ setSync }) {
       const newNotesList = [...userState.notes];
       const deletedElement = newNotesList.splice(index, 1)[0].id;
       setUserState({ type: "set-notes", notes: newNotesList });
-      const error  = await removeNote(deletedElement);
+      const error = await removeNote(deletedElement);
       if (error && error !== null) console.error(error.message);
     },
     [userState.notes]
@@ -85,7 +86,7 @@ function Notes({ setSync }) {
         <FAB
           onClick={addNote}
           position="bottom-right"
-          icon={faAdd}
+          icon={<FontAwesomeIcon icon={faAdd} />}
           color="secondary"
           className="z-10 text-3xl p-7"
         />

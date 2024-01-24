@@ -6,6 +6,7 @@ import { IconButton, PrintAfter } from "@sito/ui";
 
 import { marked } from "marked";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function PreviewNote({ id, i, title, content, last_update, onDelete }) {
   const contentRef = useRef();
@@ -44,7 +45,7 @@ function PreviewNote({ id, i, title, content, last_update, onDelete }) {
             </div>
           </Link>
           <IconButton
-            icon={faTrash}
+            icon={<FontAwesomeIcon icon={faTrash} />}
             className="primary"
             onClick={() => onDelete(i)}
           />

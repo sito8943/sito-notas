@@ -33,7 +33,6 @@ import { showError } from "../../lang/es";
 // styles
 import "./styles.css";
 
-
 function SignIn() {
   const { setNotification } = useNotification();
 
@@ -157,7 +156,9 @@ function SignIn() {
               tabIndex={-1}
               name="toggle-see-password"
               onClick={toggleShowPassword}
-              icon={showPassword ? faLockOpen : faLock}
+              icon={
+                <FontAwesomeIcon icon={showPassword ? faLockOpen : faLock} />
+              }
               className="-ml-3"
               aria-label="click para alternar ver/ocultar contraseña"
             />

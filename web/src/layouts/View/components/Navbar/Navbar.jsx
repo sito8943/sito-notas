@@ -94,7 +94,7 @@ function Navbar() {
             tooltip="Alternar tema (Claro/Oscuro)"
             name="toggle-theme"
             aria-label="Click para cambiar el tema"
-            icon={mode === "dark" ? faSun : faMoon}
+            icon={<FontAwesomeIcon icon={mode === "dark" ? faSun : faMoon} />}
           />
           {id ? (
             <></>

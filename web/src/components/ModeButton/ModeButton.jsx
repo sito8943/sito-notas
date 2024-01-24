@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/ui
@@ -18,7 +19,7 @@ function ModeButton({ className, color = "secondary" }) {
       shape="text"
       color={color}
       aria-label="Click para cambiar el tema"
-      icon={mode === "dark" ? faSun : faMoon}
+      icon={<FontAwesomeIcon icon={mode === "dark" ? faSun : faMoon} />}
       className={className}
     />
   );
