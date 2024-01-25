@@ -4,6 +4,7 @@
 
 * {
   font-family: "Roboto", sans-serif;
+  font-weight: 500;
 }
 
 .card-shadow {
@@ -84,7 +85,7 @@ h1,
 h2,
 h3 {
   font-family: "Poppins", sans-serif;
-  font-weight: 900;
+  font-weight: 700 !important;
 }
 
 .sync .loader {
