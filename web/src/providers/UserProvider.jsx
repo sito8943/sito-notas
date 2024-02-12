@@ -14,10 +14,12 @@ const userReducer = (userState, action) => {
   switch (type) {
     case "set-notes": {
       const { notes } = action;
+      saveUser({ ...userState, notes });
       return { ...userState, notes };
     }
     case "add-note": {
       const { newNote } = action;
+      saveUser({ ...userState, notes: [...userState.notes, newNote] });
       return { ...userState, notes: [...userState.notes, newNote] };
     }
     case "set-types": {
