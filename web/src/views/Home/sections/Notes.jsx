@@ -70,15 +70,40 @@ function Notes({ setSync }) {
   };
 
   const onDelete = useCallback(
-    async (index) => {
+    async (id) => {
       const newNotesList = [...userState.notes];
-      const deletedElement = newNotesList.splice(index, 1)[0].id;
-      setUserState({ type: "set-notes", notes: newNotesList });
-      const error = await removeNote(deletedElement);
-      if (error && error !== null) console.error(error.message);
+      const found = newNotesList.findIndex((note) => note.id === id);
+      if (found >= 0) {
+        const deletedElement = newNotesList.splice(found, 1)[0].id;
+        setUserState({ type: "set-notes", notes: newNotesList });
+        const error = await removeNote(deletedElement);
+        if (error && error !== null) console.error(error.message);
+      }
     },
     [userState.notes]
   );
+
+  const printNotes = useCallback(() => {
+    let sorted = sortBy(userState.notes ?? [], "last_update", false);
+    if (searchValue && searchValue.length)
+      sorted = sorted.filter((note) => {
+        if (!searchValue.length) return true;
+        if (note.title) {
+          if (
+            stringSimilarity.compareTwoStrings(
+              note.title.toLowerCase(),
+              searchValue
+            ) > 0.3
+          )
+            return true;
+        } else if (note.content.toLowerCase().indexOf(searchValue) >= 0)
+          return true;
+        return false;
+      });
+    return sorted.map((note, i) => (
+      <PreviewNote key={note.id} {...note} onDelete={onDelete} />
+    ));
+  }, [userState.notes, searchValue]);
 
   return (
     <section className="notes">
@@ -98,31 +123,7 @@ function Notes({ setSync }) {
               className="w-full h-[300px] skeleton-box !rounded-xl"
             />
           ))
-        : sortBy(userState.notes ?? [], "last_update", false)
-            .filter((note) => {
-              if (!searchValue.length) return true;
-              if (note.title) {
-                if (
-                  stringSimilarity.compareTwoStrings(
-                    note.title.toLowerCase(),
-                    searchValue
-                  ) > 0.3
-                )
-                  return true;
-              } else if (note.content.toLowerCase().indexOf(searchValue) >= 0)
-                return true;
-              return false;
-            })
-            .map((note, i) => {
-              return (
-                <PreviewNote
-                  key={note.id}
-                  i={i}
-                  {...note}
-                  onDelete={onDelete}
-                />
-              );
-            })}
+        : printNotes()}
     </section>
   );
 }
