@@ -19,6 +19,9 @@ import "tippy.js/dist/tippy.css"; // optional
 import "@fontsource/poppins/700.css";
 import "@fontsource/roboto/500.css";
 
+// i18
+import "./i18.js";
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <ModeProvider>
     <StyleProvider>

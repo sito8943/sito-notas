@@ -30,51 +30,78 @@ import { showError } from "./lang/es";
 // views
 const SignIn = loadable(() => import("./views/Auth/SignIn"));
 const SignOut = loadable(() => import("./views/Auth/SignOut"));
-const SignUp = loadable(() => import("./views/Auth/SignUp"));
 const Home = loadable(() => import("./views/Home/Home"));
 const NotFound = loadable(() => import("./views/NotFound/NotFound"));
 const Note = loadable(() => import("./views/Note/Note"));
 const Settings = loadable(() => import("./views/Settings/Settings"));
 
 function App() {
+  const { t } = useTranslation();
+
   const { setUserState } = useUser();
   const { setNotification } = useNotification();
 
   const [loading, setLoading] = useState(true);
 
-  const fetch = async () => {
+  async function handleUserError(error) {
+    if (error.message === "invalid claim: missing sub claim" && cachedUser()) {
+      const rememberValue = remember();
+      if (rememberValue !== null) {
+        const response = await refresh(getUser().user.email, rememberValue);
+        if (response.error) {
+          handleResponseError(response.error);
+          return;
+        }
+        await handleUserSuccess(response.data);
+      } else {
+        logoutUser();
+      }
+    } else if (cachedUser()) {
+      setUserState({ type: "logged-in", user: getUser(), cached: true });
+    } else {
+      logoutUser();
+    }
+  }
+
+  async function handleUserSuccess(data) {
+    const account = await fetchAccounts({
+      sort: ["updated_at"],
+      user: data.user.id,
+    });
+    if (account.error && account.error !== null) {
+      handleResponseError(account.error);
+      return;
+    }
+    const lastAccount = account.data[0];
+    saveUser({
+      ...getUser(),
+      user: data.user,
+      account: lastAccount,
+    });
+    setUserState({
+      type: "logged-in",
+      user: data.user,
+      account: lastAccount,
+      cached: false,
+    });
+  }
+
+  function handleResponseError(error) {
+    logoutUser();
+    setNotification({
+      type: "error",
+      message: t(`_accessibility:errors.${toCamelCase(error.message)}`),
+    });
+    setLoading(false);
+  }
+
+  async function fetch() {
     try {
       const { data, error } = await validateUser();
-      if (error && cachedUser()) {
-        if (error.message === "invalid claim: missing sub claim") {
-          const rememberValue = remember();
-          if (rememberValue !== null) {
-            const response = await refresh(getUser().user.email, rememberValue);
-            if (response.error) {
-              logoutUser();
-              setNotification({
-                type: "error",
-                message: showError(response.error.message),
-              });
-              return;
-            }
-            const { user, photo = {} } = response.data;
-            setUserState({
-              type: "logged-in",
-              user,
-              photo,
-            });
-            saveUser({ user, photo });
-          } else {
-            logoutUser();
-          }
-        } else {
-          setUserState({ type: "logged-in", user: getUser(), cached: true });
-        }
-      } else if (!error) {
-        const user = data.user;
-        saveUser({ ...getUser(), user, cached: false });
-        setUserState({ type: "logged-in", user });
+      if (error && error !== null) {
+        await handleUserError(error);
+      } else {
+        await handleUserSuccess(data);
       }
     } catch (err) {
       logoutUser();
@@ -82,7 +109,7 @@ function App() {
     }
 
     setLoading(false);
-  };
+  }
 
   useEffect(() => {
     fetch();
@@ -97,7 +124,7 @@ function App() {
           visible={loading}
           logo={
             <div>
-              <h1>SITO NOTAS</h1>
+              <h1 className="uppercase">{t("_accessibility:appName")}</h1>
             </div>
           }
         />
@@ -106,7 +133,6 @@ function App() {
             <Routes>
               <Route exact path="/auth" element={<Auth />}>
                 <Route index element={<SignIn />} />
-                <Route path="/auth/sign-up" element={<SignUp />} />
               </Route>
               <Route path="/" element={<View />}>
                 <Route index element={<Home />} />

@@ -5,6 +5,7 @@ import { scrollTo } from "some-javascript-utils/browser";
 // @emotion/css
 import { css } from "@emotion/css";
 
+// icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 
@@ -42,10 +43,12 @@ function View() {
         </Handler>
       </div>
       <div
-        className={`secondary filled fixed w-full bottom-0 left-0 z-[1] grid ${css({
-          gridTemplateRows: userState.cached ? "1fr" : "0fr",
-          transition: "grid-template-rows 400ms ease-in-out",
-        })}`}
+        className={`secondary filled fixed w-full bottom-0 left-0 z-[1] grid ${css(
+          {
+            gridTemplateRows: userState.cached ? "1fr" : "0fr",
+            transition: "grid-template-rows 400ms ease-in-out",
+          }
+        )}`}
       >
         <div className="overflow-hidden">
           <p className="text-center p-2">

@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useTranslation } from "react-i18next";
 import Tippy from "@tippyjs/react";
 
+// icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
   faSave,
@@ -25,6 +27,8 @@ import noPhoto from "../../../../assets/images/no-photo.webp";
 import "./styles.css";
 
 function Navbar() {
+  const { t } = useTranslation();
+
   const { userState } = useUser();
   const { toggleMode, mode } = useMode();
 
@@ -65,14 +69,18 @@ function Navbar() {
             <Link
               to="/"
               name="to-home"
-              aria-label="Ir al inicio"
+              aria-label={`${t("_accessibility:ariaLabels.goTo")} ${t(
+                "_pages:routes.home"
+              )}`}
               className="button icon-button primary"
             >
               <FontAwesomeIcon icon={faChevronLeft} />
             </Link>
           ) : (
             <Link
-              aria-label="Ir al inicio"
+              aria-label={`${t("_accessibility:ariaLabels.goTo")} ${t(
+                "_pages:routes.home"
+              )}`}
               name="go-home"
               to="/"
               className="z-10 flex gap-2 items-center primary"
@@ -89,12 +97,22 @@ function Navbar() {
           )}
         </div>
         <nav className="z-10 flex">
-          <Tippy content="Alternar tema (Claro/Oscuro)">
+          <Tippy
+            content={
+              mode === "dark"
+                ? t("_accessibility:ariaLabels.lightMode")
+                : t("_accessibility:ariaLabels.darkMode")
+            }
+          >
             <IconButton
               color="primary"
               onClick={() => toggleMode()}
               name="toggle-theme"
-              aria-label="Click para cambiar el tema"
+              aria-label={
+                mode === "dark"
+                  ? t("_accessibility:ariaLabels.lightMode")
+                  : t("_accessibility:ariaLabels.darkMode")
+              }
               icon={<FontAwesomeIcon icon={mode === "dark" ? faSun : faMoon} />}
             />
           </Tippy>
@@ -105,7 +123,9 @@ function Navbar() {
               <Link
                 to="/settings"
                 name="toggle-theme"
-                aria-label="Ir a la configuración"
+                aria-label={`${t("_accessibility:ariaLabels.goTO")} ${t(
+                  "_pages:routes.settings"
+                )}`}
                 className="primary button icon-button "
               >
                 <FontAwesomeIcon icon={faGear} />
@@ -113,7 +133,7 @@ function Navbar() {
               <Link
                 to="/sign-out"
                 name="logout"
-                aria-label="Cerrar sesión"
+                aria-label={t("_pages:routes.signOut")}
                 className="button icon-button primary"
               >
                 <FontAwesomeIcon icon={faArrowRightFromBracket} />

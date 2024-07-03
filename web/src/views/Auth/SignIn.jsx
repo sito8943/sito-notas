@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // @sito/ui
 import {
@@ -34,6 +34,8 @@ import { showError } from "../../lang/es";
 import "./styles.css";
 
 function SignIn() {
+  const { t } = useTranslation();
+
   const { setNotification } = useNotification();
 
   const [user, setUser] = useState("");
@@ -66,13 +68,13 @@ function SignIn() {
 
       if (!user.length) {
         document.getElementById("user")?.focus();
-        setUserHelperText("Debes introducir un correo electrónico");
+        setUserHelperText(t("_accessibility:errors.emailRequired"));
         setLoading(false);
         return;
       }
       if (!password.length) {
         document.getElementById("password")?.focus();
-        setPasswordHelperText("Debes introducir tu contraseña");
+        setPasswordHelperText(t("_accessibility:errors.passwordRequired"));
         setLoading(false);
         return;
       }
@@ -81,17 +83,35 @@ function SignIn() {
       const { data, error } = response;
 
       if (error && error !== null)
-        setNotification({ type: "error", message: showError(error.message) });
+        setNotification({
+          type: "error",
+          message: t(`_accessibility:errors.${toCamelCase(error.message)}`),
+        });
       else {
         const userData = await fetchUserData(data.user.id);
         if (userData.error && userData.error !== null) {
           setNotification({
             type: "error",
-            message: showError(userData.error.message),
+            message: t(
+              `_accessibility:errors.${toCamelCase(userData.error.message)}`
+            ),
           });
           setLoading(false);
         }
         if (!userData.data.length) await createSettingsUser(data.user.id);
+        // fetching account
+        const fetchAccount = await fetchAccounts({ user: data.user.id });
+        if (fetchAccount.error && fetchAccount.error !== null) {
+          setNotification({
+            type: "error",
+            message: t(
+              `_accessibility:errors.${toCamelCase(fetchAccount.error.message)}`
+            ),
+          });
+          setLoading(false);
+        }
+        if (!fetchAccount.data.length)
+          fetchAccount.data = await createAccount({ user: data.user.id });
         setUserState({
           type: "logged-in",
           user: data.user,
@@ -133,7 +153,7 @@ function SignIn() {
         </div>
         <InputControl
           id="user"
-          label="Correo electrónico"
+          label={t("_accessibility:inputs.email.label")}
           className="sign-in-input"
           value={user}
           onChange={handleUser}
@@ -150,7 +170,7 @@ function SignIn() {
           value={password}
           onChange={handlePassword}
           type={!showPassword ? "password" : "text"}
-          label="Contraseña"
+          label={t("_accessibility:inputs.password.label")}
           leftComponent={
             <IconButton
               tabIndex={-1}
@@ -160,7 +180,11 @@ function SignIn() {
                 <FontAwesomeIcon icon={showPassword ? faLockOpen : faLock} />
               }
               className="-ml-3"
-              aria-label="click para alternar ver/ocultar contraseña"
+              aria-label={`${t(
+                `_accessibility:inputs.password.${
+                  showPassword ? "showPassword" : "hidePassword"
+                }`
+              )}`}
             />
           }
           helperText={passwordHelperText}
@@ -168,26 +192,20 @@ function SignIn() {
         <Switcher
           checked={remember}
           value={remember}
-          label="Recordarme"
+          label={t("_accessibility:inputs.remember.label")}
           activeColor="primary"
           inactiveColor="basics"
           onChange={() => setRemember((remember) => !remember)}
         />
-        <p>
-          ¿No tienes cuenta?{" "}
-          <Link to="/auth/sign-up" className="underline primary">
-            Registrarme
-          </Link>
-        </p>
         <div className="w-full flex gap-5 justify-end items-center">
           <Button
             name="login"
             type="submit"
             color="primary"
             shape="filled"
-            aria-label="Click para entrar"
+            aria-label={t("_pages:auth.signIn.signInAriaLabel")}
           >
-            Entrar
+            {t("_accessibility:buttons.signIn")}
           </Button>
         </div>
       </form>

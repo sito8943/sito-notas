@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,6 +12,8 @@ import Syncing from "../../components/Syncing/Syncing";
 import Password from "./sections/Password";
 
 function Settings() {
+  const { t } = useTranslation();
+
   const [sync, setSync] = useState(false);
 
   return (
@@ -27,13 +30,15 @@ function Settings() {
           <Link
             to="/"
             name="to-home"
-            aria-label="Ir al inicio"
+            aria-label={`${t("_accessibility:ariaLabels.goTo")} ${t(
+              "_pages:routes.home"
+            )}`}
             className="button icon-button primary"
           >
             <FontAwesomeIcon icon={faChevronLeft} />
           </Link>
           <h2 className="text-6xl md:text-5xl sm:text-4xl xs:text-3xl">
-            Configuración
+            {t("_pages:settings.title")}
           </h2>
         </div>
         <Password />

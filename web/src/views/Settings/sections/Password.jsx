@@ -1,5 +1,9 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
+
+// icons
 import { faLock, faLockOpen } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // @sito/ui
 import {
@@ -12,9 +16,10 @@ import {
 
 // services
 import { updatePassword } from "../../../services/auth";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Password() {
+  const { t } = useTranslation();
+
   const { setNotification } = useNotification();
 
   const [password, setPassword] = useState("");
@@ -39,12 +44,12 @@ function Password() {
     setPasswordHelperText("");
     if (!password.length) {
       document.getElementById("password")?.focus();
-      setPasswordHelperText("Debes introducir tu contraseña");
+      setPasswordHelperText(t("_accessibility:inputs.password.requiredError"));
       return;
     }
     if (password !== rPassword) {
       document.getElementById("password")?.focus();
-      setPasswordHelperText("No coinciden las contraseñas");
+      t("_accessibility:inputs.password.passwordNoMatch");
       return;
     }
     setLoading(true);
@@ -64,11 +69,13 @@ function Password() {
         onSubmit={onSubmit}
         className="flex flex-col gap-3 justify-start items-start"
       >
-        <h3 className="text-xl">Seguridad</h3>
+        <h3 className="text-xl">
+          {t("_pages:settings.sections.security.title")}
+        </h3>
         <InputControl
           id="password"
           className="w-full"
-          label="Contraseña"
+          label={t("_accessibility:inputs.password.label")}
           maxLength={25}
           value={password}
           onChange={handlePassword}
@@ -83,7 +90,11 @@ function Password() {
                 <FontAwesomeIcon icon={showPassword ? faLockOpen : faLock} />
               }
               className="-ml-3"
-              aria-label="click para alternar ver/ocultar contraseña"
+              aria-label={`${t(
+                `_accessibility:inputs.password.${
+                  showPassword ? "showPassword" : "hidePassword"
+                }`
+              )}`}
             />
           }
           helperText={passwordHelperText}
@@ -91,7 +102,7 @@ function Password() {
         <InputControl
           id="rPassword"
           className="w-full"
-          label="Repetir Contraseña"
+          label={t("_accessibility:inputs.rPassword")}
           maxLength={25}
           value={rPassword}
           onChange={handleRPassword}
@@ -106,17 +117,29 @@ function Password() {
                 <FontAwesomeIcon icon={showRPassword ? faLockOpen : faLock} />
               }
               className="-ml-3"
-              aria-label="click para alternar ver/ocultar repetir contraseña"
+              aria-label={`${t(
+                `_accessibility:inputs.password.${
+                  showRPassword ? "showPassword" : "hidePassword"
+                }`
+              )}`}
             />
           }
         />
         <Button
+          name="save-password"
+          aria-label={`${t("_accessibility:buttons.save")} ${t(
+            "_accessibility:inputs.password.label"
+          )}`}
           type="submit"
           shape="filled"
           className="button-loading"
           disabled={loading}
         >
-          {loading ? <Loading color="basics" strokeWidth="8" /> : "Guardar"}
+          {loading ? (
+            <Loading color="basics" strokeWidth="8" />
+          ) : (
+            t("_accessibility:buttons.save")
+          )}
         </Button>
       </form>
     </section>
