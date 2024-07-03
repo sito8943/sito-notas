@@ -159,3 +159,6 @@ dist-ssr
 *.sw?
 
 *.env
+*.cache
+sw.js
+dev-dist
