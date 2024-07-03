@@ -1,6 +1,7 @@
 import { Suspense, useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import loadable from "@loadable/component";
+import { useTranslation } from "react-i18next";
 
 // layouts
 import Auth from "./layouts/Auth";
@@ -11,6 +12,7 @@ import { Handler, SplashScreen, Notification, useNotification } from "@sito/ui";
 
 // services
 import { refresh, validateUser } from "./services/auth";
+import { fetchAccounts } from "./services/account";
 
 // context
 import { useUser } from "./providers/UserProvider";

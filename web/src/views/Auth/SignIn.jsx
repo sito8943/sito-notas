@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 // @sito/ui
 import {
@@ -22,13 +23,11 @@ import ModeButton from "../../components/ModeButton/ModeButton";
 
 // services
 import { login } from "../../services/auth";
+import { fetchAccounts } from "../../services/account";
 import { createSettingsUser, fetchUserData } from "../../services/user";
 
 // auth
 import { saveUser } from "../../utils/auth";
-
-// lang
-import { showError } from "../../lang/es";
 
 // styles
 import "./styles.css";
