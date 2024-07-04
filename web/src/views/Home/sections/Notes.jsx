@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
-import { sortBy } from "some-javascript-utils/array";
 import { v4 } from "uuid";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import stringSimilarity from "string-similarity";
 import loadable from "@loadable/component";
+import { sortBy } from "some-javascript-utils/array";
+
+// icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAdd } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/ui
 import { useNotification } from "@sito/ui";

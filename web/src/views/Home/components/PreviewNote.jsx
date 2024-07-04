@@ -5,13 +5,13 @@ import { Link } from "react-router-dom";
 import { IconButton, PrintAfter } from "@sito/ui";
 
 import { marked } from "marked";
+
+// icons
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function PreviewNote({ id, title, content, last_update, onDelete }) {
   const contentRef = useRef();
-
-  console.log(id, title);
 
   useEffect(() => {
     if (contentRef !== null && contentRef.current)
