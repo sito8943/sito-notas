@@ -8,37 +8,22 @@
     "allSpent": "All spent",
     "allLogs": "All logs"
   },
-  "allSpent": {
-    "title": "All Spent",
-    "extraBalances": {
-      "all": {
-        "id": 0,
-        "description": "All"
-      },
-      "bills": {
-        "id": 1,
-        "description": "Bills"
-      },
-      "incomings": {
-        "id": 2,
-        "description": "Incomings"
-      }
-    }
-  },
   "auth": {
+    "recovery": {
+      "title": "Password Recovery",
+      "sent": "Check your email to reset your password"
+    },
+    "updatePassword": {
+      "title": "Update Password",
+      "sent": "Password has been updated"
+    },
     "signIn": {
-      "signInAriaLabel": "Click to login"
+      "signInAriaLabel": "Click to login",
+      "title": "Sign In",
+      "passwordRecovery": "Forgot password?"
     },
-    "toSignIn": {
-      "label": "Already registered?"
-    },
-    "toSignUp": {
-      "label": "No registered yet?"
-    },
-    "signUp": {
-      "titleThanksFor": "Registered successfully",
-      "thanksFor": "Thank you for signing up. Please validate your email address by clicking on the confirmation link that we have just sent to your address.",
-      "nextAriaLabel": "Click to create account"
+    "signOut": {
+      "title": "Sign Out"
     }
   },
   "home": {
