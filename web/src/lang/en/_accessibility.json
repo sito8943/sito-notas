@@ -1,13 +1,5 @@
 {
   "appName": "Sito Wallet",
-  "errors": {
-    "emailRequired": "You must enter an email address",
-    "passwordRequired": "You must enter a password",
-    "passwordsDoNotMatch": "Passwords do not match",
-    "emailNotConfirmed": "Email not confirmed",
-    "failedToFetch": "No connected",
-    "invalidLoginCredentials": "Wrong user or password"
-  },
   "common": {
     "day": "day",
     "days": "days",
@@ -75,11 +67,22 @@
     "rPassword": "Repeat password"
   },
   "buttons": {
+    "goHome": "Home",
+    "settings": "Settings",
     "toTop": "To top",
     "accept": "Accept",
     "signIn": "Sign In",
+    "signOut": "Sign Out",
+    "search": "Search",
+    "yes": "Yes",
+    "no": "No",
     "save": "Save",
-    "next": "Next"
+    "next": "Next",
+    "close": "Close",
+    "edit": "Edit",
+    "add": "Add",
+    "open": "Open",
+    "remove": "Remove"
   },
   "ariaLabels": {
     "add": "Add",
@@ -90,5 +93,27 @@
     "closeDialog": "Close dialog",
     "darkMode": "Dark mode",
     "lightMode": "Light mode"
+  },
+  "errors": {
+    "passwordDoNotMatch": "Password don't match",
+    "emailRequired": "You must enter an email address",
+    "passwordRequired": "You must enter a password",
+    "passwordsDoNotMatch": "Passwords do not match",
+    "emailNotConfirmed": "Email not confirmed",
+    "failedToFetch": "No connected",
+    "invalidLoginCredentials": "Wrong user or password"
+  },
+
+  "messages": {
+    "images": "An image is required",
+    "200": "Saved successfully",
+    "201": "{{model}} saved successfully",
+    "204": "{{model}} deleted successfully",
+    "401": "Wrong password or user",
+    "403": "Error: Access denied",
+    "404": "{{model}} not found",
+    "409": "{{model}} already exist",
+    "429": "Email rate limit exceeded",
+    "500": "Something went wrong"
   }
 }
