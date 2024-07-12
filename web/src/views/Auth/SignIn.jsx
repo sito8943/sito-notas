@@ -20,9 +20,6 @@ import { faLock, faLockOpen, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useAccount } from "../../providers/AccountProvider";
 import { useAppApiClient } from "../../providers/AppApiProvider";
 
-// components
-import ModeButton from "../../components/ModeButton/ModeButton";
-
 // styles
 import "./styles.css";
 
@@ -61,7 +58,7 @@ function SignIn() {
   const onSubmit = useCallback(
     async (e) => {
       e.preventDefault();
-      // setSaving(true);
+      setSaving(true);
       setUserHelperText("");
       setPasswordHelperText("");
 
@@ -118,8 +115,7 @@ function SignIn() {
   }, []);
 
   return (
-    <main className="w-full viewport flex items-center justify-center">
-      <ModeButton color="primary" className="top-1 right-1" />
+    <>
       <div
         className={`bg-light-dark dark:bg-dark-dark fixed top-0 left-0 z-10 w-full h-screen flex items-center backdrop-blur-[1rem] ${transition} duration-100 ${
           saving ? "opacity-100" : "opacity-0 pointer-events-none"
@@ -135,15 +131,13 @@ function SignIn() {
         onSubmit={onSubmit}
         className="form bg-light-dark dark:bg-dark-dark appear"
       >
-        <div
-          className={`flex gap-2 items-start flex-col ${transition} !delay-100 ${
+        <h2
+          className={`w-full text-2xl md:text-3xl font-bold ${transition} !delay-100 ${
             appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
           }`}
         >
-          {/* <img src={logo} alt="stick notes logo" className="w-10 h-10" /> */}
-          LOGO
-          <h1 className="primary uppercase text-4xl">Sito Notas</h1>
-        </div>
+          {t("_pages:auth.signIn.title")}
+        </h2>
         <div
           className={`${transition} !delay-200 ${
             appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
@@ -215,19 +209,11 @@ function SignIn() {
               appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
             }`}
           >
-            {saving && (
-              <Loading
-                className="bg-primary w-full h-full absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] rounded-lg "
-                strokeWidth="4"
-                loaderClass="!w-6"
-                color="stroke-white"
-              />
-            )}
             {t("_accessibility:buttons.signIn")}
           </Button>
         </div>
       </form>
-    </main>
+    </>
   );
 }
 
