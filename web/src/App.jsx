@@ -14,8 +14,12 @@ import Auth from "./layouts/Auth";
 import { Handler, SplashScreen, Notification } from "@sito/ui";
 
 // views
+// Auth
 const SignIn = loadable(() => import("./views/Auth/SignIn"));
 const SignOut = loadable(() => import("./views/Auth/SignOut"));
+const Recovery = loadable(() => import("./views/Auth/Recovery"));
+const UpdatePassword = loadable(() => import("./views/Auth/UpdatePassword"));
+// Generals
 //const Home = loadable(() => import("./views/Home/Home"));
 const NotFound = loadable(() => import("./views/NotFound/NotFound"));
 //const Note = loadable(() => import("./views/Note/Note"));
@@ -57,6 +61,11 @@ function App() {
           <Routes>
             <Route exact path="/auth" element={<Auth />}>
               <Route index element={<SignIn />} />
+              <Route path="/auth/recovery" element={<Recovery />} />
+              <Route
+                path="/auth/update-password"
+                element={<UpdatePassword />}
+              />
             </Route>
             {/*  <Route path="/" element={<View />}>
               <Route index element={<Home />} />
