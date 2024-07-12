@@ -82,7 +82,8 @@
     "edit": "Edit",
     "add": "Add",
     "open": "Open",
-    "remove": "Remove"
+    "remove": "Remove",
+    "submit": "Submit"
   },
   "ariaLabels": {
     "add": "Add",
