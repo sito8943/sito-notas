@@ -75,7 +75,7 @@ export class UserApiClient {
    */
   async updatePassword(password) {
     const { data, error } = await supabase.auth.updateUser({
-      password,
+      password: MD5(password),
     });
     return {
       json: async () => ({ ...data, status: error?.status }),
