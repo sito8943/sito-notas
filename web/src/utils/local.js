@@ -6,7 +6,6 @@
  */
 export const fromLocal = (key, as = "") => {
   const result = localStorage.getItem(key) ?? undefined;
-  console.log(result, key);
   if (result && as.length) {
     switch (as) {
       case "object":
