@@ -9,6 +9,14 @@ export class NoteApiClient {
     return { items: data, error, status };
   }
 
+  async getById(id) {
+    const { data, error, status } = await supabase
+      .from("notes")
+      .select("*")
+      .eq("id", id);
+    return { item: data[0], error, status };
+  }
+
   async create(note) {
     const { error } = await supabase.from("notes").insert({ ...note });
     return error;
@@ -20,10 +28,10 @@ export class NoteApiClient {
   }
 
   async update(note) {
-    const { error } = await supabase
+    const { error, data } = await supabase
       .from("notes")
       .update({ ...note })
       .eq("id", note.id);
-    return error;
+    return { error, data };
   }
 }
