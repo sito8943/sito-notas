@@ -26,7 +26,7 @@ function Home() {
       <Button
         shape="filled"
         onClick={() => scrollTo(0, 0)}
-        className="fixed rounded-full p-0 bottom-24 right-6 w-12 h-12"
+        className="fixed rounded-full p-6 bottom-20 right-5 w-0 h-0"
       >
         <FontAwesomeIcon icon={faChevronUp} />
       </Button>
