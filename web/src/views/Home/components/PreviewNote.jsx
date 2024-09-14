@@ -1,5 +1,6 @@
 import { memo, useRef, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 // @sito/ui
 import { IconButton } from "@sito/ui";
@@ -10,7 +11,9 @@ import { marked } from "marked";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-function PreviewNote({ id, title, content, last_update, onDelete }) {
+function PreviewNote(props) {
+  const { id, title, content, last_update, onDelete } = props;
+
   const contentRef = useRef();
 
   useEffect(() => {
@@ -61,6 +64,14 @@ function PreviewNote({ id, title, content, last_update, onDelete }) {
     </div>
   );
 }
+
+PreviewNote.propTypes = {
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string,
+  content: PropTypes.string,
+  last_update: PropTypes.number,
+  onDelete: PropTypes.func,
+};
 
 const PreviewNoteMemo = memo(
   (props) => <PreviewNote {...props} />,
