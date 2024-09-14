@@ -50,7 +50,6 @@ function Notes() {
   const removeNote = useMutation({
     mutationFn: (noteId) => appApiClient.Note.remove(noteId),
     onSuccess: (data) => {
-      console.log(data);
       if (data === null)
         queryClient.invalidateQueries([ReactQueryKeys.Notes, account.user?.id]);
       setNotification({
@@ -66,26 +65,45 @@ function Notes() {
     },
   });
 
-  const addNote = async () => {
-    const now = new Date().getTime();
-    const newNote = {
-      id: v4(),
-      title: "Nueva nota",
-      content: "",
-      created_at: now,
-      last_update: now,
-    };
-  };
+  const addNote = useMutation({
+    mutationFn: () => {
+      const now = new Date().getTime();
+      const newNote = {
+        id: v4(),
+        title: t("_pages:home.notes.defaultTitle"),
+        content: t("_pages:home.notes.defaultContent"),
+        created_at: now,
+        last_update: now,
+      };
+      appApiClient.Note.create(newNote);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      if (!data)
+        queryClient.invalidateQueries([ReactQueryKeys.Notes, account.user?.id]);
+      else
+        setNotification({
+          message: data?.message,
+          type: "error",
+        });
+    },
+    onError: (error) => {
+      // do something
+      // eslint-disable-next-line no-console
+      console.error(error);
+      setError(error);
+    },
+  });
 
   return (
     <section className="notes">
       {!error ? (
         <FAB
-          onClick={addNote}
+          onClick={() => addNote.mutate()}
           position="bottom-right"
           icon={<FontAwesomeIcon icon={faAdd} />}
           color="secondary"
-          className="z-10 text-3xl p-7"
+          className="z-10 text-2xl p-6"
         />
       ) : null}
       {isLoading
