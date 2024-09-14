@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 } from "uuid";
 import { t } from "i18next";
 import loadable from "@loadable/component";
@@ -18,6 +18,7 @@ import {
   useAppApiClient,
 } from "../../../providers/AppApiProvider";
 import { useSearch } from "../../../providers/SearchProvider";
+import { useAccount } from "../../../providers/AccountProvider";
 
 // components
 import { FAB } from "../../../components/FAB/FAB";
@@ -27,7 +28,11 @@ import "./styles.css";
 
 // utils
 import { ReactQueryKeys } from "../../../utils/queryKeys";
-import { useAccount } from "../../../providers/AccountProvider";
+
+import { fromLocal, toLocal } from "../../../utils/local";
+
+// config
+import config from "../../../config";
 
 // lazy
 const PreviewNote = loadable(() => import("../components/PreviewNote"));
@@ -40,6 +45,8 @@ function Notes() {
   const { setNotification } = useNotification();
 
   const appApiClient = useAppApiClient();
+
+  const [items, setItems] = useState([]);
 
   const { data, isLoading } = useQuery({
     queryKey: [ReactQueryKeys.Notes, account.user?.id],
@@ -94,6 +101,14 @@ function Notes() {
     },
   });
 
+  useEffect(() => {
+    console.log(data);
+    if (data?.items) {
+      toLocal(config.notes, data.items);
+      setItems(data?.items);
+    } else setItems(fromLocal(config.notes, "object") ?? []);
+  }, [data]);
+
   return (
     <section className="notes">
       {!error ? (
@@ -112,7 +127,7 @@ function Notes() {
               className="w-full h-[300px] skeleton-box !rounded-xl"
             />
           ))
-        : sortBy(data?.items ?? [], "last_update", false).map((note) => (
+        : sortBy(items ?? [], "last_update", false).map((note) => (
             <PreviewNote
               key={note.id}
               {...note}

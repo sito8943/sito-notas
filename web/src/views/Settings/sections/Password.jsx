@@ -15,11 +15,12 @@ import {
 } from "@sito/ui";
 
 // services
-import { updatePassword } from "../../../services/auth";
+import { useAppApiClient } from "../../../providers/AppApiProvider";
 
 function Password() {
   const { t } = useTranslation();
 
+  const appApiClient = useAppApiClient();
   const { setNotification } = useNotification();
 
   const [password, setPassword] = useState("");
@@ -53,7 +54,7 @@ function Password() {
       return;
     }
     setLoading(true);
-    const { error } = await updatePassword(password);
+    const { error } = await appApiClient.User.updatePassword(password);
     if (error && error !== null)
       setNotification({ type: "error", message: error.message });
     else {
