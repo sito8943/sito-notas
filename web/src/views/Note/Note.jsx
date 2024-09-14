@@ -36,6 +36,13 @@ function Note() {
   const [title, setTitle] = useState(data?.item?.title ?? "");
   const [content, setContent] = useState(data?.item?.content ?? "");
 
+  useEffect(() => {
+    if (data) {
+      setTitle(data.item.title);
+      setContent(data.item.content);
+    }
+  }, [data]);
+
   const updateNote = useMutation({
     mutationFn: (note) => appApiClient.Note.update(note),
     onSuccess: ({ error }) => {
@@ -63,7 +70,7 @@ function Note() {
     setToUpdate({
       ...data.item,
       content: e.target.value,
-      last_update: new Date().getMilliseconds(),
+      last_update: new Date().getTime(),
     });
   };
 
@@ -72,7 +79,7 @@ function Note() {
     setToUpdate({
       ...data.item,
       title: e.target.value,
-      last_update: new Date().getMilliseconds(),
+      last_update: new Date().getTime(),
     });
   };
 
