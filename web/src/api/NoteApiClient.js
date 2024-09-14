@@ -10,7 +10,8 @@ export class NoteApiClient {
   }
 
   async create(note) {
-    return await supabase.from("notes").insert({ ...note });
+    const { error } = await supabase.from("notes").insert({ ...note });
+    return error;
   }
 
   async remove(noteId) {
