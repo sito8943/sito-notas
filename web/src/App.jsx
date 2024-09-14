@@ -8,7 +8,7 @@ import { useAccount } from "./providers/AccountProvider";
 
 // layouts
 import Auth from "./layouts/Auth";
-//import View from "./layouts/View/View";
+import View from "./layouts/View/View";
 
 // @sito/ui
 import { Handler, SplashScreen, Notification } from "@sito/ui";
@@ -20,10 +20,10 @@ const SignOut = loadable(() => import("./views/Auth/SignOut"));
 const Recovery = loadable(() => import("./views/Auth/Recovery"));
 const UpdatePassword = loadable(() => import("./views/Auth/UpdatePassword"));
 // Generals
-//const Home = loadable(() => import("./views/Home/Home"));
+const Home = loadable(() => import("./views/Home/Home"));
 const NotFound = loadable(() => import("./views/NotFound/NotFound"));
-//const Note = loadable(() => import("./views/Note/Note"));
-//const Settings = loadable(() => import("./views/Settings/Settings"));
+const Note = loadable(() => import("./views/Note/Note"));
+const Settings = loadable(() => import("./views/Settings/Settings"));
 
 function App() {
   const [loaded, setLoaded] = useState(true);
@@ -67,11 +67,11 @@ function App() {
                 element={<UpdatePassword />}
               />
             </Route>
-            {/*  <Route path="/" element={<View />}>
+            <Route path="/" element={<View />}>
               <Route index element={<Home />} />
               <Route path="/note/:id" element={<Note />} />
               <Route path="/settings" element={<Settings />} />
-            </Route> */}
+            </Route>
 
             <Route exact path="/sign-out" element={<SignOut />} />
             <Route path="/*" element={<NotFound />} />

@@ -30,6 +30,7 @@ const AccountProvider = (props) => {
 
   const logUser = useCallback((data) => {
     setAccount(data);
+    console.log(data, "logs");
     toLocal(config.user, data);
   }, []);
 
@@ -41,12 +42,14 @@ const AccountProvider = (props) => {
 
   const logUserFromLocal = useCallback(async () => {
     try {
-      const { status } = await appApiClient.User.getSession();
-      if (status === 200) {
+      const response = await appApiClient.User.getSession();
+      console.log(response);
+      if (response.data?.user !== null) {
         const loggedUser = fromLocal(config.user, "object");
+        console.log(loggedUser, "?");
 
         if (loggedUser) {
-          const request = await appApiClient.User.fetchOwner(
+          const request = await appApiClient.User.fetchUserSettings(
             loggedUser.user.id
           );
           const appUser = await request.json();

@@ -18,6 +18,7 @@ const AppApiClientContext = createContext({});
  * @returns {object} React component
  */
 const AppApiClientProvider = (props) => {
+  // eslint-disable-next-line react/prop-types
   const { children } = props;
 
   const appApiClient = new AppApiClient();

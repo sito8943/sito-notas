@@ -6,6 +6,7 @@ import { StyleProvider, ModeProvider, NotificationProvider } from "@sito/ui";
 // providers
 import { AppApiClientProvider } from "./providers/AppApiProvider.jsx";
 import { AccountProvider } from "./providers/AccountProvider.jsx";
+import { SearchProvider } from "./providers/SearchProvider.jsx";
 
 // APP
 import App from "./App.jsx";
@@ -28,7 +29,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <AccountProvider>
         <StyleProvider>
           <NotificationProvider>
-            <App />
+            <SearchProvider>
+              <App />
+            </SearchProvider>
           </NotificationProvider>
         </StyleProvider>
       </AccountProvider>

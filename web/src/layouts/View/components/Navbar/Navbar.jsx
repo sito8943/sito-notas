@@ -7,7 +7,6 @@ import Tippy from "@tippyjs/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
-  faSave,
   faArrowRightFromBracket,
   faMoon,
   faSun,
@@ -18,7 +17,7 @@ import {
 import { IconButton, useMode } from "@sito/ui";
 
 // providers
-import { useUser } from "../../../../providers/UserProvider";
+import { useAccount } from "../../../../providers/AccountProvider";
 
 // images
 import noPhoto from "../../../../assets/images/no-photo.webp";
@@ -29,7 +28,7 @@ import "./styles.css";
 function Navbar() {
   const { t } = useTranslation();
 
-  const { userState } = useUser();
+  const { account } = useAccount();
   const { toggleMode, mode } = useMode();
 
   const { id } = useParams();
@@ -91,7 +90,7 @@ function Navbar() {
                 className="rounded-full w-10 h-10 object-contain"
               />
               <h1 className="capitalize text-xl">
-                {userState.user?.email?.split("@")[0]}
+                {account.user?.email?.split("@")[0]}
               </h1>
             </Link>
           )}

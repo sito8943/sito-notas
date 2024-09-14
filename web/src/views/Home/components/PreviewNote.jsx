@@ -2,7 +2,7 @@ import { memo, useRef, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 
 // @sito/ui
-import { IconButton, PrintAfter } from "@sito/ui";
+import { IconButton } from "@sito/ui";
 
 import { marked } from "marked";
 

@@ -18,7 +18,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // contexts
-import { useUser } from "../../providers/UserProvider";
+import { useAccount } from "../../providers/AccountProvider";
 
 // components
 import ModeButton from "../../components/ModeButton/ModeButton";
@@ -64,7 +64,7 @@ function SignUp() {
 
   const navigate = useNavigate();
 
-  const { setUserState } = useUser();
+  const { setUserState } = useAccount();
 
   const [loading, setLoading] = useState(false);
   const [goToVerify, setGoToVerify] = useState(false);

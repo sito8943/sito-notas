@@ -1,22 +1,23 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { v4 } from "uuid";
-import stringSimilarity from "string-similarity";
+import { t } from "i18next";
 import loadable from "@loadable/component";
 import { sortBy } from "some-javascript-utils/array";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/ui
-import { useNotification } from "@sito/ui";
+import { useNotification, Loading } from "@sito/ui";
 
 // providers
-import { useUser } from "../../../providers/UserProvider";
+import {
+  queryClient,
+  useAppApiClient,
+} from "../../../providers/AppApiProvider";
 import { useSearch } from "../../../providers/SearchProvider";
-
-// services
-import { createNote, fetchNotes, removeNote } from "../../../services/notes";
 
 // components
 import FAB from "../../../components/FAB/FAB";
@@ -24,34 +25,48 @@ import FAB from "../../../components/FAB/FAB";
 // styles
 import "./styles.css";
 
+// utils
+import { ReactQueryKeys } from "../../../utils/queryKeys";
+import { useAccount } from "../../../providers/AccountProvider";
+
 // lazy
 const PreviewNote = loadable(() => import("../components/PreviewNote"));
 
-function Notes({ setSync }) {
+function Notes() {
   const [error, setError] = useState(false);
   const { searchValue } = useSearch();
-  const { userState, setUserState } = useUser();
+
+  const { account } = useAccount();
   const { setNotification } = useNotification();
 
-  const [loading, setLoading] = useState(true);
+  const appApiClient = useAppApiClient();
 
-  useEffect(() => {
-    if (!userState.notes) {
-      setError(false);
-      setLoading(true);
-      fetchNotes().then(({ data, error }) => {
-        if (error && error !== null) {
-          setError(true);
-          setNotification({ type: "error", message: error.message });
-          console.error(error.message);
-        } else setUserState({ type: "set-notes", notes: data });
-        setLoading(false);
+  const { data, isLoading } = useQuery({
+    queryKey: [ReactQueryKeys.Notes, account.user?.id],
+    queryFn: () => appApiClient.Note.get(account.user?.id),
+    enabled: !!account.user?.id,
+  });
+
+  const removeNote = useMutation({
+    mutationFn: (noteId) => appApiClient.Note.remove(noteId),
+    onSuccess: (data) => {
+      console.log(data);
+      if (data === null)
+        queryClient.invalidateQueries([ReactQueryKeys.Notes, account.user?.id]);
+      setNotification({
+        message: data ? data.message : t("_pages:home.notes.deleted"),
+        type: data ? "error" : "success",
       });
-    } else setLoading(false);
-  }, [userState]);
+    },
+    onError: (error) => {
+      // do something
+      // eslint-disable-next-line no-console
+      console.error(error);
+      setError(error);
+    },
+  });
 
   const addNote = async () => {
-    setSync(true);
     const now = new Date().getTime();
     const newNote = {
       id: v4(),
@@ -60,52 +75,7 @@ function Notes({ setSync }) {
       created_at: now,
       last_update: now,
     };
-    setUserState({ type: "add-note", newNote });
-    if (!userState.cached) {
-      const { error } = await createNote(newNote);
-      if (error && error !== null) {
-        console.error(error.message);
-        setNotification({ type: "error", message: error.message });
-      }
-    }
-    setSync(false);
   };
-
-  const onDelete = useCallback(
-    async (id) => {
-      const newNotesList = [...userState.notes];
-      const found = newNotesList.findIndex((note) => note.id === id);
-      if (found >= 0) {
-        const deletedElement = newNotesList.splice(found, 1)[0].id;
-        setUserState({ type: "set-notes", notes: newNotesList });
-        const error = await removeNote(deletedElement);
-        if (error && error !== null) console.error(error.message);
-      }
-    },
-    [userState.notes]
-  );
-
-  const printNotes = useCallback(() => {
-    let sorted = sortBy(userState.notes ?? [], "last_update", false);
-    if (searchValue && searchValue.length)
-      sorted = sorted.filter((note) => {
-        if (!searchValue.length) return true;
-        if (note.title) {
-          if (
-            stringSimilarity.compareTwoStrings(
-              note.title.toLowerCase(),
-              searchValue
-            ) > 0.3
-          )
-            return true;
-        } else if (note.content.toLowerCase().indexOf(searchValue) >= 0)
-          return true;
-        return false;
-      });
-    return sorted.map((note, i) => (
-      <PreviewNote key={note.id} {...note} onDelete={onDelete} />
-    ));
-  }, [userState.notes, searchValue]);
 
   return (
     <section className="notes">
@@ -118,14 +88,27 @@ function Notes({ setSync }) {
           className="z-10 text-3xl p-7"
         />
       ) : null}
-      {loading
+      {isLoading
         ? [1, 2, 3, 4, 5].map((skeleton) => (
             <div
               key={skeleton}
               className="w-full h-[300px] skeleton-box !rounded-xl"
             />
           ))
-        : printNotes()}
+        : sortBy(data?.items ?? [], "last_update", false).map((note) => (
+            <PreviewNote
+              key={note.id}
+              {...note}
+              onDelete={(id) => removeNote.mutate(id)}
+            />
+          ))}
+      <div
+        className={`w-10 h-10 fixed bottom-1 left-1 transition-all duration-300 ease-in-out ${
+          isLoading ? "scale-100" : "scale-0"
+        } pointer-events-none`}
+      >
+        <Loading className="sync rounded-full" strokeWidth="8" />
+      </div>
     </section>
   );
 }

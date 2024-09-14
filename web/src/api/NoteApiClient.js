@@ -1,14 +1,12 @@
 import supabase from "../db/connection";
 
-// auth
-import { getUser } from "../utils/auth";
-
 export class NoteApiClient {
-  async get() {
-    return await supabase
+  async get(id) {
+    const { data, error, status } = await supabase
       .from("notes")
       .select("*")
-      .eq("user", getUser().user.id);
+      .eq("user", id);
+    return { items: data, error, status };
   }
 
   async create(note) {

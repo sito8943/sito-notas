@@ -6,6 +6,7 @@
  */
 export const fromLocal = (key, as = "") => {
   const result = localStorage.getItem(key) ?? undefined;
+  console.log(result, key);
   if (result && as.length) {
     switch (as) {
       case "object":
@@ -24,7 +25,10 @@ export const fromLocal = (key, as = "") => {
  * @returns nothing
  */
 export const toLocal = (key, value) =>
-  localStorage.setItem(key, typeof value === "object" ? JSON.stringify(value) : value);
+  localStorage.setItem(
+    key,
+    typeof value === "object" ? JSON.stringify(value) : value
+  );
 
 /**
  * Remove data from local storage

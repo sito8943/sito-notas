@@ -12,7 +12,7 @@ import { fetchNotes, updateNote } from "../../services/notes";
 import Syncing from "../../components/Syncing/Syncing";
 
 // providers
-import { useUser } from "../../providers/UserProvider";
+import { useAccount } from "../../providers/AccountProvider";
 
 // styles
 import "./styles.css";
@@ -22,7 +22,7 @@ function Note() {
 
   const [sync, setSync] = useState(false);
 
-  const { userState, setUserState } = useUser();
+  const { userState, setUserState } = useAccount();
   const { setNotification } = useNotification();
 
   const [note, setNote] = useState({});
