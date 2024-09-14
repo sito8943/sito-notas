@@ -1,13 +1,23 @@
 import { createContext, useContext } from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
+import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
+import { QueryClient } from "@tanstack/react-query";
 import { AppApiClient } from "../api/AppApiClient";
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false, // default: true
+      // Configure stale and cache time for better persistence
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      cacheTime: 1000 * 60 * 60, // 1 hour
     },
   },
+});
+
+// 2. the persister
+const persister = createSyncStoragePersister({
+  storage: window.localStorage,
 });
 
 const AppApiClientContext = createContext({});
@@ -25,7 +35,12 @@ const AppApiClientProvider = (props) => {
 
   return (
     <AppApiClientContext.Provider value={{ client: appApiClient }}>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      <PersistQueryClientProvider
+        client={queryClient}
+        persistOptions={{ persister }}
+      >
+        {children}
+      </PersistQueryClientProvider>
     </AppApiClientContext.Provider>
   );
 };
