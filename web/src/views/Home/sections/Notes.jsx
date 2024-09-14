@@ -78,7 +78,6 @@ function Notes() {
       appApiClient.Note.create(newNote);
     },
     onSuccess: (data) => {
-      console.log(data);
       if (!data)
         queryClient.invalidateQueries([ReactQueryKeys.Notes, account.user?.id]);
       else
@@ -106,7 +105,7 @@ function Notes() {
           className="z-10 text-2xl p-6"
         />
       ) : null}
-      {isLoading
+      {isLoading || addNote.isPending || removeNote.isPending
         ? [1, 2, 3, 4, 5].map((skeleton) => (
             <div
               key={skeleton}
@@ -122,7 +121,9 @@ function Notes() {
           ))}
       <div
         className={`w-10 h-10 fixed bottom-1 left-1 transition-all duration-300 ease-in-out ${
-          isLoading ? "scale-100" : "scale-0"
+          isLoading || addNote.isPending || removeNote.isPending
+            ? "scale-100"
+            : "scale-0"
         } pointer-events-none`}
       >
         <Loading className="sync rounded-full" strokeWidth="8" />
