@@ -1,12 +1,6 @@
 /* eslint-disable react/function-component-definition */
 /* eslint-disable react/jsx-no-constructed-context-values */
-import {
-  createContext,
-  useState,
-  useContext,
-  useCallback,
-  useEffect,
-} from "react";
+import { createContext, useState, useContext, useCallback } from "react";
 
 // prop-types is a library for typechecking of props
 import PropTypes from "prop-types";
@@ -42,26 +36,31 @@ const AccountProvider = (props) => {
   const logoutUser = useCallback(() => {
     setAccount({});
     removeFromLocal(config.user);
-  }, []);
+    appApiClient.User.logout();
+  }, [appApiClient.User]);
 
-  const logUserFromLocal = useCallback(() => {
-    const loggedUser = fromLocal(config.user, "object");
-    if (loggedUser) setAccount(loggedUser);
-  }, []);
+  const logUserFromLocal = useCallback(async () => {
+    try {
+      const { status } = await appApiClient.User.getSession();
+      if (status === 200) {
+        const loggedUser = fromLocal(config.user, "object");
 
-  const fetchSession = useCallback(async () => {
-    const { data, error } = await appApiClient.User.getSession();
-    if (!error) {
-      const request = await appApiClient.User.fetchUserSettings(data.user.id);
-      const owner = await request.json();
-      if (owner) logUser({ owner, ...data });
-      else logUser({ ...data });
+        if (loggedUser) {
+          const request = await appApiClient.User.fetchOwner(
+            loggedUser.user.id
+          );
+          const appUser = await request.json();
+
+          if (appUser) setAccount({ ...loggedUser, appUser });
+          else setAccount(loggedUser);
+        } else throw Error(401);
+      } else logoutUser();
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(err);
+      logoutUser();
     }
-  }, [appApiClient.User, logUser]);
-
-  useEffect(() => {
-    fetchSession();
-  }, [fetchSession]);
+  }, [logoutUser, appApiClient.User]);
 
   const value = { account, logUser, logoutUser, logUserFromLocal };
   return (
