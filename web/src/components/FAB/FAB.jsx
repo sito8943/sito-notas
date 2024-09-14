@@ -1,10 +1,10 @@
-import { forwardRef, useMemo } from "react";
+import { useMemo } from "react";
 import PropTypes from "prop-types";
 
 // @sito/ui
 import { IconButton } from "@sito/ui";
 
-const FAB = forwardRef(function (props, ref) {
+export const FAB = (props) => {
   const position = useMemo(() => {
     switch (props.position) {
       case "top-left":
@@ -25,7 +25,7 @@ const FAB = forwardRef(function (props, ref) {
       icon={props.icon}
     />
   );
-});
+};
 
 FAB.defaultProps = {
   shape: "filled",
@@ -43,5 +43,3 @@ FAB.propTypes = {
     "bottom-left",
   ]),
 };
-
-export default FAB;
