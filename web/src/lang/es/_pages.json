@@ -24,7 +24,9 @@
   },
   "home": {
     "notes": {
-      "deleted": "Nota eliminada"
+      "deleted": "Nota eliminada",
+      "defaultTitle": "Nueva nota",
+      "defaultContent": "Escribe algo aquí"
     }
   },
   "settings": {

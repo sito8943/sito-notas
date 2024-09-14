@@ -26,7 +26,9 @@
   },
   "home": {
     "notes": {
-      "deleted": "Note deleted"
+      "deleted": "Note deleted",
+      "defaultTitle": "New note",
+      "defaultContent": "Write something here"
     }
   },
   "settings": {
