@@ -7,7 +7,7 @@ import Tippy from "@tippyjs/react";
 import { useMode } from "@sito/ui";
 
 // components
-import FAB from "../FAB/FAB";
+import { FAB } from "../FAB/FAB";
 
 function ModeButton({ className, color = "secondary" }) {
   const { toggleMode, mode } = useMode();

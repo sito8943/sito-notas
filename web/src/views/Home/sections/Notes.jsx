@@ -20,7 +20,7 @@ import {
 import { useSearch } from "../../../providers/SearchProvider";
 
 // components
-import FAB from "../../../components/FAB/FAB";
+import { FAB } from "../../../components/FAB/FAB";
 
 // styles
 import "./styles.css";
