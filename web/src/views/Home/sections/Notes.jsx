@@ -39,7 +39,7 @@ const PreviewNote = loadable(() => import("../components/PreviewNote"));
 
 function Notes() {
   const [error, setError] = useState(false);
-  const { searchValue } = useSearch();
+  const { searchFunction } = useSearch();
 
   const { account } = useAccount();
   const { setNotification } = useNotification();
@@ -127,13 +127,15 @@ function Notes() {
               className="w-full h-[300px] skeleton-box !rounded-xl"
             />
           ))
-        : sortBy(items ?? [], "last_update", false).map((note) => (
-            <PreviewNote
-              key={note.id}
-              {...note}
-              onDelete={(id) => removeNote.mutate(id)}
-            />
-          ))}
+        : sortBy(items ?? [], "last_update", false)
+            .filter(searchFunction)
+            .map((note) => (
+              <PreviewNote
+                key={note.id}
+                {...note}
+                onDelete={(id) => removeNote.mutate(id)}
+              />
+            ))}
       <div
         className={`w-10 h-10 fixed bottom-1 left-1 transition-all duration-300 ease-in-out ${
           isLoading || addNote.isPending || removeNote.isPending
