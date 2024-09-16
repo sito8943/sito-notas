@@ -102,7 +102,6 @@ function Notes() {
   });
 
   useEffect(() => {
-    console.log(data);
     if (data?.items) {
       toLocal(config.notes, data.items);
       setItems(data?.items);
