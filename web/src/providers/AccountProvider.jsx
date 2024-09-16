@@ -42,7 +42,6 @@ const AccountProvider = (props) => {
   const logUserFromLocal = useCallback(async () => {
     try {
       const response = await appApiClient.User.getSession();
-      console.log(fromLocal(config.user, "object"));
       if (response.error) {
         const loggedUser = fromLocal(config.user, "object");
         setAccount(loggedUser);
