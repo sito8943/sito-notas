@@ -14,15 +14,17 @@ function ModeButton({ className, color = "secondary" }) {
 
   return (
     <Tippy content="Alternar tema (Claro/Oscuro)">
-      <FAB
-        onClick={() => toggleMode()}
-        name="toggle-theme"
-        shape="text"
-        color={color}
-        aria-label="Click para cambiar el tema"
-        icon={<FontAwesomeIcon icon={mode === "dark" ? faSun : faMoon} />}
-        className={className}
-      />
+      <div>
+        <FAB
+          onClick={() => toggleMode()}
+          name="toggle-theme"
+          shape="text"
+          color={color}
+          aria-label="Click para cambiar el tema"
+          icon={<FontAwesomeIcon icon={mode === "dark" ? faSun : faMoon} />}
+          className={className}
+        />
+      </div>
     </Tippy>
   );
 }
