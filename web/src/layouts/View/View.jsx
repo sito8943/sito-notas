@@ -1,5 +1,5 @@
 import { useEffect, useCallback } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { getCookie } from "some-javascript-utils/browser";
 
 // @sito/ui
@@ -7,7 +7,10 @@ import { Handler } from "@sito/ui";
 
 // providers
 import { useAccount } from "../../providers/AccountProvider";
-import { useAppApiClient } from "../../providers/AppApiProvider";
+import { queryClient, useAppApiClient } from "../../providers/AppApiProvider";
+
+// utils
+import { ReactQueryKeys } from "../../utils/queryKeys";
 
 // components
 import Navbar from "./components/Navbar/Navbar";
@@ -17,6 +20,8 @@ import Footer from "./components/Footer/Footer";
 import config from "../../config";
 
 function View() {
+  const location = useLocation();
+
   const { logoutUser } = useAccount();
 
   const navigate = useNavigate();
@@ -41,6 +46,23 @@ function View() {
   useEffect(() => {
     refreshToken();
   }, [navigate, refreshToken]);
+
+  useEffect(() => {
+    const split = location.pathname.split("/");
+    switch (split.length) {
+      case 3: {
+        // details
+        const [, , id] = split;
+        queryClient.invalidateQueries([ReactQueryKeys.Notes, id]);
+        break;
+      }
+      case 2: {
+        if (!split[0].length && !split[1].length) {
+          queryClient.invalidateQueries([ReactQueryKeys.Notes]);
+        }
+      }
+    }
+  }, [location]);
 
   return (
     <div>

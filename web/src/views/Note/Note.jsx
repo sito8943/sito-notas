@@ -7,7 +7,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { InputControl, TextareaControl, useNotification } from "@sito/ui";
 
 // providers
-import { queryClient, useAppApiClient } from "../../providers/AppApiProvider";
+import { useAppApiClient } from "../../providers/AppApiProvider";
 
 // components
 import Syncing from "../../components/Syncing/Syncing";
@@ -53,7 +53,6 @@ function Note() {
         });
         return;
       }
-      queryClient.invalidateQueries([ReactQueryKeys.Notes, id]);
     },
     onError: (error) => {
       // do something
