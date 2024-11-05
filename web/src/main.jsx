@@ -7,6 +7,7 @@ import { StyleProvider, ModeProvider, NotificationProvider } from "@sito/ui";
 import { AppApiClientProvider } from "./providers/AppApiProvider.jsx";
 import { AccountProvider } from "./providers/AccountProvider.jsx";
 import { SearchProvider } from "./providers/SearchProvider.jsx";
+import { CacheProvider } from "./providers/CacheProvider.jsx";
 
 // APP
 import App from "./App.jsx";
@@ -28,11 +29,13 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <AppApiClientProvider>
       <AccountProvider>
         <StyleProvider>
-          <NotificationProvider>
-            <SearchProvider>
-              <App />
-            </SearchProvider>
-          </NotificationProvider>
+          <CacheProvider>
+            <NotificationProvider>
+              <SearchProvider>
+                <App />
+              </SearchProvider>
+            </NotificationProvider>
+          </CacheProvider>
         </StyleProvider>
       </AccountProvider>
     </AppApiClientProvider>
