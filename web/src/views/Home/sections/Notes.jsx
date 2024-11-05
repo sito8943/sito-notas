@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { v4 } from "uuid";
 import { t } from "i18next";
 import loadable from "@loadable/component";
-import { sortBy } from "some-javascript-utils/array";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,6 +18,7 @@ import {
 } from "../../../providers/AppApiProvider";
 import { useSearch } from "../../../providers/SearchProvider";
 import { useAccount } from "../../../providers/AccountProvider";
+import { useCache } from "../../../providers/CacheProvider";
 
 // components
 import { FAB } from "../../../components/FAB/FAB";
@@ -29,11 +29,6 @@ import "./styles.css";
 
 // utils
 import { ReactQueryKeys } from "../../../utils/queryKeys";
-
-import { fromLocal, toLocal } from "../../../utils/local";
-
-// config
-import config from "../../../config";
 
 // lazy
 const PreviewNote = loadable(() => import("../components/PreviewNote"));
@@ -47,13 +42,7 @@ function Notes() {
 
   const appApiClient = useAppApiClient();
 
-  const [items, setItems] = useState([]);
-
-  const { data, isLoading } = useQuery({
-    queryKey: [ReactQueryKeys.Notes, account.user?.id],
-    queryFn: () => appApiClient.Note.get(account.user?.id),
-    enabled: !!account.user?.id,
-  });
+  const { cache, refresh, isLoading } = useCache();
 
   const removeNote = useMutation({
     mutationFn: (noteId) => appApiClient.Note.remove(noteId),
@@ -84,6 +73,7 @@ function Notes() {
         last_update: now,
       };
       appApiClient.Note.create(newNote);
+      refresh();
     },
     onSuccess: (data) => {
       if (!data)
@@ -101,13 +91,6 @@ function Notes() {
       setError(error);
     },
   });
-
-  useEffect(() => {
-    if (data?.items) {
-      toLocal(config.notes, data.items);
-      setItems(data?.items);
-    } else setItems(fromLocal(config.notes, "object") ?? []);
-  }, [data]);
 
   return (
     <section className="notes">
@@ -134,7 +117,7 @@ function Notes() {
               className="w-full h-[300px] skeleton-box !rounded-xl"
             />
           ))
-        : sortBy(items ?? [], "last_update", false)
+        : cache
             .filter(searchFunction)
             .map((note) => (
               <PreviewNote

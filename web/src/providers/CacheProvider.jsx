@@ -7,10 +7,12 @@ const CacheContext = createContext({});
 import { ReactQueryKeys } from "../utils/queryKeys";
 
 // providers
-import { useAppApiClient } from "./AppApiProvider";
+import { useAccount } from "./AccountProvider";
+import { useAppApiClient, queryClient } from "./AppApiProvider";
 
 // config
 import config from "../config";
+import { fromLocal, toLocal } from "../utils/local";
 
 /**
  * CacheProvider
@@ -23,29 +25,36 @@ const CacheProvider = (props) => {
 
   const appApiClient = useAppApiClient();
 
-  const { isLoading, data } = useQuery({
-    queryKey: [ReactQueryKeys.Notes, "all"],
-    queryFn: () => appApiClient.Note.getAll(),
+  const { account } = useAccount();
+
+  const { data, isLoading } = useQuery({
+    queryKey: [ReactQueryKeys.Notes, account.user?.id],
+    queryFn: () => appApiClient.Note.get(account.user?.id),
+    enabled: !!account.user?.id,
   });
 
   const cachedData = useMemo(() => {
     let cached = null;
     try {
-      cached = JSON.parse(localStorage.getItem(config.cache));
+      cached = fromLocal(config.notes, "object");
     } catch (e) {
       console.error(e);
     }
-
+    console.log(data?.items);
     if ((data && !data?.error?.message) || cached) {
-      localStorage.setItem(config.cache, JSON.stringify(data?.items ?? cached));
+      toLocal(config.notes, data?.items ?? cached);
       return data?.items ?? cached;
     } else return undefined;
   }, [data]);
+
+  const refresh = () =>
+    queryClient.invalidateQueries([ReactQueryKeys.Notes, account.user?.id]);
 
   return (
     <CacheContext.Provider
       value={{
         isLoading,
+        refresh,
         cache: cachedData,
       }}
     >
