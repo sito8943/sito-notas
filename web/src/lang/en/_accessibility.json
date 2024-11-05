@@ -40,16 +40,6 @@
     "10": "Nov",
     "11": "Dec"
   },
-  "newValues": {
-    "balances": "New balance"
-  },
-  "defaultValues": {
-    "balanceTypes": "Basic Spends"
-  },
-  "types": {
-    "balanceTypes": "Balance Types",
-    "balanceType": "Balance Type"
-  },
   "inputs": {
     "remember": {
       "label": "Remember"

@@ -1,5 +1,5 @@
 {
-  "appName": "Sito Wallet",
+  "appName": "Sito Notas",
   "errors": {
     "emailRequired": "Debes introducir un correo electrónico",
     "passwordRequired": "Debes introducir una contraseña",
@@ -47,16 +47,6 @@
     "9": "Oct",
     "10": "Nov",
     "11": "Dic"
-  },
-  "newValues": {
-    "balances": "Nuevo balance"
-  },
-  "defaultValues": {
-    "balanceTypes": "Gastos Básicos"
-  },
-  "types": {
-    "balanceTypes": "Tipos de balance",
-    "balanceType": "Tipo de balance"
   },
   "inputs": {
     "remember": {
