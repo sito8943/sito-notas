@@ -5,6 +5,7 @@ export class NoteApiClient {
     const { data, error, status } = await supabase
       .from("notes")
       .select("*")
+      .order("last_update", { ascending: false })
       .eq("user", id);
     return { items: data, error, status };
   }
