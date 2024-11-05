@@ -1,5 +1,3 @@
-import React from "react";
-
 // @sito/ui
 import { Loading } from "@sito/ui";
 
