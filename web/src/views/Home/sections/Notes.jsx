@@ -96,7 +96,9 @@ function Notes() {
     <section className="notes">
       <div
         className={`w-10 h-10 z-50 primary filled rounded-full fixed bottom-1 left-1 transition-all duration-300 ease-in-out ${
-          addNote.isPending || removeNote.isPending ? "scale-100" : "scale-0"
+          isLoading || addNote.isPending || removeNote.isPending
+            ? "scale-100"
+            : "scale-0"
         } pointer-events-none`}
       >
         <Syncing />

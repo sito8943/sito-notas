@@ -7,7 +7,8 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { InputControl, TextareaControl, useNotification } from "@sito/ui";
 
 // providers
-import { useAppApiClient } from "../../providers/AppApiProvider";
+import { useAccount } from "../../providers/AccountProvider";
+import { queryClient, useAppApiClient } from "../../providers/AppApiProvider";
 
 // components
 import Syncing from "../../components/Syncing/Syncing";
@@ -24,6 +25,7 @@ function Note() {
   const appApiClient = useAppApiClient();
   const { setNotification } = useNotification();
 
+  const { account } = useAccount();
   const [toUpdate, setToUpdate] = useState(undefined);
   const debounced = useDebounce(toUpdate, 500);
 
@@ -53,6 +55,7 @@ function Note() {
         });
         return;
       }
+      queryClient.invalidateQueries([ReactQueryKeys.Notes, account.user?.id]);
     },
     onError: (error) => {
       // do something
@@ -91,7 +94,7 @@ function Note() {
   return (
     <main className="flex flex-col viewport">
       <div
-        className={`w-10 h-10 fixed bottom-1 left-1 transition-all duration-300 ease-in-out ${
+        className={`w-10 h-10 fixed bottom-1 primary filled rounded-full left-1 transition-all duration-300 ease-in-out ${
           isLoading || updateNote.isPending ? "scale-100" : "scale-0"
         } pointer-events-none`}
       >
