@@ -22,6 +22,7 @@ import { useAccount } from "../../../providers/AccountProvider";
 
 // components
 import { FAB } from "../../../components/FAB/FAB";
+import Syncing from "../../../components/Syncing/Syncing";
 
 // styles
 import "./styles.css";
@@ -110,6 +111,13 @@ function Notes() {
 
   return (
     <section className="notes">
+      <div
+        className={`w-10 h-10 z-50 primary filled rounded-full fixed bottom-1 left-1 transition-all duration-300 ease-in-out ${
+          addNote.isPending || removeNote.isPending ? "scale-100" : "scale-0"
+        } pointer-events-none`}
+      >
+        <Syncing />
+      </div>
       {!error ? (
         <FAB
           onClick={() => addNote.mutate()}
@@ -119,7 +127,7 @@ function Notes() {
           className="z-10 text-2xl p-6"
         />
       ) : null}
-      {isLoading || addNote.isPending || removeNote.isPending
+      {isLoading
         ? [1, 2, 3, 4, 5].map((skeleton) => (
             <div
               key={skeleton}
