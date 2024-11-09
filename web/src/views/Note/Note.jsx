@@ -7,8 +7,8 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { InputControl, TextareaControl, useNotification } from "@sito/ui";
 
 // providers
-import { useAccount } from "../../providers/AccountProvider";
-import { queryClient, useAppApiClient } from "../../providers/AppApiProvider";
+import { useCache } from "../../providers/CacheProvider";
+import { useAppApiClient } from "../../providers/AppApiProvider";
 
 // components
 import Syncing from "../../components/Syncing/Syncing";
@@ -25,9 +25,10 @@ function Note() {
   const appApiClient = useAppApiClient();
   const { setNotification } = useNotification();
 
-  const { account } = useAccount();
   const [toUpdate, setToUpdate] = useState(undefined);
   const debounced = useDebounce(toUpdate, 500);
+
+  const { setChanged } = useCache();
 
   const { data, isLoading } = useQuery({
     queryKey: [ReactQueryKeys.Notes, id],
@@ -55,7 +56,7 @@ function Note() {
         });
         return;
       }
-      queryClient.invalidateQueries([ReactQueryKeys.Notes, account.user?.id]);
+      setChanged(true);
     },
     onError: (error) => {
       // do something

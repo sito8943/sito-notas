@@ -1,5 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import { createContext, useContext, useMemo } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 const CacheContext = createContext({});
 
@@ -27,35 +33,51 @@ const CacheProvider = (props) => {
 
   const { account } = useAccount();
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isFetching, isPending, isRefetching } = useQuery({
     queryKey: [ReactQueryKeys.Notes, account.user?.id],
     queryFn: () => appApiClient.Note.get(account.user?.id),
     enabled: !!account.user?.id,
   });
 
-  const cachedData = useMemo(() => {
+  const [cachedData, setCache] = useState();
+  const [changed, setChanged] = useState(false);
+
+  useEffect(() => {
     let cached = null;
     try {
       cached = fromLocal(config.notes, "object");
     } catch (e) {
       console.error(e);
     }
-    console.log(data?.items);
+
     if ((data && !data?.error?.message) || cached) {
       toLocal(config.notes, data?.items ?? cached);
-      return data?.items ?? cached;
-    } else return undefined;
+      setCache(data?.items ?? cached);
+    } else return setCache(undefined);
   }, [data]);
 
-  const refresh = () =>
-    queryClient.invalidateQueries([ReactQueryKeys.Notes, account.user?.id]);
+  const refresh = useCallback(
+    () =>
+      queryClient.invalidateQueries([ReactQueryKeys.Notes, account.user?.id]),
+    [account.user?.id]
+  );
+
+  useEffect(() => {
+    if (changed) {
+      refresh();
+      setChanged(false);
+    }
+  }, [changed, refresh]);
 
   return (
     <CacheContext.Provider
       value={{
-        isLoading,
+        isLoading: isLoading,
+        isSyncing: isFetching || isPending || isRefetching,
         refresh,
         cache: cachedData,
+        localSet: setCache,
+        setChanged,
       }}
     >
       {children}

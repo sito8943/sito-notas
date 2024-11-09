@@ -42,7 +42,7 @@ function Notes() {
 
   const appApiClient = useAppApiClient();
 
-  const { cache, refresh, isLoading } = useCache();
+  const { cache, refresh, isLoading, isSyncing } = useCache();
 
   const removeNote = useMutation({
     mutationFn: (noteId) => appApiClient.Note.remove(noteId),
@@ -96,7 +96,7 @@ function Notes() {
     <section className="notes">
       <div
         className={`w-10 h-10 z-50 primary filled rounded-full fixed bottom-1 left-1 transition-all duration-300 ease-in-out ${
-          isLoading || addNote.isPending || removeNote.isPending
+          isSyncing || addNote.isPending || removeNote.isPending
             ? "scale-100"
             : "scale-0"
         } pointer-events-none`}
@@ -120,8 +120,8 @@ function Notes() {
             />
           ))
         : cache
-            .filter(searchFunction)
-            .map((note) => (
+            ?.filter(searchFunction)
+            ?.map((note) => (
               <PreviewNote
                 key={note.id}
                 {...note}
