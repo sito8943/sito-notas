@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { v4 } from "uuid";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 import loadable from "@loadable/component";
 import { useMutation } from "@tanstack/react-query";
 
@@ -34,6 +34,8 @@ import { ReactQueryKeys } from "../../../utils/queryKeys";
 const PreviewNote = loadable(() => import("../components/PreviewNote"));
 
 function Notes() {
+  const { t } = useTranslation();
+
   const [error, setError] = useState(false);
   const { searchFunction } = useSearch();
 
