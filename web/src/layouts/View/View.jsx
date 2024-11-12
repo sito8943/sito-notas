@@ -8,6 +8,7 @@ import { Handler } from "@sito/ui";
 // providers
 import { useAccount } from "../../providers/AccountProvider";
 import { useAppApiClient } from "../../providers/AppApiProvider";
+import { useCache } from "../../providers/CacheProvider";
 
 // components
 import Refresher from "./components/Refresher";
@@ -22,6 +23,8 @@ function View() {
 
   const navigate = useNavigate();
   const appApiClient = useAppApiClient();
+
+  const { refresh } = useCache();
 
   const refreshToken = useCallback(async () => {
     try {
@@ -42,6 +45,10 @@ function View() {
   useEffect(() => {
     refreshToken();
   }, [navigate, refreshToken]);
+
+  useEffect(() => {
+    refresh();
+  }, [location]);
 
   return (
     <div>

@@ -7,7 +7,6 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { InputControl, TextareaControl, useNotification } from "@sito/ui";
 
 // providers
-import { useCache } from "../../providers/CacheProvider";
 import { useAppApiClient } from "../../providers/AppApiProvider";
 
 // components
@@ -27,8 +26,6 @@ function Note() {
 
   const [toUpdate, setToUpdate] = useState(undefined);
   const debounced = useDebounce(toUpdate, 500);
-
-  const { setChanged } = useCache();
 
   const { data, isLoading } = useQuery({
     queryKey: [ReactQueryKeys.Notes, id],
@@ -56,7 +53,6 @@ function Note() {
         });
         return;
       }
-      setChanged(true);
     },
     onError: (error) => {
       // do something

@@ -10,6 +10,7 @@ import {
 const CacheContext = createContext({});
 
 // utils
+import { fromLocal, toLocal } from "../utils/local";
 import { ReactQueryKeys } from "../utils/queryKeys";
 
 // providers
@@ -18,7 +19,6 @@ import { useAppApiClient, queryClient } from "./AppApiProvider";
 
 // config
 import config from "../config";
-import { fromLocal, toLocal } from "../utils/local";
 
 /**
  * CacheProvider
@@ -40,7 +40,6 @@ const CacheProvider = (props) => {
   });
 
   const [cachedData, setCache] = useState();
-  const [changed, setChanged] = useState(false);
 
   useEffect(() => {
     let cached = null;
@@ -62,13 +61,6 @@ const CacheProvider = (props) => {
     [account.user?.id]
   );
 
-  useEffect(() => {
-    if (changed) {
-      refresh();
-      setChanged(false);
-    }
-  }, [changed, refresh]);
-
   return (
     <CacheContext.Provider
       value={{
@@ -77,7 +69,6 @@ const CacheProvider = (props) => {
         refresh,
         cache: cachedData,
         localSet: setCache,
-        setChanged,
       }}
     >
       {children}
