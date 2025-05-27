@@ -176,7 +176,7 @@ function SignIn() {
                 name="toggle-see-password"
                 onClick={toggleShowPassword}
                 icon={
-                  <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                  <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
                 }
                 className="-ml-3"
                 aria-label={`${t(
@@ -200,16 +200,17 @@ function SignIn() {
             {t("_pages:auth.signIn.passwordRecovery")}
           </Link>
         </div>
-        <div className="w-full flex gap-5 justify-end items-center">
+        <div
+          className={`w-full flex gap-5 justify-end items-center duration-500 ease-in-out delay-[500ms] ${
+            appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
+          }`}
+        >
           <Button
             name="login"
             type="submit"
             color="primary"
             shape="filled"
             aria-label={t("_pages:auth.signIn.signInAriaLabel")}
-            className={`duration-500 ease-in-out delay-[500ms] ${
-              appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
-            }`}
           >
             {t("_accessibility:buttons.signIn")}
           </Button>
