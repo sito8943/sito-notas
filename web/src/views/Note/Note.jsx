@@ -89,7 +89,7 @@ function Note() {
   }, [debounced]);
 
   return (
-    <main className="flex flex-col viewport">
+    <main className="note-page">
       <div
         className={`w-10 h-10 fixed bottom-1 primary filled rounded-full left-1 transition-all duration-300 ease-in-out ${
           isLoading || updateNote.isPending ? "scale-100" : "scale-0"

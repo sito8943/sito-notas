@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+#root {
+  display: grid;
+  height: 100vh;
+  height: 100svh;
+  grid-template-rows: auto 1fr auto;
+}
+
 * {
   font-family: "Roboto", sans-serif;
   font-weight: 500;
@@ -109,4 +116,3 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
-

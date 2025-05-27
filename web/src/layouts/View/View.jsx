@@ -55,11 +55,9 @@ function View() {
     <>
       <Navbar />
       <Refresher />
-      <div className="viewport">
-        <Handler>
-          <Outlet />
-        </Handler>
-      </div>
+      <Handler>
+        <Outlet />
+      </Handler>
       <Footer />
     </>
   );
