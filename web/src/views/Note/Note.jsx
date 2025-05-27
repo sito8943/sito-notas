@@ -69,6 +69,7 @@ function Note() {
     setContent(e.target.value);
     setToUpdate({
       ...data.item,
+      title,
       content: e.target.value,
       last_update: new Date().getTime(),
     });
@@ -79,6 +80,7 @@ function Note() {
     setToUpdate({
       ...data.item,
       title: e.target.value,
+      content,
       last_update: new Date().getTime(),
     });
   };
