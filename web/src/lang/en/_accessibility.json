@@ -81,6 +81,7 @@
     "asc": "Ascendent",
     "desc": "Descendent",
     "goTo": "Go to",
+    "goHome": "Click to go home",
     "closeDialog": "Close dialog",
     "darkMode": "Dark mode",
     "lightMode": "Light mode"
