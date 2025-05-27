@@ -48,7 +48,7 @@ function App() {
   return (
     <Suspense>
       <Handler>
-        {/* <Notification /> */}
+        <Notification />
         <SplashScreen
           visible={loaded}
           logo={

@@ -3,15 +3,13 @@ import { Tooltip } from "react-tooltip";
 import { Outlet, useNavigate, Link } from "react-router-dom";
 import { getCookie } from "some-javascript-utils/browser";
 
-// @sito/ui
-import { Notification } from "@sito/ui";
-
 // providers
 import { useAccount } from "../providers/AccountProvider";
 
 // components
 import ModeButton from "../components/ModeButton/ModeButton";
 
+// config
 import config from "../config";
 
 /**
@@ -33,7 +31,6 @@ function Auth() {
 
   return (
     <main className="w-full viewport flex items-center justify-center overflow-hidden">
-      <Notification />
       <Link to="/auth">
         <h1 className="absolute top-3 left-3 primary uppercase text-4xl">
           Sito Notas
