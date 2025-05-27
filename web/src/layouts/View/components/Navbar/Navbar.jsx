@@ -33,10 +33,10 @@ function Navbar() {
   const { id } = useParams();
 
   return (
-    <header className="m-auto navbar pt-5">
+    <header className="m-auto navbar">
       <div
         className={
-          "relative backdrop-blur-[1rem] rounded-[100px] flex w-full justify-between py-3 px-5 xs:px-3 blur-background"
+          "relative backdrop-blur-[1rem] rounded-[100px] flex w-full justify-between py-3 px-2 xs:px-3 blur-background"
         }
       >
         <div className="flex gap-3">

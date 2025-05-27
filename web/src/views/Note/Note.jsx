@@ -89,7 +89,7 @@ function Note() {
   }, [debounced]);
 
   return (
-    <main className="note-page">
+    <main>
       <div
         className={`w-10 h-10 fixed bottom-1 primary filled rounded-full left-1 transition-all duration-300 ease-in-out ${
           isLoading || updateNote.isPending ? "scale-100" : "scale-0"
@@ -97,7 +97,7 @@ function Note() {
       >
         <Syncing />
       </div>
-      <div className="p-10 sm:p-3 mt-20 !pb-10 grid workspace gap-5 flex-1 appear">
+      <div className="p-10 sm:p-3 grid workspace gap-5 flex-1 h-full appear">
         {isLoading ? (
           <div className="w-full h-[45px] skeleton-box" />
         ) : (

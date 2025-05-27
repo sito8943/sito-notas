@@ -17,8 +17,8 @@ import Notes from "./sections/Notes";
 
 function Home() {
   return (
-    <main className="flex flex-col viewport">
-      <div className="p-10 sm:p-3 mt-20 !pb-5 flex flex-col gap-5 flex-1">
+    <main className="flex flex-col">
+      <div className="p-10 sm:p-3 !pb-5 flex flex-col gap-5 flex-1">
         <h2 className="text-6xl xs:text-4xl -mb-3">Mis notas</h2>
         <SearchWrapper />
         <Notes />
