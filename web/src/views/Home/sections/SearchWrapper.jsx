@@ -27,6 +27,7 @@ function SearchWrapper() {
         leftComponent={
           <FontAwesomeIcon className="opacity-70" icon={faSearch} />
         }
+        className="!pl-4"
         value={toSearch}
         onChange={(e) => setToSearch(e.target.value)}
       />
