@@ -14,7 +14,7 @@ import {
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLock, faLockOpen, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faEyeSlash, faUser } from "@fortawesome/free-solid-svg-icons";
 
 // providers
 import { useAccount } from "../../providers/AccountProvider";
@@ -146,7 +146,7 @@ function SignIn() {
           <InputControl
             id="user"
             label={t("_accessibility:inputs.email.label")}
-            className={`sign-in-input`}
+            className="sign-in-input"
             value={user}
             onChange={handleUser}
             leftComponent={
@@ -165,7 +165,7 @@ function SignIn() {
         >
           <InputControl
             id="password"
-            className={`sign-in-input`}
+            className="sign-in-input"
             value={password}
             onChange={handlePassword}
             type={!showPassword ? "password" : "text"}
@@ -176,7 +176,7 @@ function SignIn() {
                 name="toggle-see-password"
                 onClick={toggleShowPassword}
                 icon={
-                  <FontAwesomeIcon icon={showPassword ? faLockOpen : faLock} />
+                  <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                 }
                 className="-ml-3"
                 aria-label={`${t(
