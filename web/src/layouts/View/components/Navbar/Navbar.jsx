@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Tippy from "@tippyjs/react";
 
@@ -28,12 +28,13 @@ function Navbar() {
   const { toggleMode, mode } = useMode();
 
   const { id } = useParams();
+  const location = useLocation();
 
   return (
     <header className="m-auto w-full px-10">
       <div className={"flex w-full justify-between py-3"}>
         <div className="flex gap-3">
-          {id ? (
+          {location.pathname !== "/" ? (
             <Link
               to="/"
               name="to-home"
@@ -84,30 +85,24 @@ function Navbar() {
               icon={<FontAwesomeIcon icon={mode === "dark" ? faSun : faMoon} />}
             />
           </Tippy>
-          {id ? (
-            <></>
-          ) : (
-            <>
-              <Link
-                to="/settings"
-                name="toggle-theme"
-                aria-label={`${t("_accessibility:ariaLabels.goTO")} ${t(
-                  "_pages:routes.settings"
-                )}`}
-                className="primary button icon-button "
-              >
-                <FontAwesomeIcon icon={faGear} />
-              </Link>
-              <Link
-                to="/sign-out"
-                name="logout"
-                aria-label={t("_pages:routes.signOut")}
-                className="button icon-button primary"
-              >
-                <FontAwesomeIcon icon={faArrowRightFromBracket} />
-              </Link>
-            </>
-          )}
+          <Link
+            to="/settings"
+            name="toggle-theme"
+            aria-label={`${t("_accessibility:ariaLabels.goTO")} ${t(
+              "_pages:routes.settings"
+            )}`}
+            className="primary button icon-button "
+          >
+            <FontAwesomeIcon icon={faGear} />
+          </Link>
+          <Link
+            to="/sign-out"
+            name="logout"
+            aria-label={t("_pages:routes.signOut")}
+            className="button icon-button primary"
+          >
+            <FontAwesomeIcon icon={faArrowRightFromBracket} />
+          </Link>
         </nav>
       </div>
     </header>
