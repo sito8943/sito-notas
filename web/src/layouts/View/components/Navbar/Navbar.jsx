@@ -21,9 +21,6 @@ import { useAccount } from "../../../../providers/AccountProvider";
 // images
 import noPhoto from "../../../../assets/images/no-photo.webp";
 
-// styles
-import "./styles.css";
-
 function Navbar() {
   const { t } = useTranslation();
 
@@ -33,12 +30,8 @@ function Navbar() {
   const { id } = useParams();
 
   return (
-    <header className="m-auto navbar">
-      <div
-        className={
-          "relative backdrop-blur-[1rem] rounded-[100px] flex w-full justify-between py-3 px-2 xs:px-3 blur-background"
-        }
-      >
+    <header className="m-auto w-full px-10">
+      <div className={"flex w-full justify-between py-3"}>
         <div className="flex gap-3">
           {id ? (
             <Link

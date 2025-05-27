@@ -13,7 +13,6 @@ import { useCache } from "../../providers/CacheProvider";
 // components
 import Refresher from "./components/Refresher";
 import Navbar from "./components/Navbar/Navbar";
-import Footer from "./components/Footer/Footer";
 
 // config
 import config from "../../config";
@@ -58,7 +57,6 @@ function View() {
       <Handler>
         <Outlet />
       </Handler>
-      <Footer />
     </>
   );
 }
