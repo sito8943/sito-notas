@@ -1,6 +1,6 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import { useDebounce } from "use-lodash-debounce";
-import PropTypes from "prop-types";
 
 function DebouncedInput(props) {
   const { onDebounceTrigger, delay = 500, initialValue, ...rest } = props;
@@ -9,17 +9,12 @@ function DebouncedInput(props) {
 
   useEffect(() => {
     if (value.length) onDebounceTrigger(value);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debounced]);
 
   return (
     <input value={value} onChange={(e) => setValue(e.target.value)} {...rest} />
   );
 }
-
-DebouncedInput.propTypes = {
-  onDebounceTrigger: PropTypes.func,
-  delay: PropTypes.number,
-  initialValue: PropTypes.any,
-};
 
 export default DebouncedInput;

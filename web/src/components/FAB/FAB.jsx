@@ -1,12 +1,19 @@
+/* eslint-disable react/prop-types */
 import { useMemo } from "react";
-import PropTypes from "prop-types";
 
 // @sito/ui
 import { IconButton } from "@sito/ui";
 
 export const FAB = (props) => {
-  const position = useMemo(() => {
-    switch (props.position) {
+  const {
+    position = "bottom-right",
+    className = "",
+    shape = "filled",
+    ...rest
+  } = props;
+
+  const lPosition = useMemo(() => {
+    switch (position) {
       case "top-left":
         return "top-5 left-5";
       case "top-right":
@@ -16,30 +23,13 @@ export const FAB = (props) => {
       default: // bottom - right
         return "bottom-5 right-5";
     }
-  }, [props.position]);
+  }, [position]);
 
   return (
     <IconButton
-      {...props}
-      className={`fixed ${position} ${props.className}`}
-      icon={props.icon}
+      {...rest}
+      shape={shape}
+      className={`fixed ${lPosition} ${className}`}
     />
   );
-};
-
-FAB.defaultProps = {
-  shape: "filled",
-  position: "bottom-right",
-};
-
-FAB.propTypes = {
-  shape: PropTypes.oneOf(["filled", "outlined", "text"]),
-  className: PropTypes.string,
-  icon: PropTypes.object.isRequired,
-  position: PropTypes.oneOf([
-    "top-left",
-    "top-right",
-    "bottom-right",
-    "bottom-left",
-  ]),
 };

@@ -52,7 +52,7 @@ function View() {
   }, [location]);
 
   return (
-    <div>
+    <>
       <Navbar />
       <Refresher />
       <div className="viewport">
@@ -61,7 +61,7 @@ function View() {
         </Handler>
       </div>
       <Footer />
-    </div>
+    </>
   );
 }
 

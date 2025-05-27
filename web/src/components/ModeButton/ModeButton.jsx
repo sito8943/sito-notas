@@ -1,7 +1,9 @@
-import PropTypes from "prop-types";
+/* eslint-disable react/prop-types */
+import Tippy from "@tippyjs/react";
+
+// icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
-import Tippy from "@tippyjs/react";
 
 // @sito/ui
 import { useMode } from "@sito/ui";
@@ -9,7 +11,9 @@ import { useMode } from "@sito/ui";
 // components
 import { FAB } from "../FAB/FAB";
 
-function ModeButton({ className, color = "secondary" }) {
+function ModeButton(props) {
+  const { className, color = "secondary" } = props;
+
   const { toggleMode, mode } = useMode();
 
   return (
@@ -28,10 +32,5 @@ function ModeButton({ className, color = "secondary" }) {
     </Tippy>
   );
 }
-
-ModeButton.propTypes = {
-  color: PropTypes.oneOf(["primary", "secondary", "error", "success"]),
-  className: PropTypes.string,
-};
 
 export default ModeButton;

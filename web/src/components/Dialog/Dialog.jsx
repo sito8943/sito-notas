@@ -1,15 +1,19 @@
+/* eslint-disable react/prop-types */
 import { useEffect } from "react";
-import PropTypes from "prop-types";
+
+// icons
 import { faClose } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // @sito/ui
 import { IconButton } from "@sito/ui";
 
 // styles
 import "./styles.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-function Dialog({ visible, onClose, children, canBeClosed }) {
+function Dialog(props) {
+  const { visible, onClose, children, canBeClosed } = props;
+
   useEffect(() => {
     if (visible) document.body.style.overflow = "hidden";
     else document.body.style.overflow = "auto";
@@ -34,12 +38,5 @@ function Dialog({ visible, onClose, children, canBeClosed }) {
     </div>
   );
 }
-
-Dialog.propTypes = {
-  visible: PropTypes.bool,
-  onClose: PropTypes.func,
-  children: PropTypes.any,
-  canBeClosed: PropTypes.bool,
-};
 
 export default Dialog;
