@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import Tippy from "@tippyjs/react";
+import { useTranslation } from "react-i18next";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,20 +16,28 @@ function ModeButton(props) {
 
   const { toggleMode, mode } = useMode();
 
+  const { t } = useTranslation();
+
   return (
-    <Tippy content="Alternar tema (Claro/Oscuro)">
-      <div>
-        <FAB
-          onClick={() => toggleMode()}
-          name="toggle-theme"
-          shape="text"
-          color={color}
-          aria-label="Click para cambiar el tema"
-          icon={<FontAwesomeIcon icon={mode === "dark" ? faSun : faMoon} />}
-          className={className}
-        />
-      </div>
-    </Tippy>
+    <FAB
+      onClick={() => toggleMode()}
+      name="toggle-theme"
+      shape="text"
+      color={color}
+      data-tooltip-id="tooltip"
+      data-tooltip-content={
+        mode === "dark"
+          ? t("_accessibility:ariaLabels.lightMode")
+          : t("_accessibility:ariaLabels.darkMode")
+      }
+      aria-label={
+        mode === "dark"
+          ? t("_accessibility:ariaLabels.lightMode")
+          : t("_accessibility:ariaLabels.darkMode")
+      }
+      icon={<FontAwesomeIcon icon={mode === "dark" ? faSun : faMoon} />}
+      className={className}
+    />
   );
 }
 

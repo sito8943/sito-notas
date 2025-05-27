@@ -14,8 +14,6 @@ import App from "./App.jsx";
 
 // app styles
 import "./index.css";
-// Import css files
-import "tippy.js/dist/tippy.css"; // optional
 
 // fonts
 import "@fontsource/poppins/700.css";

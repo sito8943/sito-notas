@@ -1,6 +1,5 @@
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import Tippy from "@tippyjs/react";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -27,7 +26,6 @@ function Navbar() {
   const { account } = useAccount();
   const { toggleMode, mode } = useMode();
 
-  const { id } = useParams();
   const location = useLocation();
 
   return (
@@ -66,25 +64,23 @@ function Navbar() {
           )}
         </div>
         <nav className="z-10 flex">
-          <Tippy
-            content={
+          <IconButton
+            color="primary"
+            name="toggle-theme"
+            data-tooltip-id="tooltip"
+            data-tooltip-content={
               mode === "dark"
                 ? t("_accessibility:ariaLabels.lightMode")
                 : t("_accessibility:ariaLabels.darkMode")
             }
-          >
-            <IconButton
-              color="primary"
-              onClick={() => toggleMode()}
-              name="toggle-theme"
-              aria-label={
-                mode === "dark"
-                  ? t("_accessibility:ariaLabels.lightMode")
-                  : t("_accessibility:ariaLabels.darkMode")
-              }
-              icon={<FontAwesomeIcon icon={mode === "dark" ? faSun : faMoon} />}
-            />
-          </Tippy>
+            onClick={() => toggleMode()}
+            aria-label={
+              mode === "dark"
+                ? t("_accessibility:ariaLabels.lightMode")
+                : t("_accessibility:ariaLabels.darkMode")
+            }
+            icon={<FontAwesomeIcon icon={mode === "dark" ? faSun : faMoon} />}
+          />
           <Link
             to="/settings"
             name="toggle-theme"

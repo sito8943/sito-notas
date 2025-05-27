@@ -1,3 +1,4 @@
+import { Tooltip } from "react-tooltip";
 import { useEffect, useCallback } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { getCookie } from "some-javascript-utils/browser";
@@ -57,6 +58,7 @@ function View() {
       <Handler>
         <Outlet />
       </Handler>
+      <Tooltip id="tooltip" />
     </>
   );
 }

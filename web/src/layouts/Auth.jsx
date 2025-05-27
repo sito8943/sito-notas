@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Tooltip } from "react-tooltip";
 import { Outlet, useNavigate, Link } from "react-router-dom";
 import { getCookie } from "some-javascript-utils/browser";
 
@@ -40,6 +41,7 @@ function Auth() {
       </Link>
       <ModeButton color="primary" className="top-3 right-3" />
       <Outlet />
+      <Tooltip id="tooltip" />
     </main>
   );
 }
