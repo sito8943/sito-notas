@@ -155,6 +155,7 @@ function SignIn() {
               </div>
             }
             helperText={userHelperText}
+            helperTextClassName="error"
           />
         </div>
         <div
@@ -186,6 +187,7 @@ function SignIn() {
               />
             }
             helperText={passwordHelperText}
+            helperTextClassName="error"
           />
         </div>
         <div className="w-full mb-5">
