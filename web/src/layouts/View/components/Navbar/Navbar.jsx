@@ -87,7 +87,7 @@ function Navbar() {
             aria-label={`${t("_accessibility:ariaLabels.goTO")} ${t(
               "_pages:routes.settings"
             )}`}
-            className="primary button icon-button "
+            className="primary button icon-button normal"
           >
             <FontAwesomeIcon icon={faGear} />
           </Link>
@@ -95,7 +95,7 @@ function Navbar() {
             to="/sign-out"
             name="logout"
             aria-label={t("_pages:routes.signOut")}
-            className="button icon-button primary"
+            className="button icon-button normal primary"
           >
             <FontAwesomeIcon icon={faArrowRightFromBracket} />
           </Link>

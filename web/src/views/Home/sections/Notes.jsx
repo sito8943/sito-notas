@@ -40,7 +40,7 @@ function Notes() {
   const { searchFunction } = useSearch();
 
   const { account } = useAccount();
-  const { setNotification } = useNotification();
+  const { showNotification } = useNotification();
 
   const appApiClient = useAppApiClient();
 
@@ -51,7 +51,7 @@ function Notes() {
     onSuccess: (data) => {
       if (data === null)
         queryClient.invalidateQueries([ReactQueryKeys.Notes, account.user?.id]);
-      setNotification({
+      showNotification({
         message: data ? data.message : t("_pages:home.notes.deleted"),
         type: data ? "error" : "success",
       });
@@ -81,7 +81,7 @@ function Notes() {
       if (!data)
         queryClient.invalidateQueries([ReactQueryKeys.Notes, account.user?.id]);
       else
-        setNotification({
+        showNotification({
           message: data?.message,
           type: "error",
         });
@@ -97,7 +97,7 @@ function Notes() {
   return (
     <section className="notes">
       <div
-        className={`w-10 h-10 z-50 primary filled rounded-full fixed bottom-1 left-1 transition-all duration-300 ease-in-out ${
+        className={`w-10 h-10 z-20 primary filled rounded-full fixed bottom-1 left-1 transition-all duration-300 ease-in-out ${
           isSyncing || addNote.isPending || removeNote.isPending
             ? "scale-100"
             : "scale-0"
