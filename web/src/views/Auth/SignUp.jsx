@@ -166,7 +166,7 @@ function SignUp() {
             onChange={handleEmail}
             type="email"
             leftComponent={
-              <div className="icon-button button -ml-3">
+              <div className="icon-button normal button -ml-3">
                 <FontAwesomeIcon className="primary" icon={faEnvelope} />
               </div>
             }
