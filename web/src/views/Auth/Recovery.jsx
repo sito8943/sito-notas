@@ -121,7 +121,7 @@ function Recovery() {
             value={user}
             onChange={handleUser}
             leftComponent={
-              <div className="icon-button button -ml-3">
+              <div className="icon-button normal button -ml-3">
                 <FontAwesomeIcon className="primary" icon={faUser} />
               </div>
             }
