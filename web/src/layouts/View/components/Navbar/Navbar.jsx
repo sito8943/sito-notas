@@ -39,7 +39,7 @@ function Navbar() {
               aria-label={`${t("_accessibility:ariaLabels.goTo")} ${t(
                 "_pages:routes.home"
               )}`}
-              className="button icon-button primary"
+              className="button normal icon-button primary"
             >
               <FontAwesomeIcon icon={faChevronLeft} />
             </Link>
