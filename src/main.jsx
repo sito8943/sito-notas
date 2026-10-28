@@ -1,20 +1,10 @@
 import ReactDOM from "react-dom/client";
 
-// @sito/ui
-import { ToastProvider } from "@sito/ui";
-
-// providers
-import { ThemeProvider } from "./providers/ThemeProvider";
-import { AppApiClientProvider } from "./providers/AppApiProvider.jsx";
-import { AccountProvider } from "./providers/AccountProvider.jsx";
-import { SearchProvider } from "./providers/SearchProvider.jsx";
-import { CacheProvider } from "./providers/CacheProvider.jsx";
-
-// APP
-import App from "./App.jsx";
+// app
+import { App, AppProviders } from "./app";
 
 // app styles
-import "./index.css";
+import "./styles/global.css";
 
 // fonts
 import "@fontsource/poppins/700.css";
@@ -24,17 +14,7 @@ import "@fontsource/roboto/500.css";
 import "./i18.js";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <ThemeProvider>
-    <AppApiClientProvider>
-      <AccountProvider>
-        <CacheProvider>
-          <ToastProvider placement="bottom-right">
-            <SearchProvider>
-              <App />
-            </SearchProvider>
-          </ToastProvider>
-        </CacheProvider>
-      </AccountProvider>
-    </AppApiClientProvider>
-  </ThemeProvider>,
+  <AppProviders>
+    <App />
+  </AppProviders>,
 );
