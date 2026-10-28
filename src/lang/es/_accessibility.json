@@ -6,7 +6,8 @@
     "passwordsDoNotMatch": "No coinciden las contraseñas",
     "emailNotConfirmed": "No se ha confirmado el email",
     "failedToFetch": "No hay conexión",
-    "invalidLoginCredentials": "Usuario o contraseña incorrecta"
+    "invalidLoginCredentials": "Usuario o contraseña incorrecta",
+    "unknown": "Algo salió mal"
   },
   "common": {
     "day": "día",
@@ -69,7 +70,9 @@
     "accept": "Aceptar",
     "signIn": "Entrar",
     "save": "Guardar",
-    "next": "Siguiente"
+    "next": "Siguiente",
+    "retry": "Reintentar",
+    "close": "Cerrar"
   },
   "ariaLabels": {
     "add": "Agregar",
@@ -79,6 +82,7 @@
     "goTo": "Ir a la página ",
     "closeDialog": "Cerrar diálogo",
     "darkMode": "Modo oscuro",
-    "lightMode": "Modo claro"
+    "lightMode": "Modo claro",
+    "mainNavigation": "Navegación principal"
   }
 }
