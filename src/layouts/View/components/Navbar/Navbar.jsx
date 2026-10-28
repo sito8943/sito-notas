@@ -37,7 +37,7 @@ function Navbar() {
               to="/"
               name="to-home"
               aria-label={`${t("_accessibility:ariaLabels.goTo")} ${t(
-                "_pages:routes.home"
+                "_pages:routes.home",
               )}`}
               className="button normal icon-button primary"
             >
@@ -46,7 +46,7 @@ function Navbar() {
           ) : (
             <Link
               aria-label={`${t("_accessibility:ariaLabels.goTo")} ${t(
-                "_pages:routes.home"
+                "_pages:routes.home",
               )}`}
               name="go-home"
               to="/"
@@ -85,7 +85,7 @@ function Navbar() {
             to="/settings"
             name="toggle-theme"
             aria-label={`${t("_accessibility:ariaLabels.goTO")} ${t(
-              "_pages:routes.settings"
+              "_pages:routes.settings",
             )}`}
             className="primary button icon-button normal"
           >

@@ -25,7 +25,7 @@ const TabButtonMemo = memo(
     newProps.id === oldProps.id &&
     newProps.i === oldProps.i &&
     newProps.text === oldProps.text &&
-    newProps.onClick === oldProps.onClick
+    newProps.onClick === oldProps.onClick,
 );
 
 TabButtonMemo.displayName = "TabButton";

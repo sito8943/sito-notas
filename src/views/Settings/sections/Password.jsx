@@ -94,7 +94,7 @@ function Password() {
               aria-label={`${t(
                 `_accessibility:inputs.password.${
                   showPassword ? "showPassword" : "hidePassword"
-                }`
+                }`,
               )}`}
             />
           }
@@ -121,7 +121,7 @@ function Password() {
               aria-label={`${t(
                 `_accessibility:inputs.password.${
                   showRPassword ? "showPassword" : "hidePassword"
-                }`
+                }`,
               )}`}
             />
           }
@@ -129,7 +129,7 @@ function Password() {
         <Button
           name="save-password"
           aria-label={`${t("_accessibility:buttons.save")} ${t(
-            "_accessibility:inputs.password.label"
+            "_accessibility:inputs.password.label",
           )}`}
           type="submit"
           shape="filled"

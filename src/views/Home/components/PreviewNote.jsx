@@ -79,7 +79,7 @@ const PreviewNoteMemo = memo(
     oldProps.id === newProps.id &&
     oldProps.i === newProps.i &&
     oldProps.content === newProps.content &&
-    oldProps.last_update === newProps.last_update
+    oldProps.last_update === newProps.last_update,
 );
 
 PreviewNoteMemo.displayName = "PreviewNote";

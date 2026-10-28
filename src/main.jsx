@@ -37,5 +37,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         </StyleProvider>
       </AccountProvider>
     </AppApiClientProvider>
-  </ModeProvider>
+  </ModeProvider>,
 );

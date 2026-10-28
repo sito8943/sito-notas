@@ -51,7 +51,7 @@ const AccountProvider = (props) => {
 
         if (loggedUser) {
           const request = await appApiClient.User.fetchUserSettings(
-            loggedUser.user.id
+            loggedUser.user.id,
           );
           const appUser = await request.json();
 

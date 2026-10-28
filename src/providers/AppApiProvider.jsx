@@ -49,7 +49,7 @@ const useAppApiClient = () => {
   const context = useContext(AppApiClientContext);
   if (context === undefined) {
     throw new Error(
-      "useAppApiClient must be used within a AppApiClientProvider"
+      "useAppApiClient must be used within a AppApiClientProvider",
     );
   }
   return context.client;

@@ -8,6 +8,6 @@ export function encrypt(data, key = config.crypto) {
 
 export function decrypt(data, key = config.crypto) {
   return JSON.parse(
-    CryptoJS.AES.decrypt(data, key).toString(CryptoJS.enc.Utf8)
+    CryptoJS.AES.decrypt(data, key).toString(CryptoJS.enc.Utf8),
   );
 }

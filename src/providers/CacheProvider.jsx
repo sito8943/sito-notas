@@ -58,7 +58,7 @@ const CacheProvider = (props) => {
   const refresh = useCallback(
     () =>
       queryClient.invalidateQueries([ReactQueryKeys.Notes, account.user?.id]),
-    [account.user?.id]
+    [account.user?.id],
   );
 
   return (

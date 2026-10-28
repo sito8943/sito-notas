@@ -17,11 +17,11 @@ const SearchProvider = ({ children }) => {
       return searchValue && searchValue.length
         ? stringSimilarity.compareTwoStrings(
             text?.title?.toLowerCase() ?? "",
-            toSearch ?? ""
-          ) > 0.30 || text?.title?.toLowerCase().indexOf(toSearch) >= 0
+            toSearch ?? "",
+          ) > 0.3 || text?.title?.toLowerCase().indexOf(toSearch) >= 0
         : true;
     },
-    [searchValue]
+    [searchValue],
   );
 
   const value = { searchFunction, searchValue, setSearchValue };
