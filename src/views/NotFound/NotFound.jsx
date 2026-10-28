@@ -5,6 +5,9 @@ import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSadTear } from "@fortawesome/free-regular-svg-icons";
 
+// @sito/ui
+import { Button } from "@sito/ui";
+
 // components
 import ModeButton from "../../components/ModeButton/ModeButton";
 
@@ -21,14 +24,17 @@ function NotFound() {
       <h2 className="dark:text-white text-center appear">
         404 - {t("_pages:notFound.title")}
       </h2>
-      <Link
+      <Button
+        as={Link}
         name="go-home"
         aria-label={t("_accessibility:ariaLabels.goHome")}
         to="/"
-        className="primary button filled appear"
+        variant="submit"
+        color="primary"
+        className="appear"
       >
         {t("_accessibility:buttons.goHome")}
-      </Link>
+      </Button>
     </main>
   );
 }

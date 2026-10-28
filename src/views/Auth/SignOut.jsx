@@ -7,7 +7,7 @@ import { useAccount } from "../../providers/AccountProvider";
 import { useAppApiClient } from "../../providers/AppApiProvider";
 
 // components
-import { SplashScreen } from "@sito/ui";
+import { SplashScreen } from "../../components/SplashScreen";
 
 /**
  * SignOut page
@@ -36,6 +36,7 @@ function SignOut() {
   return (
     <SplashScreen
       visible
+      label={t("_accessibility:appName")}
       logo={
         <div>
           <h1 className="uppercase">{t("_accessibility:appName")}</h1>

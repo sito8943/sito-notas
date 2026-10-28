@@ -8,7 +8,7 @@ export const FAB = (props) => {
   const {
     position = "bottom-right",
     className = "",
-    shape = "filled",
+    variant = "submit",
     ...rest
   } = props;
 
@@ -28,7 +28,7 @@ export const FAB = (props) => {
   return (
     <IconButton
       {...rest}
-      shape={shape}
+      variant={variant}
       className={`fixed ${lPosition} ${className}`}
     />
   );

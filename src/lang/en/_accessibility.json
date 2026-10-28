@@ -73,7 +73,8 @@
     "add": "Add",
     "open": "Open",
     "remove": "Remove",
-    "submit": "Submit"
+    "submit": "Submit",
+    "retry": "Retry"
   },
   "ariaLabels": {
     "add": "Add",
@@ -93,9 +94,9 @@
     "passwordsDoNotMatch": "Passwords do not match",
     "emailNotConfirmed": "Email not confirmed",
     "failedToFetch": "No connected",
-    "invalidLoginCredentials": "Wrong user or password"
+    "invalidLoginCredentials": "Wrong user or password",
+    "unknown": "Something went wrong"
   },
-
   "messages": {
     "images": "An image is required",
     "200": "Saved successfully",

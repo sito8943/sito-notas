@@ -18,7 +18,7 @@ function Settings() {
         <div
           className={`w-10 h-10 fixed bottom-1 left-1 transition-all duration-300 ease-in-out ${
             sync ? "scale-100" : "scale-0"
-          } pointer-events-none primary filled rounded-full`}
+          } pointer-events-none bg-(--sito-ui-color-primary-default) text-(--sito-ui-color-primary-text) rounded-full`}
         >
           <Syncing />
         </div>

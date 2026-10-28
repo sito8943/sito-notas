@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { scrollTo } from "some-javascript-utils/browser";
 
 // font awesome
@@ -6,13 +7,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/ui
-import { Button } from "@sito/ui";
+import { IconButton } from "@sito/ui";
 
 // sections
 import Notes from "./sections/Notes";
 import SearchWrapper from "./sections/SearchWrapper";
 
 function Home() {
+  const { t } = useTranslation();
+
   const mainRef = useRef(null);
 
   return (
@@ -22,13 +25,13 @@ function Home() {
         <SearchWrapper />
         <Notes />
       </div>
-      <Button
-        shape="filled"
+      <IconButton
+        variant="submit"
         onClick={() => scrollTo(0, 0, mainRef?.current)}
-        className="fixed rounded-full p-6 bottom-20 right-5 w-0 h-0"
-      >
-        <FontAwesomeIcon icon={faChevronUp} />
-      </Button>
+        aria-label={t("_accessibility:buttons.toTop")}
+        icon={<FontAwesomeIcon icon={faChevronUp} />}
+        className="fixed bottom-20 right-5"
+      />
     </main>
   );
 }

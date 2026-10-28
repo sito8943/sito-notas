@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/ui
-import { useNotification, Loading } from "@sito/ui";
+import { useToast, Spinner } from "@sito/ui";
 
 // providers
 import {
@@ -40,7 +40,7 @@ function Notes() {
   const { searchFunction } = useSearch();
 
   const { account } = useAccount();
-  const { showNotification } = useNotification();
+  const toast = useToast();
 
   const appApiClient = useAppApiClient();
 
@@ -51,9 +51,9 @@ function Notes() {
     onSuccess: (data) => {
       if (data === null)
         queryClient.invalidateQueries([ReactQueryKeys.Notes, account.user?.id]);
-      showNotification({
+      toast({
         message: data ? data.message : t("_pages:home.notes.deleted"),
-        type: data ? "error" : "success",
+        color: data ? "error" : "success",
       });
     },
     onError: (mutationError) => {
@@ -81,9 +81,9 @@ function Notes() {
       if (!data)
         queryClient.invalidateQueries([ReactQueryKeys.Notes, account.user?.id]);
       else
-        showNotification({
+        toast({
           message: data?.message,
-          type: "error",
+          color: "error",
         });
     },
     onError: (mutationError) => {
@@ -97,7 +97,7 @@ function Notes() {
   return (
     <section className="notes">
       <div
-        className={`w-10 h-10 z-20 primary filled rounded-full fixed bottom-1 left-1 transition-all duration-300 ease-in-out ${
+        className={`w-10 h-10 z-20 bg-(--sito-ui-color-primary-default) text-(--sito-ui-color-primary-text) rounded-full fixed bottom-1 left-1 transition-all duration-300 ease-in-out ${
           isSyncing || addNote.isPending || removeNote.isPending
             ? "scale-100"
             : "scale-0"
@@ -131,13 +131,13 @@ function Notes() {
               />
             ))}
       <div
-        className={`w-10 h-10 fixed bottom-1 left-1 transition-all duration-300 ease-in-out ${
+        className={`w-10 h-10 fixed bottom-1 left-1 flex items-center justify-center text-2xl primary transition-all duration-300 ease-in-out ${
           isLoading || addNote.isPending || removeNote.isPending
             ? "scale-100"
             : "scale-0"
         } pointer-events-none`}
       >
-        <Loading className="sync rounded-full" strokeWidth="8" />
+        <Spinner />
       </div>
     </section>
   );

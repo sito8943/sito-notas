@@ -10,8 +10,9 @@ import { useAccount } from "./providers/AccountProvider";
 import Auth from "./layouts/Auth";
 import View from "./layouts/View/View";
 
-// @sito/ui
-import { Handler, SplashScreen, Notification } from "@sito/ui";
+// components
+import { ErrorHandler } from "./components/ErrorHandler";
+import { SplashScreen } from "./components/SplashScreen";
 
 // views
 // Auth
@@ -47,10 +48,10 @@ function App() {
 
   return (
     <Suspense>
-      <Handler>
-        <Notification />
+      <ErrorHandler>
         <SplashScreen
           visible={loaded}
+          label={t("_accessibility:appName")}
           logo={
             <div>
               <h1 className="uppercase">{t("_accessibility:appName")}</h1>
@@ -77,7 +78,7 @@ function App() {
             <Route path="/*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
-      </Handler>
+      </ErrorHandler>
     </Suspense>
   );
 }

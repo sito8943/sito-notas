@@ -1,9 +1,10 @@
 import ReactDOM from "react-dom/client";
 
 // @sito/ui
-import { StyleProvider, ModeProvider, NotificationProvider } from "@sito/ui";
+import { ToastProvider } from "@sito/ui";
 
 // providers
+import { ThemeProvider } from "./providers/ThemeProvider";
 import { AppApiClientProvider } from "./providers/AppApiProvider.jsx";
 import { AccountProvider } from "./providers/AccountProvider.jsx";
 import { SearchProvider } from "./providers/SearchProvider.jsx";
@@ -23,19 +24,17 @@ import "@fontsource/roboto/500.css";
 import "./i18.js";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <ModeProvider>
+  <ThemeProvider>
     <AppApiClientProvider>
       <AccountProvider>
-        <StyleProvider>
-          <CacheProvider>
-            <NotificationProvider>
-              <SearchProvider>
-                <App />
-              </SearchProvider>
-            </NotificationProvider>
-          </CacheProvider>
-        </StyleProvider>
+        <CacheProvider>
+          <ToastProvider placement="bottom-right">
+            <SearchProvider>
+              <App />
+            </SearchProvider>
+          </ToastProvider>
+        </CacheProvider>
       </AccountProvider>
     </AppApiClientProvider>
-  </ModeProvider>,
+  </ThemeProvider>,
 );

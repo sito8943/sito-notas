@@ -3,8 +3,8 @@ import { useEffect, useCallback } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { getCookie } from "some-javascript-utils/browser";
 
-// @sito/ui
-import { Handler } from "@sito/ui";
+// components
+import { ErrorHandler } from "../../components/ErrorHandler";
 
 // providers
 import { useAccount } from "../../providers/AccountProvider";
@@ -55,9 +55,9 @@ function View() {
     <>
       <Navbar />
       <Refresher />
-      <Handler>
+      <ErrorHandler>
         <Outlet />
-      </Handler>
+      </ErrorHandler>
       <Tooltip id="tooltip" />
     </>
   );

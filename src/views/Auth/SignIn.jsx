@@ -4,13 +4,10 @@ import { Link } from "react-router-dom";
 import { css } from "@emotion/css";
 
 // @sito/ui
-import {
-  useNotification,
-  Loading,
-  InputControl,
-  IconButton,
-  Button,
-} from "@sito/ui";
+import { useToast, Spinner, IconButton, Button } from "@sito/ui";
+
+// components
+import { InputControl } from "../../components/InputControl";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -38,7 +35,7 @@ function SignIn() {
 
   const appApiClient = useAppApiClient();
 
-  const { setNotification } = useNotification();
+  const toast = useToast();
 
   const [user, setUser] = useState("");
   const [userHelperText, setUserHelperText] = useState("");
@@ -100,12 +97,15 @@ function SignIn() {
         // eslint-disable-next-line no-console
         console.error(error);
         // set server status to notification
-        setNotification(String(error.status));
+        toast({
+          message: error?.message ?? t("_accessibility:errors.unknown"),
+          color: "error",
+        });
       }
 
       setSaving(false);
     },
-    [user, password, t, appApiClient.User, logUser, setNotification],
+    [user, password, t, appApiClient.User, logUser, toast],
   );
 
   useEffect(() => {
@@ -121,11 +121,13 @@ function SignIn() {
           saving ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       >
-        <Loading
-          className={`bg-light-default dark:bg-dark-default ${transition} duration-300! ${
-            saving ? "h-[100px]!" : "h-0!"
+        <div
+          className={`m-auto text-5xl primary ${transition} duration-300! ${
+            saving ? "scale-100" : "scale-0"
           }`}
-        />
+        >
+          <Spinner label={t("_accessibility:appName")} />
+        </div>
       </div>
       <form
         onSubmit={onSubmit}
@@ -150,9 +152,7 @@ function SignIn() {
             value={user}
             onChange={handleUser}
             leftComponent={
-              <div className="icon-button normal button -ml-3">
-                <FontAwesomeIcon className="primary" icon={faUser} />
-              </div>
+              <FontAwesomeIcon className="primary" icon={faUser} />
             }
             helperText={userHelperText}
             helperTextClassName="error"
@@ -178,7 +178,6 @@ function SignIn() {
                 icon={
                   <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
                 }
-                className="-ml-3"
                 aria-label={`${t(
                   `_accessibility:inputs.password.${
                     showPassword ? "showPassword" : "hidePassword"
@@ -209,7 +208,7 @@ function SignIn() {
             name="login"
             type="submit"
             color="primary"
-            shape="filled"
+            variant="submit"
             aria-label={t("_pages:auth.signIn.signInAriaLabel")}
           >
             {t("_accessibility:buttons.signIn")}

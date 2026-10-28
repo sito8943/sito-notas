@@ -1,13 +1,11 @@
 // @sito/ui
-import { Loading } from "@sito/ui";
+import { Spinner } from "@sito/ui";
 
 function Syncing() {
   return (
-    <Loading
-      className="sync rounded-full bg-[#00000000]!"
-      strokeWidth="6"
-      color="secondary"
-    />
+    <span className="w-full h-full flex items-center justify-center text-xl">
+      <Spinner />
+    </span>
   );
 }
 

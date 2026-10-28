@@ -5,13 +5,10 @@ import { deleteCookie } from "some-javascript-utils/browser";
 import { css } from "@emotion/css";
 
 // @sito/ui
-import {
-  useNotification,
-  Loading,
-  InputControl,
-  IconButton,
-  Button,
-} from "@sito/ui";
+import { useToast, Spinner, IconButton, Button } from "@sito/ui";
+
+// components
+import { InputControl } from "../../components/InputControl";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -42,7 +39,7 @@ function UpdatePassword() {
   const navigate = useNavigate();
   const appApiClient = useAppApiClient();
 
-  const { setNotification } = useNotification();
+  const toast = useToast();
 
   const [appear, setAppear] = useState(false);
 
@@ -77,13 +74,15 @@ function UpdatePassword() {
       }
       if (password !== rPassword) {
         setSaving(false);
-        // eslint-disable-next-line no-console
-        console.error(t("_accessibility:errors.passwordDoNotMatch"));
-        return setNotification(t("_accessibility:errors.passwordDoNotMatch"));
+        setPasswordHelperText(t("_accessibility:errors.passwordsDoNotMatch"));
+        return;
       }
       try {
         await appApiClient.User.updatePassword(password);
-        setNotification(t("_pages:auth.updatePassword.sent"), {}, "good");
+        toast({
+          message: t("_pages:auth.updatePassword.sent"),
+          color: "success",
+        });
 
         deleteCookie(config.recovering);
         setTimeout(() => navigate("/sign-out"), 2000);
@@ -91,11 +90,14 @@ function UpdatePassword() {
         // eslint-disable-next-line no-console
         console.error(err);
         // set server status to notification
-        setNotification(String(err.status));
+        toast({
+          message: err?.message ?? t("_accessibility:errors.unknown"),
+          color: "error",
+        });
       }
       setSaving(false);
     },
-    [appApiClient.User, navigate, password, rPassword, setNotification, t],
+    [appApiClient.User, navigate, password, rPassword, t, toast],
   );
 
   useEffect(() => {
@@ -111,11 +113,13 @@ function UpdatePassword() {
           saving ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       >
-        <Loading
-          className={`bg-light-default dark:bg-dark-default ${transition} duration-300! ${
-            saving ? "h-[100px]!" : "h-0!"
+        <div
+          className={`m-auto text-5xl primary ${transition} duration-300! ${
+            saving ? "scale-100" : "scale-0"
           }`}
-        />
+        >
+          <Spinner label={t("_accessibility:appName")} />
+        </div>
       </div>
       <form
         onSubmit={onSubmit}
@@ -152,7 +156,6 @@ function UpdatePassword() {
                 icon={
                   <FontAwesomeIcon icon={showPassword ? faLockOpen : faLock} />
                 }
-                className="-ml-3"
                 aria-label={`${t(
                   `_accessibility:inputs.password.${
                     showPassword ? "showPassword" : "hidePassword"
@@ -169,23 +172,22 @@ function UpdatePassword() {
           }`}
         >
           <InputControl
-            id="password"
+            id="rPassword"
             className={`sign-in-input`}
-            value={password}
+            value={rPassword}
             onChange={handleRPassword}
-            type={!showPassword ? "password" : "text"}
+            type={!showRPassword ? "password" : "text"}
             label={t("_accessibility:inputs.rPassword")}
             leftComponent={
               <IconButton
                 tabIndex={-1}
-                name="toggle-see-password"
+                name="toggle-see-r-password"
                 onClick={toggleRShowPassword}
                 icon={
                   <FontAwesomeIcon icon={showRPassword ? faLockOpen : faLock} />
                 }
-                className="-ml-3"
                 aria-label={`${t(
-                  `_accessibility:inputs.rPassword.${
+                  `_accessibility:inputs.password.${
                     showRPassword ? "showPassword" : "hidePassword"
                   }`,
                 )}`}
@@ -198,7 +200,7 @@ function UpdatePassword() {
             name="login"
             type="submit"
             color="primary"
-            shape="filled"
+            variant="submit"
             aria-label={t("_pages:auth.signIn.signInAriaLabel")}
             className={`duration-500 ease-in-out delay-500 ${
               appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"

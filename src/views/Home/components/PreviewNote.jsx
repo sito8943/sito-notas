@@ -1,6 +1,7 @@
 import { memo, useRef, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 
 // @sito/ui
 import { IconButton } from "@sito/ui";
@@ -13,6 +14,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function PreviewNote(props) {
   const { id, title, content, last_update, onDelete } = props;
+
+  const { t } = useTranslation();
 
   const contentRef = useRef();
 
@@ -50,7 +53,8 @@ function PreviewNote(props) {
         </Link>
         <IconButton
           icon={<FontAwesomeIcon icon={faTrash} />}
-          className="primary"
+          color="primary"
+          aria-label={t("_accessibility:buttons.remove")}
           onClick={() => onDelete(id)}
         />
       </div>

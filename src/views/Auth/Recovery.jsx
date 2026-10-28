@@ -5,7 +5,10 @@ import { createCookie } from "some-javascript-utils/browser";
 import { css } from "@emotion/css";
 
 // @sito/ui
-import { useNotification, Loading, InputControl, Button } from "@sito/ui";
+import { useToast, Spinner, Button } from "@sito/ui";
+
+// components
+import { InputControl } from "../../components/InputControl";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -43,7 +46,7 @@ function Recovery() {
   const [appear, setAppear] = useState(false);
   const [saving, setSaving] = useState(false);
 
-  const { setNotification } = useNotification();
+  const toast = useToast();
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -61,16 +64,22 @@ function Recovery() {
       const response = await appApiClient.User.recovery(user);
       const data = await response.json();
       if (data !== null && data.status && data.status !== 200)
-        setNotification(String(data.status));
+        toast({
+          message: data.message ?? t("_accessibility:errors.unknown"),
+          color: "error",
+        });
       else {
-        setNotification(t("_pages:auth.recovery.sent"), {}, "good");
+        toast({ message: t("_pages:auth.recovery.sent"), color: "success" });
         createCookie(config.recovering, 1, user);
       }
     } catch (err) {
       // eslint-disable-next-line no-console
       console.error(err);
       // set server status to notification
-      setNotification(String(err.status));
+      toast({
+        message: err?.message ?? t("_accessibility:errors.unknown"),
+        color: "error",
+      });
     }
     setSaving(false);
   };
@@ -88,11 +97,13 @@ function Recovery() {
           saving ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       >
-        <Loading
-          className={`bg-light-default dark:bg-dark-default ${transition} duration-300! ${
-            saving ? "h-[100px]!" : "h-0!"
+        <div
+          className={`m-auto text-5xl primary ${transition} duration-300! ${
+            saving ? "scale-100" : "scale-0"
           }`}
-        />
+        >
+          <Spinner label={t("_accessibility:appName")} />
+        </div>
       </div>
       <form
         onSubmit={onSubmit}
@@ -121,9 +132,7 @@ function Recovery() {
             value={user}
             onChange={handleUser}
             leftComponent={
-              <div className="icon-button normal button -ml-3">
-                <FontAwesomeIcon className="primary" icon={faUser} />
-              </div>
+              <FontAwesomeIcon className="primary" icon={faUser} />
             }
             helperText={userHelperText}
             helperTextClassName="error"
@@ -138,7 +147,7 @@ function Recovery() {
             name="login"
             type="submit"
             color="primary"
-            shape="filled"
+            variant="submit"
             aria-label={t("_pages:auth.signIn.signInAriaLabel")}
           >
             {t("_accessibility:buttons.submit")}

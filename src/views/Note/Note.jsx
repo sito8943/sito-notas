@@ -4,12 +4,14 @@ import { useDebounce } from "../../hooks";
 import { useQuery, useMutation } from "@tanstack/react-query";
 
 // @sito/ui
-import { InputControl, TextareaControl, useNotification } from "@sito/ui";
+import { useToast } from "@sito/ui";
 
 // providers
 import { useAppApiClient } from "../../providers/AppApiProvider";
 
 // components
+import { InputControl } from "../../components/InputControl";
+import { TextareaControl } from "../../components/TextareaControl";
 import Syncing from "../../components/Syncing/Syncing";
 
 // utils
@@ -22,7 +24,7 @@ function Note() {
   const { id } = useParams();
 
   const appApiClient = useAppApiClient();
-  const { setNotification } = useNotification();
+  const toast = useToast();
 
   const [toUpdate, setToUpdate] = useState(undefined);
   const debounced = useDebounce(toUpdate, 500);
@@ -47,9 +49,9 @@ function Note() {
     mutationFn: (note) => appApiClient.Note.update(note),
     onSuccess: ({ error }) => {
       if (error) {
-        setNotification({
+        toast({
           message: error.message,
-          type: "error",
+          color: "error",
         });
         return;
       }
@@ -58,9 +60,9 @@ function Note() {
       // do something
       // eslint-disable-next-line no-console
       console.error(error);
-      setNotification({
+      toast({
         message: error.message,
-        type: error,
+        color: "error",
       });
     },
   });
@@ -93,7 +95,7 @@ function Note() {
   return (
     <main>
       <div
-        className={`w-10 h-10 fixed bottom-1 primary filled rounded-full left-1 transition-all duration-300 ease-in-out ${
+        className={`w-10 h-10 fixed bottom-1 bg-(--sito-ui-color-primary-default) text-(--sito-ui-color-primary-text) rounded-full left-1 transition-all duration-300 ease-in-out ${
           isLoading || updateNote.isPending ? "scale-100" : "scale-0"
         } pointer-events-none`}
       >
@@ -113,9 +115,9 @@ function Note() {
           <div className="w-full min-h-[300px] h-full skeleton-box rounded-xl!" />
         ) : (
           <TextareaControl
-            label={""}
             value={content}
             onChange={handleContent}
+            containerClassName="h-full"
             className="min-h-[300px] h-full"
           />
         )}

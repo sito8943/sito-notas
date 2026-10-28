@@ -6,13 +6,10 @@ import { faLock, faLockOpen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // @sito/ui
-import {
-  useNotification,
-  Loading,
-  InputControl,
-  IconButton,
-  Button,
-} from "@sito/ui";
+import { useToast, IconButton, Button } from "@sito/ui";
+
+// components
+import { InputControl } from "../../../components/InputControl";
 
 // services
 import { useAppApiClient } from "../../../providers/AppApiProvider";
@@ -21,7 +18,7 @@ function Password() {
   const { t } = useTranslation();
 
   const appApiClient = useAppApiClient();
-  const { setNotification } = useNotification();
+  const toast = useToast();
 
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -50,13 +47,13 @@ function Password() {
     }
     if (password !== rPassword) {
       document.getElementById("password")?.focus();
-      t("_accessibility:inputs.password.passwordNoMatch");
+      setPasswordHelperText(t("_accessibility:errors.passwordsDoNotMatch"));
       return;
     }
     setLoading(true);
     const { error } = await appApiClient.User.updatePassword(password);
     if (error && error !== null)
-      setNotification({ type: "error", message: error.message });
+      toast({ message: error.message, color: "error" });
     else {
       setPassword("");
       setRPassword("");
@@ -132,15 +129,11 @@ function Password() {
             "_accessibility:inputs.password.label",
           )}`}
           type="submit"
-          shape="filled"
-          className="button-loading"
-          disabled={loading}
+          variant="submit"
+          color="primary"
+          loading={loading}
         >
-          {loading ? (
-            <Loading color="basics" strokeWidth="8" />
-          ) : (
-            t("_accessibility:buttons.save")
-          )}
+          {t("_accessibility:buttons.save")}
         </Button>
       </form>
     </section>

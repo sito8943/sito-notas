@@ -5,8 +5,8 @@ import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 
-// @sito/ui
-import { useMode } from "@sito/ui";
+// providers
+import { ThemeMode, useTheme } from "../../providers/ThemeProvider";
 
 // components
 import { FAB } from "../FAB/FAB";
@@ -14,7 +14,7 @@ import { FAB } from "../FAB/FAB";
 function ModeButton(props) {
   const { className, color = "secondary" } = props;
 
-  const { toggleMode, mode } = useMode();
+  const { toggleMode, mode } = useTheme();
 
   const { t } = useTranslation();
 
@@ -22,20 +22,20 @@ function ModeButton(props) {
     <FAB
       onClick={() => toggleMode()}
       name="toggle-theme"
-      shape="text"
+      variant="text"
       color={color}
       data-tooltip-id="tooltip"
       data-tooltip-content={
-        mode === "dark"
+        mode === ThemeMode.Dark
           ? t("_accessibility:ariaLabels.lightMode")
           : t("_accessibility:ariaLabels.darkMode")
       }
       aria-label={
-        mode === "dark"
+        mode === ThemeMode.Dark
           ? t("_accessibility:ariaLabels.lightMode")
           : t("_accessibility:ariaLabels.darkMode")
       }
-      icon={<FontAwesomeIcon icon={mode === "dark" ? faSun : faMoon} />}
+      icon={<FontAwesomeIcon icon={mode === ThemeMode.Dark ? faSun : faMoon} />}
       className={className}
     />
   );

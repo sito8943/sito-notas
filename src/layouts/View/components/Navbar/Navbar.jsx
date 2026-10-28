@@ -12,9 +12,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/ui
-import { IconButton, useMode } from "@sito/ui";
+import { IconButton } from "@sito/ui";
 
 // providers
+import { ThemeMode, useTheme } from "../../../../providers/ThemeProvider";
 import { useAccount } from "../../../../providers/AccountProvider";
 
 // images
@@ -24,7 +25,7 @@ function Navbar() {
   const { t } = useTranslation();
 
   const { account } = useAccount();
-  const { toggleMode, mode } = useMode();
+  const { toggleMode, mode } = useTheme();
 
   const location = useLocation();
 
@@ -33,16 +34,16 @@ function Navbar() {
       <div className={"flex w-full justify-between py-3"}>
         <div className="flex gap-3">
           {location.pathname !== "/" ? (
-            <Link
+            <IconButton
+              as={Link}
               to="/"
               name="to-home"
+              color="primary"
               aria-label={`${t("_accessibility:ariaLabels.goTo")} ${t(
                 "_pages:routes.home",
               )}`}
-              className="button normal icon-button primary"
-            >
-              <FontAwesomeIcon icon={faChevronLeft} />
-            </Link>
+              icon={<FontAwesomeIcon icon={faChevronLeft} />}
+            />
           ) : (
             <Link
               aria-label={`${t("_accessibility:ariaLabels.goTo")} ${t(
@@ -69,36 +70,40 @@ function Navbar() {
             name="toggle-theme"
             data-tooltip-id="tooltip"
             data-tooltip-content={
-              mode === "dark"
+              mode === ThemeMode.Dark
                 ? t("_accessibility:ariaLabels.lightMode")
                 : t("_accessibility:ariaLabels.darkMode")
             }
             onClick={() => toggleMode()}
             aria-label={
-              mode === "dark"
+              mode === ThemeMode.Dark
                 ? t("_accessibility:ariaLabels.lightMode")
                 : t("_accessibility:ariaLabels.darkMode")
             }
-            icon={<FontAwesomeIcon icon={mode === "dark" ? faSun : faMoon} />}
+            icon={
+              <FontAwesomeIcon
+                icon={mode === ThemeMode.Dark ? faSun : faMoon}
+              />
+            }
           />
-          <Link
+          <IconButton
+            as={Link}
             to="/settings"
-            name="toggle-theme"
-            aria-label={`${t("_accessibility:ariaLabels.goTO")} ${t(
+            name="to-settings"
+            color="primary"
+            aria-label={`${t("_accessibility:ariaLabels.goTo")} ${t(
               "_pages:routes.settings",
             )}`}
-            className="primary button icon-button normal"
-          >
-            <FontAwesomeIcon icon={faGear} />
-          </Link>
-          <Link
+            icon={<FontAwesomeIcon icon={faGear} />}
+          />
+          <IconButton
+            as={Link}
             to="/sign-out"
             name="logout"
+            color="primary"
             aria-label={t("_pages:routes.signOut")}
-            className="button icon-button normal primary"
-          >
-            <FontAwesomeIcon icon={faArrowRightFromBracket} />
-          </Link>
+            icon={<FontAwesomeIcon icon={faArrowRightFromBracket} />}
+          />
         </nav>
       </div>
     </header>
