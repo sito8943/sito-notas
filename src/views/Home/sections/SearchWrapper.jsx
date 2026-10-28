@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useDebounce } from "use-lodash-debounce";
+import { useDebounce } from "../../../hooks";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -27,7 +27,7 @@ function SearchWrapper() {
         leftComponent={
           <FontAwesomeIcon className="opacity-70" icon={faSearch} />
         }
-        className="!pl-4"
+        className="pl-4!"
         value={toSearch}
         onChange={(e) => setToSearch(e.target.value)}
       />

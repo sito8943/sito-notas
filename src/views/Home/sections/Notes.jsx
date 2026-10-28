@@ -56,11 +56,11 @@ function Notes() {
         type: data ? "error" : "success",
       });
     },
-    onError: (error) => {
+    onError: (mutationError) => {
       // do something
       // eslint-disable-next-line no-console
-      console.error(error);
-      setError(error);
+      console.error(mutationError);
+      setError(mutationError);
     },
   });
 
@@ -86,11 +86,11 @@ function Notes() {
           type: "error",
         });
     },
-    onError: (error) => {
+    onError: (mutationError) => {
       // do something
       // eslint-disable-next-line no-console
-      console.error(error);
-      setError(error);
+      console.error(mutationError);
+      setError(mutationError);
     },
   });
 
@@ -118,7 +118,7 @@ function Notes() {
         ? [1, 2, 3, 4, 5].map((skeleton) => (
             <div
               key={skeleton}
-              className="w-full h-[300px] skeleton-box !rounded-xl"
+              className="w-full h-[300px] skeleton-box rounded-xl!"
             />
           ))
         : cache

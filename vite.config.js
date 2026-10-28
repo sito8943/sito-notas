@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
 import { VitePWA } from "vite-plugin-pwa";
 
 const manifestForPlugIn = {
@@ -11,9 +12,9 @@ const manifestForPlugIn = {
     description: "Aplicación de gestión de notas de Sito",
     icons: [
       {
-        "src": "favicon.ico",
-        "sizes": "16x16",
-        "type": "image/x-icon"
+        src: "favicon.ico",
+        sizes: "16x16",
+        type: "image/x-icon",
       },
       {
         src: "/android-chrome-192x192.png",
@@ -24,7 +25,6 @@ const manifestForPlugIn = {
         src: "/android-chrome-512x512.png",
         sizes: "512x512",
         type: "image/png",
-        
       },
       {
         src: "/apple-touch-icon.png",
@@ -51,5 +51,5 @@ const manifestForPlugIn = {
 };
 
 export default defineConfig({
-  plugins: [react(), VitePWA(manifestForPlugIn)],
+  plugins: [react(), tailwindcss(), VitePWA(manifestForPlugIn)],
 });

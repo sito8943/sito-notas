@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
-import { useDebounce } from "use-lodash-debounce";
+import { useDebounce } from "../../hooks";
 
 function DebouncedInput(props) {
   const { onDebounceTrigger, delay = 500, initialValue, ...rest } = props;

@@ -10,7 +10,7 @@ import Password from "./sections/Password";
 function Settings() {
   const { t } = useTranslation();
 
-  const [sync, setSync] = useState(false);
+  const [sync] = useState(false);
 
   return (
     <main className="flex flex-col">

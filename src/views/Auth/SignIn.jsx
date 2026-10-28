@@ -83,13 +83,13 @@ function SignIn() {
             setUserHelperText(
               t(`_accessibility:messages.404`, {
                 model: t("_entities:entities.user"),
-              })
+              }),
             );
           else if (data.status === 401 || data.status === 400)
             setPasswordHelperText(t("_accessibility:messages.401"));
           else {
             const request = await appApiClient.User.fetchUserSettings(
-              data.user.id
+              data.user.id,
             );
             const settings = await request.json();
             if (settings) logUser({ ...data, settings });
@@ -98,14 +98,14 @@ function SignIn() {
         }
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        console.error(error);
         // set server status to notification
-        setNotification(String(e.status));
+        setNotification(String(error.status));
       }
 
       setSaving(false);
     },
-    [user, password, t, appApiClient.User, logUser, setNotification]
+    [user, password, t, appApiClient.User, logUser, setNotification],
   );
 
   useEffect(() => {
@@ -122,8 +122,8 @@ function SignIn() {
         }`}
       >
         <Loading
-          className={`bg-light-default dark:bg-dark-default ${transition} !duration-300 ${
-            saving ? "!h-[100px]" : "!h-[0px]"
+          className={`bg-light-default dark:bg-dark-default ${transition} duration-300! ${
+            saving ? "h-[100px]!" : "h-0!"
           }`}
         />
       </div>
@@ -132,14 +132,14 @@ function SignIn() {
         className="form bg-light-dark dark:bg-dark-dark appear"
       >
         <h2
-          className={`w-full text-2xl md:text-3xl font-bold ${transition} !delay-100 ${
+          className={`w-full text-2xl md:text-3xl font-bold ${transition} delay-100! ${
             appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
           }`}
         >
           {t("_pages:auth.signIn.title")}
         </h2>
         <div
-          className={`${transition} !delay-200 ${
+          className={`${transition} delay-200! ${
             appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
           }`}
         >
@@ -159,7 +159,7 @@ function SignIn() {
           />
         </div>
         <div
-          className={`${transition} !delay-300 ${
+          className={`${transition} delay-300! ${
             appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
           }`}
         >
@@ -182,7 +182,7 @@ function SignIn() {
                 aria-label={`${t(
                   `_accessibility:inputs.password.${
                     showPassword ? "showPassword" : "hidePassword"
-                  }`
+                  }`,
                 )}`}
               />
             }
@@ -193,7 +193,7 @@ function SignIn() {
         <div className="w-full mb-5">
           <Link
             to="/auth/recovery"
-            className={`underline text-left ${transition} !delay-[400ms] ${
+            className={`underline text-left ${transition} delay-400! ${
               appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
             }`}
           >
@@ -201,7 +201,7 @@ function SignIn() {
           </Link>
         </div>
         <div
-          className={`w-full flex gap-5 justify-end items-center duration-500 ease-in-out delay-[500ms] ${
+          className={`w-full flex gap-5 justify-end items-center duration-500 ease-in-out delay-500 ${
             appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
           }`}
         >

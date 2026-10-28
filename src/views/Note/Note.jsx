@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useDebounce } from "use-lodash-debounce";
+import { useDebounce } from "../../hooks";
 import { useQuery, useMutation } from "@tanstack/react-query";
 
 // @sito/ui
@@ -110,7 +110,7 @@ function Note() {
           />
         )}
         {isLoading ? (
-          <div className="w-full min-h-[300px] h-full skeleton-box !rounded-xl" />
+          <div className="w-full min-h-[300px] h-full skeleton-box rounded-xl!" />
         ) : (
           <TextareaControl
             label={""}

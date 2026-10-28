@@ -15,7 +15,9 @@ const Notification = memo(() => {
   const { t } = useTranslation();
   const { notification, setNotification, params, state } = useNotification();
 
-  const [notificationOpen, setNotificationOpen] = useState(Boolean(notification.length));
+  const [notificationOpen, setNotificationOpen] = useState(
+    Boolean(notification.length),
+  );
 
   const localState = useMemo(() => {
     switch (notification) {
@@ -48,7 +50,9 @@ const Notification = memo(() => {
       ugly: "bg-red-500",
     };
     if (state.length) return lNotificationClasses[state];
-    return localState === "" ? lNotificationClasses.bad : lNotificationClasses[localState];
+    return localState === ""
+      ? lNotificationClasses.bad
+      : lNotificationClasses[localState];
   }, [localState, state]);
 
   useEffect(() => {
@@ -84,17 +88,24 @@ const Notification = memo(() => {
           className={`${notificationOpen ? "opacity-1 scale-100" : "pointer-events-none opacity-0"} transition-all fixed bottom-0 right-0 w-full md:bottom-8 md:right-12 md:w-auto z-50`}
         >
           <div
-            className={`${notificationClass} border border-transparent text-white text-sm p-3 md:rounded shadow-lg flex justify-between`}
+            className={`${notificationClass} border border-transparent text-white text-sm p-3 md:rounded-sm shadow-lg flex justify-between`}
           >
             <div className={`text-white inline-flex`}>
-              {localState === "" ? notification : t(`_accessibility:messages.${notification}`, params)}
+              {localState === ""
+                ? notification
+                : t(`_accessibility:messages.${notification}`, params)}
             </div>
             <button
               className="text-white hover:text-[red] pl-2 ml-3 border-l border-slate-200"
               onClick={() => setNotificationOpen(false)}
             >
-              <span className="sr-only">{t("_accessibility:buttons.close")}</span>
-              <svg className="w-4 h-4 shrink-0 fill-current" viewBox="0 0 16 16">
+              <span className="sr-only">
+                {t("_accessibility:buttons.close")}
+              </span>
+              <svg
+                className="w-4 h-4 shrink-0 fill-current"
+                viewBox="0 0 16 16"
+              >
                 <path d="M12.72 3.293a1 1 0 00-1.415 0L8.012 6.586 4.72 3.293a1 1 0 00-1.414 1.414L6.598 8l-3.293 3.293a1 1 0 101.414 1.414l3.293-3.293 3.293 3.293a1 1 0 001.414-1.414L9.426 8l3.293-3.293a1 1 0 000-1.414z" />
               </svg>
             </button>

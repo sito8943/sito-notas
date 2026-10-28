@@ -112,7 +112,7 @@ function SignUp() {
         setNotification({ type: "error", message: showError(error.message) });
       setLoading(false);
     },
-    [email, password, rPassword, setNotification, navigate, setUserState]
+    [email, password, rPassword, setNotification, navigate, setUserState],
   );
 
   return (
@@ -125,7 +125,7 @@ function SignUp() {
       >
         <Loading
           className={`bg-light-default dark:bg-dark-default transition-all duration-300  ${
-            loading ? "!h-[100px]" : "!h-[0px]"
+            loading ? "h-[100px]!" : "h-0!"
           }`}
         />
       </div>

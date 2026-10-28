@@ -87,15 +87,15 @@ function UpdatePassword() {
 
         deleteCookie(config.recovering);
         setTimeout(() => navigate("/sign-out"), 2000);
-      } catch (e) {
+      } catch (err) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        console.error(err);
         // set server status to notification
-        setNotification(String(e.status));
+        setNotification(String(err.status));
       }
       setSaving(false);
     },
-    [appApiClient.User, navigate, password, rPassword, setNotification, t]
+    [appApiClient.User, navigate, password, rPassword, setNotification, t],
   );
 
   useEffect(() => {
@@ -112,8 +112,8 @@ function UpdatePassword() {
         }`}
       >
         <Loading
-          className={`bg-light-default dark:bg-dark-default ${transition} !duration-300 ${
-            saving ? "!h-[100px]" : "!h-[0px]"
+          className={`bg-light-default dark:bg-dark-default ${transition} duration-300! ${
+            saving ? "h-[100px]!" : "h-0!"
           }`}
         />
       </div>
@@ -123,7 +123,7 @@ function UpdatePassword() {
       >
         <Link
           to="/auth"
-          className={`flex gap-2 items-start flex-col ${transition} !delay-100 ${
+          className={`flex gap-2 items-start flex-col ${transition} delay-100! ${
             appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
           }`}
         >
@@ -133,7 +133,7 @@ function UpdatePassword() {
         </Link>
 
         <div
-          className={`${transition} !delay-300 ${
+          className={`${transition} delay-300! ${
             appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
           }`}
         >
@@ -156,7 +156,7 @@ function UpdatePassword() {
                 aria-label={`${t(
                   `_accessibility:inputs.password.${
                     showPassword ? "showPassword" : "hidePassword"
-                  }`
+                  }`,
                 )}`}
               />
             }
@@ -164,7 +164,7 @@ function UpdatePassword() {
           />
         </div>
         <div
-          className={`${transition} !delay-300 ${
+          className={`${transition} delay-300! ${
             appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
           }`}
         >
@@ -187,7 +187,7 @@ function UpdatePassword() {
                 aria-label={`${t(
                   `_accessibility:inputs.rPassword.${
                     showRPassword ? "showPassword" : "hidePassword"
-                  }`
+                  }`,
                 )}`}
               />
             }
@@ -200,7 +200,7 @@ function UpdatePassword() {
             color="primary"
             shape="filled"
             aria-label={t("_pages:auth.signIn.signInAriaLabel")}
-            className={`duration-500 ease-in-out delay-[500ms] ${
+            className={`duration-500 ease-in-out delay-500 ${
               appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
             }`}
           >

@@ -21,16 +21,28 @@ const NotificationProvider = (props) => {
   /**
    *
    * @param {string} string string to parse
-   * @param  {...string} params array of params
+   * @param  {...string} newParams array of params
    */
-  const setNotificationFunction = useCallback((string, params, state = "") => {
-    setNotification(string);
-    setParams(params);
-    setState(state);
-  }, []);
+  const setNotificationFunction = useCallback(
+    (string, newParams, newState = "") => {
+      setNotification(string);
+      setParams(newParams);
+      setState(newState);
+    },
+    [],
+  );
 
-  const value = { notification, setNotification: setNotificationFunction, params, state };
-  return <NotificationContext.Provider value={value}>{children}</NotificationContext.Provider>;
+  const value = {
+    notification,
+    setNotification: setNotificationFunction,
+    params,
+    state,
+  };
+  return (
+    <NotificationContext.Provider value={value}>
+      {children}
+    </NotificationContext.Provider>
+  );
 };
 
 NotificationProvider.propTypes = {
@@ -43,7 +55,8 @@ NotificationProvider.propTypes = {
  */
 const useNotification = () => {
   const context = useContext(NotificationContext);
-  if (context === undefined) throw new Error("notificationContext must be used within a Provider");
+  if (context === undefined)
+    throw new Error("notificationContext must be used within a Provider");
   return context;
 };
 
