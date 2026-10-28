@@ -85,7 +85,8 @@
     "goHome": "Click to go home",
     "closeDialog": "Close dialog",
     "darkMode": "Dark mode",
-    "lightMode": "Light mode"
+    "lightMode": "Light mode",
+    "mainNavigation": "Main navigation"
   },
   "errors": {
     "passwordDoNotMatch": "Password don't match",

@@ -1,67 +1,75 @@
-import { Tooltip } from "react-tooltip";
-import { useEffect, useCallback } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { useCallback, useEffect } from "react";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+
+// routes
 import { AppRoute } from "@/shared/routes";
-import { getCookie } from "some-javascript-utils/browser";
 
 // components
 import { ErrorHandler } from "@/shared/components/organisms/ErrorHandler";
+import { AppShellTemplate } from "@/shared/components/templates/AppShellTemplate";
 
 // providers
-import { useAccount } from "@/features/auth";
 import { useAppApiClient } from "@/shared/providers/ApiClientProvider";
+
+// hooks
+import { useScrollReset } from "@/shared/hooks";
+
+// features
+import { useRecoveringRedirect } from "@/features/auth";
 import { useCache } from "@/features/notes";
 
-// components
-import { Refresher } from "./Refresher";
-import { Navbar } from "./Navbar";
+import { NavbarActions } from "./NavbarActions";
+import { NavbarBrand } from "./NavbarBrand";
+import { INVALID_SESSION_STATUSES } from "./constants";
 
-// config
-import config from "@/shared/config";
-
-function View() {
-  const { logoutUser } = useAccount();
-
+/**
+ * Signed-in layout: validates the session and keeps notes fresh per route
+ */
+function ViewLayout() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
-  const appApiClient = useAppApiClient();
+  const { pathname } = useLocation();
 
+  const appApiClient = useAppApiClient();
+  const redirectIfRecovering = useRecoveringRedirect();
   const { refresh } = useCache();
 
-  const refreshToken = useCallback(async () => {
+  useScrollReset();
+
+  const validateSession = useCallback(async () => {
     try {
-      const value = await appApiClient.User.validates();
-      if (value.status === 400) throw Error("400");
-      if (value.status === 401) throw Error("401");
-      if (value.status === 403) throw Error("403");
-      const recovering = getCookie(config.recovering);
-      if (recovering?.length) navigate(AppRoute.UpdatePassword);
+      const { status } = await appApiClient.User.validates();
+      if (status !== undefined && INVALID_SESSION_STATUSES.includes(status))
+        throw new Error(String(status));
+      redirectIfRecovering();
     } catch (err) {
       // eslint-disable-next-line no-console
       console.error(err);
-      logoutUser();
+      // SignOut clears the local session and the Supabase one
       navigate(AppRoute.SignOut);
     }
-  }, [logoutUser, appApiClient.User, navigate]);
+  }, [appApiClient.User, navigate, redirectIfRecovering]);
 
   useEffect(() => {
-    refreshToken();
-  }, [navigate, refreshToken]);
+    validateSession();
+  }, [validateSession]);
 
   useEffect(() => {
     refresh();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location]);
+  }, [pathname, refresh]);
 
   return (
-    <>
-      <Navbar />
-      <Refresher />
+    <AppShellTemplate
+      brand={<NavbarBrand />}
+      actions={<NavbarActions />}
+      navLabel={t("_accessibility:ariaLabels.mainNavigation")}
+    >
       <ErrorHandler>
         <Outlet />
       </ErrorHandler>
-      <Tooltip id="tooltip" />
-    </>
+    </AppShellTemplate>
   );
 }
 
-export default View;
+export default ViewLayout;

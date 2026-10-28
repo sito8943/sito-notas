@@ -1,47 +1,50 @@
 import { useEffect } from "react";
-import { Tooltip } from "react-tooltip";
-import { Outlet, useNavigate, Link } from "react-router-dom";
-import { AppRoute } from "@/shared/routes";
-import { getCookie } from "some-javascript-utils/browser";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
-// providers
-import { useAccount } from "@/features/auth";
+// routes
+import { AppRoute } from "@/shared/routes";
+
+// features
+import { useAccount, useRecoveringRedirect } from "@/features/auth";
 
 // components
-import { ModeButton } from "@/shared/components/molecules/ModeButton";
+import { ThemeToggle } from "@/shared/components/molecules/ThemeToggle";
+import { AuthTemplate } from "@/shared/components/templates/AuthTemplate";
 
-// config
-import config from "@/shared/config";
+// hooks
+import { useScrollReset } from "@/shared/hooks";
 
 /**
- * Auth layout
- * @returns Auth component
+ * Auth layout: keeps signed-in users out of the auth screens
  */
-function Auth() {
+function AuthLayout() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const { account } = useAccount();
+  const redirectIfRecovering = useRecoveringRedirect();
+
+  useScrollReset();
 
   useEffect(() => {
-    const recovering = getCookie(config.recovering);
-    if (recovering?.length) navigate(AppRoute.UpdatePassword);
-    else {
-      if (account.user) navigate(AppRoute.Home);
-    }
-  }, [account, navigate]);
+    if (!redirectIfRecovering() && account.user) navigate(AppRoute.Home);
+  }, [account, navigate, redirectIfRecovering]);
 
   return (
-    <main className="w-full viewport flex items-center justify-center overflow-hidden">
-      <Link to={AppRoute.Auth}>
-        <h1 className="absolute top-3 left-3 primary uppercase text-4xl">
-          Sito Notas
-        </h1>
-      </Link>
-      <ModeButton color="primary" className="top-3 right-3" />
+    <AuthTemplate
+      brand={
+        <Link to={AppRoute.Auth}>
+          <h1 className="primary uppercase text-4xl">
+            {t("_accessibility:appName")}
+          </h1>
+        </Link>
+      }
+      actions={<ThemeToggle />}
+    >
       <Outlet />
-      <Tooltip id="tooltip" />
-    </main>
+    </AuthTemplate>
   );
 }
 
-export default Auth;
+export default AuthLayout;

@@ -8,8 +8,8 @@ import { useTranslation } from "react-i18next";
 import { useAccount } from "@/features/auth";
 
 // layouts
-import { AuthLayout as Auth } from "@/app/layouts/AuthLayout";
-import { ViewLayout as View } from "@/app/layouts/ViewLayout";
+import { AuthLayout } from "@/app/layouts/AuthLayout";
+import { ViewLayout } from "@/app/layouts/ViewLayout";
 
 // components
 import { ErrorHandler } from "@/shared/components/organisms/ErrorHandler";
@@ -40,13 +40,6 @@ function App() {
   const { logUserFromLocal } = useAccount();
 
   useEffect(() => {
-    document.documentElement.style.scrollBehavior = "auto";
-    window.scroll({ top: 0 });
-    document.documentElement.style.scrollBehavior = "";
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname]); // triggered on route change
-
-  useEffect(() => {
     logUserFromLocal();
     setTimeout(() => {
       setLoaded(false);
@@ -67,7 +60,7 @@ function App() {
         />
         <BrowserRouter>
           <Routes>
-            <Route path={AppRoute.Auth} element={<Auth />}>
+            <Route path={AppRoute.Auth} element={<AuthLayout />}>
               <Route index element={<SignIn />} />
               <Route path={AppRoute.Recovery} element={<Recovery />} />
               <Route
@@ -75,7 +68,7 @@ function App() {
                 element={<UpdatePassword />}
               />
             </Route>
-            <Route path={AppRoute.Home} element={<View />}>
+            <Route path={AppRoute.Home} element={<ViewLayout />}>
               <Route index element={<Home />} />
               <Route path={AppRoute.Note} element={<Note />} />
               <Route path={AppRoute.Settings} element={<Settings />} />

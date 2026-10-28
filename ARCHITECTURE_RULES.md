@@ -27,9 +27,9 @@ src/
   shared/                    # Domain-agnostic code only
     components/
       atoms/                 # Smallest UI units (FAB, Syncing)
-      molecules/             # Small compositions (Field, InputControl, ModeButton)
+      molecules/             # Small compositions (Field, InputControl, ThemeToggle)
       organisms/             # Larger self-contained blocks (ErrorHandler, SplashScreen)
-      templates/             # Presentational page shells with no feature state
+      templates/             # Presentational page shells (AuthTemplate, AppShellTemplate)
     hooks/
     lib/                     # supabase client, queryClient, storage helpers
     providers/               # ApiClientProvider, ThemeProvider

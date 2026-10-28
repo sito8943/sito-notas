@@ -10,14 +10,16 @@ import { faSadTear } from "@fortawesome/free-regular-svg-icons";
 import { Button } from "@sito/ui";
 
 // components
-import { ModeButton } from "@/shared/components/molecules/ModeButton";
+import { ThemeToggle } from "@/shared/components/molecules/ThemeToggle";
 
 function NotFound() {
   const { t } = useTranslation();
 
   return (
     <main className="w-full h-screen flex items-center justify-center flex-col gap-5">
-      <ModeButton color="primary" className="top-1 right-1" />
+      <div className="fixed top-3 right-3">
+        <ThemeToggle />
+      </div>
       <FontAwesomeIcon
         icon={faSadTear}
         className="dark:text-white text-7xl appear"

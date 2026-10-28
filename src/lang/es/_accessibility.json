@@ -82,6 +82,7 @@
     "goTo": "Ir a la página ",
     "closeDialog": "Cerrar diálogo",
     "darkMode": "Modo oscuro",
-    "lightMode": "Modo claro"
+    "lightMode": "Modo claro",
+    "mainNavigation": "Navegación principal"
   }
 }
