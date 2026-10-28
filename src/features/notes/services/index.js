@@ -1,1 +1,0 @@
-export { NoteApiClient } from "./NoteApiClient";

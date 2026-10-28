@@ -10,6 +10,7 @@
     ".DS_Store"
   ],
   "options": {
+    "typeAware": true,
     "maxWarnings": 0
   },
   "categories": {
@@ -17,6 +18,20 @@
     "suspicious": "error"
   },
   "rules": {
+    "typescript/no-explicit-any": "error",
+    "typescript/consistent-return": "off",
+    "typescript/no-floating-promises": "off",
+    "typescript/no-unnecessary-type-conversion": "off",
+    "typescript/no-unsafe-type-assertion": "off",
+    "typescript/no-unnecessary-type-parameters": "off",
+    "typescript/no-useless-default-assignment": "off",
+    "unicorn/no-array-sort": "off",
+    "no-underscore-dangle": [
+      "error",
+      {
+        "allow": ["__dirname"]
+      }
+    ],
     "no-console": [
       "error",
       {
@@ -28,9 +43,17 @@
   },
   "overrides": [
     {
-      "files": ["**/*.test.js", "**/*.test.jsx", "src/test/**"],
+      "files": ["**/*.test.ts", "**/*.test.tsx", "src/test/**"],
       "rules": {
-        "unicorn/consistent-function-scoping": "off"
+        "typescript/no-explicit-any": "off",
+        "typescript/no-extraneous-class": "off",
+        "typescript/await-thenable": "off",
+        "typescript/no-base-to-string": "off",
+        "typescript/no-unnecessary-type-assertion": "off",
+        "typescript/restrict-template-expressions": "off",
+        "unicorn/consistent-function-scoping": "off",
+        "unicorn/no-thenable": "off",
+        "unicorn/prefer-add-event-listener": "off"
       }
     }
   ]
