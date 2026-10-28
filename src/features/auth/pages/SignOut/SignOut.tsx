@@ -1,14 +1,14 @@
 import { useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { AppRoute } from "../../../../shared/routes";
+import { AppRoute } from "@/shared/routes";
 import { useTranslation } from "react-i18next";
 
 // providers
-import { useAccount } from "../../providers/AccountProvider";
-import { useAppApiClient } from "../../../../shared/providers/ApiClientProvider";
+import { useAccount } from "@/features/auth/providers/AccountProvider";
+import { useAppApiClient } from "@/shared/providers/ApiClientProvider";
 
 // components
-import { SplashScreen } from "../../../../shared/components/organisms/SplashScreen";
+import { SplashScreen } from "@/shared/components/organisms/SplashScreen";
 
 /**
  * SignOut page

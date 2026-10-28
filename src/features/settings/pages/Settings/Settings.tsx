@@ -2,10 +2,10 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 // components
-import { Syncing } from "../../../../shared/components/atoms/Syncing";
+import { Syncing } from "@/shared/components/atoms/Syncing";
 
 // sections
-import { Password } from "../../components/Password";
+import { Password } from "@/features/settings/components/Password";
 
 function Settings() {
   const { t } = useTranslation();

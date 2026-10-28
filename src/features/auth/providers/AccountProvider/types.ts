@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import type { Account } from "../../models";
+import type { Account } from "@/features/auth/models";
 
 export interface AccountContextValue {
   account: Account;

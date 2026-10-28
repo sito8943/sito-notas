@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { AppRoute } from "../../../shared/routes";
+import { AppRoute } from "@/shared/routes";
 import { useTranslation } from "react-i18next";
 
 // font awesome
@@ -10,7 +10,7 @@ import { faSadTear } from "@fortawesome/free-regular-svg-icons";
 import { Button } from "@sito/ui";
 
 // components
-import { ModeButton } from "../../../shared/components/molecules/ModeButton";
+import { ModeButton } from "@/shared/components/molecules/ModeButton";
 
 function NotFound() {
   const { t } = useTranslation();

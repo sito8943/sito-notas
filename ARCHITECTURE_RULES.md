@@ -69,6 +69,8 @@ src/
 - `features/` may import `shared/` and other features **only through their
   `index.ts`**. Never import another feature's internals.
 - `shared/` must never import `features/` or `app/`.
+- Import other folders with the `@/` alias (`@/shared/...`, `@/features/notes`);
+  use `./` only for siblings inside the same unit. Never use `../`.
 - Exception: `app/App.tsx` lazy-loads `features/*/pages/*` directly so each
   page stays its own chunk.
 - Promote code to `shared/` only when it is domain-agnostic or reused by more

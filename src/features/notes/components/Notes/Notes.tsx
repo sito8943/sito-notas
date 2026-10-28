@@ -12,27 +12,29 @@ import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import { useToast, Spinner } from "@sito/ui";
 
 // providers
-import { useAppApiClient } from "../../../../shared/providers/ApiClientProvider";
-import { queryClient } from "../../../../shared/lib/queryClient";
-import { useSearch } from "../../providers/SearchProvider";
-import { useAccount } from "../../../auth";
-import { useCache } from "../../providers/CacheProvider";
+import { useAppApiClient } from "@/shared/providers/ApiClientProvider";
+import { queryClient } from "@/shared/lib/queryClient";
+import { useSearch } from "@/features/notes/providers/SearchProvider";
+import { useAccount } from "@/features/auth";
+import { useCache } from "@/features/notes/providers/CacheProvider";
 
 // components
-import { FAB } from "../../../../shared/components/atoms/FAB";
-import { Syncing } from "../../../../shared/components/atoms/Syncing";
+import { FAB } from "@/shared/components/atoms/FAB";
+import { Syncing } from "@/shared/components/atoms/Syncing";
 
 // styles
 import "./styles.css";
 
 // utils
-import { ReactQueryKeys } from "../../constants";
+import { ReactQueryKeys } from "@/features/notes/constants";
 
 // models
-import type { Note } from "../../models";
+import type { Note } from "@/features/notes/models";
 
 // lazy
-const PreviewNote = loadable(() => import("../PreviewNote/PreviewNote"));
+const PreviewNote = loadable(
+  () => import("@/features/notes/components/PreviewNote/PreviewNote"),
+);
 
 function Notes() {
   const { t } = useTranslation();

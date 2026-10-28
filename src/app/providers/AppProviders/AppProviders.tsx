@@ -2,14 +2,14 @@ import type { ReactNode } from "react";
 import { ToastProvider } from "@sito/ui";
 
 // shared
-import { ApiClientProvider, ThemeProvider } from "../../../shared/providers";
+import { ApiClientProvider, ThemeProvider } from "@/shared/providers";
 
 // features
-import { AccountProvider } from "../../../features/auth";
-import { CacheProvider, SearchProvider } from "../../../features/notes";
+import { AccountProvider } from "@/features/auth";
+import { CacheProvider, SearchProvider } from "@/features/notes";
 
 // api
-import { AppApiClient } from "../../api";
+import { AppApiClient } from "@/app/api";
 
 const appApiClient = new AppApiClient();
 

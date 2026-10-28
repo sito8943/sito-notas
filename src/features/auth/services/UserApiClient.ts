@@ -1,13 +1,13 @@
 import { MD5 } from "crypto-js";
 import type { Session, User } from "@supabase/supabase-js";
 
-import config from "../../../shared/config";
+import config from "@/shared/config";
 
 // db
-import supabase from "../../../shared/lib/supabase";
+import supabase from "@/shared/lib/supabase";
 
 // models
-import type { UserSettings } from "../models";
+import type { UserSettings } from "@/features/auth/models";
 
 /** Mimics a fetch Response so callers can keep the `await res.json()` flow */
 export interface JsonResponse<T> {

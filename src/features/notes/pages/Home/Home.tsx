@@ -10,8 +10,8 @@ import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { IconButton } from "@sito/ui";
 
 // sections
-import { Notes } from "../../components/Notes";
-import { SearchWrapper } from "../../components/SearchWrapper";
+import { Notes } from "@/features/notes/components/Notes";
+import { SearchWrapper } from "@/features/notes/components/SearchWrapper";
 
 function Home() {
   const { t } = useTranslation();

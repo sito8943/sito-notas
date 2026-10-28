@@ -1,6 +1,6 @@
 import { memo, useRef, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { getNoteRoute } from "../../../../shared/routes";
+import { getNoteRoute } from "@/shared/routes";
 import { useTranslation } from "react-i18next";
 
 // @sito/ui

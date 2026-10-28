@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { AppRoute } from "../../../../shared/routes";
+import { AppRoute } from "@/shared/routes";
 import { useTranslation } from "react-i18next";
 
 // icons
@@ -16,14 +16,11 @@ import {
 import { IconButton } from "@sito/ui";
 
 // providers
-import {
-  ThemeMode,
-  useTheme,
-} from "../../../../shared/providers/ThemeProvider";
-import { useAccount } from "../../../../features/auth";
+import { ThemeMode, useTheme } from "@/shared/providers/ThemeProvider";
+import { useAccount } from "@/features/auth";
 
 // images
-import noPhoto from "../../../../assets/images/no-photo.webp";
+import noPhoto from "@/assets/images/no-photo.webp";
 
 function Navbar() {
   const { t } = useTranslation();

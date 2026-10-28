@@ -1,6 +1,6 @@
 import type { Dispatch, ReactNode, SetStateAction } from "react";
 
-import type { Note } from "../../models";
+import type { Note } from "@/features/notes/models";
 
 export interface SearchContextValue {
   searchFunction: (note: Note) => boolean;

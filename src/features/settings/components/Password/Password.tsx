@@ -9,10 +9,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useToast, IconButton, Button } from "@sito/ui";
 
 // components
-import { InputControl } from "../../../../shared/components/molecules/InputControl";
+import { InputControl } from "@/shared/components/molecules/InputControl";
 
 // services
-import { useAppApiClient } from "../../../../shared/providers/ApiClientProvider";
+import { useAppApiClient } from "@/shared/providers/ApiClientProvider";
 
 function Password() {
   const { t } = useTranslation();

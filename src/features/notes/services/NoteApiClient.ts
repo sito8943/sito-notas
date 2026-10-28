@@ -1,9 +1,9 @@
 import type { PostgrestError } from "@supabase/supabase-js";
 
-import supabase from "../../../shared/lib/supabase";
+import supabase from "@/shared/lib/supabase";
 
 // models
-import type { Note } from "../models";
+import type { Note } from "@/features/notes/models";
 
 export interface NoteListResult {
   items: Note[] | null;

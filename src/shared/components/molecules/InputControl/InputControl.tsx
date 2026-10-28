@@ -1,4 +1,4 @@
-import { CONTROL_CLASSNAME, Field } from "../Field";
+import { CONTROL_CLASSNAME, Field } from "@/shared/components/molecules/Field";
 import type { InputControlProps } from "./types";
 
 function InputControl(props: InputControlProps) {

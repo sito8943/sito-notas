@@ -1,17 +1,17 @@
 import { useEffect } from "react";
 import { Tooltip } from "react-tooltip";
 import { Outlet, useNavigate, Link } from "react-router-dom";
-import { AppRoute } from "../../../shared/routes";
+import { AppRoute } from "@/shared/routes";
 import { getCookie } from "some-javascript-utils/browser";
 
 // providers
-import { useAccount } from "../../../features/auth";
+import { useAccount } from "@/features/auth";
 
 // components
-import { ModeButton } from "../../../shared/components/molecules/ModeButton";
+import { ModeButton } from "@/shared/components/molecules/ModeButton";
 
 // config
-import config from "../../../shared/config";
+import config from "@/shared/config";
 
 /**
  * Auth layout

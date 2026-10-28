@@ -1,20 +1,20 @@
 import { useCallback, useMemo, useState } from "react";
 
 // providers
-import { useAppApiClient } from "../../../../shared/providers/ApiClientProvider";
+import { useAppApiClient } from "@/shared/providers/ApiClientProvider";
 
 // utils
 import {
   fromLocalObject,
   removeFromLocal,
   toLocal,
-} from "../../../../shared/lib/storage";
+} from "@/shared/lib/storage";
 
 // config
-import config from "../../../../shared/config";
+import config from "@/shared/config";
 
 // models
-import type { Account } from "../../models";
+import type { Account } from "@/features/auth/models";
 
 import { AccountContext } from "./AccountContext";
 import type { AccountProviderProps } from "./types";

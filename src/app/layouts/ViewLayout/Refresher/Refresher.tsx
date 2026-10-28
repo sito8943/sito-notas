@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 // providers
-import { queryClient } from "../../../../shared/lib/queryClient";
+import { queryClient } from "@/shared/lib/queryClient";
 
 // utils
-import { ReactQueryKeys } from "../../../../features/notes";
+import { ReactQueryKeys } from "@/features/notes";
 
 const getOnLineStatus = () =>
   typeof navigator !== "undefined" && typeof navigator.onLine === "boolean"

@@ -7,28 +7,28 @@ import {
 } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { AppRoute } from "../../../../shared/routes";
+import { AppRoute } from "@/shared/routes";
 import { css } from "@emotion/css";
 
 // @sito/ui
 import { useToast, Spinner, IconButton, Button } from "@sito/ui";
 
 // components
-import { InputControl } from "../../../../shared/components/molecules/InputControl";
+import { InputControl } from "@/shared/components/molecules/InputControl";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash, faUser } from "@fortawesome/free-solid-svg-icons";
 
 // providers
-import { useAccount } from "../../providers/AccountProvider";
-import { useAppApiClient } from "../../../../shared/providers/ApiClientProvider";
+import { useAccount } from "@/features/auth/providers/AccountProvider";
+import { useAppApiClient } from "@/shared/providers/ApiClientProvider";
 
 // utils
-import { getErrorMessage } from "../../../../shared/lib/errors";
+import { getErrorMessage } from "@/shared/lib/errors";
 
 // styles
-import "../styles.css";
+import "@/features/auth/pages/styles.css";
 
 const transition = css({
   transition: "opacity, transform",

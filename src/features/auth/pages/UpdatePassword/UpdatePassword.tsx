@@ -7,7 +7,7 @@ import {
 } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
-import { AppRoute } from "../../../../shared/routes";
+import { AppRoute } from "@/shared/routes";
 import { deleteCookie } from "some-javascript-utils/browser";
 import { css } from "@emotion/css";
 
@@ -15,23 +15,23 @@ import { css } from "@emotion/css";
 import { useToast, Spinner, IconButton, Button } from "@sito/ui";
 
 // components
-import { InputControl } from "../../../../shared/components/molecules/InputControl";
+import { InputControl } from "@/shared/components/molecules/InputControl";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock, faLockOpen } from "@fortawesome/free-solid-svg-icons";
 
 // providers
-import { useAppApiClient } from "../../../../shared/providers/ApiClientProvider";
+import { useAppApiClient } from "@/shared/providers/ApiClientProvider";
 
 // utils
-import { getErrorMessage } from "../../../../shared/lib/errors";
+import { getErrorMessage } from "@/shared/lib/errors";
 
 // config
-import config from "../../../../shared/config";
+import config from "@/shared/config";
 
 // styles
-import "../styles.css";
+import "@/features/auth/pages/styles.css";
 
 const transition = css({
   transition: "opacity, transform",

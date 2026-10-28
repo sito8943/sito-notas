@@ -5,10 +5,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 
 // providers
-import { ThemeMode, useTheme } from "../../../providers/ThemeProvider";
+import { ThemeMode, useTheme } from "@/shared/providers/ThemeProvider";
 
 // components
-import { FAB } from "../../atoms/FAB";
+import { FAB } from "@/shared/components/atoms/FAB";
 
 import type { ModeButtonProps } from "./types";
 

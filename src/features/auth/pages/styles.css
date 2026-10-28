@@ -1,4 +1,4 @@
-@reference "../../../styles/global.css";
+@reference "@/styles/global.css";
 
 .form {
   box-shadow: 0px 0px 10px 0px #f9000052;

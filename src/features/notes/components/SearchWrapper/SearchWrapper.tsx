@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
-import { useDebounce } from "../../../../shared/hooks";
+import { useDebounce } from "@/shared/hooks";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 // components
-import { InputControl } from "../../../../shared/components/molecules/InputControl";
+import { InputControl } from "@/shared/components/molecules/InputControl";
 
 // providers
-import { useSearch } from "../../providers/SearchProvider";
+import { useSearch } from "@/features/notes/providers/SearchProvider";
 
 function SearchWrapper() {
   const { setSearchValue } = useSearch();

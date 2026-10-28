@@ -1,38 +1,36 @@
 import { Suspense, useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AppRoute } from "../shared/routes";
+import { AppRoute } from "@/shared/routes";
 import loadable from "@loadable/component";
 import { useTranslation } from "react-i18next";
 
 // providers
-import { useAccount } from "../features/auth";
+import { useAccount } from "@/features/auth";
 
 // layouts
-import { AuthLayout as Auth } from "./layouts/AuthLayout";
-import { ViewLayout as View } from "./layouts/ViewLayout";
+import { AuthLayout as Auth } from "@/app/layouts/AuthLayout";
+import { ViewLayout as View } from "@/app/layouts/ViewLayout";
 
 // components
-import { ErrorHandler } from "../shared/components/organisms/ErrorHandler";
-import { SplashScreen } from "../shared/components/organisms/SplashScreen";
+import { ErrorHandler } from "@/shared/components/organisms/ErrorHandler";
+import { SplashScreen } from "@/shared/components/organisms/SplashScreen";
 
 // views
 // Auth
-const SignIn = loadable(() => import("../features/auth/pages/SignIn/SignIn"));
-const SignOut = loadable(
-  () => import("../features/auth/pages/SignOut/SignOut"),
-);
+const SignIn = loadable(() => import("@/features/auth/pages/SignIn/SignIn"));
+const SignOut = loadable(() => import("@/features/auth/pages/SignOut/SignOut"));
 const Recovery = loadable(
-  () => import("../features/auth/pages/Recovery/Recovery"),
+  () => import("@/features/auth/pages/Recovery/Recovery"),
 );
 const UpdatePassword = loadable(
-  () => import("../features/auth/pages/UpdatePassword/UpdatePassword"),
+  () => import("@/features/auth/pages/UpdatePassword/UpdatePassword"),
 );
 // Generals
-const Home = loadable(() => import("../features/notes/pages/Home/Home"));
-const NotFound = loadable(() => import("./pages/NotFound/NotFound"));
-const Note = loadable(() => import("../features/notes/pages/Note/Note"));
+const Home = loadable(() => import("@/features/notes/pages/Home/Home"));
+const NotFound = loadable(() => import("@/app/pages/NotFound/NotFound"));
+const Note = loadable(() => import("@/features/notes/pages/Note/Note"));
 const Settings = loadable(
-  () => import("../features/settings/pages/Settings/Settings"),
+  () => import("@/features/settings/pages/Settings/Settings"),
 );
 
 function App() {

@@ -1,5 +1,5 @@
-import { UserApiClient } from "../../features/auth";
-import { NoteApiClient } from "../../features/notes";
+import { UserApiClient } from "@/features/auth";
+import { NoteApiClient } from "@/features/notes";
 
 export class AppApiClient {
   private readonly user = new UserApiClient();
@@ -15,7 +15,7 @@ export class AppApiClient {
 }
 
 // Types the client that shared/ApiClientProvider exposes to features
-declare module "../../shared/providers/ApiClientProvider/types" {
+declare module "@/shared/providers/ApiClientProvider/types" {
   interface ApiClient {
     readonly User: UserApiClient;
     readonly Note: NoteApiClient;

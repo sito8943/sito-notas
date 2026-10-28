@@ -1,24 +1,24 @@
 import { useState, useEffect, type ChangeEvent } from "react";
 import { useParams } from "react-router-dom";
-import { useDebounce } from "../../../../shared/hooks";
+import { useDebounce } from "@/shared/hooks";
 import { useQuery, useMutation } from "@tanstack/react-query";
 
 // @sito/ui
 import { useToast } from "@sito/ui";
 
 // providers
-import { useAppApiClient } from "../../../../shared/providers/ApiClientProvider";
+import { useAppApiClient } from "@/shared/providers/ApiClientProvider";
 
 // components
-import { InputControl } from "../../../../shared/components/molecules/InputControl";
-import { TextareaControl } from "../../../../shared/components/molecules/TextareaControl";
-import { Syncing } from "../../../../shared/components/atoms/Syncing";
+import { InputControl } from "@/shared/components/molecules/InputControl";
+import { TextareaControl } from "@/shared/components/molecules/TextareaControl";
+import { Syncing } from "@/shared/components/atoms/Syncing";
 
 // utils
-import { ReactQueryKeys } from "../../constants";
+import { ReactQueryKeys } from "@/features/notes/constants";
 
 // models
-import type { Note as NoteModel } from "../../models";
+import type { Note as NoteModel } from "@/features/notes/models";
 
 // styles
 import "./styles.css";

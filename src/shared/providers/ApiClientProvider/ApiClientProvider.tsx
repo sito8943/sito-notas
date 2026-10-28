@@ -3,7 +3,7 @@ import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client
 import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
 
 // lib
-import { queryClient } from "../../lib/queryClient";
+import { queryClient } from "@/shared/lib/queryClient";
 
 // types
 import type { ApiClient, ApiClientProviderProps } from "./types";

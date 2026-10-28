@@ -1,4 +1,4 @@
-import type { Note } from "../../models";
+import type { Note } from "@/features/notes/models";
 
 export type PreviewNoteProps = Pick<
   Note,

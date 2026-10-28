@@ -1,23 +1,23 @@
 import { Tooltip } from "react-tooltip";
 import { useEffect, useCallback } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { AppRoute } from "../../../shared/routes";
+import { AppRoute } from "@/shared/routes";
 import { getCookie } from "some-javascript-utils/browser";
 
 // components
-import { ErrorHandler } from "../../../shared/components/organisms/ErrorHandler";
+import { ErrorHandler } from "@/shared/components/organisms/ErrorHandler";
 
 // providers
-import { useAccount } from "../../../features/auth";
-import { useAppApiClient } from "../../../shared/providers/ApiClientProvider";
-import { useCache } from "../../../features/notes";
+import { useAccount } from "@/features/auth";
+import { useAppApiClient } from "@/shared/providers/ApiClientProvider";
+import { useCache } from "@/features/notes";
 
 // components
 import { Refresher } from "./Refresher";
 import { Navbar } from "./Navbar";
 
 // config
-import config from "../../../shared/config";
+import config from "@/shared/config";
 
 function View() {
   const { logoutUser } = useAccount();

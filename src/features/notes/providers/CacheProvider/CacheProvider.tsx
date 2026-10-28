@@ -2,19 +2,19 @@ import { useQuery } from "@tanstack/react-query";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 // utils
-import { fromLocalObject, toLocal } from "../../../../shared/lib/storage";
-import { queryClient } from "../../../../shared/lib/queryClient";
-import { ReactQueryKeys } from "../../constants";
+import { fromLocalObject, toLocal } from "@/shared/lib/storage";
+import { queryClient } from "@/shared/lib/queryClient";
+import { ReactQueryKeys } from "@/features/notes/constants";
 
 // providers
-import { useAccount } from "../../../auth";
-import { useAppApiClient } from "../../../../shared/providers/ApiClientProvider";
+import { useAccount } from "@/features/auth";
+import { useAppApiClient } from "@/shared/providers/ApiClientProvider";
 
 // config
-import config from "../../../../shared/config";
+import config from "@/shared/config";
 
 // models
-import type { Note } from "../../models";
+import type { Note } from "@/features/notes/models";
 
 import { CacheContext } from "./CacheContext";
 import type { CacheProviderProps } from "./types";

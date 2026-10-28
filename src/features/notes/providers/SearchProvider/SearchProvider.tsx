@@ -2,7 +2,7 @@ import stringSimilarity from "string-similarity";
 import { useCallback, useMemo, useState } from "react";
 
 // models
-import type { Note } from "../../models";
+import type { Note } from "@/features/notes/models";
 
 import { SEARCH_SIMILARITY_THRESHOLD } from "./constants";
 import { SearchContext } from "./SearchContext";
