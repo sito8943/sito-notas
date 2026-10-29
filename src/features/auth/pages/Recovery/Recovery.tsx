@@ -21,8 +21,8 @@ import { useAppApiClient } from "@/shared/providers/ApiClientProvider";
 // utils
 import { getErrorMessage } from "@/shared/lib/errors";
 
-// config
-import config from "@/shared/config";
+// constants
+import { RECOVERING_COOKIE } from "@/features/auth/constants";
 
 // styles
 import "@/features/auth/pages/styles.css";
@@ -75,7 +75,7 @@ function Recovery() {
         });
       else {
         toast({ message: t("_pages:auth.recovery.sent"), color: "success" });
-        createCookie(config.recovering, 1, user);
+        createCookie(RECOVERING_COOKIE, 1, user);
       }
     } catch (err) {
       // eslint-disable-next-line no-console

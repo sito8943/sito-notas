@@ -4,14 +4,11 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 // utils
 import { fromLocalObject, toLocal } from "@/shared/lib/storage";
 import { queryClient } from "@/shared/lib/queryClient";
-import { ReactQueryKeys } from "@/features/notes/constants";
+import { NOTES_STORAGE_KEY, ReactQueryKeys } from "@/features/notes/constants";
 
 // providers
 import { useAccount } from "@/features/auth";
 import { useAppApiClient } from "@/shared/providers/ApiClientProvider";
-
-// config
-import config from "@/shared/config";
 
 // models
 import type { Note } from "@/features/notes/models";
@@ -38,14 +35,14 @@ function CacheProvider({ children }: CacheProviderProps) {
   useEffect(() => {
     let cached: Note[] | undefined;
     try {
-      cached = fromLocalObject<Note[]>(config.notes);
+      cached = fromLocalObject<Note[]>(NOTES_STORAGE_KEY);
     } catch (e) {
       console.error(e);
     }
 
     const next = data?.items ?? cached;
     if ((data && !data.error?.message) || cached) {
-      toLocal(config.notes, next);
+      toLocal(NOTES_STORAGE_KEY, next);
       setCache(next);
     } else setCache(undefined);
   }, [data]);
