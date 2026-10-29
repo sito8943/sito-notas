@@ -8,7 +8,10 @@
     "failedToFetch": "No hay conexión",
     "invalidLoginCredentials": "Usuario o contraseña incorrecta",
     "unknown": "Algo salió mal",
-    "userNotFound": "No existe una cuenta con este correo"
+    "userNotFound": "No existe una cuenta con este correo",
+    "invalidRecoveryLink": "El enlace de recuperación no es válido o expiró. Solicita uno nuevo.",
+    "wrongCurrentPassword": "La contraseña actual es incorrecta",
+    "passwordTooShort": "La contraseña debe tener al menos 6 caracteres"
   },
   "common": {
     "day": "día",
@@ -67,6 +70,9 @@
     "rPassword": "Repetir contraseña",
     "confirmPassword": {
       "label": "Confirmar contraseña"
+    },
+    "currentPassword": {
+      "label": "Contraseña actual"
     }
   },
   "buttons": {

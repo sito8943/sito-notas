@@ -57,6 +57,9 @@
     "rPassword": "Repeat password",
     "confirmPassword": {
       "label": "Confirm password"
+    },
+    "currentPassword": {
+      "label": "Current password"
     }
   },
   "buttons": {
@@ -101,7 +104,10 @@
     "failedToFetch": "No connected",
     "invalidLoginCredentials": "Wrong user or password",
     "unknown": "Something went wrong",
-    "userNotFound": "No account found with this email"
+    "userNotFound": "No account found with this email",
+    "invalidRecoveryLink": "The recovery link is invalid or expired. Request a new one.",
+    "wrongCurrentPassword": "Current password is incorrect",
+    "passwordTooShort": "Password must be at least 6 characters"
   },
   "messages": {
     "images": "An image is required",

@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { Button, useToast } from "@sito/ui";
 
 // components
+import { Checkbox } from "@/shared/components/atoms/Checkbox";
 import { Logo } from "@/shared/components/atoms/Logo";
 import { PasswordInput } from "@/shared/components/molecules/PasswordInput";
 import { TextInput } from "@/shared/components/molecules/TextInput";
@@ -17,6 +18,7 @@ import { useAppApiClient } from "@/shared/providers/ApiClientProvider";
 
 // utils
 import { getErrorMessage } from "@/shared/lib/errors";
+import { isHttpError, NETWORK_ERROR_STATUS } from "@/shared/lib/http";
 import { AppRoute } from "@/shared/routes";
 
 import type { SignInForm } from "./types";
@@ -33,37 +35,33 @@ function SignIn() {
     handleSubmit,
     setError,
     formState: { errors, isSubmitting },
-  } = useForm<SignInForm>({ defaultValues: { email: "", password: "" } });
+  } = useForm<SignInForm>({
+    defaultValues: { email: "", password: "", rememberMe: true },
+  });
 
-  const onSubmit = handleSubmit(async ({ email, password }) => {
+  const onSubmit = handleSubmit(async ({ email, password, rememberMe }) => {
     try {
-      const response = await appApiClient.User.login(email, password);
-      const data = await response.json();
-
-      if (data.status === 404) {
-        setError("email", {
-          type: "server",
-          message: t("_accessibility:errors.userNotFound"),
-        });
-        return;
-      }
-      if (data.status === 400 || data.status === 401) {
+      logUser(await appApiClient.User.signIn(email, password, rememberMe));
+    } catch (error) {
+      if (isHttpError(error, 401)) {
         setError("password", {
           type: "server",
           message: t("_accessibility:errors.invalidLoginCredentials"),
         });
         return;
       }
-      if (data.user) {
-        const request = await appApiClient.User.fetchUserSettings(data.user.id);
-        const settings = await request.json();
-        logUser(settings ? { ...data, settings } : { ...data });
+      if (isHttpError(error, 404)) {
+        setError("email", {
+          type: "server",
+          message: t("_accessibility:errors.userNotFound"),
+        });
+        return;
       }
-    } catch (error) {
-      // eslint-disable-next-line no-console
       console.error(error);
       toast({
-        message: getErrorMessage(error, t("_accessibility:errors.unknown")),
+        message: isHttpError(error, NETWORK_ERROR_STATUS)
+          ? t("_accessibility:errors.failedToFetch")
+          : getErrorMessage(error, t("_accessibility:errors.unknown")),
         color: "error",
       });
     }
@@ -116,6 +114,11 @@ function SignIn() {
         {...register("password", {
           required: t("_accessibility:errors.passwordRequired"),
         })}
+      />
+      <Checkbox
+        label={t("_accessibility:inputs.remember.label")}
+        disabled={isSubmitting}
+        {...register("rememberMe")}
       />
     </AuthScreen>
   );

@@ -38,14 +38,14 @@ function App() {
   const [loaded, setLoaded] = useState(true);
   const { t } = useTranslation();
 
-  const { logUserFromLocal } = useAccount();
+  const { restoreSession } = useAccount();
 
   useEffect(() => {
-    logUserFromLocal();
+    restoreSession();
     setTimeout(() => {
       setLoaded(false);
     }, 1000);
-  }, [logUserFromLocal]);
+  }, [restoreSession]);
 
   return (
     <Suspense>

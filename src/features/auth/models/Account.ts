@@ -1,14 +1,23 @@
-import type { Session, User } from "@supabase/supabase-js";
-
-export interface UserSettings {
-  id: string;
-  photo?: Record<string, unknown>;
-  created_at?: number;
+/** Response of sito-auth sign-in, refresh and session endpoints */
+export interface AuthDto {
+  id: number;
+  username: string;
+  email: string;
+  admin: boolean;
+  emailConfirmed: boolean;
+  token: string;
+  /** Only on sign-in with rememberMe, and on refresh */
+  refreshToken?: string | null;
+  /** ISO LocalDateTime in the server zone */
+  accessTokenExpiresAt?: string | null;
 }
 
+/** Signed-in user, without tokens */
+export type AuthUser = Pick<
+  AuthDto,
+  "id" | "username" | "email" | "admin" | "emailConfirmed"
+>;
+
 export interface Account {
-  user?: User | null;
-  session?: Session | null;
-  settings?: Partial<UserSettings>;
-  appUser?: Partial<UserSettings>;
+  user?: AuthUser;
 }

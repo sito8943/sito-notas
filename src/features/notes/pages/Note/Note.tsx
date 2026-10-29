@@ -15,53 +15,46 @@ import { TextareaControl } from "@/shared/components/molecules/TextareaControl";
 import { Syncing } from "@/shared/components/atoms/Syncing";
 
 // utils
-import { ReactQueryKeys } from "@/features/notes/constants";
+import { getNoteDetailKey } from "@/features/notes/constants";
 
-// models
-import type { Note as NoteModel } from "@/features/notes/models";
+// services
+import type { UpdateNoteInput } from "@/features/notes/services";
 
 // styles
 import "./styles.css";
 
 function Note() {
   const { id } = useParams();
+  const noteId = Number(id);
+  const validId = Number.isInteger(noteId) && noteId > 0;
 
   const appApiClient = useAppApiClient();
   const toast = useToast();
 
-  const [toUpdate, setToUpdate] = useState<NoteModel | undefined>(undefined);
+  const [toUpdate, setToUpdate] = useState<UpdateNoteInput | undefined>(
+    undefined,
+  );
   const debounced = useDebounce(toUpdate, 500);
 
   const { data, isLoading } = useQuery({
-    queryKey: [ReactQueryKeys.Notes, id],
-    queryFn: () => appApiClient.Note.getById(id ?? ""),
-    enabled: !!id,
+    queryKey: getNoteDetailKey(noteId),
+    queryFn: () => appApiClient.Note.getById(noteId),
+    enabled: validId,
   });
 
-  const [title, setTitle] = useState(data?.item?.title ?? "");
-  const [content, setContent] = useState(data?.item?.content ?? "");
+  const [title, setTitle] = useState(data?.title ?? "");
+  const [content, setContent] = useState(data?.content ?? "");
 
   useEffect(() => {
-    if (data?.item) {
-      setTitle(data.item.title);
-      setContent(data.item.content);
+    if (data) {
+      setTitle(data.title);
+      setContent(data.content);
     }
   }, [data]);
 
   const updateNote = useMutation({
-    mutationFn: (note: NoteModel) => appApiClient.Note.update(note),
-    onSuccess: ({ error }) => {
-      if (error) {
-        toast({
-          message: error.message,
-          color: "error",
-        });
-        return;
-      }
-    },
+    mutationFn: (note: UpdateNoteInput) => appApiClient.Note.update(note),
     onError: (error) => {
-      // do something
-      // eslint-disable-next-line no-console
       console.error(error);
       toast({
         message: error.message,
@@ -72,24 +65,14 @@ function Note() {
 
   const handleContent = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
-    if (!data?.item) return;
-    setToUpdate({
-      ...data.item,
-      title,
-      content: e.target.value,
-      last_update: new Date().getTime(),
-    });
+    if (!data) return;
+    setToUpdate({ id: data.id, title, content: e.target.value });
   };
 
   const handleTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
-    if (!data?.item) return;
-    setToUpdate({
-      ...data.item,
-      title: e.target.value,
-      content,
-      last_update: new Date().getTime(),
-    });
+    if (!data) return;
+    setToUpdate({ id: data.id, title: e.target.value, content });
   };
 
   useEffect(() => {

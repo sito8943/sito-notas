@@ -57,7 +57,8 @@
     "titles": "Configuración",
     "sections": {
       "security": {
-        "title": "Seguridad"
+        "title": "Seguridad",
+        "updated": "Contraseña actualizada. Inicia sesión de nuevo."
       }
     }
   },
