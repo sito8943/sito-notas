@@ -1,8 +1,8 @@
 import type { LogoMarkProps } from "./types";
 
 /**
- * Sito Notas "N" mark. Painted with currentColor so it follows the
- * surrounding text color in light and dark mode.
+ * Sito Notas "N" mark, inlined from src/assets/logo.svg. Painted with
+ * currentColor so it follows the surrounding text color in light and dark.
  */
 function LogoMark(props: LogoMarkProps) {
   return (
