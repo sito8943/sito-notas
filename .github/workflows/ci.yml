@@ -11,8 +11,8 @@ permissions:
 
 # Build-time env for deploys. Only the variables the app reads are listed.
 env:
-  VITE_SUPABASE_CO: ${{ secrets.VITE_SUPABASE_CO }}
-  VITE_SUPABASE_ANON: ${{ secrets.VITE_SUPABASE_ANON }}
+  VITE_AUTH_URL: ${{ secrets.VITE_AUTH_URL }}
+  VITE_API_URL: ${{ secrets.VITE_API_URL }}
   FIREBASE_PROJECT_ID: sitonotas
 
 jobs:

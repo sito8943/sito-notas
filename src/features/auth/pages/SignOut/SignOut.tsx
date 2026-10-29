@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 
 // providers
 import { useAccount } from "@/features/auth/providers/AccountProvider";
-import { useAppApiClient } from "@/shared/providers/ApiClientProvider";
 
 // components
 import { SplashScreen } from "@/shared/components/organisms/SplashScreen";
@@ -18,17 +17,14 @@ function SignOut() {
   const { t } = useTranslation();
   const { logoutUser } = useAccount();
 
-  const appApiClient = useAppApiClient();
-
   const navigate = useNavigate();
 
   const logic = useCallback(async () => {
-    await appApiClient.User.logout();
-    logoutUser();
+    await logoutUser();
     setTimeout(() => {
       navigate(AppRoute.Auth);
     }, 1000);
-  }, [appApiClient.User, logoutUser, navigate]);
+  }, [logoutUser, navigate]);
 
   useEffect(() => {
     logic();

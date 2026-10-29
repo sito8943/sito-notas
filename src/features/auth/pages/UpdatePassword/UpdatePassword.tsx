@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Link, useNavigate } from "react-router-dom";
-import { deleteCookie } from "some-javascript-utils/browser";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 // @sito/ui
 import { Button, useToast } from "@sito/ui";
@@ -15,12 +14,15 @@ import { AuthScreen } from "@/shared/components/organisms/AuthScreen";
 import { useAppApiClient } from "@/shared/providers/ApiClientProvider";
 
 // utils
-import { RECOVERING_COOKIE } from "@/features/auth/constants";
 import { getErrorMessage } from "@/shared/lib/errors";
+import { isHttpError } from "@/shared/lib/http";
 import { AppRoute } from "@/shared/routes";
+
+import { MIN_PASSWORD_LENGTH } from "@/features/auth/constants";
 
 import { SIGN_OUT_DELAY_MS } from "./constants";
 import type { UpdatePasswordForm } from "./types";
+import { getResetPasswordRequest } from "./utils";
 
 /**
  * UpdatePassword page: sets a new password after a recovery email
@@ -29,6 +31,7 @@ function UpdatePassword() {
   const { t } = useTranslation();
   const toast = useToast();
   const navigate = useNavigate();
+  const { hash, search } = useLocation();
 
   const appApiClient = useAppApiClient();
 
@@ -41,21 +44,27 @@ function UpdatePassword() {
   });
 
   const onSubmit = handleSubmit(async ({ password }) => {
+    const request = getResetPasswordRequest(hash, search, password);
+    if (!request) {
+      toast({
+        message: t("_accessibility:errors.invalidRecoveryLink"),
+        color: "error",
+      });
+      return;
+    }
     try {
-      const { error } = await appApiClient.User.updatePassword(password);
-      if (error) throw error;
-
+      await appApiClient.User.resetPassword(request);
       toast({
         message: t("_pages:auth.updatePassword.sent"),
         color: "success",
       });
-      deleteCookie(RECOVERING_COOKIE);
       setTimeout(() => navigate(AppRoute.SignOut), SIGN_OUT_DELAY_MS);
     } catch (err) {
-      // eslint-disable-next-line no-console
       console.error(err);
       toast({
-        message: getErrorMessage(err, t("_accessibility:errors.unknown")),
+        message: isHttpError(err, 401)
+          ? t("_accessibility:errors.invalidRecoveryLink")
+          : getErrorMessage(err, t("_accessibility:errors.unknown")),
         color: "error",
       });
     }
@@ -97,6 +106,10 @@ function UpdatePassword() {
         helperText={errors.password?.message}
         {...register("password", {
           required: t("_accessibility:errors.passwordRequired"),
+          minLength: {
+            value: MIN_PASSWORD_LENGTH,
+            message: t("_accessibility:errors.passwordTooShort"),
+          },
         })}
       />
       <PasswordInput

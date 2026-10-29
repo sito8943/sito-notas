@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { createCookie } from "some-javascript-utils/browser";
 
 // @sito/ui
 import { Button, useToast } from "@sito/ui";
@@ -14,9 +13,9 @@ import { AuthScreen } from "@/shared/components/organisms/AuthScreen";
 import { useAppApiClient } from "@/shared/providers/ApiClientProvider";
 
 // utils
-import { RECOVERING_COOKIE } from "@/features/auth/constants";
 import { getErrorMessage } from "@/shared/lib/errors";
-import { AppRoute } from "@/shared/routes";
+import { isHttpError, NETWORK_ERROR_STATUS } from "@/shared/lib/http";
+import { AppRoute, getAbsoluteRoute } from "@/shared/routes";
 
 import type { RecoveryForm } from "./types";
 
@@ -37,22 +36,17 @@ function Recovery() {
 
   const onSubmit = handleSubmit(async ({ email }) => {
     try {
-      const response = await appApiClient.User.recovery(email);
-      const data = await response.json();
-      if (data.status && data.status !== 200) {
-        toast({
-          message: data.message ?? t("_accessibility:errors.unknown"),
-          color: "error",
-        });
-        return;
-      }
+      await appApiClient.User.forgotPassword(
+        email,
+        getAbsoluteRoute(AppRoute.UpdatePassword),
+      );
       toast({ message: t("_pages:auth.recovery.sent"), color: "success" });
-      createCookie(RECOVERING_COOKIE, 1, email);
     } catch (err) {
-      // eslint-disable-next-line no-console
       console.error(err);
       toast({
-        message: getErrorMessage(err, t("_accessibility:errors.unknown")),
+        message: isHttpError(err, NETWORK_ERROR_STATUS)
+          ? t("_accessibility:errors.failedToFetch")
+          : getErrorMessage(err, t("_accessibility:errors.unknown")),
         color: "error",
       });
     }

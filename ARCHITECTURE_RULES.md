@@ -7,7 +7,7 @@ applies (Context + Provider, managers, Tailwind, routing, i18n).
 ## Scope
 
 - React 19 + TypeScript (strict) under `src/`.
-- Backend: Supabase (auth + `notes` table).
+- Backend: sito-auth (accounts, tokens) + Sito Notes API (data).
 - Styling: Tailwind CSS v4 + `@sito/ui` 0.10.x, tokens in `src/styles/global.css`.
 
 ---
@@ -31,7 +31,7 @@ src/
       organisms/             # Larger self-contained blocks (ErrorHandler, SplashScreen)
       templates/             # Presentational page shells (AuthTemplate, AppShellTemplate)
     hooks/
-    lib/                     # supabase client, queryClient, storage helpers
+    lib/                     # http (HttpClient, SessionManager), queryClient, storage helpers
     providers/               # ApiClientProvider, ThemeProvider
     config.ts
     routes.ts                # AppRoute + route helpers
@@ -42,7 +42,7 @@ src/
       components/
       providers/
       models/                # Typed domain entities (Note, Account)
-      services/              # Supabase access for the feature domain
+      services/              # API access for the feature domain
       constants.ts
       index.ts               # Public feature API
 
@@ -103,11 +103,16 @@ Something/
 - `shared/providers/ApiClientProvider` declares an empty `ApiClient`
   interface; `app/api/AppApiClient.ts` extends it by declaration merging, so
   `useAppApiClient()` is typed without `shared` depending on features.
-- Each feature owns its Supabase service in `features/<feature>/services/`.
-- `app/api/AppApiClient` aggregates them; `AppProviders` injects one instance
-  into `shared/providers/ApiClientProvider`.
+- `shared/lib/http` holds the domain-agnostic HTTP layer: `HttpClient`
+  (JSON fetch, Bearer token, `HttpError`, retry once after a 401) and
+  `SessionManager` (token storage, proactive single-flight refresh).
+- Each feature owns its service in `features/<feature>/services/`, built on an
+  `HttpClient` it receives (never `fetch` directly).
+- `app/api/AppApiClient` creates one `SessionManager`, one `HttpClient` per
+  server and the feature services; `AppProviders` injects one instance into
+  `shared/providers/ApiClientProvider`.
 - Components read the client with `useAppApiClient()`; never instantiate
-  services or import the Supabase client from UI code.
+  services or HTTP clients from UI code.
 
 ---
 

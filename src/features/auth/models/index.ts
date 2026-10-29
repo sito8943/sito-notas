@@ -1,1 +1,1 @@
-export type { Account, UserSettings } from "./Account";
+export type { Account, AuthDto, AuthUser } from "./Account";

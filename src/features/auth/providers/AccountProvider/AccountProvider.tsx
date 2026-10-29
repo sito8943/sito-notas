@@ -1,73 +1,74 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 // providers
 import { useAppApiClient } from "@/shared/providers/ApiClientProvider";
 
 // utils
-import {
-  fromLocalObject,
-  removeFromLocal,
-  toLocal,
-} from "@/shared/lib/storage";
+import { isHttpError } from "@/shared/lib/http";
+import { removeFromLocal, toLocal } from "@/shared/lib/storage";
 
 // constants
 import { USER_STORAGE_KEY } from "@/features/auth/constants";
 
 // models
-import type { Account } from "@/features/auth/models";
+import type { Account, AuthUser } from "@/features/auth/models";
 
 import { AccountContext } from "./AccountContext";
+import { INVALID_SESSION_STATUSES } from "./constants";
 import type { AccountProviderProps } from "./types";
+import { readStoredAccount } from "./utils";
 
 /**
- * Account Provider
+ * Account Provider: signed-in user state, kept in sync with the session
  */
 function AccountProvider({ children }: AccountProviderProps) {
   const appApiClient = useAppApiClient();
 
-  const [account, setAccount] = useState<Account>({});
+  const [account, setAccount] = useState<Account>(() =>
+    appApiClient.User.hasSession() ? readStoredAccount() : {},
+  );
 
-  const logUser = useCallback((data: Account) => {
-    setAccount(data);
-    toLocal(USER_STORAGE_KEY, data);
-  }, []);
-
-  const logoutUser = useCallback(() => {
+  const clearAccount = useCallback(() => {
     setAccount({});
     removeFromLocal(USER_STORAGE_KEY);
-    appApiClient.User.logout();
-  }, [appApiClient.User]);
+  }, []);
 
-  const logUserFromLocal = useCallback(async () => {
-    try {
-      const response = await appApiClient.User.getSession();
-      if (response.error) {
-        const loggedUser = fromLocalObject<Account>(USER_STORAGE_KEY);
-        setAccount(loggedUser ?? {});
-      }
-      if (response.data?.user !== null) {
-        const loggedUser = fromLocalObject<Account>(USER_STORAGE_KEY);
+  // The session can end anywhere (failed refresh, other tab, sign-out)
+  useEffect(
+    () =>
+      appApiClient.User.onSessionChange((tokens) => {
+        if (!tokens) clearAccount();
+      }),
+    [appApiClient.User, clearAccount],
+  );
 
-        if (loggedUser?.user) {
-          const request = await appApiClient.User.fetchUserSettings(
-            loggedUser.user.id,
-          );
-          const appUser = await request.json();
+  const logUser = useCallback((user: AuthUser) => {
+    setAccount({ user });
+    toLocal(USER_STORAGE_KEY, { user });
+  }, []);
 
-          if (appUser) setAccount({ ...loggedUser, appUser });
-          else setAccount(loggedUser);
-        } else throw new Error("401");
-      } else logoutUser();
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err);
-      logoutUser();
+  const logoutUser = useCallback(async () => {
+    clearAccount();
+    await appApiClient.User.signOut();
+  }, [appApiClient.User, clearAccount]);
+
+  const restoreSession = useCallback(async () => {
+    if (!appApiClient.User.hasSession()) {
+      clearAccount();
+      return;
     }
-  }, [logoutUser, appApiClient.User]);
+    try {
+      logUser(await appApiClient.User.getSession());
+    } catch (err) {
+      if (isHttpError(err, ...INVALID_SESSION_STATUSES)) await logoutUser();
+      // Offline or server down: keep the stored account
+      else console.warn(err);
+    }
+  }, [appApiClient.User, clearAccount, logUser, logoutUser]);
 
   const value = useMemo(
-    () => ({ account, logUser, logoutUser, logUserFromLocal }),
-    [account, logUser, logoutUser, logUserFromLocal],
+    () => ({ account, logUser, logoutUser, restoreSession }),
+    [account, logUser, logoutUser, restoreSession],
   );
 
   return (

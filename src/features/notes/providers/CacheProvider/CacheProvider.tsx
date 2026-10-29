@@ -2,9 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 // utils
-import { fromLocalObject, toLocal } from "@/shared/lib/storage";
+import { removeFromLocal, toLocal } from "@/shared/lib/storage";
 import { queryClient } from "@/shared/lib/queryClient";
-import { NOTES_STORAGE_KEY, ReactQueryKeys } from "@/features/notes/constants";
+import {
+  getNotesListKey,
+  NOTES_STORAGE_KEY,
+  ReactQueryKeys,
+} from "@/features/notes/constants";
 
 // providers
 import { useAccount } from "@/features/auth";
@@ -15,44 +19,44 @@ import type { Note } from "@/features/notes/models";
 
 import { CacheContext } from "./CacheContext";
 import type { CacheProviderProps } from "./types";
+import { readCachedNotes } from "./utils";
 
 /**
- * CacheProvider
+ * CacheProvider: the user's notes, persisted locally for offline use and
+ * cleared when the session ends
  */
 function CacheProvider({ children }: CacheProviderProps) {
   const appApiClient = useAppApiClient();
 
   const { account } = useAccount();
+  const userId = account.user?.id;
 
   const { data, isLoading, isFetching, isPending, isRefetching } = useQuery({
-    queryKey: [ReactQueryKeys.Notes, account.user?.id],
-    queryFn: () => appApiClient.Note.get(account.user?.id),
-    enabled: !!account.user?.id,
+    queryKey: getNotesListKey(userId),
+    queryFn: () => appApiClient.Note.list(),
+    enabled: userId !== undefined,
   });
 
   const [cachedData, setCache] = useState<Note[] | undefined>();
 
   useEffect(() => {
-    let cached: Note[] | undefined;
-    try {
-      cached = fromLocalObject<Note[]>(NOTES_STORAGE_KEY);
-    } catch (e) {
-      console.error(e);
+    if (userId === undefined) {
+      removeFromLocal(NOTES_STORAGE_KEY);
+      queryClient.removeQueries({ queryKey: [ReactQueryKeys.Notes] });
+      setCache(undefined);
+      return;
     }
-
-    const next = data?.items ?? cached;
-    if ((data && !data.error?.message) || cached) {
-      toLocal(NOTES_STORAGE_KEY, next);
-      setCache(next);
-    } else setCache(undefined);
-  }, [data]);
+    if (data) {
+      toLocal(NOTES_STORAGE_KEY, data);
+      setCache(data);
+      return;
+    }
+    setCache(readCachedNotes());
+  }, [data, userId]);
 
   const refresh = useCallback(
-    () =>
-      queryClient.invalidateQueries({
-        queryKey: [ReactQueryKeys.Notes, account.user?.id],
-      }),
-    [account.user?.id],
+    () => queryClient.invalidateQueries({ queryKey: getNotesListKey(userId) }),
+    [userId],
   );
 
   const value = useMemo(
