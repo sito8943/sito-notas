@@ -7,7 +7,8 @@
     "emailNotConfirmed": "No se ha confirmado el email",
     "failedToFetch": "No hay conexión",
     "invalidLoginCredentials": "Usuario o contraseña incorrecta",
-    "unknown": "Algo salió mal"
+    "unknown": "Algo salió mal",
+    "userNotFound": "No existe una cuenta con este correo"
   },
   "common": {
     "day": "día",
@@ -63,7 +64,10 @@
       "requiredError": "Debes introducir tu contraseña",
       "passwordNoMatch": "No coinciden las contraseñas"
     },
-    "rPassword": "Repetir contraseña"
+    "rPassword": "Repetir contraseña",
+    "confirmPassword": {
+      "label": "Confirmar contraseña"
+    }
   },
   "buttons": {
     "toTop": "Ir al tope",
@@ -72,7 +76,8 @@
     "save": "Guardar",
     "next": "Siguiente",
     "retry": "Reintentar",
-    "close": "Cerrar"
+    "close": "Cerrar",
+    "back": "Volver"
   },
   "ariaLabels": {
     "add": "Agregar",

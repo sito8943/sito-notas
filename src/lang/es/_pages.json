@@ -14,12 +14,36 @@
       "label": "¿No tienes cuenta?"
     },
     "signIn": {
-      "signInAriaLabel": "Click para iniciar sesión"
+      "signInAriaLabel": "Click para iniciar sesión",
+      "title": "Iniciar sesión",
+      "submit": "Entrar",
+      "recovery": {
+        "question": "¿Problemas para acceder?",
+        "link": "Recupera tu cuenta"
+      }
     },
     "signUp": {
       "titleThanksFor": "Registrado correctamente",
       "thanksFor": "Gracias por registrarte. Por favor, valida tu dirección de correo electrónico haciendo clic en el enlace de confirmación que acabamos de enviar a tu dirección.",
       "nextAriaLabel": "Click para crear cuenta"
+    },
+    "recovery": {
+      "title": "Recuperar cuenta",
+      "submit": "Enviar correo",
+      "sent": "Revisa tu correo para restablecer la contraseña",
+      "toSignIn": {
+        "question": "¿Recordaste tu contraseña?",
+        "link": "Inicia sesión"
+      }
+    },
+    "updatePassword": {
+      "title": "Actualizar contraseña",
+      "submit": "Guardar contraseña",
+      "sent": "La contraseña se actualizó",
+      "toSignIn": {
+        "question": "¿Ya tienes acceso?",
+        "link": "Inicia sesión"
+      }
     }
   },
   "home": {

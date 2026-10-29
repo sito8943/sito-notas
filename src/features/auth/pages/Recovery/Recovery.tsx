@@ -1,165 +1,102 @@
-import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
+import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { AppRoute } from "@/shared/routes";
 import { createCookie } from "some-javascript-utils/browser";
-import { css } from "@emotion/css";
 
 // @sito/ui
-import { useToast, Spinner, Button } from "@sito/ui";
+import { Button, useToast } from "@sito/ui";
 
 // components
-import { InputControl } from "@/shared/components/molecules/InputControl";
-
-// icons
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { TextInput } from "@/shared/components/molecules/TextInput";
+import { AuthScreen } from "@/shared/components/organisms/AuthScreen";
 
 // providers
 import { useAppApiClient } from "@/shared/providers/ApiClientProvider";
 
 // utils
-import { getErrorMessage } from "@/shared/lib/errors";
-
-// constants
 import { RECOVERING_COOKIE } from "@/features/auth/constants";
+import { getErrorMessage } from "@/shared/lib/errors";
+import { AppRoute } from "@/shared/routes";
 
-// styles
-import "@/features/auth/pages/styles.css";
-
-const transition = css({
-  transition: "opacity, transform",
-  transitionDuration: "500ms",
-  transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
-});
+import type { RecoveryForm } from "./types";
 
 /**
- * Recovery page
- * @returns Recovery page component
+ * Recovery page: sends the reset-password email
  */
 function Recovery() {
   const { t } = useTranslation();
+  const toast = useToast();
 
   const appApiClient = useAppApiClient();
 
-  const [user, setUser] = useState("");
-  const [userHelperText, setUserHelperText] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<RecoveryForm>({ defaultValues: { email: "" } });
 
-  const handleUser = (e: ChangeEvent<HTMLInputElement>) =>
-    setUser(e.target.value);
-
-  const [appear, setAppear] = useState(false);
-  const [saving, setSaving] = useState(false);
-
-  const toast = useToast();
-
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setSaving(true);
-    setUserHelperText("");
-
-    if (!user.length) {
-      document.getElementById("user")?.focus();
-      setUserHelperText(t("_accessibility:errors.emailRequired"));
-      setSaving(false);
-      return;
-    }
-
+  const onSubmit = handleSubmit(async ({ email }) => {
     try {
-      const response = await appApiClient.User.recovery(user);
+      const response = await appApiClient.User.recovery(email);
       const data = await response.json();
-      if (data !== null && data.status && data.status !== 200)
+      if (data.status && data.status !== 200) {
         toast({
           message: data.message ?? t("_accessibility:errors.unknown"),
           color: "error",
         });
-      else {
-        toast({ message: t("_pages:auth.recovery.sent"), color: "success" });
-        createCookie(RECOVERING_COOKIE, 1, user);
+        return;
       }
+      toast({ message: t("_pages:auth.recovery.sent"), color: "success" });
+      createCookie(RECOVERING_COOKIE, 1, email);
     } catch (err) {
       // eslint-disable-next-line no-console
       console.error(err);
-      // set server status to notification
       toast({
         message: getErrorMessage(err, t("_accessibility:errors.unknown")),
         color: "error",
       });
     }
-    setSaving(false);
-  };
-
-  useEffect(() => {
-    setTimeout(() => {
-      setAppear(true);
-    }, 1100);
-  }, []);
+  });
 
   return (
-    <>
-      <div
-        className={`bg-light-dark dark:bg-dark-dark fixed top-0 left-0 z-10 w-full h-screen flex items-center backdrop-blur-[1rem] ${transition} duration-100 ${
-          saving ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
-      >
-        <div
-          className={`m-auto text-5xl primary ${transition} duration-300! ${
-            saving ? "scale-100" : "scale-0"
-          }`}
+    <AuthScreen
+      title={t("_pages:auth.recovery.title")}
+      backTo={AppRoute.Auth}
+      backLabel={t("_accessibility:buttons.back")}
+      onSubmit={(event) => void onSubmit(event)}
+      helperLinks={
+        <p className="auth-screen-helper-text">
+          {t("_pages:auth.recovery.toSignIn.question")}
+          <Link to={AppRoute.Auth} className="auth-screen-helper-link">
+            {t("_pages:auth.recovery.toSignIn.link")}
+          </Link>
+        </p>
+      }
+      actions={
+        <Button
+          type="submit"
+          variant="submit"
+          color="primary"
+          loading={isSubmitting}
+          className="px-8"
         >
-          <Spinner label={t("_accessibility:appName")} />
-        </div>
-      </div>
-      <form
-        onSubmit={onSubmit}
-        className="form bg-light-dark dark:bg-dark-dark appear"
-      >
-        <Link
-          to={AppRoute.Auth}
-          className={`flex gap-2 items-start flex-col ${transition} delay-100! ${
-            appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
-          }`}
-        >
-          <h2 className={`w-full text-2xl md:text-3xl font-bold`}>
-            {t("_pages:auth.recovery.title")}
-          </h2>
-        </Link>
-
-        <div
-          className={`${transition} delay-200! ${
-            appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
-          }`}
-        >
-          <InputControl
-            id="user"
-            label={t("_accessibility:inputs.email.label")}
-            className={`sign-in-input`}
-            value={user}
-            onChange={handleUser}
-            leftComponent={
-              <FontAwesomeIcon className="primary" icon={faUser} />
-            }
-            helperText={userHelperText}
-            helperTextClassName="error"
-          />
-        </div>
-        <div
-          className={`w-full flex gap-5 justify-end items-center duration-500 ease-in-out delay-500 ${
-            appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
-          }`}
-        >
-          <Button
-            name="login"
-            type="submit"
-            color="primary"
-            variant="submit"
-            aria-label={t("_pages:auth.signIn.signInAriaLabel")}
-          >
-            {t("_accessibility:buttons.submit")}
-          </Button>
-        </div>
-      </form>
-    </>
+          {t("_pages:auth.recovery.submit")}
+        </Button>
+      }
+    >
+      <TextInput
+        type="email"
+        autoComplete="email"
+        label={t("_accessibility:inputs.email.label")}
+        required
+        disabled={isSubmitting}
+        error={!!errors.email}
+        helperText={errors.email?.message}
+        {...register("email", {
+          required: t("_accessibility:errors.emailRequired"),
+        })}
+      />
+    </AuthScreen>
   );
 }
 

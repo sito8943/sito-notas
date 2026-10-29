@@ -1,24 +1,15 @@
-import {
-  useCallback,
-  useState,
-  useEffect,
-  type ChangeEvent,
-  type FormEvent,
-} from "react";
+import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { AppRoute } from "@/shared/routes";
-import { css } from "@emotion/css";
 
 // @sito/ui
-import { useToast, Spinner, IconButton, Button } from "@sito/ui";
+import { Button, useToast } from "@sito/ui";
 
 // components
-import { InputControl } from "@/shared/components/molecules/InputControl";
-
-// icons
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash, faUser } from "@fortawesome/free-solid-svg-icons";
+import { Logo } from "@/shared/components/atoms/Logo";
+import { PasswordInput } from "@/shared/components/molecules/PasswordInput";
+import { TextInput } from "@/shared/components/molecules/TextInput";
+import { AuthScreen } from "@/shared/components/organisms/AuthScreen";
 
 // providers
 import { useAccount } from "@/features/auth/providers/AccountProvider";
@@ -26,208 +17,107 @@ import { useAppApiClient } from "@/shared/providers/ApiClientProvider";
 
 // utils
 import { getErrorMessage } from "@/shared/lib/errors";
+import { AppRoute } from "@/shared/routes";
 
-// styles
-import "@/features/auth/pages/styles.css";
-
-const transition = css({
-  transition: "opacity, transform",
-  transitionDuration: "500ms",
-  transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
-});
+import type { SignInForm } from "./types";
 
 function SignIn() {
   const { t } = useTranslation();
-
-  const { logUser } = useAccount();
-
-  const [appear, setAppear] = useState(false);
-
-  const appApiClient = useAppApiClient();
-
   const toast = useToast();
 
-  const [user, setUser] = useState("");
-  const [userHelperText, setUserHelperText] = useState("");
+  const { logUser } = useAccount();
+  const appApiClient = useAppApiClient();
 
-  const handleUser = (e: ChangeEvent<HTMLInputElement>) =>
-    setUser(e.target.value);
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm<SignInForm>({ defaultValues: { email: "", password: "" } });
 
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [passwordHelperText, setPasswordHelperText] = useState("");
+  const onSubmit = handleSubmit(async ({ email, password }) => {
+    try {
+      const response = await appApiClient.User.login(email, password);
+      const data = await response.json();
 
-  const handlePassword = (e: ChangeEvent<HTMLInputElement>) =>
-    setPassword(e.target.value);
-
-  const toggleShowPassword = () => setShowPassword((oldValue) => !oldValue);
-
-  const [saving, setSaving] = useState(false);
-
-  const onSubmit = useCallback(
-    async (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      setSaving(true);
-      setUserHelperText("");
-      setPasswordHelperText("");
-
-      if (!user.length) {
-        document.getElementById("user")?.focus();
-        setUserHelperText(t("_accessibility:errors.emailRequired"));
-        setSaving(false);
-        return;
-      }
-      if (!password.length) {
-        document.getElementById("password")?.focus();
-        setPasswordHelperText(t("_accessibility:errors.passwordRequired"));
-        setSaving(false);
-        return;
-      }
-
-      try {
-        const response = await appApiClient.User.login(user, password);
-        const data = await response.json();
-        if (data.status) {
-          if (data.status === 404)
-            setUserHelperText(
-              t(`_accessibility:messages.404`, {
-                model: t("_entities:entities.user"),
-              }),
-            );
-          else if (data.status === 401 || data.status === 400)
-            setPasswordHelperText(t("_accessibility:messages.401"));
-          else if (data.user) {
-            const request = await appApiClient.User.fetchUserSettings(
-              data.user.id,
-            );
-            const settings = await request.json();
-            if (settings) logUser({ ...data, settings });
-            else logUser({ ...data });
-          }
-        }
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error(error);
-        // set server status to notification
-        toast({
-          message: getErrorMessage(error, t("_accessibility:errors.unknown")),
-          color: "error",
+      if (data.status === 404) {
+        setError("email", {
+          type: "server",
+          message: t("_accessibility:errors.userNotFound"),
         });
+        return;
       }
-
-      setSaving(false);
-    },
-    [user, password, t, appApiClient.User, logUser, toast],
-  );
-
-  useEffect(() => {
-    setTimeout(() => {
-      setAppear(true);
-    }, 1100);
-  }, []);
+      if (data.status === 400 || data.status === 401) {
+        setError("password", {
+          type: "server",
+          message: t("_accessibility:errors.invalidLoginCredentials"),
+        });
+        return;
+      }
+      if (data.user) {
+        const request = await appApiClient.User.fetchUserSettings(data.user.id);
+        const settings = await request.json();
+        logUser(settings ? { ...data, settings } : { ...data });
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error);
+      toast({
+        message: getErrorMessage(error, t("_accessibility:errors.unknown")),
+        color: "error",
+      });
+    }
+  });
 
   return (
-    <>
-      <div
-        className={`bg-light-dark dark:bg-dark-dark fixed top-0 left-0 z-10 w-full h-screen flex items-center backdrop-blur-[1rem] ${transition} duration-100 ${
-          saving ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
-      >
-        <div
-          className={`m-auto text-5xl primary ${transition} duration-300! ${
-            saving ? "scale-100" : "scale-0"
-          }`}
-        >
-          <Spinner label={t("_accessibility:appName")} />
-        </div>
-      </div>
-      <form
-        onSubmit={onSubmit}
-        className="form bg-light-dark dark:bg-dark-dark appear"
-      >
-        <h2
-          className={`w-full text-2xl md:text-3xl font-bold ${transition} delay-100! ${
-            appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
-          }`}
-        >
-          {t("_pages:auth.signIn.title")}
-        </h2>
-        <div
-          className={`${transition} delay-200! ${
-            appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
-          }`}
-        >
-          <InputControl
-            id="user"
-            label={t("_accessibility:inputs.email.label")}
-            className="sign-in-input"
-            value={user}
-            onChange={handleUser}
-            leftComponent={
-              <FontAwesomeIcon className="primary" icon={faUser} />
-            }
-            helperText={userHelperText}
-            helperTextClassName="error"
-          />
-        </div>
-        <div
-          className={`${transition} delay-300! ${
-            appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
-          }`}
-        >
-          <InputControl
-            id="password"
-            className="sign-in-input"
-            value={password}
-            onChange={handlePassword}
-            type={!showPassword ? "password" : "text"}
-            label={t("_accessibility:inputs.password.label")}
-            leftComponent={
-              <IconButton
-                tabIndex={-1}
-                name="toggle-see-password"
-                onClick={toggleShowPassword}
-                icon={
-                  <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
-                }
-                aria-label={t(
-                  `_accessibility:inputs.password.${
-                    showPassword ? "showPassword" : "hidePassword"
-                  }`,
-                )}
-              />
-            }
-            helperText={passwordHelperText}
-            helperTextClassName="error"
-          />
-        </div>
-        <div className="w-full mb-5">
-          <Link
-            to={AppRoute.Recovery}
-            className={`underline text-left ${transition} delay-400! ${
-              appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
-            }`}
-          >
-            {t("_pages:auth.signIn.passwordRecovery")}
+    <AuthScreen
+      title={t("_pages:auth.signIn.title")}
+      logo={<Logo />}
+      onSubmit={(event) => void onSubmit(event)}
+      helperLinks={
+        <p className="auth-screen-helper-text">
+          {t("_pages:auth.signIn.recovery.question")}
+          <Link to={AppRoute.Recovery} className="auth-screen-helper-link">
+            {t("_pages:auth.signIn.recovery.link")}
           </Link>
-        </div>
-        <div
-          className={`w-full flex gap-5 justify-end items-center duration-500 ease-in-out delay-500 ${
-            appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
-          }`}
+        </p>
+      }
+      actions={
+        <Button
+          type="submit"
+          variant="submit"
+          color="primary"
+          loading={isSubmitting}
+          className="px-8"
         >
-          <Button
-            name="login"
-            type="submit"
-            color="primary"
-            variant="submit"
-            aria-label={t("_pages:auth.signIn.signInAriaLabel")}
-          >
-            {t("_accessibility:buttons.signIn")}
-          </Button>
-        </div>
-      </form>
-    </>
+          {t("_pages:auth.signIn.submit")}
+        </Button>
+      }
+    >
+      <TextInput
+        type="email"
+        autoComplete="email"
+        label={t("_accessibility:inputs.email.label")}
+        required
+        disabled={isSubmitting}
+        error={!!errors.email}
+        helperText={errors.email?.message}
+        {...register("email", {
+          required: t("_accessibility:errors.emailRequired"),
+        })}
+      />
+      <PasswordInput
+        autoComplete="current-password"
+        label={t("_accessibility:inputs.password.label")}
+        required
+        disabled={isSubmitting}
+        error={!!errors.password}
+        helperText={errors.password?.message}
+        {...register("password", {
+          required: t("_accessibility:errors.passwordRequired"),
+        })}
+      />
+    </AuthScreen>
   );
 }
 

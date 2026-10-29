@@ -54,7 +54,10 @@
       "requiredError": "Password is required",
       "passwordNoMatch": "Passwords not match"
     },
-    "rPassword": "Repeat password"
+    "rPassword": "Repeat password",
+    "confirmPassword": {
+      "label": "Confirm password"
+    }
   },
   "buttons": {
     "goHome": "Home",
@@ -74,7 +77,8 @@
     "open": "Open",
     "remove": "Remove",
     "submit": "Submit",
-    "retry": "Retry"
+    "retry": "Retry",
+    "back": "Back"
   },
   "ariaLabels": {
     "add": "Add",
@@ -96,7 +100,8 @@
     "emailNotConfirmed": "Email not confirmed",
     "failedToFetch": "No connected",
     "invalidLoginCredentials": "Wrong user or password",
-    "unknown": "Something went wrong"
+    "unknown": "Something went wrong",
+    "userNotFound": "No account found with this email"
   },
   "messages": {
     "images": "An image is required",

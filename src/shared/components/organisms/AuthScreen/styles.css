@@ -1,0 +1,103 @@
+@reference "@/styles/global.css";
+
+.auth-screen {
+  @apply flex w-full max-w-110 flex-col items-start gap-2 rounded-3xl px-5 py-5;
+}
+
+.auth-screen-header {
+  @apply mb-3 flex w-full flex-col items-start gap-5;
+}
+
+.auth-screen-heading {
+  @apply flex w-full items-center gap-2;
+}
+
+.auth-screen-back {
+  @apply -ml-2;
+}
+
+.auth-screen-title {
+  @apply w-full text-2xl sm:text-xl;
+}
+
+.auth-screen-content {
+  @apply w-full;
+}
+
+.auth-screen-fields {
+  @apply flex w-full flex-col gap-4;
+}
+
+.auth-screen-helper-links {
+  @apply mt-1 w-full;
+}
+
+.auth-screen-helper-text {
+  @apply font-normal;
+  /* Not `text-base`: with the shared palette that resolves to the surface color */
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.auth-screen-helper-link {
+  @apply ml-1 text-sm underline;
+  color: var(--color-text-primary);
+}
+
+.auth-screen-actions {
+  @apply mt-4 flex w-full gap-3 xs:flex-col;
+}
+
+/* Staggered entrance: card blurs in, then each block rises in order */
+.auth-screen {
+  animation: auth-screen-appear 300ms ease-out both;
+}
+
+.auth-screen-block {
+  opacity: 0;
+  animation: auth-screen-block-appear 420ms ease-out both;
+}
+
+.auth-screen-block:nth-child(1) {
+  animation-delay: 120ms;
+}
+
+.auth-screen-block:nth-child(2) {
+  animation-delay: 220ms;
+}
+
+.auth-screen-block:nth-child(3) {
+  animation-delay: 320ms;
+}
+
+@keyframes auth-screen-appear {
+  from {
+    opacity: 0;
+    filter: blur(8px);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes auth-screen-block-appear {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-screen,
+  .auth-screen-block {
+    animation: none;
+    opacity: 1;
+  }
+}

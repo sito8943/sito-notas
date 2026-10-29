@@ -1,228 +1,119 @@
-import {
-  useCallback,
-  useEffect,
-  useState,
-  type ChangeEvent,
-  type FormEvent,
-} from "react";
+import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
-import { AppRoute } from "@/shared/routes";
 import { deleteCookie } from "some-javascript-utils/browser";
-import { css } from "@emotion/css";
 
 // @sito/ui
-import { useToast, Spinner, IconButton, Button } from "@sito/ui";
+import { Button, useToast } from "@sito/ui";
 
 // components
-import { InputControl } from "@/shared/components/molecules/InputControl";
-
-// icons
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLock, faLockOpen } from "@fortawesome/free-solid-svg-icons";
+import { Logo } from "@/shared/components/atoms/Logo";
+import { PasswordInput } from "@/shared/components/molecules/PasswordInput";
+import { AuthScreen } from "@/shared/components/organisms/AuthScreen";
 
 // providers
 import { useAppApiClient } from "@/shared/providers/ApiClientProvider";
 
 // utils
-import { getErrorMessage } from "@/shared/lib/errors";
-
-// constants
 import { RECOVERING_COOKIE } from "@/features/auth/constants";
+import { getErrorMessage } from "@/shared/lib/errors";
+import { AppRoute } from "@/shared/routes";
 
-// styles
-import "@/features/auth/pages/styles.css";
-
-const transition = css({
-  transition: "opacity, transform",
-  transitionDuration: "500ms",
-  transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
-});
+import { SIGN_OUT_DELAY_MS } from "./constants";
+import type { UpdatePasswordForm } from "./types";
 
 /**
- * UpdatePassword page
- * @returns UpdatePassword page component
+ * UpdatePassword page: sets a new password after a recovery email
  */
 function UpdatePassword() {
   const { t } = useTranslation();
-
+  const toast = useToast();
   const navigate = useNavigate();
+
   const appApiClient = useAppApiClient();
 
-  const toast = useToast();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<UpdatePasswordForm>({
+    defaultValues: { password: "", confirmPassword: "" },
+  });
 
-  const [appear, setAppear] = useState(false);
+  const onSubmit = handleSubmit(async ({ password }) => {
+    try {
+      const { error } = await appApiClient.User.updatePassword(password);
+      if (error) throw error;
 
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [passwordHelperText, setPasswordHelperText] = useState("");
-
-  const handlePassword = (e: ChangeEvent<HTMLInputElement>) =>
-    setPassword(e.target.value);
-
-  const toggleShowPassword = () => setShowPassword((oldValue) => !oldValue);
-
-  const [rPassword, setRPassword] = useState("");
-  const [showRPassword, setRShowPassword] = useState(false);
-
-  const handleRPassword = (e: ChangeEvent<HTMLInputElement>) =>
-    setRPassword(e.target.value);
-
-  const toggleRShowPassword = () => setRShowPassword((oldValue) => !oldValue);
-
-  const [saving, setSaving] = useState(false);
-
-  const onSubmit = useCallback(
-    async (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      setSaving(true);
-      setPasswordHelperText("");
-
-      if (!password.length) {
-        document.getElementById("password")?.focus();
-        setPasswordHelperText(t("_accessibility:errors.passwordRequired"));
-        setSaving(false);
-        return;
-      }
-      if (password !== rPassword) {
-        setSaving(false);
-        setPasswordHelperText(t("_accessibility:errors.passwordsDoNotMatch"));
-        return;
-      }
-      try {
-        await appApiClient.User.updatePassword(password);
-        toast({
-          message: t("_pages:auth.updatePassword.sent"),
-          color: "success",
-        });
-
-        deleteCookie(RECOVERING_COOKIE);
-        setTimeout(() => navigate(AppRoute.SignOut), 2000);
-      } catch (err) {
-        // eslint-disable-next-line no-console
-        console.error(err);
-        // set server status to notification
-        toast({
-          message: getErrorMessage(err, t("_accessibility:errors.unknown")),
-          color: "error",
-        });
-      }
-      setSaving(false);
-    },
-    [appApiClient.User, navigate, password, rPassword, t, toast],
-  );
-
-  useEffect(() => {
-    setTimeout(() => {
-      setAppear(true);
-    }, 1100);
-  }, []);
+      toast({
+        message: t("_pages:auth.updatePassword.sent"),
+        color: "success",
+      });
+      deleteCookie(RECOVERING_COOKIE);
+      setTimeout(() => navigate(AppRoute.SignOut), SIGN_OUT_DELAY_MS);
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(err);
+      toast({
+        message: getErrorMessage(err, t("_accessibility:errors.unknown")),
+        color: "error",
+      });
+    }
+  });
 
   return (
-    <>
-      <div
-        className={`bg-light-dark dark:bg-dark-dark fixed top-0 left-0 z-10 w-full h-screen flex items-center backdrop-blur-[1rem] ${transition} duration-100 ${
-          saving ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
-      >
-        <div
-          className={`m-auto text-5xl primary ${transition} duration-300! ${
-            saving ? "scale-100" : "scale-0"
-          }`}
+    <AuthScreen
+      title={t("_pages:auth.updatePassword.title")}
+      logo={<Logo />}
+      backTo={AppRoute.Auth}
+      backLabel={t("_accessibility:buttons.back")}
+      onSubmit={(event) => void onSubmit(event)}
+      helperLinks={
+        <p className="auth-screen-helper-text">
+          {t("_pages:auth.updatePassword.toSignIn.question")}
+          <Link to={AppRoute.Auth} className="auth-screen-helper-link">
+            {t("_pages:auth.updatePassword.toSignIn.link")}
+          </Link>
+        </p>
+      }
+      actions={
+        <Button
+          type="submit"
+          variant="submit"
+          color="primary"
+          loading={isSubmitting}
+          className="px-8"
         >
-          <Spinner label={t("_accessibility:appName")} />
-        </div>
-      </div>
-      <form
-        onSubmit={onSubmit}
-        className="form bg-light-dark dark:bg-dark-dark appear"
-      >
-        <Link
-          to={AppRoute.Auth}
-          className={`flex gap-2 items-start flex-col ${transition} delay-100! ${
-            appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
-          }`}
-        >
-          <h2 className={`w-full text-2xl md:text-3xl font-bold`}>
-            {t("_pages:auth.updatePassword.title")}
-          </h2>
-        </Link>
-
-        <div
-          className={`${transition} delay-300! ${
-            appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
-          }`}
-        >
-          <InputControl
-            id="password"
-            className={`sign-in-input`}
-            value={password}
-            onChange={handlePassword}
-            type={!showPassword ? "password" : "text"}
-            label={t("_accessibility:inputs.password.label")}
-            leftComponent={
-              <IconButton
-                tabIndex={-1}
-                name="toggle-see-password"
-                onClick={toggleShowPassword}
-                icon={
-                  <FontAwesomeIcon icon={showPassword ? faLockOpen : faLock} />
-                }
-                aria-label={t(
-                  `_accessibility:inputs.password.${
-                    showPassword ? "showPassword" : "hidePassword"
-                  }`,
-                )}
-              />
-            }
-            helperText={passwordHelperText}
-          />
-        </div>
-        <div
-          className={`${transition} delay-300! ${
-            appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
-          }`}
-        >
-          <InputControl
-            id="rPassword"
-            className={`sign-in-input`}
-            value={rPassword}
-            onChange={handleRPassword}
-            type={!showRPassword ? "password" : "text"}
-            label={t("_accessibility:inputs.rPassword")}
-            leftComponent={
-              <IconButton
-                tabIndex={-1}
-                name="toggle-see-r-password"
-                onClick={toggleRShowPassword}
-                icon={
-                  <FontAwesomeIcon icon={showRPassword ? faLockOpen : faLock} />
-                }
-                aria-label={t(
-                  `_accessibility:inputs.password.${
-                    showRPassword ? "showPassword" : "hidePassword"
-                  }`,
-                )}
-              />
-            }
-          />
-        </div>
-        <div className="w-full flex gap-5 justify-end items-center">
-          <Button
-            name="login"
-            type="submit"
-            color="primary"
-            variant="submit"
-            aria-label={t("_pages:auth.signIn.signInAriaLabel")}
-            className={`duration-500 ease-in-out delay-500 ${
-              appear ? "translate-y-0 opacity-100" : "opacity-0 translate-y-1"
-            }`}
-          >
-            {t("_accessibility:buttons.submit")}
-          </Button>
-        </div>
-      </form>
-    </>
+          {t("_pages:auth.updatePassword.submit")}
+        </Button>
+      }
+    >
+      <PasswordInput
+        autoComplete="new-password"
+        label={t("_accessibility:inputs.password.label")}
+        required
+        disabled={isSubmitting}
+        error={!!errors.password}
+        helperText={errors.password?.message}
+        {...register("password", {
+          required: t("_accessibility:errors.passwordRequired"),
+        })}
+      />
+      <PasswordInput
+        autoComplete="new-password"
+        label={t("_accessibility:inputs.confirmPassword.label")}
+        required
+        disabled={isSubmitting}
+        error={!!errors.confirmPassword}
+        helperText={errors.confirmPassword?.message}
+        {...register("confirmPassword", {
+          required: t("_accessibility:errors.passwordRequired"),
+          validate: (value, values) =>
+            value === values.password ||
+            t("_accessibility:errors.passwordsDoNotMatch"),
+        })}
+      />
+    </AuthScreen>
   );
 }
 
