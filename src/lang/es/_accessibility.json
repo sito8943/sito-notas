@@ -89,5 +89,14 @@
     "darkMode": "Modo oscuro",
     "lightMode": "Modo claro",
     "mainNavigation": "Navegación principal"
+  },
+  "pwa": {
+    "offlineReady": "Sito Notas ya funciona sin conexión",
+    "update": {
+      "title": "Nueva versión disponible",
+      "description": "Hay una actualización de Sito Notas lista. Recarga para empezar a usarla.",
+      "confirm": "Actualizar ahora",
+      "later": "Más tarde"
+    }
   }
 }

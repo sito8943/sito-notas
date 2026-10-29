@@ -114,5 +114,14 @@
     "409": "{{model}} already exist",
     "429": "Email rate limit exceeded",
     "500": "Something went wrong"
+  },
+  "pwa": {
+    "offlineReady": "Sito Notas is ready to work offline",
+    "update": {
+      "title": "New version available",
+      "description": "An update of Sito Notas is ready. Reload to start using it.",
+      "confirm": "Update now",
+      "later": "Later"
+    }
   }
 }
