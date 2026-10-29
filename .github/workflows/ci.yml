@@ -9,8 +9,14 @@ on:
 permissions:
   contents: read
 
+# Build-time env for deploys. Only the variables the app reads are listed.
+env:
+  VITE_SUPABASE_CO: ${{ secrets.VITE_SUPABASE_CO }}
+  VITE_SUPABASE_ANON: ${{ secrets.VITE_SUPABASE_ANON }}
+  FIREBASE_PROJECT_ID: sitonotas
+
 jobs:
-  lint-and-test:
+  checks:
     runs-on: ubuntu-latest
 
     steps:
@@ -37,5 +43,128 @@ jobs:
       - name: Lint
         run: pnpm run lint
 
+      - name: Typecheck
+        run: pnpm run typecheck
+
       - name: Unit & Integration Tests
         run: pnpm run test
+
+      - name: Build
+        run: pnpm exec vite build
+
+  deploy-preview:
+    # Fork PRs have no access to secrets
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    needs: checks
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+      pull-requests: write
+
+    steps:
+      - name: Check deploy secrets
+        id: secrets
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SITONOTAS }}
+        run: |
+          if [ -n "$FIREBASE_SERVICE_ACCOUNT" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::FIREBASE_SERVICE_ACCOUNT_SITONOTAS is not set; skipping preview deploy."
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Checkout
+        if: steps.secrets.outputs.enabled == 'true'
+        uses: actions/checkout@v7
+
+      - name: Setup pnpm
+        if: steps.secrets.outputs.enabled == 'true'
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10.34.4
+
+      - name: Setup Node
+        if: steps.secrets.outputs.enabled == 'true'
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        if: steps.secrets.outputs.enabled == 'true'
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        if: steps.secrets.outputs.enabled == 'true'
+        run: pnpm exec vite build
+
+      - name: Deploy preview channel
+        if: steps.secrets.outputs.enabled == 'true'
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SITONOTAS }}
+          projectId: ${{ env.FIREBASE_PROJECT_ID }}
+          expires: 7d
+
+  deploy-live:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: checks
+    runs-on: ubuntu-latest
+    concurrency:
+      group: deploy-live
+      cancel-in-progress: false
+    environment:
+      name: production
+      url: https://sitonotas.web.app
+
+    steps:
+      - name: Check deploy secrets
+        id: secrets
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SITONOTAS }}
+        run: |
+          if [ -n "$FIREBASE_SERVICE_ACCOUNT" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::FIREBASE_SERVICE_ACCOUNT_SITONOTAS is not set; skipping live deploy."
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Checkout
+        if: steps.secrets.outputs.enabled == 'true'
+        uses: actions/checkout@v7
+
+      - name: Setup pnpm
+        if: steps.secrets.outputs.enabled == 'true'
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10.34.4
+
+      - name: Setup Node
+        if: steps.secrets.outputs.enabled == 'true'
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        if: steps.secrets.outputs.enabled == 'true'
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        if: steps.secrets.outputs.enabled == 'true'
+        run: pnpm exec vite build
+
+      - name: Deploy live
+        if: steps.secrets.outputs.enabled == 'true'
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SITONOTAS }}
+          projectId: ${{ env.FIREBASE_PROJECT_ID }}
+          channelId: live
