@@ -1,13 +1,22 @@
 # Sito Notas
 
-Notes app built with React 19, TypeScript, Vite, Tailwind CSS 4, `@sito/ui` and Supabase.
+Notes app built with React 19, TypeScript, Vite, Tailwind CSS 4 and `@sito/ui`.
+Accounts live in **sito-auth**; notes in the **Sito Notes API**.
 
 ## Development
 
 ```sh
+cp .env.example .env   # set VITE_AUTH_URL and VITE_API_URL
 pnpm install
 pnpm dev
 ```
+
+| Variable        | Purpose                                               |
+| --------------- | ----------------------------------------------------- |
+| `VITE_AUTH_URL` | sito-auth base URL (sign-in, refresh, password reset) |
+| `VITE_API_URL`  | Sito Notes API base URL                               |
+
+Both servers must allow this app's origin in `CORS_ALLOWED_ORIGINS`.
 
 Checks: `pnpm typecheck`, `pnpm lint`, `pnpm format:check`, `pnpm test`, `pnpm build`.
 
@@ -30,7 +39,7 @@ Required repository secrets:
 | Secret                               | Purpose                                                  |
 | ------------------------------------ | -------------------------------------------------------- |
 | `FIREBASE_SERVICE_ACCOUNT_SITONOTAS` | Service account JSON with Firebase Hosting deploy rights |
-| `VITE_SUPABASE_CO`                   | Supabase project URL                                     |
-| `VITE_SUPABASE_ANON`                 | Supabase anon key                                        |
+| `VITE_AUTH_URL`                      | Production sito-auth base URL                            |
+| `VITE_API_URL`                       | Production Sito Notes API base URL                       |
 
 Create the service account secret with `firebase init hosting:github`, or add it manually under Settings → Secrets and variables → Actions.
