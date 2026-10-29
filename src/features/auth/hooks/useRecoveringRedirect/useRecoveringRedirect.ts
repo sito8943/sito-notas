@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCookie } from "some-javascript-utils/browser";
 
-import config from "@/shared/config";
+import { RECOVERING_COOKIE } from "@/features/auth/constants";
 import { AppRoute } from "@/shared/routes";
 
 /**
@@ -13,7 +13,7 @@ function useRecoveringRedirect(): () => boolean {
   const navigate = useNavigate();
 
   return useCallback(() => {
-    const recovering = getCookie(config.recovering);
+    const recovering = getCookie(RECOVERING_COOKIE);
     if (!recovering?.length) return false;
     navigate(AppRoute.UpdatePassword);
     return true;

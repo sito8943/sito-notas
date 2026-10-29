@@ -27,8 +27,8 @@ import { useAppApiClient } from "@/shared/providers/ApiClientProvider";
 // utils
 import { getErrorMessage } from "@/shared/lib/errors";
 
-// config
-import config from "@/shared/config";
+// constants
+import { RECOVERING_COOKIE } from "@/features/auth/constants";
 
 // styles
 import "@/features/auth/pages/styles.css";
@@ -96,7 +96,7 @@ function UpdatePassword() {
           color: "success",
         });
 
-        deleteCookie(config.recovering);
+        deleteCookie(RECOVERING_COOKIE);
         setTimeout(() => navigate(AppRoute.SignOut), 2000);
       } catch (err) {
         // eslint-disable-next-line no-console

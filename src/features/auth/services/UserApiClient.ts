@@ -1,7 +1,7 @@
 import { MD5 } from "crypto-js";
 import type { Session, User } from "@supabase/supabase-js";
 
-import config from "@/shared/config";
+import { AppRoute } from "@/shared/routes";
 
 // db
 import supabase from "@/shared/lib/supabase";
@@ -84,7 +84,7 @@ export class UserApiClient {
    */
   async recovery(email: string): Promise<JsonResponse<StatusResult>> {
     const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${config.thisUrl}auth/update-password`,
+      redirectTo: `${window.location.origin}${AppRoute.UpdatePassword}`,
     });
     return {
       json: async () => ({

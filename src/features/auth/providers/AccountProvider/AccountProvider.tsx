@@ -10,8 +10,8 @@ import {
   toLocal,
 } from "@/shared/lib/storage";
 
-// config
-import config from "@/shared/config";
+// constants
+import { USER_STORAGE_KEY } from "@/features/auth/constants";
 
 // models
 import type { Account } from "@/features/auth/models";
@@ -29,12 +29,12 @@ function AccountProvider({ children }: AccountProviderProps) {
 
   const logUser = useCallback((data: Account) => {
     setAccount(data);
-    toLocal(config.user, data);
+    toLocal(USER_STORAGE_KEY, data);
   }, []);
 
   const logoutUser = useCallback(() => {
     setAccount({});
-    removeFromLocal(config.user);
+    removeFromLocal(USER_STORAGE_KEY);
     appApiClient.User.logout();
   }, [appApiClient.User]);
 
@@ -42,11 +42,11 @@ function AccountProvider({ children }: AccountProviderProps) {
     try {
       const response = await appApiClient.User.getSession();
       if (response.error) {
-        const loggedUser = fromLocalObject<Account>(config.user);
+        const loggedUser = fromLocalObject<Account>(USER_STORAGE_KEY);
         setAccount(loggedUser ?? {});
       }
       if (response.data?.user !== null) {
-        const loggedUser = fromLocalObject<Account>(config.user);
+        const loggedUser = fromLocalObject<Account>(USER_STORAGE_KEY);
 
         if (loggedUser?.user) {
           const request = await appApiClient.User.fetchUserSettings(
