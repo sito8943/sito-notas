@@ -8,17 +8,32 @@
   },
   "auth": {
     "recovery": {
-      "title": "Password Recovery",
-      "sent": "Check your email to reset your password"
+      "title": "Recover account",
+      "sent": "Check your email to reset your password",
+      "submit": "Send email",
+      "toSignIn": {
+        "question": "Remembered your password?",
+        "link": "Sign In"
+      }
     },
     "updatePassword": {
-      "title": "Update Password",
-      "sent": "Password has been updated"
+      "title": "Update password",
+      "sent": "Password has been updated",
+      "submit": "Save new password",
+      "toSignIn": {
+        "question": "Already have access?",
+        "link": "Sign In"
+      }
     },
     "signIn": {
       "signInAriaLabel": "Click to login",
       "title": "Sign In",
-      "passwordRecovery": "Forgot password?"
+      "passwordRecovery": "Forgot password?",
+      "submit": "Sign In",
+      "recovery": {
+        "question": "Trouble accessing your account?",
+        "link": "Recover it here"
+      }
     },
     "signOut": {
       "title": "Sign Out"

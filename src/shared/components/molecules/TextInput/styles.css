@@ -1,0 +1,55 @@
+@reference "@/styles/global.css";
+
+.text-input-container {
+  @apply w-full;
+}
+
+.text-input-field {
+  @apply relative w-full;
+}
+
+.text-input {
+  @apply block w-full appearance-none rounded-lg border-2 bg-transparent py-2.5 pl-3 pr-3 text-sm outline-none transition-colors;
+  /* Derived from the text color so it keeps contrast in light and dark */
+  border-color: color-mix(in srgb, var(--sito-ui-color-text) 22%, transparent);
+  color: var(--sito-ui-color-text);
+}
+
+.text-input.has-adornment {
+  @apply pr-11;
+}
+
+.text-input:focus {
+  border-color: var(--color-text-primary);
+}
+
+.text-input.is-error {
+  border-color: var(--sito-ui-color-error-default);
+}
+
+.text-input:disabled {
+  @apply opacity-60;
+}
+
+.text-input-label {
+  @apply pointer-events-none absolute left-3 top-3 origin-[0] text-sm font-normal transition-transform duration-300;
+  color: var(--sito-ui-color-text);
+}
+
+/* Float the label above the field when focused or filled */
+.text-input:focus ~ .text-input-label,
+.text-input:not(:placeholder-shown) ~ .text-input-label {
+  @apply -translate-y-7 scale-75;
+}
+
+.text-input-adornment {
+  @apply absolute right-1 top-1/2 flex -translate-y-1/2 items-center;
+}
+
+.text-input-helper-text {
+  @apply mt-1 text-sm font-normal;
+}
+
+.text-input-helper-text.is-error {
+  color: var(--sito-ui-color-error-default);
+}

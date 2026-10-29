@@ -13,6 +13,7 @@ import { ViewLayout } from "@/app/layouts/ViewLayout";
 
 // components
 import { ErrorHandler } from "@/shared/components/organisms/ErrorHandler";
+import { PwaUpdateDialog } from "@/shared/components/organisms/PwaUpdateDialog";
 import { SplashScreen } from "@/shared/components/organisms/SplashScreen";
 
 // views
@@ -58,6 +59,7 @@ function App() {
             </div>
           }
         />
+        <PwaUpdateDialog />
         <BrowserRouter>
           <Routes>
             <Route path={AppRoute.Auth} element={<AuthLayout />}>

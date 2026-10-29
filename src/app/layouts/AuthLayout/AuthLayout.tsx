@@ -1,6 +1,5 @@
 import { useEffect } from "react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { Outlet, useNavigate } from "react-router-dom";
 
 // routes
 import { AppRoute } from "@/shared/routes";
@@ -19,7 +18,6 @@ import { useScrollReset } from "@/shared/hooks";
  * Auth layout: keeps signed-in users out of the auth screens
  */
 function AuthLayout() {
-  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const { account } = useAccount();
@@ -32,16 +30,7 @@ function AuthLayout() {
   }, [account, navigate, redirectIfRecovering]);
 
   return (
-    <AuthTemplate
-      brand={
-        <Link to={AppRoute.Auth}>
-          <h1 className="primary uppercase text-4xl">
-            {t("_accessibility:appName")}
-          </h1>
-        </Link>
-      }
-      actions={<ThemeToggle />}
-    >
+    <AuthTemplate actions={<ThemeToggle />}>
       <Outlet />
     </AuthTemplate>
   );

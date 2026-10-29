@@ -19,56 +19,176 @@
   --breakpoint-*: initial;
   --color-*: initial;
 
-  --color-dark-dark: #101010;
-  --color-dark-default: #303030;
-  --color-dark-light: #4e4e4e;
+  /* Palette shared with Sito Wallet (wallet/src/styles/variables.css) */
+  --color-primary: #041e42;
+  --color-bg-primary: #021327;
+  --color-hover-primary: #0a2f66;
+  --color-secondary: #cd212a;
+  --color-bg-secondary: #8f151b;
+  --color-hover-secondary: #e03a42;
+  --color-tertiary: #00997b;
+  --color-bg-tertiary: #006654;
+  --color-hover-tertiary: #1ab89a;
+  --color-quaternary: #d7942e;
+  --color-bg-quaternary: #9e6a1f;
+  --color-hover-quaternary: #ebb04a;
+  /* surfaces: base-dark = recessed, base = page, base-light = raised */
+  --color-base-dark: hsl(0 0% 90%);
+  --color-base: hsl(0 0% 95%);
+  --color-base-light: hsl(0 0% 100%);
+  --color-text: #0d0d0d;
+  --color-border: hsl(0 0% 80%);
+  --color-text-muted: hsl(0 0% 30%);
+  /* brand used as text/accent on page surfaces (links, icons, logo) */
+  --color-text-primary: #041e42;
+  /* text on brand-filled surfaces (buttons, chips) */
+  --color-on-brand: hsl(0 0% 100%);
+  /* notification colors */
+  --color-bg-info: #0070ba;
+  --color-info: #fbfbfb;
+  --color-bg-success: hsl(149.76, 68%, 36%);
+  --color-success: #fbfbfb;
+  --color-bg-warning: #ffa500;
+  --color-warning: #000000;
+  --color-bg-error: hsl(0, 50%, 51%);
+  --color-error: #fbfbfb;
 
-  --color-light-dark: #e1e1e1;
-  --color-light-default: #ededed;
-  --color-light-light: #f7f7f7;
+  /* Legacy notas surface names (bg-light-..., bg-dark-...), kept so existing
+     utilities follow the palette: -dark = page, -default = card, -light = accent */
+  --color-light-dark: hsl(0 0% 95%);
+  --color-light-default: hsl(0 0% 100%);
+  --color-light-light: hsl(0 0% 90%);
+  --color-dark-dark: #0f141c;
+  --color-dark-default: #1a212c;
+  --color-dark-light: #343d4b;
 }
 
-/* @sito/ui ships light tokens only; dark values follow the old StyleProvider palette */
+/* Dark theme: same token names, so utilities flip with <html class="dark"> */
 .dark {
-  --sito-ui-color-text: #f7f7f7;
-  --sito-ui-color-text-muted: #a0a0a0;
-  --sito-ui-color-surface: #202020;
-  --sito-ui-color-border: #4e4e4e;
+  --color-primary: #1f4f99;
+  --color-bg-primary: #1a4285;
+  --color-hover-primary: #2d62b8;
+  --color-secondary: #cd212a;
+  --color-bg-secondary: #a51b22;
+  --color-hover-secondary: #e03a42;
+  --color-tertiary: #0a8a70;
+  --color-bg-tertiary: #08705b;
+  --color-hover-tertiary: #12a585;
+  --color-quaternary: #b87a1f;
+  --color-bg-quaternary: #9a6619;
+  --color-hover-quaternary: #d08e2a;
+  --color-text-primary: #8ab4f8;
+  --color-on-brand: #f1f5fb;
+  --color-base-dark: #0b0f16;
+  --color-base: #0f141c;
+  --color-base-light: #1a212c;
+  --color-text: #e6e9ef;
+  --color-border: #343d4b;
+  --color-text-muted: #a0a8b6;
+  --color-bg-info: #1f6fb0;
+  --color-info: #f1f5fb;
+  --color-bg-success: #1f8a55;
+  --color-success: #f1f5fb;
+  --color-bg-warning: #e8a33a;
+  --color-warning: #111111;
+  --color-bg-error: #c24a4a;
+  --color-error: #f1f5fb;
   --sito-ui-color-scheme: dark;
-
-  --sito-ui-color-default-text: #f7f7f7;
-  --sito-ui-color-default-light: rgb(247 247 247 / 8%);
-  --sito-ui-color-default-default: #303030;
-  --sito-ui-color-default-hover: #4e4e4e;
 }
 
+/* Point @sito/ui at the palette. Declared on the root element, so the
+   .dark overrides above are already applied when these resolve. */
+:root {
+  --sito-ui-color-text: var(--color-text);
+  --sito-ui-color-text-muted: var(--color-text-muted);
+  --sito-ui-color-surface: var(--color-base-light);
+  --sito-ui-color-border: var(--color-border);
+
+  --sito-ui-color-default-text: var(--color-text);
+  --sito-ui-color-default-light: color-mix(
+    in srgb,
+    var(--color-text) 8%,
+    transparent
+  );
+  --sito-ui-color-default-default: var(--color-base-dark);
+  --sito-ui-color-default-hover: var(--color-border);
+
+  --sito-ui-color-primary-text: var(--color-on-brand);
+  --sito-ui-color-primary-light: color-mix(
+    in srgb,
+    var(--color-text-primary) 12%,
+    transparent
+  );
+  --sito-ui-color-primary-default: var(--color-primary);
+  --sito-ui-color-primary-hover: var(--color-hover-primary);
+
+  --sito-ui-color-secondary-text: var(--color-on-brand);
+  --sito-ui-color-secondary-light: color-mix(
+    in srgb,
+    var(--color-secondary) 12%,
+    transparent
+  );
+  --sito-ui-color-secondary-default: var(--color-secondary);
+  --sito-ui-color-secondary-hover: var(--color-hover-secondary);
+
+  --sito-ui-color-error-text: var(--color-error);
+  --sito-ui-color-error-default: var(--color-bg-error);
+  --sito-ui-color-success-text: var(--color-success);
+  --sito-ui-color-success-default: var(--color-bg-success);
+  --sito-ui-color-warning-text: var(--color-warning);
+  --sito-ui-color-warning-default: var(--color-bg-warning);
+  --sito-ui-color-info-text: var(--color-info);
+  --sito-ui-color-info-default: var(--color-bg-info);
+}
+
+/* Base typography lives in the base layer so Tailwind utilities
+   (font-bold, font-[family-name:…]) can override it */
 @layer base {
-  body {
-    background-color: var(--color-light-dark);
-    color: var(--sito-ui-color-text);
+  * {
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
   }
 
-  .dark body {
-    background-color: var(--color-dark-dark);
+  h1,
+  h2,
+  h3 {
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
   }
+
+  body {
+    background-color: var(--color-base);
+    color: var(--color-text);
+  }
+}
+
+/* Brand on page surfaces (text/outlined buttons) uses the text accent, as in
+   wallet: the fill tone is too dark to read on the dark background */
+.sito-ui-button--text.sito-ui-button--primary,
+.sito-ui-button--outlined.sito-ui-button--primary {
+  color: var(--color-text-primary);
+}
+
+.sito-ui-button--outlined.sito-ui-button--primary {
+  border-color: var(--color-text-primary);
 }
 
 /* Color helpers previously generated by @sito/ui StyleProvider */
 @layer components {
   .primary {
-    color: var(--sito-ui-color-primary-default);
+    color: var(--color-text-primary);
   }
 
   .secondary {
-    color: var(--sito-ui-color-secondary-default);
+    color: var(--color-secondary);
   }
 
   .error {
-    color: var(--sito-ui-color-error-default);
+    color: var(--color-bg-error);
   }
 
   .success {
-    color: var(--sito-ui-color-success-default);
+    color: var(--color-bg-success);
   }
 }
 
@@ -97,11 +217,6 @@
   grid-template-rows: auto 1fr auto;
 }
 
-* {
-  font-family: "Roboto", sans-serif;
-  font-weight: 500;
-}
-
 .card-shadow {
   box-shadow: 0px 0px 10px 0px #00000052;
 }
@@ -118,18 +233,19 @@
   width: 100%;
   height: 50px;
   border-radius: 10px 10px 10px 10px;
+  /* Fades the note preview into the card surface (flips with .dark) */
   background-image: linear-gradient(
     0deg,
-    rgba(237 237 237) 50%,
-    rgba(255, 0, 0, 0)
+    var(--color-light-default) 50%,
+    transparent
   );
 }
 
 .dark .card-overflow-background {
   background-image: linear-gradient(
     0deg,
-    rgba(48 48 48) 50%,
-    rgba(255, 0, 0, 0)
+    var(--color-dark-default) 50%,
+    transparent
   );
 }
 .skeleton-box {
@@ -174,13 +290,6 @@
 .viewport {
   min-height: 100vh;
   min-height: 100svh;
-}
-
-h1,
-h2,
-h3 {
-  font-family: "Poppins", sans-serif;
-  font-weight: 700 !important;
 }
 
 .sync .loader {

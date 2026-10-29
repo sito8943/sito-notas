@@ -6,42 +6,31 @@ import { VitePWA, type VitePWAOptions } from "vite-plugin-pwa";
 
 const manifestForPlugIn: Partial<VitePWAOptions> = {
   registerType: "prompt",
-  includeAssets: ["favicon.ico", "robots.txt", "maskable-icon.png"],
+  includeAssets: ["favicon.ico", "favicon.svg", "apple-touch-icon.png"],
   manifest: {
     name: "Sito Notas",
     short_name: "Sito Notas",
     description: "Aplicación de gestión de notas de Sito",
     icons: [
       {
-        src: "favicon.ico",
-        sizes: "16x16",
-        type: "image/x-icon",
-      },
-      {
-        src: "/android-chrome-192x192.png",
+        src: "/pwa-192x192.png",
         sizes: "192x192",
         type: "image/png",
       },
       {
-        src: "/android-chrome-512x512.png",
+        src: "/pwa-512x512.png",
         sizes: "512x512",
         type: "image/png",
       },
       {
-        src: "/apple-touch-icon.png",
-        sizes: "180x180",
-        type: "image/png",
-        purpose: "apple touch icon",
-      },
-      {
-        src: "/maskable_icon.png",
+        src: "/maskable-icon-512x512.png",
         sizes: "512x512",
         type: "image/png",
-        purpose: "any maskable",
+        purpose: "maskable",
       },
     ],
-    theme_color: "#222333",
-    background_color: "#1b1b1b",
+    theme_color: "#041e42",
+    background_color: "#f2f2f2",
     display: "standalone",
     start_url: ".",
     orientation: "portrait",
