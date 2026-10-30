@@ -8,7 +8,11 @@ import {
   NOTES_PAGE_SIZE,
   NoteEndpoint,
 } from "./constants";
-import type { CreateNoteInput, UpdateNoteInput } from "./types";
+import type {
+  CreateNoteInput,
+  SetFavoriteInput,
+  UpdateNoteInput,
+} from "./types";
 import { parsePage, sortByUpdatedAtDesc, toNote } from "./utils";
 
 /**
@@ -70,6 +74,18 @@ export class NoteApiClient {
       id: input.id,
       title: input.title,
       content: input.content,
+    });
+  }
+
+  /**
+   * Marks or unmarks a note as favorite; title, content and categories are kept
+   * @param input - note id and favorite flag
+   * @returns id of the note
+   */
+  async setFavorite(input: SetFavoriteInput): Promise<number> {
+    return this.http.patch<number>(`${NoteEndpoint.Notes}/${input.id}`, {
+      id: input.id,
+      favorite: input.favorite,
     });
   }
 

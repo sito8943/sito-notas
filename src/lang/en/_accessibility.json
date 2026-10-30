@@ -97,7 +97,10 @@
     "sidebar": "Sidebar",
     "expandSidebar": "Expand sidebar",
     "collapseSidebar": "Collapse sidebar",
-    "headerActions": "Quick actions"
+    "headerActions": "Quick actions",
+    "share": "Share",
+    "favorite": "Add to favorites",
+    "unfavorite": "Remove from favorites"
   },
   "errors": {
     "passwordDoNotMatch": "Password don't match",

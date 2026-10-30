@@ -1,22 +1,42 @@
 @reference "@/styles/global.css";
 
-/* Combined with the global .appear and .card-shadow helpers */
+/* Masonry item (Notes uses CSS columns); combined with the global .appear */
 .preview-note {
-  @apply relative flex h-[400px] w-full flex-col gap-3 rounded-xl bg-light-default p-5 transition hover:-translate-y-1 dark:bg-dark-default;
-}
-
-.preview-note-header {
-  @apply flex w-full items-center justify-between;
+  @apply mb-5 flex w-full break-inside-avoid flex-col gap-3 rounded-xl bg-base-light p-5 transition hover:-translate-y-1;
 }
 
 .preview-note-link {
-  @apply flex items-center justify-start gap-4;
+  @apply flex flex-col gap-3;
+}
+
+.preview-note-title {
+  @apply text-text;
+  /* Not `text-base`: with the shared palette that resolves to the surface color */
+  font-size: 1rem;
+  line-height: 1.375;
+}
+
+.preview-note-excerpt {
+  @apply line-clamp-6 text-sm text-text-muted;
 }
 
 .preview-note-date {
-  @apply text-sm;
+  @apply text-xs text-text-muted;
 }
 
-.preview-note-content {
-  @apply flex max-h-[300px] flex-col gap-1 overflow-hidden;
+.preview-note-footer {
+  @apply flex items-center justify-between gap-2;
+}
+
+/* Color comes from the tag (inline), muted when it has none */
+.preview-note-tag {
+  @apply flex min-w-0 items-center gap-1.5 text-xs text-text-muted;
+}
+
+.preview-note-tag-name {
+  @apply truncate text-text-muted;
+}
+
+.preview-note-actions {
+  @apply -mr-2 flex shrink-0 items-center;
 }

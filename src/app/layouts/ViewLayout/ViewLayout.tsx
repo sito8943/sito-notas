@@ -16,6 +16,7 @@ import { useScrollReset } from "@/shared/hooks";
 import { useAccount } from "@/features/auth";
 import { useCache } from "@/features/notes";
 
+import { AppBottomNavigation } from "./AppBottomNavigation";
 import { AppSidebar } from "./AppSidebar";
 import { NavbarActions } from "./NavbarActions";
 import { NavbarBrand } from "./NavbarBrand";
@@ -45,6 +46,7 @@ function ViewLayout() {
   return (
     <AppShellTemplate
       sidebar={<AppSidebar />}
+      bottomNavigation={<AppBottomNavigation />}
       brand={<NavbarBrand />}
       actions={<NavbarActions />}
       navLabel={t("_accessibility:ariaLabels.headerActions")}

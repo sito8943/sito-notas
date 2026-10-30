@@ -1,0 +1,15 @@
+@reference "@/styles/global.css";
+
+.navbar-user {
+  @apply flex min-w-0 items-center gap-3;
+}
+
+/* The sidebar shows the user on wide screens */
+.navbar-user-avatar {
+  @apply hidden h-10 w-10 shrink-0 rounded-full object-cover md:block;
+}
+
+/* Short greeting, as in Sito Wallet */
+.navbar-user-welcome {
+  @apply truncate text-3xl capitalize md:text-2xl xs:text-xl;
+}

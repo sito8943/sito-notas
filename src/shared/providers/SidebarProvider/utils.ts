@@ -1,14 +1,14 @@
-import { SIDEBAR_OVERLAY_QUERY, SIDEBAR_STORAGE_KEY } from "./constants";
+import { SIDEBAR_STORAGE_KEY } from "./constants";
 
-/** Stored choice, else expanded on wide screens and collapsed on small ones */
+/** Stored choice, expanded by default */
 export const readStoredOpen = (): boolean => {
   try {
     const stored = localStorage.getItem(SIDEBAR_STORAGE_KEY);
     if (stored !== null) return stored === "true";
   } catch {
-    // storage unavailable (private mode): fall back to the screen size
+    // storage unavailable (private mode): fall back to the default
   }
-  return !window.matchMedia(SIDEBAR_OVERLAY_QUERY).matches;
+  return true;
 };
 
 export const storeOpen = (open: boolean): void => {

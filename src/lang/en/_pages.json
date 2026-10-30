@@ -48,7 +48,13 @@
     "notes": {
       "deleted": "Note deleted",
       "defaultTitle": "New note",
-      "defaultContent": "Write something here"
+      "defaultContent": "Write something here",
+      "untitled": "Untitled note",
+      "copied": "Note copied"
+    },
+    "welcome": "Welcome {{user}}",
+    "tabs": {
+      "all": "All"
     }
   },
   "settings": {

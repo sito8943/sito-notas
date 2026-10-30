@@ -1,7 +1,6 @@
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import loadable from "@loadable/component";
-import { useMutation } from "@tanstack/react-query";
+import { useIsMutating, useMutation } from "@tanstack/react-query";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,8 +11,15 @@ import { useToast, Spinner } from "@sito/ui";
 
 // providers
 import { useAppApiClient } from "@/shared/providers/ApiClientProvider";
+import { getRequestErrorKey } from "@/shared/lib/errors";
 import { useSearch } from "@/features/notes/providers/SearchProvider";
 import { useCache } from "@/features/notes/providers/CacheProvider";
+
+// hooks
+import {
+  ADD_NOTE_MUTATION_KEY,
+  useAddNote,
+} from "@/features/notes/hooks/useAddNote";
 
 // components
 import { FAB } from "@/shared/components/atoms/FAB";
@@ -30,7 +36,6 @@ const PreviewNote = loadable(
 function Notes() {
   const { t } = useTranslation();
 
-  const [error, setError] = useState<Error | null>(null);
   const { searchFunction } = useSearch();
 
   const toast = useToast();
@@ -47,44 +52,32 @@ function Notes() {
     },
     onError: (mutationError) => {
       console.error(mutationError);
-      toast({ message: mutationError.message, color: "error" });
+      toast({ message: t(getRequestErrorKey(mutationError)), color: "error" });
     },
   });
 
-  const addNote = useMutation({
-    mutationFn: () =>
-      appApiClient.Note.create({
-        title: t("_pages:home.notes.defaultTitle"),
-        content: t("_pages:home.notes.defaultContent"),
-      }),
-    onSuccess: () => refresh(),
-    onError: (mutationError) => {
-      console.error(mutationError);
-      setError(mutationError);
-    },
-  });
+  const addNote = useAddNote();
+  // Any add button (this FAB or the mobile bottom navigation)
+  const isAdding = useIsMutating({ mutationKey: ADD_NOTE_MUTATION_KEY }) > 0;
 
   return (
     <section className="notes">
       <div
         className={`notes-syncing ${
-          isSyncing || addNote.isPending || removeNote.isPending
-            ? "visible"
-            : ""
+          isSyncing || isAdding || removeNote.isPending ? "visible" : ""
         }`}
       >
         <Syncing />
       </div>
-      {!error ? (
-        <FAB
-          onClick={() => addNote.mutate()}
-          position="bottom-right"
-          aria-label={t("_accessibility:buttons.add")}
-          icon={<FontAwesomeIcon icon={faAdd} />}
-          color="secondary"
-          className="notes-fab"
-        />
-      ) : null}
+      <FAB
+        onClick={() => addNote.mutate()}
+        disabled={isAdding}
+        position="bottom-right"
+        aria-label={t("_accessibility:buttons.add")}
+        icon={<FontAwesomeIcon icon={faAdd} />}
+        color="secondary"
+        className="notes-fab"
+      />
       {isLoading
         ? [1, 2, 3, 4, 5].map((skeleton) => (
             <div key={skeleton} className="notes-skeleton skeleton-box" />
@@ -94,15 +87,13 @@ function Notes() {
             ?.map((note) => (
               <PreviewNote
                 key={note.id}
-                {...note}
+                note={note}
                 onDelete={(id) => removeNote.mutate(id)}
               />
             ))}
       <div
         className={`notes-spinner primary ${
-          isLoading || addNote.isPending || removeNote.isPending
-            ? "visible"
-            : ""
+          isLoading || isAdding || removeNote.isPending ? "visible" : ""
         }`}
       >
         <Spinner />

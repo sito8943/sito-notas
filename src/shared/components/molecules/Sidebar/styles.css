@@ -1,23 +1,12 @@
 @reference "@/styles/global.css";
 
+/* Desktop only: small screens use the bottom navigation */
 .sidebar {
-  @apply flex h-full w-16 shrink-0 flex-col items-center gap-5 overflow-x-hidden overflow-y-auto border-r border-border bg-base-light px-2 py-5 whitespace-nowrap transition-[width] duration-200;
+  @apply flex h-full w-16 shrink-0 flex-col items-center gap-5 overflow-x-hidden overflow-y-auto border-r border-border bg-base-light px-2 py-5 whitespace-nowrap transition-[width] duration-200 md:hidden;
 }
 
-/* Expanded; on small screens it overlays the content */
 .sidebar.open {
-  @apply w-64 items-stretch px-4 md:fixed md:inset-y-0 md:left-0 md:z-40 md:shadow-xl;
-}
-
-/* Keeps the rail's space while the expanded sidebar overlays */
-.sidebar-spacer {
-  @apply hidden w-16 shrink-0 md:block;
-}
-
-/* The theme resets --color-*, so the scrim color is plain CSS */
-.sidebar-backdrop {
-  @apply fixed inset-0 z-30 hidden md:block;
-  background-color: rgb(0 0 0 / 0.4);
+  @apply w-64 items-stretch px-4;
 }
 
 .sidebar-header {

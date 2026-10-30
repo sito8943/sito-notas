@@ -55,7 +55,13 @@
     "notes": {
       "deleted": "Nota eliminada",
       "defaultTitle": "Nueva nota",
-      "defaultContent": "Escribe algo aquí"
+      "defaultContent": "Escribe algo aquí",
+      "untitled": "Nota sin título",
+      "copied": "Nota copiada"
+    },
+    "welcome": "Bienvenido {{user}}",
+    "tabs": {
+      "all": "Todas"
     }
   },
   "settings": {

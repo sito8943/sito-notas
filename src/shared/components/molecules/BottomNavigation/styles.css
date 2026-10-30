@@ -1,0 +1,19 @@
+@reference "@/styles/global.css";
+
+/* Only on small screens, where it replaces the sidebar */
+.bottom-nav {
+  @apply fixed inset-x-0 bottom-0 z-30 hidden h-16 bg-base-light md:block;
+}
+
+.bottom-nav-list {
+  @apply mx-auto flex h-full max-w-md items-center justify-around px-2;
+}
+
+.bottom-nav-action-slot {
+  @apply flex w-16 justify-center;
+}
+
+/* Raised above the bar */
+.bottom-nav-action {
+  @apply -translate-y-5 shadow-lg;
+}

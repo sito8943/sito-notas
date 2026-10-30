@@ -1,29 +1,31 @@
 @reference "@/styles/global.css";
 
+/* Masonry: cards flow down CSS columns and keep their own height */
 .notes {
-  @apply grid gap-5 grid-cols-5 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 sm:grid-cols-1;
+  @apply columns-4 gap-5 xl:columns-3 lg:columns-2 sm:columns-1;
 }
 
 .notes-syncing {
-  @apply pointer-events-none fixed bottom-1 left-1 z-20 h-10 w-10 scale-0 rounded-full bg-(--sito-ui-color-primary-default) text-(--sito-ui-color-primary-text) transition-all duration-300 ease-in-out;
+  @apply pointer-events-none fixed bottom-1 left-1 z-20 md:bottom-20 h-10 w-10 scale-0 rounded-full bg-(--sito-ui-color-primary-default) text-(--sito-ui-color-primary-text) transition-all duration-300 ease-in-out;
 }
 
 .notes-syncing.visible {
   @apply scale-100;
 }
 
+/* Small screens add notes from the bottom navigation */
 .notes-fab {
-  @apply z-10 p-6 text-2xl;
+  @apply z-10 p-6 text-2xl md:hidden;
 }
 
 /* Combined with the global .skeleton-box helper */
 .notes-skeleton {
-  @apply h-[300px] w-full rounded-xl!;
+  @apply mb-5 h-[300px] w-full break-inside-avoid rounded-xl!;
 }
 
 /* Combined with the global .primary helper */
 .notes-spinner {
-  @apply pointer-events-none fixed bottom-1 left-1 flex h-10 w-10 scale-0 items-center justify-center text-2xl transition-all duration-300 ease-in-out;
+  @apply pointer-events-none fixed bottom-1 left-1 md:bottom-20 flex h-10 w-10 scale-0 items-center justify-center text-2xl transition-all duration-300 ease-in-out;
 }
 
 .notes-spinner.visible {
