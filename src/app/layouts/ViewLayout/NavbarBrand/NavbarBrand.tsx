@@ -19,7 +19,10 @@ import noPhoto from "@/assets/images/no-photo.webp";
 
 import "./styles.css";
 
-/** Back button on inner pages; on home, the user's avatar on small screens */
+/**
+ * Back button on inner pages; on home, the greeting (plus the avatar on small
+ * screens, where the sidebar is hidden)
+ */
 function NavbarBrand() {
   const { t } = useTranslation();
   const { pathname } = useLocation();
@@ -33,6 +36,9 @@ function NavbarBrand() {
           alt={account.user?.username ?? ""}
           className="navbar-user-avatar"
         />
+        <h1 className="navbar-user-welcome">
+          {t("_pages:home.welcome", { user: account.user?.username })}
+        </h1>
       </div>
     );
 

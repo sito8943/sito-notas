@@ -8,11 +8,6 @@
   @apply flex flex-1 flex-col gap-5 p-10 sm:p-3;
 }
 
-/* Short greeting, as in Sito Wallet */
-.home-title {
-  @apply text-4xl capitalize md:text-3xl xs:text-2xl;
-}
-
 .home-to-top {
   @apply fixed right-5 bottom-20 md:bottom-24;
 }

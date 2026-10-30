@@ -18,6 +18,11 @@
   @apply flex items-center gap-3;
 }
 
+/* The brand can hold long text (greeting): let it truncate */
+.app-shell-brand {
+  @apply min-w-0;
+}
+
 /* Room for the fixed bottom navigation on small screens */
 .app-shell-content {
   @apply flex min-h-0 flex-1 flex-col md:pb-16;
