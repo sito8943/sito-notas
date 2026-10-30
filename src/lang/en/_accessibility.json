@@ -133,5 +133,9 @@
       "confirm": "Update now",
       "later": "Later"
     }
+  },
+  "toast": {
+    "label": "Notifications",
+    "close": "Close"
   }
 }

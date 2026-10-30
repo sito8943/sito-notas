@@ -108,5 +108,9 @@
       "confirm": "Actualizar ahora",
       "later": "Más tarde"
     }
+  },
+  "toast": {
+    "label": "Notificaciones",
+    "close": "Cerrar"
   }
 }

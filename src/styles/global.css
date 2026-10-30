@@ -134,12 +134,18 @@
 
   --sito-ui-color-error-text: var(--color-error);
   --sito-ui-color-error-default: var(--color-bg-error);
-  --sito-ui-color-success-text: var(--color-success);
-  --sito-ui-color-success-default: var(--color-bg-success);
+  /* A successful toast takes the brand, as in Sito Presentation Deck */
+  --sito-ui-color-success-text: var(--color-on-brand);
+  --sito-ui-color-success-default: var(--color-primary);
   --sito-ui-color-warning-text: var(--color-warning);
   --sito-ui-color-warning-default: var(--color-bg-warning);
   --sito-ui-color-info-text: var(--color-info);
   --sito-ui-color-info-default: var(--color-bg-info);
+
+  /* Toasts keep a plain border all round, no colored stripe on the left
+     (as in Sito Presentation Deck) */
+  --sito-ui-toast-accent-width: var(--sito-ui-border-width-thin);
+  --sito-ui-toast-accent-border: var(--sito-ui-color-border);
 }
 
 /* Base typography lives in the base layer so Tailwind utilities

@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
-import { ToastProvider } from "@sito/ui";
 
 // shared
 import {
   ApiClientProvider,
+  NotificationsProvider,
   SidebarProvider,
   ThemeProvider,
 } from "@/shared/providers";
@@ -23,11 +23,11 @@ function AppProviders({ children }: { children: ReactNode }) {
       <ApiClientProvider client={appApiClient}>
         <AccountProvider>
           <CacheProvider>
-            <ToastProvider placement="bottom-right">
+            <NotificationsProvider>
               <SearchProvider>
                 <SidebarProvider>{children}</SidebarProvider>
               </SearchProvider>
-            </ToastProvider>
+            </NotificationsProvider>
           </CacheProvider>
         </AccountProvider>
       </ApiClientProvider>
