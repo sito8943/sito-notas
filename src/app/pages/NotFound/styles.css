@@ -1,0 +1,17 @@
+@reference "@/styles/global.css";
+
+.not-found {
+  @apply flex h-screen w-full flex-col items-center justify-center gap-5;
+}
+
+.not-found-theme-toggle {
+  @apply fixed top-3 right-3;
+}
+
+.not-found-icon {
+  @apply text-7xl;
+}
+
+.not-found-title {
+  @apply text-center;
+}

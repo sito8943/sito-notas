@@ -24,6 +24,8 @@ import { SIGN_OUT_DELAY_MS } from "./constants";
 import type { UpdatePasswordForm } from "./types";
 import { getResetPasswordRequest } from "./utils";
 
+import "./styles.css";
+
 /**
  * UpdatePassword page: sets a new password after a recovery email
  */
@@ -91,7 +93,7 @@ function UpdatePassword() {
           variant="submit"
           color="primary"
           loading={isSubmitting}
-          className="px-8"
+          className="update-password-submit"
         >
           {t("_pages:auth.updatePassword.submit")}
         </Button>

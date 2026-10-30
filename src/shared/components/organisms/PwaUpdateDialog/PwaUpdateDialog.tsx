@@ -6,6 +6,7 @@ import { useRegisterSW } from "virtual:pwa-register/react";
 import { Dialog, DialogActions, useToast } from "@sito/ui";
 
 import { scheduleUpdateChecks } from "./utils";
+import "./styles.css";
 
 /**
  * Asks the user to reload when a new version of the app is installed in the
@@ -50,7 +51,9 @@ function PwaUpdateDialog() {
       closeOnEscape={!updating}
       showCloseButton={!updating}
     >
-      <p className="mb-4">{t("_accessibility:pwa.update.description")}</p>
+      <p className="pwa-update-dialog-description">
+        {t("_accessibility:pwa.update.description")}
+      </p>
       <DialogActions
         alignEnd
         primaryText={t("_accessibility:pwa.update.confirm")}

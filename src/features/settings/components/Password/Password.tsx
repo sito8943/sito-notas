@@ -22,6 +22,8 @@ import { MIN_PASSWORD_LENGTH } from "@/features/auth";
 import { CHANGE_PASSWORD_DEFAULTS, SIGN_OUT_DELAY_MS } from "./constants";
 import type { ChangePasswordForm } from "./types";
 
+import "./styles.css";
+
 /**
  * Security section: changes the password. sito-auth revokes every session
  * afterwards, so the user signs in again.
@@ -67,12 +69,12 @@ function Password() {
   });
 
   return (
-    <section className="flex flex-col gap-3">
+    <section className="password">
       <form
         onSubmit={(event) => void onSubmit(event)}
-        className="flex flex-col gap-5 justify-start items-start max-w-md"
+        className="password-form"
       >
-        <h3 className="text-xl">
+        <h3 className="password-title">
           {t("_pages:settings.sections.security.title")}
         </h3>
         <PasswordInput

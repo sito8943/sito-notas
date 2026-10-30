@@ -1,4 +1,5 @@
 import type { FieldProps } from "./types";
+import "./styles.css";
 
 function Field(props: FieldProps) {
   const {
@@ -15,23 +16,23 @@ function Field(props: FieldProps) {
   const helperId = id && helperText ? `${id}-helper` : undefined;
 
   return (
-    <div className={`flex flex-col gap-1 w-full ${className}`}>
+    <div className={`field ${className}`}>
       {label ? (
-        <label htmlFor={id} className="text-sm">
+        <label htmlFor={id} className="field-label">
           {label}
         </label>
       ) : null}
-      <div className="flex items-center gap-2 w-full rounded-3xl bg-light-default dark:bg-dark-default">
+      <div className="field-box">
         {leftComponent ? (
-          <span className="flex items-center pl-3">{leftComponent}</span>
+          <span className="field-adornment-left">{leftComponent}</span>
         ) : null}
         {children(helperId)}
         {rightComponent ? (
-          <span className="flex items-center pr-3">{rightComponent}</span>
+          <span className="field-adornment-right">{rightComponent}</span>
         ) : null}
       </div>
       {helperText ? (
-        <p id={helperId} className={`text-sm ${helperTextClassName}`}>
+        <p id={helperId} className={`field-helper-text ${helperTextClassName}`}>
           {helperText}
         </p>
       ) : null}

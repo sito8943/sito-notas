@@ -1,4 +1,4 @@
-import { CONTROL_CLASSNAME, Field } from "@/shared/components/molecules/Field";
+import { Field } from "@/shared/components/molecules/Field";
 import type { InputControlProps } from "./types";
 
 function InputControl(props: InputControlProps) {
@@ -31,7 +31,7 @@ function InputControl(props: InputControlProps) {
           type={type}
           aria-describedby={helperId}
           aria-invalid={helperText ? true : undefined}
-          className={`${CONTROL_CLASSNAME} ${className}`}
+          className={`field-control ${className}`}
           {...rest}
         />
       )}

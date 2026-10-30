@@ -1,0 +1,5 @@
+@reference "@/styles/global.css";
+
+.sign-in-submit {
+  @apply px-8;
+}

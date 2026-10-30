@@ -1,5 +1,6 @@
-import { CONTROL_CLASSNAME, Field } from "@/shared/components/molecules/Field";
+import { Field } from "@/shared/components/molecules/Field";
 import type { TextareaControlProps } from "./types";
+import "./styles.css";
 
 function TextareaControl(props: TextareaControlProps) {
   const {
@@ -29,7 +30,7 @@ function TextareaControl(props: TextareaControlProps) {
           id={id}
           aria-describedby={helperId}
           aria-invalid={helperText ? true : undefined}
-          className={`${CONTROL_CLASSNAME} resize-none ${className}`}
+          className={`field-control textarea-control ${className}`}
           {...rest}
         />
       )}

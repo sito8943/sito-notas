@@ -12,19 +12,18 @@ import { Button } from "@sito/ui";
 // components
 import { ThemeToggle } from "@/shared/components/molecules/ThemeToggle";
 
+import "./styles.css";
+
 function NotFound() {
   const { t } = useTranslation();
 
   return (
-    <main className="w-full h-screen flex items-center justify-center flex-col gap-5">
-      <div className="fixed top-3 right-3">
+    <main className="not-found">
+      <div className="not-found-theme-toggle">
         <ThemeToggle />
       </div>
-      <FontAwesomeIcon
-        icon={faSadTear}
-        className="dark:text-white text-7xl appear"
-      />
-      <h2 className="dark:text-white text-center appear">
+      <FontAwesomeIcon icon={faSadTear} className="not-found-icon appear" />
+      <h2 className="not-found-title appear">
         404 - {t("_pages:notFound.title")}
       </h2>
       <Button

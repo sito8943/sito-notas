@@ -1,0 +1,5 @@
+@reference "@/styles/global.css";
+
+.syncing {
+  @apply w-full h-full flex items-center justify-center text-xl;
+}

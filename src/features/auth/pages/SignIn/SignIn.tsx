@@ -23,6 +23,8 @@ import { AppRoute } from "@/shared/routes";
 
 import type { SignInForm } from "./types";
 
+import "./styles.css";
+
 function SignIn() {
   const { t } = useTranslation();
   const toast = useToast();
@@ -86,7 +88,7 @@ function SignIn() {
           variant="submit"
           color="primary"
           loading={isSubmitting}
-          className="px-8"
+          className="sign-in-submit"
         >
           {t("_pages:auth.signIn.submit")}
         </Button>

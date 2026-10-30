@@ -1,0 +1,13 @@
+@reference "@/styles/global.css";
+
+.error-fallback {
+  @apply w-full h-full flex flex-col items-center justify-center gap-4 p-10;
+}
+
+.error-fallback-title {
+  @apply text-2xl text-center;
+}
+
+.error-fallback-message {
+  @apply text-sm opacity-70 text-center;
+}

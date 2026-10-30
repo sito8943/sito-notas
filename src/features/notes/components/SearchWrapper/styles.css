@@ -1,0 +1,5 @@
+@reference "@/styles/global.css";
+
+.search-wrapper-icon {
+  @apply opacity-70;
+}

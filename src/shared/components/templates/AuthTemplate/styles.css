@@ -1,0 +1,13 @@
+@reference "@/styles/global.css";
+
+.auth-template {
+  @apply relative w-full flex items-center justify-center overflow-hidden px-4 py-6;
+}
+
+.auth-template-header {
+  @apply absolute top-0 inset-x-0 z-10 flex items-center justify-between p-3;
+}
+
+.auth-template-actions {
+  @apply flex items-center;
+}

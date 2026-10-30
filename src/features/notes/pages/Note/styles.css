@@ -1,3 +1,36 @@
+@reference "@/styles/global.css";
+
 .workspace {
   grid-template-rows: 45px 1fr;
+}
+
+.note-syncing {
+  @apply pointer-events-none fixed bottom-1 left-1 h-10 w-10 scale-0 rounded-full bg-(--sito-ui-color-primary-default) text-(--sito-ui-color-primary-text) transition-all duration-300 ease-in-out;
+}
+
+.note-syncing.visible {
+  @apply scale-100;
+}
+
+/* Combined with .workspace and the global .appear helper */
+.note-workspace {
+  @apply grid h-full flex-1 gap-5 p-10 sm:p-3;
+}
+
+/* Combined with the global .skeleton-box helper */
+.note-title-skeleton {
+  @apply h-[45px] w-full;
+}
+
+.note-title-input {
+  @apply text-2xl;
+}
+
+/* Combined with the global .skeleton-box helper */
+.note-content-skeleton {
+  @apply h-full min-h-[300px] w-full rounded-xl!;
+}
+
+.note-content-input {
+  @apply h-full min-h-[300px];
 }

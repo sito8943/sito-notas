@@ -1,6 +1,7 @@
 import { useId } from "react";
 
 import type { CheckboxProps } from "./types";
+import "./styles.css";
 
 /**
  * Native checkbox with a clickable label
@@ -19,18 +20,15 @@ function Checkbox(props: CheckboxProps) {
   const inputId = id ?? generatedId;
 
   return (
-    <div className={`flex items-center gap-2 ${containerClassName}`}>
+    <div className={`checkbox ${containerClassName}`}>
       <input
         ref={ref}
         id={inputId}
         type="checkbox"
-        className={`h-4 w-4 cursor-pointer accent-(--color-text-primary) disabled:cursor-not-allowed disabled:opacity-60 ${className}`}
+        className={`checkbox-input ${className}`}
         {...rest}
       />
-      <label
-        htmlFor={inputId}
-        className="cursor-pointer select-none text-sm text-(--sito-ui-color-text)"
-      >
+      <label htmlFor={inputId} className="checkbox-label">
         {label}
       </label>
     </div>

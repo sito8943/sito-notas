@@ -1,0 +1,21 @@
+@reference "@/styles/global.css";
+
+.fab {
+  @apply fixed;
+}
+
+.fab.top-left {
+  @apply top-5 left-5;
+}
+
+.fab.top-right {
+  @apply top-5 right-5;
+}
+
+.fab.bottom-left {
+  @apply bottom-5 left-5;
+}
+
+.fab.bottom-right {
+  @apply bottom-5 right-5;
+}

@@ -9,6 +9,8 @@ import { useAccount } from "@/features/auth/providers/AccountProvider";
 // components
 import { SplashScreen } from "@/shared/components/organisms/SplashScreen";
 
+import "./styles.css";
+
 /**
  * SignOut page
  * @returns SignOut page component
@@ -36,7 +38,9 @@ function SignOut() {
       label={t("_accessibility:appName")}
       logo={
         <div>
-          <h1 className="uppercase">{t("_accessibility:appName")}</h1>
+          <h1 className="sign-out-splash-title">
+            {t("_accessibility:appName")}
+          </h1>
         </div>
       }
     />

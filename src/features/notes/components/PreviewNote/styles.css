@@ -1,0 +1,22 @@
+@reference "@/styles/global.css";
+
+/* Combined with the global .appear and .card-shadow helpers */
+.preview-note {
+  @apply relative flex h-[400px] w-full flex-col gap-3 rounded-xl bg-light-default p-5 transition hover:-translate-y-1 dark:bg-dark-default;
+}
+
+.preview-note-header {
+  @apply flex w-full items-center justify-between;
+}
+
+.preview-note-link {
+  @apply flex items-center justify-start gap-4;
+}
+
+.preview-note-date {
+  @apply text-sm;
+}
+
+.preview-note-content {
+  @apply flex max-h-[300px] flex-col gap-1 overflow-hidden;
+}
