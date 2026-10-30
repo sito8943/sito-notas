@@ -1,6 +1,11 @@
 export const AppRoute = {
   Home: "/",
+  Notes: "/notes",
   Note: "/note/:id",
+  Tags: "/tags",
+  Calendar: "/calendar",
+  Shared: "/shared",
+  Trash: "/trash",
   Settings: "/settings",
   SignOut: "/sign-out",
   Auth: "/auth",

@@ -3,3 +3,29 @@
 .notes {
   @apply grid gap-5 grid-cols-5 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 sm:grid-cols-1;
 }
+
+.notes-syncing {
+  @apply pointer-events-none fixed bottom-1 left-1 z-20 h-10 w-10 scale-0 rounded-full bg-(--sito-ui-color-primary-default) text-(--sito-ui-color-primary-text) transition-all duration-300 ease-in-out;
+}
+
+.notes-syncing.visible {
+  @apply scale-100;
+}
+
+.notes-fab {
+  @apply z-10 p-6 text-2xl;
+}
+
+/* Combined with the global .skeleton-box helper */
+.notes-skeleton {
+  @apply h-[300px] w-full rounded-xl!;
+}
+
+/* Combined with the global .primary helper */
+.notes-spinner {
+  @apply pointer-events-none fixed bottom-1 left-1 flex h-10 w-10 scale-0 items-center justify-center text-2xl transition-all duration-300 ease-in-out;
+}
+
+.notes-spinner.visible {
+  @apply scale-100;
+}

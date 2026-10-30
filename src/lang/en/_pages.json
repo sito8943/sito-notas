@@ -4,7 +4,12 @@
     "signIn": "Login",
     "signUp": "Sign Up",
     "signOut": "Sign Out",
-    "settings": "Settings"
+    "settings": "Settings",
+    "notes": "All notes",
+    "tags": "Tags",
+    "calendar": "Calendar",
+    "shared": "Shared with me",
+    "trash": "Trash"
   },
   "auth": {
     "recovery": {
@@ -57,5 +62,8 @@
   },
   "notFound": {
     "title": "Page not found"
+  },
+  "sidebar": {
+    "addCategory": "Add category"
   }
 }

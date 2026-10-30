@@ -1,0 +1,23 @@
+@reference "@/styles/global.css";
+
+/* Spans every row of the #root grid */
+.app-shell {
+  @apply row-[1/-1] flex h-full min-h-0;
+}
+
+.app-shell-main {
+  @apply flex min-w-0 flex-1 flex-col;
+}
+
+.app-shell-header {
+  @apply flex w-full items-center justify-between px-10 py-3 sm:px-3;
+}
+
+.app-shell-brand,
+.app-shell-actions {
+  @apply flex items-center gap-3;
+}
+
+.app-shell-content {
+  @apply flex min-h-0 flex-1 flex-col;
+}

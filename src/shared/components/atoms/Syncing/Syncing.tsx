@@ -1,9 +1,11 @@
 // @sito/ui
 import { Spinner } from "@sito/ui";
 
+import "./styles.css";
+
 function Syncing() {
   return (
-    <span className="w-full h-full flex items-center justify-center text-xl">
+    <span className="syncing">
       <Spinner />
     </span>
   );

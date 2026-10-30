@@ -83,30 +83,30 @@ function Note() {
   return (
     <main>
       <div
-        className={`w-10 h-10 fixed bottom-1 bg-(--sito-ui-color-primary-default) text-(--sito-ui-color-primary-text) rounded-full left-1 transition-all duration-300 ease-in-out ${
-          isLoading || updateNote.isPending ? "scale-100" : "scale-0"
-        } pointer-events-none`}
+        className={`note-syncing ${
+          isLoading || updateNote.isPending ? "visible" : ""
+        }`}
       >
         <Syncing />
       </div>
-      <div className="p-10 sm:p-3 grid workspace gap-5 flex-1 h-full appear">
+      <div className="note-workspace workspace appear">
         {isLoading ? (
-          <div className="w-full h-[45px] skeleton-box" />
+          <div className="note-title-skeleton skeleton-box" />
         ) : (
           <InputControl
             value={title}
             onChange={handleTitle}
-            className="text-2xl"
+            className="note-title-input"
           />
         )}
         {isLoading ? (
-          <div className="w-full min-h-[300px] h-full skeleton-box rounded-xl!" />
+          <div className="note-content-skeleton skeleton-box" />
         ) : (
           <TextareaControl
             value={content}
             onChange={handleContent}
             containerClassName="h-full"
-            className="min-h-[300px] h-full"
+            className="note-content-input"
           />
         )}
       </div>

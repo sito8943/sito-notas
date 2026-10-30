@@ -1,0 +1,5 @@
+@reference "@/styles/global.css";
+
+.textarea-control {
+  @apply resize-none;
+}

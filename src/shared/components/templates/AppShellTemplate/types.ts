@@ -7,6 +7,8 @@ export interface AppShellTemplateProps {
   actions?: ReactNode;
   /** Accessible name of the header navigation */
   navLabel?: string;
+  /** Side navigation, left of the header and content */
+  sidebar?: ReactNode;
   /** Page content; pages render their own <main> */
   children: ReactNode;
 }

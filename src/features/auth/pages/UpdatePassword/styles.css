@@ -1,0 +1,5 @@
+@reference "@/styles/global.css";
+
+.update-password-submit {
+  @apply px-8;
+}

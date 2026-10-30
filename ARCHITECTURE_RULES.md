@@ -1,8 +1,8 @@
 # Sito Notas Architecture Rules For Agents (CLAUDE/CODEX)
 
-This file overrides the folder-structure sections (6 and 7) of the workspace
-`../ARCHITECTURE_RULES.md` for Sito Notas. Every other workspace rule still
-applies (Context + Provider, managers, Tailwind, routing, i18n).
+This file overrides the styling (5) and folder-structure (6 and 7) sections of
+the workspace `../ARCHITECTURE_RULES.md` for Sito Notas. Every other workspace
+rule still applies (Context + Provider, managers, routing, i18n).
 
 ## Scope
 
@@ -116,7 +116,22 @@ Something/
 
 ---
 
-## 4) Routing
+## 4) Styling
+
+- No inline Tailwind utility chains in `className`. Each component owns a
+  sibling `styles.css` with semantic classes built with `@apply`, starting with
+  `@reference "@/styles/global.css";`, and imports it (`import "./styles.css"`).
+- Name classes after the component (`.sidebar`, `.sidebar-header`); express
+  states as modifier classes (`.sidebar.open`, `.sidebar-item.active`), not
+  ternaries over utility strings.
+- `className` only lists those semantic classes, shared helpers
+  (`.reveal-after-grow`, `.primary`) or props forwarded by the parent.
+- Tokens stay in `src/styles/global.css`. The theme resets `--color-*`, so only
+  palette colors exist as utilities (no `bg-black`); use plain CSS otherwise.
+
+---
+
+## 5) Routing
 
 - All paths live in `shared/routes.ts` (`AppRoute`, `getNoteRoute(id)`).
 - Do not hardcode route strings in `navigate`, `<Link to>` or `<Route path>`.

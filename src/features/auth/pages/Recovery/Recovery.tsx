@@ -19,6 +19,8 @@ import { AppRoute, getAbsoluteRoute } from "@/shared/routes";
 
 import type { RecoveryForm } from "./types";
 
+import "./styles.css";
+
 /**
  * Recovery page: sends the reset-password email
  */
@@ -72,7 +74,7 @@ function Recovery() {
           variant="submit"
           color="primary"
           loading={isSubmitting}
-          className="px-8"
+          className="recovery-submit"
         >
           {t("_pages:auth.recovery.submit")}
         </Button>

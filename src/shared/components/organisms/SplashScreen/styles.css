@@ -1,0 +1,14 @@
+@reference "@/styles/global.css";
+
+.splash-screen {
+  @apply fixed inset-0 z-[100] flex flex-col items-center justify-center gap-6 bg-light-dark dark:bg-dark-dark transition-opacity duration-500 opacity-100;
+}
+
+/* Fading out before unmount */
+.splash-screen.exiting {
+  @apply opacity-0 pointer-events-none;
+}
+
+.splash-screen-spinner {
+  @apply text-3xl;
+}

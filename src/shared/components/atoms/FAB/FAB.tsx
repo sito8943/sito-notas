@@ -1,8 +1,9 @@
 // @sito/ui
 import { IconButton } from "@sito/ui";
 
-import { FAB_POSITION_CLASSNAME, FabPosition } from "./constants";
+import { FabPosition } from "./constants";
 import type { FABProps } from "./types";
+import "./styles.css";
 
 export const FAB = (props: FABProps) => {
   const {
@@ -16,7 +17,7 @@ export const FAB = (props: FABProps) => {
     <IconButton
       {...rest}
       variant={variant}
-      className={`fixed ${FAB_POSITION_CLASSNAME[position]} ${className}`}
+      className={`fab ${position} ${className}`}
     />
   );
 };

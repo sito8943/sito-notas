@@ -4,7 +4,12 @@
     "signIn": "Login",
     "signUp": "Registrarse",
     "signOut": "Cerrar sesión",
-    "settings": "Configuración"
+    "settings": "Configuración",
+    "notes": "Todas las notas",
+    "tags": "Etiquetas",
+    "calendar": "Calendario",
+    "shared": "Compartidas conmigo",
+    "trash": "Papelera"
   },
   "auth": {
     "toSignIn": {
@@ -64,5 +69,8 @@
   },
   "notFound": {
     "title": "Página no encontrada"
+  },
+  "sidebar": {
+    "addCategory": "Añadir categoría"
   }
 }

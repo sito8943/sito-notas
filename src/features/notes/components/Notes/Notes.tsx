@@ -67,11 +67,11 @@ function Notes() {
   return (
     <section className="notes">
       <div
-        className={`w-10 h-10 z-20 bg-(--sito-ui-color-primary-default) text-(--sito-ui-color-primary-text) rounded-full fixed bottom-1 left-1 transition-all duration-300 ease-in-out ${
+        className={`notes-syncing ${
           isSyncing || addNote.isPending || removeNote.isPending
-            ? "scale-100"
-            : "scale-0"
-        } pointer-events-none`}
+            ? "visible"
+            : ""
+        }`}
       >
         <Syncing />
       </div>
@@ -82,15 +82,12 @@ function Notes() {
           aria-label={t("_accessibility:buttons.add")}
           icon={<FontAwesomeIcon icon={faAdd} />}
           color="secondary"
-          className="z-10 text-2xl p-6"
+          className="notes-fab"
         />
       ) : null}
       {isLoading
         ? [1, 2, 3, 4, 5].map((skeleton) => (
-            <div
-              key={skeleton}
-              className="w-full h-[300px] skeleton-box rounded-xl!"
-            />
+            <div key={skeleton} className="notes-skeleton skeleton-box" />
           ))
         : cache
             ?.filter(searchFunction)
@@ -102,11 +99,11 @@ function Notes() {
               />
             ))}
       <div
-        className={`w-10 h-10 fixed bottom-1 left-1 flex items-center justify-center text-2xl primary transition-all duration-300 ease-in-out ${
+        className={`notes-spinner primary ${
           isLoading || addNote.isPending || removeNote.isPending
-            ? "scale-100"
-            : "scale-0"
-        } pointer-events-none`}
+            ? "visible"
+            : ""
+        }`}
       >
         <Spinner />
       </div>

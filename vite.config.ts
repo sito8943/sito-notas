@@ -1,5 +1,5 @@
 import { fileURLToPath, URL } from "node:url";
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv, type ProxyOptions } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import { VitePWA, type VitePWAOptions } from "vite-plugin-pwa";
@@ -40,9 +40,39 @@ const manifestForPlugIn: Partial<VitePWAOptions> = {
   },
 };
 
-export default defineConfig({
+/** Dev proxy paths, used as VITE_AUTH_URL / VITE_API_URL to reach remote servers */
+const DEV_PROXY_PATHS = {
+  DEV_PROXY_AUTH_TARGET: "/proxy/auth",
+  DEV_PROXY_API_TARGET: "/proxy/api",
+} as const;
+
+/**
+ * Dev-only proxy to remote servers (e.g. prod) that reject the localhost origin.
+ * Enabled per server by setting DEV_PROXY_*_TARGET in .env.local.
+ * @param env - loaded env
+ * @returns vite proxy config
+ */
+const buildDevProxy = (env: Record<string, string>) => {
+  const proxy: Record<string, ProxyOptions> = {};
+  for (const [key, path] of Object.entries(DEV_PROXY_PATHS)) {
+    const target = env[key];
+    if (!target) continue;
+    proxy[path] = {
+      target,
+      changeOrigin: true,
+      rewrite: (url) => url.slice(path.length),
+      // Same-origin for the server: drop Origin so CORS checks do not apply
+      configure: (server) =>
+        server.on("proxyReq", (req) => req.removeHeader("origin")),
+    };
+  }
+  return proxy;
+};
+
+export default defineConfig(({ mode }) => ({
   plugins: [react(), tailwindcss(), VitePWA(manifestForPlugIn)],
   resolve: {
     alias: { "@": fileURLToPath(new URL("./src", import.meta.url)) },
   },
-});
+  server: { proxy: buildDevProxy(loadEnv(mode, process.cwd(), "DEV_PROXY_")) },
+}));

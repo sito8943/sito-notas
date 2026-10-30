@@ -1,0 +1,13 @@
+@reference "@/styles/global.css";
+
+.checkbox {
+  @apply flex items-center gap-2;
+}
+
+.checkbox-input {
+  @apply h-4 w-4 cursor-pointer accent-(--color-text-primary) disabled:cursor-not-allowed disabled:opacity-60;
+}
+
+.checkbox-label {
+  @apply cursor-pointer select-none text-sm text-(--sito-ui-color-text);
+}

@@ -16,6 +16,8 @@ import { ErrorHandler } from "@/shared/components/organisms/ErrorHandler";
 import { PwaUpdateDialog } from "@/shared/components/organisms/PwaUpdateDialog";
 import { SplashScreen } from "@/shared/components/organisms/SplashScreen";
 
+import "./styles.css";
+
 // views
 // Auth
 const SignIn = loadable(() => import("@/features/auth/pages/SignIn/SignIn"));
@@ -55,7 +57,9 @@ function App() {
           label={t("_accessibility:appName")}
           logo={
             <div>
-              <h1 className="uppercase">{t("_accessibility:appName")}</h1>
+              <h1 className="app-splash-title">
+                {t("_accessibility:appName")}
+              </h1>
             </div>
           }
         />

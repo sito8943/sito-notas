@@ -15,6 +15,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { PREVIEW_CONTENT_LENGTH, PREVIEW_DATE_FORMAT } from "./constants";
 import type { PreviewNoteProps } from "./types";
 
+import "./styles.css";
+
 function PreviewNote(props: PreviewNoteProps) {
   const { id, title, content, updatedAt, onDelete } = props;
 
@@ -36,15 +38,12 @@ function PreviewNote(props: PreviewNoteProps) {
   }, [updatedAt]);
 
   return (
-    <div className="appear relative flex flex-col gap-3 bg-light-default dark:bg-dark-default p-5 rounded-xl card-shadow w-full transition hover:-translate-y-1 h-[400px]">
-      <div className="flex items-center justify-between w-full">
-        <Link
-          to={getNoteRoute(id)}
-          className="flex items-center justify-start gap-4"
-        >
+    <div className="preview-note appear card-shadow">
+      <div className="preview-note-header">
+        <Link to={getNoteRoute(id)} className="preview-note-link">
           <div>
             <h3>{title || "Nota sin título"}</h3>
-            <p className="text-sm">{parsedLastDate}</p>
+            <p className="preview-note-date">{parsedLastDate}</p>
           </div>
         </Link>
         <IconButton
@@ -56,10 +55,7 @@ function PreviewNote(props: PreviewNoteProps) {
       </div>
 
       <hr className="card-divider" />
-      <div
-        ref={contentRef}
-        className="flex flex-col gap-1 max-h-[300px] overflow-hidden"
-      />
+      <div ref={contentRef} className="preview-note-content" />
       <div className="card-overflow-background"></div>
     </div>
   );

@@ -1,0 +1,5 @@
+@reference "@/styles/global.css";
+
+.app-splash-title {
+  @apply uppercase;
+}

@@ -1,0 +1,13 @@
+@reference "@/styles/global.css";
+
+.logo {
+  @apply flex w-full flex-col items-center gap-3;
+}
+
+.logo-mark {
+  @apply h-16 w-auto;
+}
+
+.logo-name {
+  @apply font-[family-name:Poppins] text-4xl font-bold;
+}

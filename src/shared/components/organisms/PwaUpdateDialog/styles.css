@@ -1,0 +1,5 @@
+@reference "@/styles/global.css";
+
+.pwa-update-dialog-description {
+  @apply mb-4;
+}

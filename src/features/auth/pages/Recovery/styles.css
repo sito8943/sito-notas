@@ -1,0 +1,5 @@
+@reference "@/styles/global.css";
+
+.recovery-submit {
+  @apply px-8;
+}

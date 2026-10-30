@@ -10,6 +10,8 @@ import { InputControl } from "@/shared/components/molecules/InputControl";
 // providers
 import { useSearch } from "@/features/notes/providers/SearchProvider";
 
+import "./styles.css";
+
 function SearchWrapper() {
   const { setSearchValue } = useSearch();
 
@@ -25,7 +27,7 @@ function SearchWrapper() {
     <section role="search">
       <InputControl
         leftComponent={
-          <FontAwesomeIcon className="opacity-70" icon={faSearch} />
+          <FontAwesomeIcon className="search-wrapper-icon" icon={faSearch} />
         }
         type="search"
         value={toSearch}

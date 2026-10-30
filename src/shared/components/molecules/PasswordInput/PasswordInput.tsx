@@ -8,7 +8,7 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 // @sito/ui
 import { IconButton } from "@sito/ui";
 
-import { TextInput } from "../TextInput";
+import { TextInput } from "@/shared/components/molecules/TextInput";
 import type { PasswordInputProps } from "./types";
 
 /** Text input with a show/hide password toggle */
