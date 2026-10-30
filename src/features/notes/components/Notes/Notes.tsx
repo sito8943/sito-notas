@@ -86,7 +86,7 @@ function Notes() {
             ?.map((note) => (
               <PreviewNote
                 key={note.id}
-                {...note}
+                note={note}
                 onDelete={(id) => removeNote.mutate(id)}
               />
             ))}

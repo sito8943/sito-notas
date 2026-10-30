@@ -31,6 +31,7 @@ describe("NoteApiClient mapping", () => {
       title: "Note 7",
       content: "body",
       categories: [{ id: 1, name: "c", color: "#fff" }],
+      favorite: false,
       createdAt: Date.UTC(2026, 9, 1, 10, 0, 0),
       updatedAt: Date.UTC(2026, 9, 2, 8, 30, 0),
     });
@@ -121,6 +122,18 @@ describe("NoteApiClient", () => {
     expect(fetchFn.mock.calls[0]?.[1]?.body).toBe(
       JSON.stringify({ title: "t", content: "c", categoryIds: [] }),
     );
+  });
+
+  it("sets favorite with a partial patch", async () => {
+    const { client, fetchFn } = setup();
+    fetchFn.mockResolvedValue(jsonResponse(200, 5));
+
+    await client.setFavorite({ id: 5, favorite: true });
+
+    const [url, init] = fetchFn.mock.calls[0] ?? [];
+    expect(String(url)).toBe("https://api.test/notes/5");
+    expect(init?.method).toBe("PATCH");
+    expect(JSON.parse(String(init?.body))).toEqual({ id: 5, favorite: true });
   });
 
   it("updates without categoryIds so categories are kept", async () => {

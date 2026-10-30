@@ -1,7 +1,8 @@
 @reference "@/styles/global.css";
 
+/* Masonry: cards flow down CSS columns and keep their own height */
 .notes {
-  @apply grid gap-5 grid-cols-5 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 sm:grid-cols-1;
+  @apply columns-4 gap-5 xl:columns-3 lg:columns-2 sm:columns-1;
 }
 
 .notes-syncing {
@@ -19,7 +20,7 @@
 
 /* Combined with the global .skeleton-box helper */
 .notes-skeleton {
-  @apply h-[300px] w-full rounded-xl!;
+  @apply mb-5 h-[300px] w-full break-inside-avoid rounded-xl!;
 }
 
 /* Combined with the global .primary helper */

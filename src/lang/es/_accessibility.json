@@ -98,7 +98,10 @@
     "sidebar": "Barra lateral",
     "expandSidebar": "Expandir barra lateral",
     "collapseSidebar": "Contraer barra lateral",
-    "headerActions": "Acciones rápidas"
+    "headerActions": "Acciones rápidas",
+    "share": "Compartir",
+    "favorite": "Añadir a favoritas",
+    "unfavorite": "Quitar de favoritas"
   },
   "pwa": {
     "offlineReady": "Sito Notas ya funciona sin conexión",

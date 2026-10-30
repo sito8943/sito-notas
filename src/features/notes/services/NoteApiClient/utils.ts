@@ -56,6 +56,7 @@ export const toNote = (value: unknown): Note => {
     title: typeof value.title === "string" ? value.title : "",
     content: typeof value.content === "string" ? value.content : "",
     categories: toNoteCategories(value.categories),
+    favorite: value.favorite === true,
     createdAt,
     updatedAt: parseApiDate(value.updatedAt) || createdAt,
   };
