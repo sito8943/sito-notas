@@ -1,5 +1,6 @@
 import { useState, useEffect, type ChangeEvent } from "react";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useDebounce } from "@/shared/hooks";
 import { useQuery, useMutation } from "@tanstack/react-query";
 
@@ -8,6 +9,7 @@ import { useToast } from "@sito/ui";
 
 // providers
 import { useAppApiClient } from "@/shared/providers/ApiClientProvider";
+import { getRequestErrorKey } from "@/shared/lib/errors";
 
 // components
 import { InputControl } from "@/shared/components/molecules/InputControl";
@@ -29,6 +31,7 @@ function Note() {
   const validId = Number.isInteger(noteId) && noteId > 0;
 
   const appApiClient = useAppApiClient();
+  const { t } = useTranslation();
   const toast = useToast();
 
   const [toUpdate, setToUpdate] = useState<UpdateNoteInput | undefined>(
@@ -57,7 +60,7 @@ function Note() {
     onError: (error) => {
       console.error(error);
       toast({
-        message: error.message,
+        message: t(getRequestErrorKey(error)),
         color: "error",
       });
     },

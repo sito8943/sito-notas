@@ -11,6 +11,7 @@ import { useToast, Spinner } from "@sito/ui";
 
 // providers
 import { useAppApiClient } from "@/shared/providers/ApiClientProvider";
+import { getRequestErrorKey } from "@/shared/lib/errors";
 import { useSearch } from "@/features/notes/providers/SearchProvider";
 import { useCache } from "@/features/notes/providers/CacheProvider";
 
@@ -51,7 +52,7 @@ function Notes() {
     },
     onError: (mutationError) => {
       console.error(mutationError);
-      toast({ message: mutationError.message, color: "error" });
+      toast({ message: t(getRequestErrorKey(mutationError)), color: "error" });
     },
   });
 

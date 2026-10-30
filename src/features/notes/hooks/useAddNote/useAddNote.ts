@@ -6,6 +6,7 @@ import { useToast } from "@sito/ui";
 
 // providers
 import { useAppApiClient } from "@/shared/providers/ApiClientProvider";
+import { getRequestErrorKey } from "@/shared/lib/errors";
 import { useCache } from "@/features/notes/providers/CacheProvider";
 
 import { ADD_NOTE_MUTATION_KEY } from "./constants";
@@ -37,7 +38,7 @@ function useAddNote(options: UseAddNoteOptions = {}) {
     },
     onError: (mutationError) => {
       console.error(mutationError);
-      toast({ message: mutationError.message, color: "error" });
+      toast({ message: t(getRequestErrorKey(mutationError)), color: "error" });
     },
   });
 }

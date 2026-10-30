@@ -1,10 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 
 // @sito/ui
 import { useToast } from "@sito/ui";
 
 // utils
 import { queryClient } from "@/shared/lib/queryClient";
+import { getRequestErrorKey } from "@/shared/lib/errors";
 import { getNotesListKey } from "@/features/notes/constants";
 
 // providers
@@ -23,6 +25,7 @@ import { withFavorite } from "./utils";
  * @returns the mutation
  */
 function useToggleFavorite() {
+  const { t } = useTranslation();
   const toast = useToast();
   const appApiClient = useAppApiClient();
   const { account } = useAccount();
@@ -42,7 +45,7 @@ function useToggleFavorite() {
     onError: (mutationError, _input, context) => {
       console.error(mutationError);
       queryClient.setQueryData(listKey, context?.previous);
-      toast({ message: mutationError.message, color: "error" });
+      toast({ message: t(getRequestErrorKey(mutationError)), color: "error" });
     },
   });
 }
