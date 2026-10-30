@@ -5,7 +5,7 @@
 }
 
 .note-syncing {
-  @apply pointer-events-none fixed bottom-1 left-1 h-10 w-10 scale-0 rounded-full bg-(--sito-ui-color-primary-default) text-(--sito-ui-color-primary-text) transition-all duration-300 ease-in-out;
+  @apply pointer-events-none fixed bottom-1 left-1 md:bottom-20 h-10 w-10 scale-0 rounded-full bg-(--sito-ui-color-primary-default) text-(--sito-ui-color-primary-text) transition-all duration-300 ease-in-out;
 }
 
 .note-syncing.visible {

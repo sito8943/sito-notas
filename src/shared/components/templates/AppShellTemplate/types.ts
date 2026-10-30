@@ -9,6 +9,8 @@ export interface AppShellTemplateProps {
   navLabel?: string;
   /** Side navigation, left of the header and content */
   sidebar?: ReactNode;
+  /** Navigation fixed to the bottom on small screens */
+  bottomNavigation?: ReactNode;
   /** Page content; pages render their own <main> */
   children: ReactNode;
 }

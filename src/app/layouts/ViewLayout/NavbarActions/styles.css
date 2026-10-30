@@ -1,0 +1,6 @@
+@reference "@/styles/global.css";
+
+/* Sign out lives in the sidebar on wide screens */
+.navbar-sign-out {
+  @apply hidden md:inline-flex;
+}

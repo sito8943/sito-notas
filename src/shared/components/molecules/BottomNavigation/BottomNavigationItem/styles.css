@@ -1,0 +1,13 @@
+@reference "@/styles/global.css";
+
+.bottom-nav-item {
+  @apply flex h-12 w-12 items-center justify-center rounded-lg text-xl text-text-muted transition-colors hover:text-text;
+}
+
+.bottom-nav-item.active {
+  @apply text-text-primary;
+}
+
+.bottom-nav-item.disabled {
+  @apply cursor-not-allowed opacity-50 hover:text-text-muted;
+}

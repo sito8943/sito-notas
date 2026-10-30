@@ -5,15 +5,16 @@
 }
 
 .notes-syncing {
-  @apply pointer-events-none fixed bottom-1 left-1 z-20 h-10 w-10 scale-0 rounded-full bg-(--sito-ui-color-primary-default) text-(--sito-ui-color-primary-text) transition-all duration-300 ease-in-out;
+  @apply pointer-events-none fixed bottom-1 left-1 z-20 md:bottom-20 h-10 w-10 scale-0 rounded-full bg-(--sito-ui-color-primary-default) text-(--sito-ui-color-primary-text) transition-all duration-300 ease-in-out;
 }
 
 .notes-syncing.visible {
   @apply scale-100;
 }
 
+/* Small screens add notes from the bottom navigation */
 .notes-fab {
-  @apply z-10 p-6 text-2xl;
+  @apply z-10 p-6 text-2xl md:hidden;
 }
 
 /* Combined with the global .skeleton-box helper */
@@ -23,7 +24,7 @@
 
 /* Combined with the global .primary helper */
 .notes-spinner {
-  @apply pointer-events-none fixed bottom-1 left-1 flex h-10 w-10 scale-0 items-center justify-center text-2xl transition-all duration-300 ease-in-out;
+  @apply pointer-events-none fixed bottom-1 left-1 md:bottom-20 flex h-10 w-10 scale-0 items-center justify-center text-2xl transition-all duration-300 ease-in-out;
 }
 
 .notes-spinner.visible {

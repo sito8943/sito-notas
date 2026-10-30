@@ -1,9 +1,10 @@
 import type { AppShellTemplateProps } from "./types";
 import "./styles.css";
 
-/** App frame: optional sidebar, then a column with header and content */
+/** App frame: optional sidebar, a column with header and content, and an optional bottom navigation */
 function AppShellTemplate(props: AppShellTemplateProps) {
-  const { brand, actions, navLabel, sidebar, children } = props;
+  const { brand, actions, navLabel, sidebar, bottomNavigation, children } =
+    props;
 
   return (
     <div className="app-shell">
@@ -19,6 +20,7 @@ function AppShellTemplate(props: AppShellTemplateProps) {
         </header>
         <div className="app-shell-content">{children}</div>
       </div>
+      {bottomNavigation}
     </div>
   );
 }

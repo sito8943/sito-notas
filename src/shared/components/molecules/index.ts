@@ -5,3 +5,5 @@ export * from "./ThemeToggle";
 export * from "./TextInput";
 export * from "./PasswordInput";
 export * from "./Sidebar";
+export * from "./BottomNavigation";
+export * from "./Tabs";

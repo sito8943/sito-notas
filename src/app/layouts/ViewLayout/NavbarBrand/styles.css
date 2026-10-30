@@ -1,0 +1,10 @@
+@reference "@/styles/global.css";
+
+/* The sidebar shows the user on wide screens */
+.navbar-user {
+  @apply hidden items-center gap-2 md:flex;
+}
+
+.navbar-user-avatar {
+  @apply h-10 w-10 rounded-full object-cover;
+}

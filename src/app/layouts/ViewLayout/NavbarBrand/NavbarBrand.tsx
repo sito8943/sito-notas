@@ -11,12 +11,30 @@ import { IconButton } from "@sito/ui";
 // routes
 import { AppRoute } from "@/shared/routes";
 
-/** Back button on inner pages; the user identity lives in the sidebar */
+// features
+import { useAccount } from "@/features/auth";
+
+// images
+import noPhoto from "@/assets/images/no-photo.webp";
+
+import "./styles.css";
+
+/** Back button on inner pages; on home, the user's avatar on small screens */
 function NavbarBrand() {
   const { t } = useTranslation();
   const { pathname } = useLocation();
+  const { account } = useAccount();
 
-  if (pathname === AppRoute.Home) return null;
+  if (pathname === AppRoute.Home)
+    return (
+      <div className="navbar-user">
+        <img
+          src={noPhoto}
+          alt={account.user?.username ?? ""}
+          className="navbar-user-avatar"
+        />
+      </div>
+    );
 
   const goHomeLabel = `${t("_accessibility:ariaLabels.goTo")} ${t(
     "_pages:routes.home",
