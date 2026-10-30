@@ -10,7 +10,10 @@
 }
 
 .preview-note-title {
-  @apply text-base leading-snug;
+  @apply text-text;
+  /* Not `text-base`: with the shared palette that resolves to the surface color */
+  font-size: 1rem;
+  line-height: 1.375;
 }
 
 .preview-note-excerpt {

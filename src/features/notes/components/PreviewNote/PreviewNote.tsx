@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 // @sito/ui
-import { ICON_BUTTON_SIZES, IconButton, useToast } from "@sito/ui";
+import { ICON_BUTTON_SIZES, IconButton, Tooltip, useToast } from "@sito/ui";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -56,6 +56,8 @@ function PreviewNote(props: PreviewNoteProps) {
   const favoriteLabel = favorite
     ? t("_accessibility:ariaLabels.unfavorite")
     : t("_accessibility:ariaLabels.favorite");
+  const shareLabel = t("_accessibility:ariaLabels.share");
+  const removeLabel = t("_accessibility:buttons.remove");
 
   return (
     <article className="preview-note appear">
@@ -77,28 +79,36 @@ function PreviewNote(props: PreviewNoteProps) {
           <span />
         )}
         <div className="preview-note-actions">
-          <IconButton
-            color="primary"
-            size={ICON_BUTTON_SIZES.SM}
-            aria-label={t("_accessibility:ariaLabels.share")}
-            onClick={share}
-            icon={<FontAwesomeIcon icon={faShareNodes} />}
-          />
-          <IconButton
-            color="primary"
-            size={ICON_BUTTON_SIZES.SM}
-            aria-label={favoriteLabel}
-            aria-pressed={favorite}
-            onClick={() => toggleFavorite.mutate({ id, favorite: !favorite })}
-            icon={<FontAwesomeIcon icon={favorite ? faHeartSolid : faHeart} />}
-          />
-          <IconButton
-            color="primary"
-            size={ICON_BUTTON_SIZES.SM}
-            aria-label={t("_accessibility:buttons.remove")}
-            onClick={() => onDelete(id)}
-            icon={<FontAwesomeIcon icon={faTrash} />}
-          />
+          <Tooltip label={shareLabel}>
+            <IconButton
+              color="primary"
+              size={ICON_BUTTON_SIZES.SM}
+              aria-label={shareLabel}
+              onClick={share}
+              icon={<FontAwesomeIcon icon={faShareNodes} />}
+            />
+          </Tooltip>
+          <Tooltip label={favoriteLabel}>
+            <IconButton
+              color="primary"
+              size={ICON_BUTTON_SIZES.SM}
+              aria-label={favoriteLabel}
+              aria-pressed={favorite}
+              onClick={() => toggleFavorite.mutate({ id, favorite: !favorite })}
+              icon={
+                <FontAwesomeIcon icon={favorite ? faHeartSolid : faHeart} />
+              }
+            />
+          </Tooltip>
+          <Tooltip label={removeLabel} align="end">
+            <IconButton
+              color="error"
+              size={ICON_BUTTON_SIZES.SM}
+              aria-label={removeLabel}
+              onClick={() => onDelete(id)}
+              icon={<FontAwesomeIcon icon={faTrash} />}
+            />
+          </Tooltip>
         </div>
       </footer>
     </article>

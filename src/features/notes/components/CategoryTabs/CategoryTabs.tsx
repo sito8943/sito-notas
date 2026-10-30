@@ -34,6 +34,9 @@ function CategoryTabs() {
       setCategoryId(null);
   }, [categoryId, setCategoryId, tabs]);
 
+  // Only "All": nothing to pick, it is implied
+  if (tabs.length <= 1) return null;
+
   return (
     <Tabs
       label={t("_pages:routes.tags")}
