@@ -2,7 +2,11 @@ import type { ReactNode } from "react";
 import { ToastProvider } from "@sito/ui";
 
 // shared
-import { ApiClientProvider, ThemeProvider } from "@/shared/providers";
+import {
+  ApiClientProvider,
+  SidebarProvider,
+  ThemeProvider,
+} from "@/shared/providers";
 
 // features
 import { AccountProvider } from "@/features/auth";
@@ -20,7 +24,9 @@ function AppProviders({ children }: { children: ReactNode }) {
         <AccountProvider>
           <CacheProvider>
             <ToastProvider placement="bottom-right">
-              <SearchProvider>{children}</SearchProvider>
+              <SearchProvider>
+                <SidebarProvider>{children}</SidebarProvider>
+              </SearchProvider>
             </ToastProvider>
           </CacheProvider>
         </AccountProvider>

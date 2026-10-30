@@ -4,6 +4,7 @@
 @import "./animations/appear.css";
 @import "./animations/grow.css";
 @import "./animations/shake.css";
+@import "./animations/reveal.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 

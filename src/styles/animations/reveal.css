@@ -1,0 +1,15 @@
+/* Hidden while a container finishes growing, then fades in
+   (e.g. sidebar labels during the 200ms width transition) */
+.reveal-after-grow {
+  animation: reveal-after-grow 0.15s ease 0.15s both;
+}
+
+@keyframes reveal-after-grow {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

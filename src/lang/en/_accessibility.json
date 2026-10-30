@@ -93,7 +93,11 @@
     "closeDialog": "Close dialog",
     "darkMode": "Dark mode",
     "lightMode": "Light mode",
-    "mainNavigation": "Main navigation"
+    "mainNavigation": "Main navigation",
+    "sidebar": "Sidebar",
+    "expandSidebar": "Expand sidebar",
+    "collapseSidebar": "Collapse sidebar",
+    "headerActions": "Quick actions"
   },
   "errors": {
     "passwordDoNotMatch": "Password don't match",
