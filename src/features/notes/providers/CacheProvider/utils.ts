@@ -3,7 +3,9 @@ import { fromLocalObject } from "@/shared/lib/storage";
 import { NOTES_STORAGE_KEY } from "@/features/notes/constants";
 import type { Note } from "@/features/notes/models";
 
-const isNote = (value: unknown): value is Note => {
+type CachedNote = Omit<Note, "categories"> & { categories?: unknown };
+
+const isNote = (value: unknown): value is CachedNote => {
   if (typeof value !== "object" || value === null) return false;
   const { id, title, content, updatedAt } = value as Record<string, unknown>;
   return (
@@ -21,7 +23,13 @@ const isNote = (value: unknown): value is Note => {
 export const readCachedNotes = (): Note[] | undefined => {
   try {
     const cached = fromLocalObject<unknown>(NOTES_STORAGE_KEY);
-    return Array.isArray(cached) ? cached.filter(isNote) : undefined;
+    // Notes cached before tags existed have no `categories`
+    return Array.isArray(cached)
+      ? cached.filter(isNote).map((note) => ({
+          ...note,
+          categories: Array.isArray(note.categories) ? note.categories : [],
+        }))
+      : undefined;
   } catch (error) {
     console.error(error);
     return undefined;

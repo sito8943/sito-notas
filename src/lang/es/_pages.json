@@ -56,6 +56,10 @@
       "deleted": "Nota eliminada",
       "defaultTitle": "Nueva nota",
       "defaultContent": "Escribe algo aquí"
+    },
+    "welcome": "Bienvenido {{user}}",
+    "tabs": {
+      "all": "Todas"
     }
   },
   "settings": {

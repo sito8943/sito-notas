@@ -12,19 +12,28 @@ import { IconButton } from "@sito/ui";
 // sections
 import { Notes } from "@/features/notes/components/Notes";
 import { SearchWrapper } from "@/features/notes/components/SearchWrapper";
+import { CategoryTabs } from "@/features/notes/components/CategoryTabs";
+
+// features
+import { useAccount } from "@/features/auth";
 
 import "./styles.css";
 
 function Home() {
   const { t } = useTranslation();
 
+  const { account } = useAccount();
+
   const mainRef = useRef<HTMLElement>(null);
 
   return (
     <main ref={mainRef} className="home">
       <div className="home-content">
-        <h2 className="home-title">Mis notas</h2>
+        <h2 className="home-title">
+          {t("_pages:home.welcome", { user: account.user?.username })}
+        </h2>
         <SearchWrapper />
+        <CategoryTabs />
         <Notes />
       </div>
       <IconButton

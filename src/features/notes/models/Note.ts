@@ -1,8 +1,16 @@
+/** Tag of a note (the API calls them categories) */
+export interface NoteCategory {
+  id: number;
+  name: string;
+  color?: string;
+}
+
 /** Note as the UI uses it. Dates are epoch milliseconds. */
 export interface Note {
   id: number;
   title: string;
   content: string;
+  categories: NoteCategory[];
   createdAt: number;
   updatedAt: number;
 }

@@ -49,6 +49,10 @@
       "deleted": "Note deleted",
       "defaultTitle": "New note",
       "defaultContent": "Write something here"
+    },
+    "welcome": "Welcome {{user}}",
+    "tabs": {
+      "all": "All"
     }
   },
   "settings": {

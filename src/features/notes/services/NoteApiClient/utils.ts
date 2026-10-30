@@ -1,4 +1,4 @@
-import type { Note, PageDto } from "@/features/notes/models";
+import type { Note, NoteCategory, PageDto } from "@/features/notes/models";
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === "object" && value !== null;
@@ -18,6 +18,30 @@ export const parseApiDate = (value: unknown): number => {
 };
 
 /**
+ * Keeps the well-formed categories of a NoteDTO
+ * @param value - `categories` of one item of the API response
+ * @returns the note tags
+ */
+export const toNoteCategories = (value: unknown): NoteCategory[] =>
+  Array.isArray(value)
+    ? value.flatMap((item) =>
+        isRecord(item) &&
+        typeof item.id === "number" &&
+        typeof item.name === "string"
+          ? [
+              {
+                id: item.id,
+                name: item.name,
+                ...(typeof item.color === "string"
+                  ? { color: item.color }
+                  : {}),
+              },
+            ]
+          : [],
+      )
+    : [];
+
+/**
  * Validates and maps a NoteDTO
  * @param value - one item of the API response
  * @returns the UI note
@@ -31,6 +55,7 @@ export const toNote = (value: unknown): Note => {
     id: value.id,
     title: typeof value.title === "string" ? value.title : "",
     content: typeof value.content === "string" ? value.content : "",
+    categories: toNoteCategories(value.categories),
     createdAt,
     updatedAt: parseApiDate(value.updatedAt) || createdAt,
   };

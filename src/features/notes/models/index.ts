@@ -1,1 +1,7 @@
-export type { Note, NoteCategoryDto, NoteDto, PageDto } from "./Note";
+export type {
+  Note,
+  NoteCategory,
+  NoteCategoryDto,
+  NoteDto,
+  PageDto,
+} from "./Note";

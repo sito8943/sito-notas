@@ -30,9 +30,20 @@ describe("NoteApiClient mapping", () => {
       id: 7,
       title: "Note 7",
       content: "body",
+      categories: [{ id: 1, name: "c", color: "#fff" }],
       createdAt: Date.UTC(2026, 9, 1, 10, 0, 0),
       updatedAt: Date.UTC(2026, 9, 2, 8, 30, 0),
     });
+  });
+
+  it("keeps only well-formed categories", () => {
+    expect(
+      toNote({
+        id: 2,
+        categories: [{ id: 3, name: "work", color: null }, { name: "x" }, 5],
+      }).categories,
+    ).toEqual([{ id: 3, name: "work" }]);
+    expect(toNote({ id: 2, categories: null }).categories).toEqual([]);
   });
 
   it("defaults null fields and falls back to createdAt", () => {
