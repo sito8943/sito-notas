@@ -1,12 +1,7 @@
 import { NavLink } from "react-router-dom";
 
-import {
-  NAV_ITEM_ACTIVE_CLASSNAME,
-  NAV_ITEM_BASE_CLASSNAME,
-  NAV_ITEM_DISABLED_CLASSNAME,
-  NAV_ITEM_IDLE_CLASSNAME,
-} from "./constants";
 import type { SidebarNavItemProps } from "./types";
+import "./styles.css";
 
 /** One sidebar entry: route link, action button or disabled placeholder */
 function SidebarNavItem(props: SidebarNavItemProps) {
@@ -15,35 +10,28 @@ function SidebarNavItem(props: SidebarNavItemProps) {
 
   const content = (
     <>
-      <span className="flex w-5 shrink-0 justify-center" aria-hidden>
+      <span className="sidebar-item-icon" aria-hidden>
         {icon}
       </span>
       {collapsed ? null : (
-        <span className="reveal-after-grow flex-1 truncate">{label}</span>
+        <span className="sidebar-item-label reveal-after-grow">{label}</span>
       )}
-      {badge ? (
-        <span
-          className={`flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1.5 text-xs text-on-brand ${
-            collapsed ? "absolute top-1 right-1 h-4 min-w-4 px-1" : ""
-          }`}
-        >
-          {badge}
-        </span>
-      ) : null}
+      {badge ? <span className="sidebar-item-badge">{badge}</span> : null}
     </>
   );
 
   // Collapsed: the label is only reachable through aria-label and title
   const a11y = collapsed ? { "aria-label": label, title: label } : {};
-  const layout = collapsed ? "justify-center px-0" : "";
+  const className = `sidebar-item ${collapsed ? "collapsed" : ""}`;
+
+  const handleClick = () => {
+    onClick?.();
+    onNavigate?.();
+  };
 
   if (disabled)
     return (
-      <span
-        {...a11y}
-        aria-disabled
-        className={`${NAV_ITEM_BASE_CLASSNAME} ${NAV_ITEM_DISABLED_CLASSNAME} ${layout}`}
-      >
+      <span {...a11y} aria-disabled className={`${className} disabled`}>
         {content}
       </span>
     );
@@ -53,31 +41,16 @@ function SidebarNavItem(props: SidebarNavItemProps) {
       <NavLink
         to={to}
         end={end}
-        onClick={() => {
-          onClick?.();
-          onNavigate?.();
-        }}
+        onClick={handleClick}
         {...a11y}
-        className={({ isActive }) =>
-          `${NAV_ITEM_BASE_CLASSNAME} ${
-            isActive ? NAV_ITEM_ACTIVE_CLASSNAME : NAV_ITEM_IDLE_CLASSNAME
-          } ${layout}`
-        }
+        className={({ isActive }) => `${className} ${isActive ? "active" : ""}`}
       >
         {content}
       </NavLink>
     );
 
   return (
-    <button
-      type="button"
-      onClick={() => {
-        onClick?.();
-        onNavigate?.();
-      }}
-      {...a11y}
-      className={`${NAV_ITEM_BASE_CLASSNAME} ${NAV_ITEM_IDLE_CLASSNAME} ${layout}`}
-    >
+    <button type="button" onClick={handleClick} {...a11y} className={className}>
       {content}
     </button>
   );

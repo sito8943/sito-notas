@@ -1,0 +1,54 @@
+@reference "@/styles/global.css";
+
+.sidebar {
+  @apply flex h-full w-16 shrink-0 flex-col items-center gap-5 overflow-x-hidden overflow-y-auto border-r border-border bg-base-light px-2 py-5 whitespace-nowrap transition-[width] duration-200;
+}
+
+/* Expanded; on small screens it overlays the content */
+.sidebar.open {
+  @apply w-64 items-stretch px-4 md:fixed md:inset-y-0 md:left-0 md:z-40 md:shadow-xl;
+}
+
+/* Keeps the rail's space while the expanded sidebar overlays */
+.sidebar-spacer {
+  @apply hidden w-16 shrink-0 md:block;
+}
+
+/* The theme resets --color-*, so the scrim color is plain CSS */
+.sidebar-backdrop {
+  @apply fixed inset-0 z-30 hidden md:block;
+  background-color: rgb(0 0 0 / 0.4);
+}
+
+.sidebar-header {
+  @apply flex flex-col items-center gap-3;
+}
+
+.sidebar.open .sidebar-header {
+  @apply flex-row;
+}
+
+/* max-w-none: the img must keep its size while the width animates */
+.sidebar-avatar {
+  @apply h-10 w-10 max-w-none shrink-0 rounded-full object-cover;
+}
+
+.sidebar-name {
+  @apply flex-1 truncate font-bold capitalize;
+}
+
+.sidebar-action {
+  @apply w-full justify-center gap-2;
+}
+
+.sidebar-nav {
+  @apply flex w-full flex-1 flex-col;
+}
+
+.sidebar-list {
+  @apply flex flex-col gap-1;
+}
+
+.sidebar-list.footer {
+  @apply mt-auto border-t border-border pt-4;
+}
