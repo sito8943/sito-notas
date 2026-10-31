@@ -26,15 +26,22 @@ import { useNoteShares } from "@/features/notes/hooks/useNoteShares";
 import { useShareNote } from "@/features/notes/hooks/useShareNote";
 
 import type { ShareNoteDialogProps } from "./types";
-import { getShareInitial, getShareName } from "./utils";
+import { getShareInitial, getShareName, isSameNoteSummary } from "./utils";
 import "./styles.css";
 
 /**
  * Share a note with other Sito Notas users by email (view or edit), change
  * or remove who has access, or send a copy with the system share sheet.
  */
-function ShareNoteDialog({ note, onClose }: ShareNoteDialogProps) {
+function ShareNoteDialog(props: ShareNoteDialogProps) {
+  const { onClose } = props;
   const { t } = useTranslation();
+
+  // Keeps the last note while the dialog animates out, so its people list
+  // and title don't vanish (and resize it) on close
+  const [note, setNote] = useState(props.note);
+  if (props.note && !isSameNoteSummary(props.note, note)) setNote(props.note);
+  const open = props.note !== null;
   const [email, setEmail] = useState("");
   const [permission, setPermission] = useState<SharePermissionValue>(
     SharePermission.Read,
@@ -71,7 +78,7 @@ function ShareNoteDialog({ note, onClose }: ShareNoteDialogProps) {
   return (
     <Dialog
       closeIcon={<FontAwesomeIcon icon={faXmark} />}
-      open={note !== null}
+      open={open}
       title={t("_pages:share.title", { title })}
       onClose={close}
       closeLabel={t("_accessibility:buttons.close")}
