@@ -10,14 +10,14 @@
 }
 
 .preview-note-title {
-  @apply text-text;
+  @apply text-text wrap-anywhere;
   /* Not `text-base`: with the shared palette that resolves to the surface color */
   font-size: 1rem;
   line-height: 1.375;
 }
 
 .preview-note-excerpt {
-  @apply line-clamp-6 text-sm text-text-muted;
+  @apply line-clamp-6 text-sm wrap-anywhere text-text-muted;
 }
 
 .preview-note-date {
