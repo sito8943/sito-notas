@@ -4,6 +4,7 @@ import { Placeholder } from "@tiptap/extensions";
 import { Markdown } from "@tiptap/markdown";
 
 import { MARKDOWN_PARSE_OPTIONS } from "./constants";
+import { MoveListItem } from "./MoveListItem";
 
 /**
  * Editor features. Only formats Markdown can store are enabled, so saving
@@ -18,6 +19,7 @@ export const createEditorExtensions = (placeholder: string) => [
   }),
   TaskList,
   TaskItem.configure({ nested: true }),
+  MoveListItem,
   Placeholder.configure({ placeholder }),
   Markdown.configure({ markedOptions: MARKDOWN_PARSE_OPTIONS }),
 ];
