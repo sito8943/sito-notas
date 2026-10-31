@@ -20,6 +20,7 @@ import {
 } from "@/features/notes/components/NoteEditor";
 
 // hooks
+import { useEscapeKey } from "@/shared/hooks";
 import {
   NoteSaveStatus,
   toNoteId,
@@ -52,6 +53,12 @@ function Note() {
   } = useNoteEditor(noteId);
 
   const [mode, setMode] = useState<NoteEditorModeValue>(NoteEditorMode.Rich);
+
+  // Escape: Markdown source back to the editor, then out of the note
+  useEscapeKey(() => {
+    if (mode === NoteEditorMode.Markdown) setMode(NoteEditorMode.Rich);
+    else navigate(AppRoute.Home);
+  });
 
   const removeDialog = useDialog();
   const share = useShareNote();
