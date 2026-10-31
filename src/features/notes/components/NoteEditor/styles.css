@@ -70,8 +70,14 @@
   @apply flex items-start gap-2;
 }
 
+/* As tall as one text line, so the checkbox centers on the first line */
 .note-editor-content ul[data-type="taskList"] li > label {
-  @apply mt-1 shrink-0;
+  @apply flex shrink-0 items-center;
+  height: 1lh;
+}
+
+.note-editor-content ul[data-type="taskList"] li > label > input {
+  @apply m-0 h-4 w-4 cursor-pointer accent-(--color-text-primary);
 }
 
 .note-editor-content ul[data-type="taskList"] li > div {
