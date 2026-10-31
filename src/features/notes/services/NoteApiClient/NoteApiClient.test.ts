@@ -5,7 +5,13 @@ import { jsonResponse } from "@/test/http";
 
 import { NoteApiClient } from "./NoteApiClient";
 import { NOTES_PAGE_SIZE } from "./constants";
-import { parseApiDate, toNote, toNoteShare } from "./utils";
+import {
+  parseApiDate,
+  toLinkToken,
+  toNote,
+  toNoteShare,
+  toPublicNote,
+} from "./utils";
 
 const dto = (id: number, updatedAt: string) => ({
   id,
@@ -304,5 +310,40 @@ describe("NoteApiClient shared notes", () => {
     expect(String(fetchFn.mock.calls[0]?.[0])).toBe(
       "https://api.test/notes/shared",
     );
+  });
+});
+
+describe("NoteApiClient public links", () => {
+  it("maps link tokens and public notes", () => {
+    expect(toLinkToken({ token: "abc" })).toBe("abc");
+    expect(toLinkToken({ token: null })).toBeNull();
+    expect(toLinkToken({ token: "" })).toBeNull();
+    expect(
+      toPublicNote({
+        title: "T",
+        content: "C",
+        updatedAt: "2026-10-01T10:00:00",
+        ownerName: "ana",
+      }),
+    ).toEqual({
+      title: "T",
+      content: "C",
+      updatedAt: Date.UTC(2026, 9, 1, 10, 0, 0),
+      ownerName: "ana",
+    });
+  });
+
+  it("reads a public note without a session", async () => {
+    const { client, fetchFn } = setup();
+    fetchFn.mockResolvedValueOnce(
+      jsonResponse(200, { title: "T", content: "C", ownerName: "ana" }),
+    );
+
+    await expect(client.getPublic("a b")).resolves.toMatchObject({
+      title: "T",
+    });
+    const [url, init] = fetchFn.mock.calls[0] ?? [];
+    expect(String(url)).toBe("https://api.test/public/notes/a%20b");
+    expect(new Headers(init?.headers).has("Authorization")).toBe(false);
   });
 });

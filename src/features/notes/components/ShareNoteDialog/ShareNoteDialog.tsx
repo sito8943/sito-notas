@@ -14,6 +14,7 @@ import { Button, Dialog, ICON_BUTTON_SIZES, IconButton } from "@sito/ui";
 
 // components
 import { SharePermissionSelect } from "@/features/notes/components/SharePermissionSelect";
+import { ShareLinkSection } from "@/features/notes/components/ShareLinkSection";
 
 // models
 import {
@@ -31,7 +32,8 @@ import "./styles.css";
 
 /**
  * Share a note with other Sito Notas users by email (view or edit), change
- * or remove who has access, or send a copy with the system share sheet.
+ * or remove who has access, manage its public link, or send a copy with
+ * the system share sheet.
  */
 function ShareNoteDialog(props: ShareNoteDialogProps) {
   const { onClose } = props;
@@ -171,6 +173,8 @@ function ShareNoteDialog(props: ShareNoteDialogProps) {
             </ul>
           )}
         </section>
+
+        <ShareLinkSection noteId={note?.id ?? null} />
 
         <footer className="share-note-footer">
           <Button

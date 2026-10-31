@@ -208,7 +208,17 @@
       "alreadyShared": "This note is already shared with that person"
     },
     "permissionLabel": "Permission",
-    "permissionFor": "{{name}}'s permission"
+    "permissionFor": "{{name}}'s permission",
+    "link": {
+      "title": "Public link",
+      "off": "Anyone with the link can read the note, without an account and without editing it.",
+      "create": "Create link",
+      "copy": "Copy link",
+      "copied": "Link copied",
+      "remove": "Turn off",
+      "removeLabel": "Turn off the public link",
+      "urlLabel": "Public link of the note"
+    }
   },
   "shared": {
     "description": "Notes other people shared with you.",
@@ -216,5 +226,12 @@
     "from": "From {{name}}",
     "readOnly": "Read only",
     "canEdit": "You can edit"
+  },
+  "publicNote": {
+    "by": "By {{name}}",
+    "updated": "Edited {{date}}",
+    "notFound": "This link doesn't exist or was turned off",
+    "open": "Open Sito Notas",
+    "contentLabel": "Note content"
   }
 }

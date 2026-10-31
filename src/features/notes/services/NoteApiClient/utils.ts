@@ -4,6 +4,7 @@ import {
   type NoteCategory,
   type NoteOwner,
   type NoteShare,
+  type PublicNote,
   type PageDto,
 } from "@/features/notes/models";
 
@@ -182,4 +183,29 @@ export const toNoteShare = (value: unknown): NoteShare => {
 export const toNoteShares = (value: unknown): NoteShare[] => {
   if (!Array.isArray(value)) throw new Error("Invalid note shares response");
   return value.map(toNoteShare);
+};
+
+/**
+ * @param value - body of the link endpoints
+ * @returns the link token, or null when the note has no public link
+ */
+export const toLinkToken = (value: unknown): string | null =>
+  isRecord(value) && typeof value.token === "string" && value.token
+    ? value.token
+    : null;
+
+/**
+ * Validates and maps a PublicNoteDTO
+ * @param value - parsed response body
+ * @returns the public note
+ * @throws Error when it is not an object
+ */
+export const toPublicNote = (value: unknown): PublicNote => {
+  if (!isRecord(value)) throw new Error("Invalid public note");
+  return {
+    title: typeof value.title === "string" ? value.title : "",
+    content: typeof value.content === "string" ? value.content : "",
+    updatedAt: parseApiDate(value.updatedAt),
+    ownerName: typeof value.ownerName === "string" ? value.ownerName : "",
+  };
 };

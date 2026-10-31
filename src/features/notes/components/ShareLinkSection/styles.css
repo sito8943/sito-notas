@@ -1,0 +1,47 @@
+@reference "@/styles/global.css";
+
+.share-link {
+  @apply flex flex-col gap-2 border-t border-border pt-3;
+}
+
+.share-link-title {
+  @apply text-sm font-semibold text-text-muted;
+}
+
+.share-link-row {
+  @apply flex items-center gap-2;
+}
+
+.share-link-url {
+  @apply min-w-0 flex-1 truncate rounded-lg border border-border bg-base px-3 py-2 text-sm text-text outline-none focus:border-text-muted;
+}
+
+/* Small screens: only the icon */
+.share-link-copy {
+  @apply shrink-0 gap-2;
+}
+
+.share-link-copy-label {
+  @apply md:hidden;
+}
+
+.share-link-footer {
+  @apply flex items-center justify-between gap-3 sm:flex-col sm:items-stretch;
+}
+
+.share-link-hint {
+  @apply text-xs text-text-muted;
+}
+
+.share-link-create {
+  @apply shrink-0 gap-2;
+}
+
+.share-link-remove {
+  @apply shrink-0;
+}
+
+/* Combined with the global .skeleton-box helper */
+.share-link-skeleton {
+  @apply h-10 w-full rounded-lg!;
+}

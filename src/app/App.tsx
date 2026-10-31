@@ -34,6 +34,9 @@ const NotFound = loadable(() => import("@/app/pages/NotFound/NotFound"));
 const Note = loadable(() => import("@/features/notes/pages/Note/Note"));
 const Trash = loadable(() => import("@/features/notes/pages/Trash/Trash"));
 const Shared = loadable(() => import("@/features/notes/pages/Shared/Shared"));
+const PublicNote = loadable(
+  () => import("@/features/notes/pages/PublicNote/PublicNote"),
+);
 const Tags = loadable(() => import("@/features/notes/pages/Tags/Tags"));
 const Settings = loadable(
   () => import("@/features/settings/pages/Settings/Settings"),
@@ -87,6 +90,7 @@ function App() {
             </Route>
 
             <Route path={AppRoute.SignOut} element={<SignOut />} />
+            <Route path={AppRoute.PublicNote} element={<PublicNote />} />
             <Route path={AppRoute.NotFound} element={<NotFound />} />
           </Routes>
         </BrowserRouter>

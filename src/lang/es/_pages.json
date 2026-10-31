@@ -215,7 +215,17 @@
       "alreadyShared": "Ya compartiste esta nota con esa persona"
     },
     "permissionLabel": "Permiso",
-    "permissionFor": "Permiso de {{name}}"
+    "permissionFor": "Permiso de {{name}}",
+    "link": {
+      "title": "Enlace público",
+      "off": "Cualquiera con el enlace podrá leer la nota, sin cuenta y sin poder editarla.",
+      "create": "Crear enlace",
+      "copy": "Copiar enlace",
+      "copied": "Enlace copiado",
+      "remove": "Desactivar",
+      "removeLabel": "Desactivar el enlace público",
+      "urlLabel": "Enlace público de la nota"
+    }
   },
   "shared": {
     "description": "Notas que otras personas compartieron contigo.",
@@ -223,5 +233,12 @@
     "from": "De {{name}}",
     "readOnly": "Solo lectura",
     "canEdit": "Puedes editar"
+  },
+  "publicNote": {
+    "by": "De {{name}}",
+    "updated": "Editado {{date}}",
+    "notFound": "Este enlace no existe o fue desactivado",
+    "open": "Abrir Sito Notas",
+    "contentLabel": "Contenido de la nota"
   }
 }

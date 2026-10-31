@@ -8,6 +8,20 @@ export const NoteEndpoint = {
 
 /**
  * @param noteId - note id
+ * @returns endpoint of the note's public link
+ */
+export const getNoteLinkEndpoint = (noteId: number) =>
+  `${NoteEndpoint.Notes}/${noteId}/link`;
+
+/**
+ * @param token - public link token
+ * @returns endpoint that reads a note by its public link (no login)
+ */
+export const getPublicNoteEndpoint = (token: string) =>
+  `/public/notes/${encodeURIComponent(token)}`;
+
+/**
+ * @param noteId - note id
  * @returns endpoint of the users the note is shared with
  */
 export const getNoteSharesEndpoint = (noteId: number) =>

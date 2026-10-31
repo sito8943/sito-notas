@@ -1,6 +1,6 @@
 import type { HttpClient } from "@/shared/lib/http";
 
-import type { Note, NoteShare } from "@/features/notes/models";
+import type { Note, NoteShare, PublicNote } from "@/features/notes/models";
 
 import {
   MAX_NOTE_PAGES,
@@ -8,7 +8,9 @@ import {
   NOTES_PAGE_SIZE,
   NoteEndpoint,
   TRASH_LIST_QUERY,
+  getNoteLinkEndpoint,
   getNoteSharesEndpoint,
+  getPublicNoteEndpoint,
 } from "./constants";
 import type {
   CreateNoteInput,
@@ -26,6 +28,8 @@ import {
   toNote,
   toNoteShare,
   toNoteShares,
+  toLinkToken,
+  toPublicNote,
 } from "./utils";
 
 /**
@@ -219,6 +223,50 @@ export class NoteApiClient {
         `${getNoteSharesEndpoint(input.noteId)}/${input.userId}`,
         { permission: input.permission },
       ),
+    );
+  }
+
+  /**
+   * @param noteId - id of one of the user's notes
+   * @returns token of its public link, or null when it has none
+   */
+  async getLink(noteId: number): Promise<string | null> {
+    return toLinkToken(
+      await this.http.get<unknown>(getNoteLinkEndpoint(noteId)),
+    );
+  }
+
+  /**
+   * Creates the public read-only link (or returns the existing one)
+   * @param noteId - id of one of the user's notes
+   * @returns the link token
+   */
+  async createLink(noteId: number): Promise<string | null> {
+    return toLinkToken(
+      await this.http.post<unknown>(getNoteLinkEndpoint(noteId)),
+    );
+  }
+
+  /**
+   * Disables the public link; creating it again gives a new one
+   * @param noteId - id of one of the user's notes
+   */
+  async removeLink(noteId: number): Promise<void> {
+    await this.http.delete<unknown>(getNoteLinkEndpoint(noteId));
+  }
+
+  /**
+   * Reads a note by its public link, without login
+   * @param token - public link token
+   * @returns the note
+   * @throws HttpError 404 when the link does not exist, was disabled or the
+   * note is in the trash
+   */
+  async getPublic(token: string): Promise<PublicNote> {
+    return toPublicNote(
+      await this.http.get<unknown>(getPublicNoteEndpoint(token), {
+        auth: false,
+      }),
     );
   }
 
