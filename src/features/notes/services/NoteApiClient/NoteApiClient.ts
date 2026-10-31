@@ -17,7 +17,7 @@ import type {
 import {
   parsePage,
   sortByDeletedAtDesc,
-  sortByUpdatedAtDesc,
+  sortByPosition,
   toNote,
 } from "./utils";
 
@@ -34,10 +34,10 @@ export class NoteApiClient {
 
   /**
    * Loads every active note, paging until the last page
-   * @returns notes sorted by last update, newest first
+   * @returns notes in the user's manual order, then newest update first
    */
   async list(): Promise<Note[]> {
-    return sortByUpdatedAtDesc(await this.listPages(NOTES_LIST_QUERY));
+    return sortByPosition(await this.listPages(NOTES_LIST_QUERY));
   }
 
   /**
@@ -121,6 +121,15 @@ export class NoteApiClient {
    */
   async remove(ids: number[]): Promise<number> {
     return this.http.delete<number>(NoteEndpoint.Notes, ids);
+  }
+
+  /**
+   * Saves the manual order of the notes; trashed or foreign ids are skipped
+   * @param ids - every active note id, top first
+   * @returns number of notes updated
+   */
+  async reorder(ids: number[]): Promise<number> {
+    return this.http.patch<number>(NoteEndpoint.Reorder, ids);
   }
 
   /**

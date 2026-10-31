@@ -1,7 +1,7 @@
 @reference "@/styles/global.css";
 
-/* Masonry: cards flow down CSS columns and keep their own height */
-.notes {
+/* Placeholders while loading: CSS columns, same breakpoints as NotesGrid */
+.notes-skeletons {
   @apply columns-4 gap-5 xl:columns-3 lg:columns-2 sm:columns-1;
 }
 

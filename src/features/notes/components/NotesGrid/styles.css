@@ -1,0 +1,36 @@
+@reference "@/styles/global.css";
+
+/* Row-major masonry: one flex column per layout column */
+.notes-grid {
+  @apply flex items-start gap-5;
+}
+
+.notes-grid.dragging {
+  @apply cursor-grabbing select-none;
+}
+
+.notes-grid-column {
+  @apply flex min-w-0 flex-1 flex-col;
+}
+
+/* Vertical pan stays native; a held touch starts the drag */
+.notes-grid-item {
+  @apply relative rounded-xl;
+  touch-action: pan-y;
+}
+
+/* Links and images never start the browser's own drag */
+.notes-grid-item a,
+.notes-grid-item img {
+  -webkit-user-drag: none;
+}
+
+/* Card under the pointer: follows it, above the rest, lets hits through */
+.notes-grid-item.lifted {
+  @apply pointer-events-none z-20 opacity-90 shadow-xl;
+}
+
+/* Drop target */
+.notes-grid-item.target {
+  @apply outline-2 outline-offset-2 outline-(--sito-ui-color-primary-default);
+}

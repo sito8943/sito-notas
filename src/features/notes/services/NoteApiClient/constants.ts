@@ -2,6 +2,7 @@ export const NoteEndpoint = {
   Notes: "/notes",
   Restore: "/notes/restore",
   Permanent: "/notes/permanent",
+  Reorder: "/notes/reorder",
 } as const;
 
 /** Page size used to load every note of the user */

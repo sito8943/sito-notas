@@ -61,6 +61,7 @@ export const toNote = (value: unknown): Note => {
     createdAt,
     updatedAt: parseApiDate(value.updatedAt) || createdAt,
     ...(deletedAt ? { deletedAt } : {}),
+    ...(typeof value.position === "number" ? { position: value.position } : {}),
   };
 };
 
@@ -89,6 +90,21 @@ export const parsePage = (value: unknown): PageDto<unknown> => {
  */
 export const sortByUpdatedAtDesc = (notes: Note[]): Note[] =>
   [...notes].sort((a, b) => b.updatedAt - a.updatedAt);
+
+/**
+ * Manual order first (lower position on top), then notes never ordered,
+ * each group newest update first
+ * @param notes - notes to sort
+ * @returns a sorted copy
+ */
+export const sortByPosition = (notes: Note[]): Note[] =>
+  [...notes].sort((a, b) => {
+    if (a.position !== undefined && b.position !== undefined)
+      return a.position - b.position || b.updatedAt - a.updatedAt;
+    if (a.position !== undefined) return -1;
+    if (b.position !== undefined) return 1;
+    return b.updatedAt - a.updatedAt;
+  });
 
 /**
  * @param notes - trashed notes
