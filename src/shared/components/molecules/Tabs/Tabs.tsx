@@ -1,7 +1,7 @@
 import type { TabsProps } from "./types";
 import "./styles.css";
 
-/** Text tabs (Notes / Favorite style) that select one value */
+/** Chip tabs that select one value (filters such as All / Favorites / tags) */
 function Tabs<T extends string | number>(props: TabsProps<T>) {
   const { tabs, value, onChange, label, className = "" } = props;
 

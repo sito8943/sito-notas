@@ -8,18 +8,20 @@ import { Tabs } from "@/shared/components/molecules/Tabs";
 import { useCache } from "@/features/notes/providers/CacheProvider";
 import { useSearch } from "@/features/notes/providers/SearchProvider";
 
-import { ALL_CATEGORIES_TAB } from "./constants";
+import { ALL_CATEGORIES_TAB, FAVORITES_TAB } from "./constants";
 import { getUsedCategories } from "./utils";
 
-/** Filters the notes by tag: "All" plus every tag the notes use */
+/** Filters the notes: "All", "Favorites" and every tag the notes use */
 function CategoryTabs() {
   const { t } = useTranslation();
   const { cache } = useCache();
-  const { categoryId, setCategoryId } = useSearch();
+  const { categoryId, setCategoryId, favoritesOnly, setFavoritesOnly } =
+    useSearch();
 
   const tabs = useMemo(
     () => [
       { value: ALL_CATEGORIES_TAB, label: t("_pages:home.tabs.all") },
+      { value: FAVORITES_TAB, label: t("_pages:home.tabs.favorites") },
       ...getUsedCategories(cache ?? []).map(({ id, name }) => ({
         value: id,
         label: name,
@@ -34,17 +36,15 @@ function CategoryTabs() {
       setCategoryId(null);
   }, [categoryId, setCategoryId, tabs]);
 
-  // Only "All": nothing to pick, it is implied
-  if (tabs.length <= 1) return null;
-
   return (
     <Tabs
       label={t("_pages:routes.tags")}
       tabs={tabs}
-      value={categoryId ?? ALL_CATEGORIES_TAB}
-      onChange={(value) =>
-        setCategoryId(value === ALL_CATEGORIES_TAB ? null : value)
-      }
+      value={favoritesOnly ? FAVORITES_TAB : (categoryId ?? ALL_CATEGORIES_TAB)}
+      onChange={(value) => {
+        setFavoritesOnly(value === FAVORITES_TAB);
+        setCategoryId(value > ALL_CATEGORIES_TAB ? value : null);
+      }}
     />
   );
 }

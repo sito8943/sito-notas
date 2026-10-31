@@ -5,7 +5,6 @@
     "signUp": "Registrarse",
     "signOut": "Cerrar sesión",
     "settings": "Configuración",
-    "notes": "Todas las notas",
     "tags": "Etiquetas",
     "calendar": "Calendario",
     "shared": "Compartidas conmigo",
@@ -57,11 +56,13 @@
       "defaultTitle": "Nueva nota",
       "defaultContent": "Escribe algo aquí",
       "untitled": "Nota sin título",
-      "copied": "Nota copiada"
+      "copied": "Nota copiada",
+      "noFavorites": "Aún no tienes notas favoritas. Márcalas con el corazón."
     },
     "welcome": "Bienvenido {{user}}",
     "tabs": {
-      "all": "Todas"
+      "all": "Todas",
+      "favorites": "Favoritas"
     }
   },
   "settings": {

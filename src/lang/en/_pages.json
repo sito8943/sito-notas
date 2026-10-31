@@ -5,7 +5,6 @@
     "signUp": "Sign Up",
     "signOut": "Sign Out",
     "settings": "Settings",
-    "notes": "All notes",
     "tags": "Tags",
     "calendar": "Calendar",
     "shared": "Shared with me",
@@ -50,11 +49,13 @@
       "defaultTitle": "New note",
       "defaultContent": "Write something here",
       "untitled": "Untitled note",
-      "copied": "Note copied"
+      "copied": "Note copied",
+      "noFavorites": "No favorite notes yet. Mark them with the heart."
     },
     "welcome": "Welcome {{user}}",
     "tabs": {
-      "all": "All"
+      "all": "All",
+      "favorites": "Favorites"
     }
   },
   "settings": {

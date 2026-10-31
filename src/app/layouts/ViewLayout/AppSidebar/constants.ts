@@ -3,7 +3,6 @@ import {
   faCalendar,
   faGear,
   faHouse,
-  faNoteSticky,
   faTag,
   faTrash,
   faUserGroup,
@@ -20,13 +19,6 @@ export const SIDEBAR_ITEMS: AppSidebarItemConfig[] = [
     icon: faHouse,
     route: AppRoute.Home,
     end: true,
-  },
-  {
-    id: "notes",
-    labelKey: "_pages:routes.notes",
-    icon: faNoteSticky,
-    route: AppRoute.Notes,
-    disabled: true,
   },
   {
     id: "tags",

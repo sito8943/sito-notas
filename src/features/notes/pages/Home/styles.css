@@ -1,7 +1,8 @@
 @reference "@/styles/global.css";
 
+/* Vertical page: never a sideways scrollbar */
 .home {
-  @apply flex h-full flex-col overflow-auto;
+  @apply flex h-full flex-col overflow-x-hidden overflow-y-auto;
 }
 
 .home-content {

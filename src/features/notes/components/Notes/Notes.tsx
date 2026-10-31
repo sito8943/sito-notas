@@ -46,7 +46,7 @@ const PreviewNote = loadable(
 function Notes() {
   const { t } = useTranslation();
 
-  const { searchFunction } = useSearch();
+  const { searchFunction, favoritesOnly } = useSearch();
 
   const { cache, isLoading, isSyncing } = useCache();
 
@@ -119,6 +119,8 @@ function Notes() {
             <div key={skeleton} className="notes-skeleton skeleton-box" />
           ))}
         </div>
+      ) : favoritesOnly && !visible.length ? (
+        <p className="notes-empty">{t("_pages:home.notes.noFavorites")}</p>
       ) : (
         <NotesGrid notes={visible} renderNote={renderNote} onMove={moveNote} />
       )}

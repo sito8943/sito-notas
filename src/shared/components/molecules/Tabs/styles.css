@@ -1,15 +1,20 @@
 @reference "@/styles/global.css";
 
-/* Scrolls sideways when the tabs do not fit */
+/* Chips (soft corners, not pills); scrolls sideways when they do not fit */
 .tabs {
-  @apply flex gap-5 overflow-x-auto whitespace-nowrap;
+  @apply flex gap-2 overflow-x-auto overscroll-x-contain py-0.5 whitespace-nowrap;
   scrollbar-width: none;
 }
 
+/* Safari/iOS ignore scrollbar-width: hide the bar there too */
+.tabs::-webkit-scrollbar {
+  display: none;
+}
+
 .tabs-tab {
-  @apply shrink-0 py-1 text-lg font-bold text-text-muted opacity-60 transition-opacity hover:opacity-100;
+  @apply shrink-0 rounded-lg border border-border bg-base-light px-3 py-1.5 text-sm font-medium text-text-muted transition-colors hover:border-text-muted hover:text-text focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--sito-ui-color-primary-default);
 }
 
 .tabs-tab.selected {
-  @apply text-text opacity-100;
+  @apply border-(--sito-ui-color-primary-default) bg-(--sito-ui-color-primary-default) text-(--sito-ui-color-primary-text);
 }

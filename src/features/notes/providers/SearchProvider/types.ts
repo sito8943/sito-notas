@@ -9,6 +9,9 @@ export interface SearchContextValue {
   /** Selected tag; null shows every note */
   categoryId: number | null;
   setCategoryId: Dispatch<SetStateAction<number | null>>;
+  /** Show only favorite notes (combined with the tag, when one is set) */
+  favoritesOnly: boolean;
+  setFavoritesOnly: Dispatch<SetStateAction<boolean>>;
 }
 
 export interface SearchProviderProps {

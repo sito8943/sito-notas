@@ -18,6 +18,10 @@
   @apply z-10 p-6 text-2xl md:hidden;
 }
 
+.notes-empty {
+  @apply py-10 text-center text-text-muted;
+}
+
 /* Combined with the global .skeleton-box helper */
 .notes-skeleton {
   @apply mb-5 h-[300px] w-full break-inside-avoid rounded-xl!;
