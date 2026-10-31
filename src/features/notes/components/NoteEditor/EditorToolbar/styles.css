@@ -1,16 +1,18 @@
 @reference "@/styles/global.css";
 
-/* Stays visible while the note scrolls */
+/* Stays visible while the note scrolls. No overflow clipping: tooltips are
+   drawn inside the buttons, so narrow screens wrap instead of scrolling */
 .editor-toolbar {
-  @apply sticky top-0 z-10 flex items-center gap-1 overflow-x-auto rounded-xl border border-border bg-base-light p-1;
+  @apply sticky top-2 z-10 flex flex-wrap items-center gap-1 rounded-2xl bg-base-light px-2 py-1.5;
 }
 
 .editor-toolbar-group {
   @apply flex shrink-0 items-center gap-0.5 border-r border-border pr-1;
 }
 
-.editor-toolbar-group:last-child {
-  @apply border-r-0 pr-0;
+/* Undo sits on the right edge */
+.editor-toolbar-end {
+  @apply ml-auto flex shrink-0 items-center;
 }
 
 .editor-toolbar-button {
@@ -19,8 +21,4 @@
 
 .editor-toolbar-button.active {
   @apply bg-base-dark text-text-primary;
-}
-
-.editor-toolbar-text {
-  @apply text-xs font-bold;
 }

@@ -11,11 +11,20 @@
 
 /* Combined with the global .appear helper */
 .note-body {
-  @apply mx-auto flex w-full max-w-3xl flex-col gap-4 px-10 pb-16 sm:px-3;
+  @apply mx-auto flex w-full max-w-3xl flex-col gap-6 px-10 pt-10 pb-16 sm:px-3 sm:pt-6;
+}
+
+.note-heading {
+  @apply flex flex-col gap-2;
 }
 
 .note-title {
-  @apply w-full bg-transparent font-[family-name:Poppins] text-3xl font-bold text-text outline-none placeholder:text-text-muted sm:text-2xl;
+  @apply w-full bg-transparent font-[family-name:Poppins] text-4xl font-bold text-text outline-none placeholder:text-text-muted sm:text-3xl;
+}
+
+/* Combined with the global .skeleton-box helper */
+.note-title-skeleton {
+  @apply h-12 w-2/3;
 }
 
 .note-source {
@@ -32,11 +41,6 @@
 
 .note-syncing.visible {
   @apply scale-100;
-}
-
-/* Combined with the global .skeleton-box helper */
-.note-title-skeleton {
-  @apply h-10 w-2/3;
 }
 
 /* Combined with the global .skeleton-box helper */

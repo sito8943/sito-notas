@@ -1,0 +1,5 @@
+@reference "@/styles/global.css";
+
+.remove-note-dialog-description {
+  @apply mb-4 text-text-muted;
+}

@@ -1,21 +1,45 @@
 @reference "@/styles/global.css";
 
 .note-header {
-  @apply flex w-full items-center gap-3 px-10 py-2 sm:px-3;
+  @apply flex w-full items-center gap-3 border-b border-border px-10 py-3 sm:px-3;
 }
 
-.note-header-status {
-  @apply min-w-0 flex-1 truncate text-xs text-text-muted;
+.note-header-nav {
+  @apply min-w-0 flex-1;
 }
 
-.note-header-status.error {
-  @apply text-bg-error;
+.note-header-crumbs {
+  @apply flex min-w-0 items-center gap-2 text-sm;
+}
+
+.note-header-crumb-link {
+  @apply shrink-0 text-text-muted transition-colors hover:text-text;
+}
+
+.note-header-crumb-separator {
+  @apply shrink-0 text-xs text-text-muted;
+}
+
+.note-header-crumb-current {
+  @apply min-w-0 truncate text-text;
 }
 
 .note-header-actions {
-  @apply flex shrink-0 items-center;
+  @apply flex shrink-0 items-center gap-1;
 }
 
-.note-header-toggle.active {
-  @apply bg-base-dark;
+.note-header-action {
+  @apply text-text-muted;
+}
+
+/* Danger variant of the @sito/ui menu item (0.10 has none); the library
+   class raises specificity over its own color and hover */
+.note-header-remove.sito-ui-context-menu__item,
+.note-header-remove .sito-ui-context-menu__leading {
+  @apply text-bg-error;
+}
+
+.note-header-remove.sito-ui-context-menu__item:hover:not(:disabled),
+.note-header-remove.sito-ui-context-menu__item:focus-visible {
+  background: color-mix(in srgb, var(--color-bg-error) 15%, transparent);
 }

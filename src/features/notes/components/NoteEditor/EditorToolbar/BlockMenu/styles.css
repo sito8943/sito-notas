@@ -1,0 +1,18 @@
+@reference "@/styles/global.css";
+
+.block-menu-button {
+  @apply flex h-8 min-w-16 items-center justify-between gap-2 rounded-lg px-2 text-sm font-semibold text-text-muted transition-colors hover:bg-base-dark hover:text-text;
+}
+
+.block-menu-chevron {
+  @apply text-xs;
+}
+
+/* Keeps every item aligned; only the current block shows it */
+.block-menu-check {
+  @apply invisible;
+}
+
+.block-menu-check.visible {
+  @apply visible;
+}

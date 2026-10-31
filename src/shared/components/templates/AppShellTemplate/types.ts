@@ -5,6 +5,8 @@ export interface AppShellTemplateProps {
   brand: ReactNode;
   /** Right side of the header, rendered inside a <nav> */
   actions?: ReactNode;
+  /** Pages with their own top bar (e.g. the note editor) hide the header */
+  hideHeader?: boolean;
   /** Accessible name of the header navigation */
   navLabel?: string;
   /** Side navigation, left of the header and content */

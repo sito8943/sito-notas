@@ -46,7 +46,7 @@
   },
   "home": {
     "notes": {
-      "deleted": "Note deleted",
+      "deleted": "Note moved to trash",
       "defaultTitle": "New note",
       "defaultContent": "Write something here",
       "untitled": "Untitled note",
@@ -100,7 +100,35 @@
       "codeBlock": "Code block",
       "horizontalRule": "Divider",
       "undo": "Undo",
-      "redo": "Redo"
+      "block": "Block type",
+      "paragraph": "Text",
+      "heading1Short": "H1",
+      "heading2Short": "H2",
+      "heading3Short": "H3",
+      "codeBlockShort": "Code",
+      "link": "Link"
+    },
+    "notes": "Notes",
+    "breadcrumb": "Breadcrumb",
+    "more": "More actions",
+    "richText": "Edit with formatting",
+    "updated": "Updated {{date}}",
+    "link": {
+      "title": "Link",
+      "url": "URL",
+      "apply": "Apply",
+      "cancel": "Cancel",
+      "remove": "Remove link",
+      "invalid": "Enter a web, email or phone link"
+    }
+  },
+  "trash": {
+    "moveToTrash": "Move to trash",
+    "confirm": {
+      "title": "Move to trash?",
+      "description": "The note stays in the trash for {{days}} days. You can restore it from there until then; after that it is deleted for good.",
+      "submit": "Move to trash",
+      "cancel": "Cancel"
     }
   }
 }

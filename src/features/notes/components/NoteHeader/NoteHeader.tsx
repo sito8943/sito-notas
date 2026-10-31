@@ -1,14 +1,25 @@
-import { useNavigate } from "react-router-dom";
+import type { MouseEvent } from "react";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 // @sito/ui
-import { ICON_BUTTON_SIZES, IconButton, Tooltip } from "@sito/ui";
+import {
+  ContextMenu,
+  ContextMenuItem,
+  ContextMenuSeparator,
+  ICON_BUTTON_SIZES,
+  IconButton,
+  Tooltip,
+  useContextMenu,
+} from "@sito/ui";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faArrowLeft,
+  faChevronRight,
+  faEllipsis,
   faHeart as faHeartSolid,
+  faPen,
   faShareNodes,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
@@ -21,14 +32,14 @@ import { AppRoute } from "@/shared/routes";
 // components
 import { NoteEditorMode } from "@/features/notes/components/NoteEditor";
 
-import { SAVE_STATUS_LABEL_KEYS } from "./constants";
+import { MENU_OFFSET_PX } from "./constants";
 import type { NoteHeaderProps } from "./types";
 import "./styles.css";
 
-/** Top bar of the note page: back, save status and note actions */
+/** Top bar of the note page: breadcrumb and note actions */
 function NoteHeader(props: NoteHeaderProps) {
   const {
-    status,
+    title,
     mode,
     onModeChange,
     favorite,
@@ -39,79 +50,101 @@ function NoteHeader(props: NoteHeaderProps) {
   } = props;
 
   const { t } = useTranslation();
-  const navigate = useNavigate();
+  const menu = useContextMenu<null>();
 
-  const statusKey = SAVE_STATUS_LABEL_KEYS[status];
   const isMarkdown = mode === NoteEditorMode.Markdown;
 
-  const backLabel = t("_accessibility:buttons.back");
-  const markdownLabel = t("_pages:note.markdown");
-  const favoriteLabel = favorite
-    ? t("_accessibility:ariaLabels.unfavorite")
-    : t("_accessibility:ariaLabels.favorite");
   const shareLabel = t("_accessibility:ariaLabels.share");
-  const removeLabel = t("_accessibility:buttons.remove");
+  const moreLabel = t("_pages:note.more");
+
+  const openMenu = (event: MouseEvent<HTMLButtonElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    menu.openAt(rect.right, rect.bottom + MENU_OFFSET_PX, null);
+  };
+
+  const choose = (action: () => void) => () => {
+    action();
+    menu.close();
+  };
 
   return (
     <header className="note-header">
-      <Tooltip label={backLabel} align="start">
-        <IconButton
-          color="primary"
-          aria-label={backLabel}
-          onClick={() => navigate(AppRoute.Home)}
-          icon={<FontAwesomeIcon icon={faArrowLeft} />}
-        />
-      </Tooltip>
-      <p className={`note-header-status ${status}`} role="status">
-        {statusKey ? t(statusKey) : null}
-      </p>
+      <nav aria-label={t("_pages:note.breadcrumb")} className="note-header-nav">
+        <ol className="note-header-crumbs">
+          <li>
+            <Link to={AppRoute.Home} className="note-header-crumb-link">
+              {t("_pages:note.notes")}
+            </Link>
+          </li>
+          <li aria-hidden="true" className="note-header-crumb-separator">
+            <FontAwesomeIcon icon={faChevronRight} />
+          </li>
+          <li aria-current="page" className="note-header-crumb-current">
+            {title}
+          </li>
+        </ol>
+      </nav>
       {disabled ? null : (
         <div className="note-header-actions">
-          <Tooltip label={markdownLabel}>
-            <IconButton
-              color="primary"
-              size={ICON_BUTTON_SIZES.SM}
-              aria-label={markdownLabel}
-              aria-pressed={isMarkdown}
-              onClick={() =>
-                onModeChange(
-                  isMarkdown ? NoteEditorMode.Rich : NoteEditorMode.Markdown,
-                )
-              }
-              icon={<FontAwesomeIcon icon={faMarkdown} />}
-              className={`note-header-toggle ${isMarkdown ? "active" : ""}`}
-            />
-          </Tooltip>
-          <Tooltip label={favoriteLabel}>
-            <IconButton
-              color="primary"
-              size={ICON_BUTTON_SIZES.SM}
-              aria-label={favoriteLabel}
-              aria-pressed={favorite}
-              onClick={onToggleFavorite}
-              icon={
-                <FontAwesomeIcon icon={favorite ? faHeartSolid : faHeart} />
-              }
-            />
-          </Tooltip>
           <Tooltip label={shareLabel}>
             <IconButton
-              color="primary"
               size={ICON_BUTTON_SIZES.SM}
               aria-label={shareLabel}
               onClick={onShare}
               icon={<FontAwesomeIcon icon={faShareNodes} />}
+              className="note-header-action"
             />
           </Tooltip>
-          <Tooltip label={removeLabel} align="end">
+          <Tooltip label={moreLabel} align="end">
             <IconButton
-              color="error"
               size={ICON_BUTTON_SIZES.SM}
-              aria-label={removeLabel}
-              onClick={onRemove}
-              icon={<FontAwesomeIcon icon={faTrash} />}
+              aria-label={moreLabel}
+              aria-haspopup="menu"
+              aria-expanded={menu.open}
+              onClick={openMenu}
+              icon={<FontAwesomeIcon icon={faEllipsis} />}
+              className="note-header-action"
             />
           </Tooltip>
+          <ContextMenu
+            open={menu.open}
+            position={menu.position}
+            onClose={menu.close}
+            ariaLabel={moreLabel}
+          >
+            <ContextMenuItem
+              leading={
+                <FontAwesomeIcon icon={favorite ? faHeartSolid : faHeart} />
+              }
+              onClick={choose(onToggleFavorite)}
+            >
+              {favorite
+                ? t("_accessibility:ariaLabels.unfavorite")
+                : t("_accessibility:ariaLabels.favorite")}
+            </ContextMenuItem>
+            <ContextMenuItem
+              leading={
+                <FontAwesomeIcon icon={isMarkdown ? faPen : faMarkdown} />
+              }
+              onClick={choose(() =>
+                onModeChange(
+                  isMarkdown ? NoteEditorMode.Rich : NoteEditorMode.Markdown,
+                ),
+              )}
+            >
+              {isMarkdown
+                ? t("_pages:note.richText")
+                : t("_pages:note.markdown")}
+            </ContextMenuItem>
+            <ContextMenuSeparator />
+            <ContextMenuItem
+              leading={<FontAwesomeIcon icon={faTrash} />}
+              onClick={choose(onRemove)}
+              className="note-header-remove"
+            >
+              {t("_pages:trash.moveToTrash")}
+            </ContextMenuItem>
+          </ContextMenu>
         </div>
       )}
     </header>

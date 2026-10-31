@@ -18,12 +18,15 @@ import { faHeart } from "@fortawesome/free-regular-svg-icons";
 // routes
 import { getNoteRoute } from "@/shared/routes";
 
+// utils
+import { formatNoteDate } from "@/features/notes/utils";
+
 // hooks
 import { useShareNote } from "@/features/notes/hooks/useShareNote";
 import { useToggleFavorite } from "@/features/notes/hooks/useToggleFavorite";
 
 import type { PreviewNoteProps } from "./types";
-import { formatNoteDate, toExcerpt } from "./utils";
+import { toExcerpt } from "./utils";
 import "./styles.css";
 
 function PreviewNote(props: PreviewNoteProps) {
@@ -43,7 +46,7 @@ function PreviewNote(props: PreviewNoteProps) {
     ? t("_accessibility:ariaLabels.unfavorite")
     : t("_accessibility:ariaLabels.favorite");
   const shareLabel = t("_accessibility:ariaLabels.share");
-  const removeLabel = t("_accessibility:buttons.remove");
+  const removeLabel = t("_pages:trash.moveToTrash");
 
   return (
     <article className="preview-note appear">

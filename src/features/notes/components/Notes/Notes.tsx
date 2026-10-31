@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import loadable from "@loadable/component";
 import { useIsMutating } from "@tanstack/react-query";
@@ -23,6 +24,7 @@ import { useRemoveNote } from "@/features/notes/hooks/useRemoveNote";
 // components
 import { FAB } from "@/shared/components/atoms/FAB";
 import { Syncing } from "@/shared/components/atoms/Syncing";
+import { RemoveNoteDialog } from "@/features/notes/components/RemoveNoteDialog";
 
 // styles
 import "./styles.css";
@@ -39,7 +41,9 @@ function Notes() {
 
   const { cache, isLoading, isSyncing } = useCache();
 
-  const removeNote = useRemoveNote();
+  // Note waiting for the user to confirm the move to the trash
+  const [toRemove, setToRemove] = useState<number | null>(null);
+  const removeNote = useRemoveNote({ onRemoved: () => setToRemove(null) });
 
   const addNote = useAddNote();
   // Any add button (this FAB or the mobile bottom navigation)
@@ -70,11 +74,7 @@ function Notes() {
         : cache
             ?.filter(searchFunction)
             ?.map((note) => (
-              <PreviewNote
-                key={note.id}
-                note={note}
-                onDelete={(id) => removeNote.mutate(id)}
-              />
+              <PreviewNote key={note.id} note={note} onDelete={setToRemove} />
             ))}
       <div
         className={`notes-spinner primary ${
@@ -83,6 +83,12 @@ function Notes() {
       >
         <Spinner />
       </div>
+      <RemoveNoteDialog
+        open={toRemove !== null}
+        onConfirm={() => toRemove !== null && removeNote.mutate(toRemove)}
+        onClose={() => setToRemove(null)}
+        isLoading={removeNote.isPending}
+      />
     </section>
   );
 }

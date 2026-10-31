@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, matchPath, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 // routes
@@ -32,6 +32,9 @@ function ViewLayout() {
   const { account } = useAccount();
   const { refresh } = useCache();
 
+  // The note editor has its own top bar (title and note actions)
+  const isNotePage = matchPath(AppRoute.Note, pathname) !== null;
+
   useScrollReset();
 
   // Signed out (sign-out, failed refresh, other tab): back to sign-in
@@ -49,6 +52,7 @@ function ViewLayout() {
       bottomNavigation={<AppBottomNavigation />}
       brand={<NavbarBrand />}
       actions={<NavbarActions />}
+      hideHeader={isNotePage}
       navLabel={t("_accessibility:ariaLabels.headerActions")}
     >
       <ErrorHandler>

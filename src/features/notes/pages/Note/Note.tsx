@@ -5,9 +5,14 @@ import { useTranslation } from "react-i18next";
 // routes
 import { AppRoute } from "@/shared/routes";
 
+// @sito/ui
+import { useDialog } from "@sito/ui";
+
 // components
 import { Syncing } from "@/shared/components/atoms/Syncing";
+import { RemoveNoteDialog } from "@/features/notes/components/RemoveNoteDialog";
 import { NoteHeader } from "@/features/notes/components/NoteHeader";
+import { NoteMeta } from "@/features/notes/components/NoteMeta";
 import {
   NoteEditor,
   NoteEditorMode,
@@ -48,6 +53,7 @@ function Note() {
 
   const [mode, setMode] = useState<NoteEditorModeValue>(NoteEditorMode.Rich);
 
+  const removeDialog = useDialog();
   const share = useShareNote();
   const toggleFavorite = useToggleFavorite();
   const removeNote = useRemoveNote({
@@ -67,7 +73,7 @@ function Note() {
   return (
     <main className="note">
       <NoteHeader
-        status={status}
+        title={note ? displayTitle : ""}
         mode={mode}
         onModeChange={setMode}
         favorite={note?.favorite ?? false}
@@ -76,7 +82,7 @@ function Note() {
           toggleFavorite.mutate({ id: note.id, favorite: !note.favorite })
         }
         onShare={() => share(displayTitle, content)}
-        onRemove={remove}
+        onRemove={removeDialog.handleOpen}
         disabled={!note}
       />
       <div
@@ -88,6 +94,12 @@ function Note() {
       >
         <Syncing />
       </div>
+      <RemoveNoteDialog
+        open={removeDialog.open}
+        onConfirm={remove}
+        onClose={removeDialog.handleClose}
+        isLoading={removeNote.isPending}
+      />
       <div className="note-scroll">
         <div className="note-body appear">
           {notFound ? (
@@ -99,20 +111,23 @@ function Note() {
             </>
           ) : (
             <>
-              <input
-                value={title}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  setTitle(e.target.value)
-                }
-                placeholder={t("_pages:note.titlePlaceholder")}
-                aria-label={t("_pages:note.titleLabel")}
-                className="note-title"
-              />
+              <div className="note-heading">
+                <input
+                  value={title}
+                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                    setTitle(event.target.value)
+                  }
+                  placeholder={t("_pages:note.titlePlaceholder")}
+                  aria-label={t("_pages:note.titleLabel")}
+                  className="note-title"
+                />
+                <NoteMeta updatedAt={note.updatedAt} status={status} />
+              </div>
               {mode === NoteEditorMode.Markdown ? (
                 <textarea
                   value={content}
-                  onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-                    setContent(e.target.value)
+                  onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
+                    setContent(event.target.value)
                   }
                   placeholder={placeholder}
                   aria-label={contentLabel}

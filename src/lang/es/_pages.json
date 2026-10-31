@@ -53,7 +53,7 @@
   },
   "home": {
     "notes": {
-      "deleted": "Nota eliminada",
+      "deleted": "Nota movida a la papelera",
       "defaultTitle": "Nueva nota",
       "defaultContent": "Escribe algo aquí",
       "untitled": "Nota sin título",
@@ -107,7 +107,35 @@
       "codeBlock": "Bloque de código",
       "horizontalRule": "Separador",
       "undo": "Deshacer",
-      "redo": "Rehacer"
+      "block": "Tipo de bloque",
+      "paragraph": "Texto",
+      "heading1Short": "H1",
+      "heading2Short": "H2",
+      "heading3Short": "H3",
+      "codeBlockShort": "Código",
+      "link": "Enlace"
+    },
+    "notes": "Notas",
+    "breadcrumb": "Ruta de navegación",
+    "more": "Más acciones",
+    "richText": "Editar con formato",
+    "updated": "Editado {{date}}",
+    "link": {
+      "title": "Enlace",
+      "url": "URL",
+      "apply": "Aplicar",
+      "cancel": "Cancelar",
+      "remove": "Quitar enlace",
+      "invalid": "Escribe un enlace web, de correo o de teléfono"
+    }
+  },
+  "trash": {
+    "moveToTrash": "Mover a la papelera",
+    "confirm": {
+      "title": "¿Mover a la papelera?",
+      "description": "La nota se queda en la papelera {{days}} días. Hasta entonces puedes recuperarla desde allí; después se borra para siempre.",
+      "submit": "Mover a la papelera",
+      "cancel": "Cancelar"
     }
   }
 }
