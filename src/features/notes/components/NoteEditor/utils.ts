@@ -4,6 +4,7 @@ import { Placeholder } from "@tiptap/extensions";
 import { Markdown } from "@tiptap/markdown";
 
 import { MARKDOWN_PARSE_OPTIONS } from "./constants";
+import { ModClickLink } from "./ModClickLink";
 import { MoveListItem } from "./MoveListItem";
 
 /**
@@ -20,6 +21,7 @@ export const createEditorExtensions = (placeholder: string) => [
   TaskList,
   TaskItem.configure({ nested: true }),
   MoveListItem,
+  ModClickLink,
   Placeholder.configure({ placeholder }),
   Markdown.configure({ markedOptions: MARKDOWN_PARSE_OPTIONS }),
 ];

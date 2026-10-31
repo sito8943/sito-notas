@@ -61,6 +61,11 @@
   @apply text-text-primary underline;
 }
 
+/* Ctrl/Cmd held: links open on click (ModClickLink) */
+.note-editor-content.mod-pressed a {
+  @apply cursor-pointer;
+}
+
 /* Checklists: checkbox next to the text, no bullet */
 .note-editor-content ul[data-type="taskList"] {
   @apply list-none pl-0;
