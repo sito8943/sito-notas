@@ -1,0 +1,38 @@
+@reference "@/styles/global.css";
+
+.page-header {
+  @apply flex w-full items-center gap-2 border-b border-border px-10 py-3 sm:px-3;
+}
+
+.page-header-back {
+  @apply -ml-2 text-text-muted;
+}
+
+.page-header-nav {
+  @apply min-w-0 flex-1;
+}
+
+.page-header-crumbs {
+  @apply flex min-w-0 items-center gap-2 text-sm;
+}
+
+.page-header-crumb {
+  @apply shrink-0;
+}
+
+/* The current page takes the free space and truncates */
+.page-header-crumb.current {
+  @apply min-w-0 shrink truncate text-text;
+}
+
+.page-header-crumb-link {
+  @apply text-text-muted transition-colors hover:text-text;
+}
+
+.page-header-separator {
+  @apply shrink-0 text-xs text-text-muted;
+}
+
+.page-header-actions {
+  @apply flex shrink-0 items-center gap-1;
+}

@@ -129,6 +129,28 @@
       "description": "The note stays in the trash for {{days}} days. You can restore it from there until then; after that it is deleted for good.",
       "submit": "Move to trash",
       "cancel": "Cancel"
+    },
+    "title": "Trash",
+    "description": "Notes stay here for {{days}} days, then they are deleted for good.",
+    "empty": "Empty trash",
+    "emptyState": "The trash is empty",
+    "restore": "Restore",
+    "deleteForever": "Delete forever",
+    "deletedAt": "Deleted {{date}}",
+    "purgeIn_one": "Deleted for good in {{count}} day",
+    "purgeIn_other": "Deleted for good in {{count}} days",
+    "purgeToday": "Deleted for good today",
+    "restored_one": "Note restored",
+    "restored_other": "{{count}} notes restored",
+    "deleted_one": "Note deleted for good",
+    "deleted_other": "{{count}} notes deleted for good",
+    "confirmDelete": {
+      "title": "Delete forever?",
+      "description": "This note will be deleted for good. This cannot be undone."
+    },
+    "confirmEmpty": {
+      "title": "Empty the trash?",
+      "description": "The {{count}} notes in the trash will be deleted for good. This cannot be undone."
     }
   }
 }

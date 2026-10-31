@@ -54,7 +54,6 @@ export const SIDEBAR_ITEMS: AppSidebarItemConfig[] = [
     labelKey: "_pages:routes.trash",
     icon: faTrash,
     route: AppRoute.Trash,
-    disabled: true,
   },
 ];
 

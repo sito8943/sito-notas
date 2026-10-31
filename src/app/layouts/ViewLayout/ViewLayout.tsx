@@ -20,6 +20,7 @@ import { AppBottomNavigation } from "./AppBottomNavigation";
 import { AppSidebar } from "./AppSidebar";
 import { NavbarActions } from "./NavbarActions";
 import { NavbarBrand } from "./NavbarBrand";
+import { PAGE_HEADER_ROUTES } from "./constants";
 
 /**
  * Signed-in layout: requires an account and keeps notes fresh per route
@@ -32,8 +33,10 @@ function ViewLayout() {
   const { account } = useAccount();
   const { refresh } = useCache();
 
-  // The note editor has its own top bar (title and note actions)
-  const isNotePage = matchPath(AppRoute.Note, pathname) !== null;
+  // Inner pages bring their own top bar (back + breadcrumb)
+  const hasPageHeader = PAGE_HEADER_ROUTES.some(
+    (route) => matchPath(route, pathname) !== null,
+  );
 
   useScrollReset();
 
@@ -52,7 +55,7 @@ function ViewLayout() {
       bottomNavigation={<AppBottomNavigation />}
       brand={<NavbarBrand />}
       actions={<NavbarActions />}
-      hideHeader={isNotePage}
+      hideHeader={hasPageHeader}
       navLabel={t("_accessibility:ariaLabels.headerActions")}
     >
       <ErrorHandler>

@@ -7,13 +7,19 @@ import {
   NOTES_LIST_QUERY,
   NOTES_PAGE_SIZE,
   NoteEndpoint,
+  TRASH_LIST_QUERY,
 } from "./constants";
 import type {
   CreateNoteInput,
   SetFavoriteInput,
   UpdateNoteInput,
 } from "./types";
-import { parsePage, sortByUpdatedAtDesc, toNote } from "./utils";
+import {
+  parsePage,
+  sortByDeletedAtDesc,
+  sortByUpdatedAtDesc,
+  toNote,
+} from "./utils";
 
 /**
  * Notes API client (notes of the signed-in user)
@@ -31,17 +37,36 @@ export class NoteApiClient {
    * @returns notes sorted by last update, newest first
    */
   async list(): Promise<Note[]> {
+    return sortByUpdatedAtDesc(await this.listPages(NOTES_LIST_QUERY));
+  }
+
+  /**
+   * Loads every note in the trash
+   * @returns trashed notes, most recently deleted first
+   */
+  async listTrash(): Promise<Note[]> {
+    return sortByDeletedAtDesc(await this.listPages(TRASH_LIST_QUERY));
+  }
+
+  /**
+   * Pages through a note listing until the last page
+   * @param query - listing filters
+   * @returns every note of the listing
+   */
+  private async listPages(
+    query: typeof NOTES_LIST_QUERY | typeof TRASH_LIST_QUERY,
+  ): Promise<Note[]> {
     const notes: Note[] = [];
     for (let page = 0; page < MAX_NOTE_PAGES; page++) {
       const response = parsePage(
         await this.http.get<unknown>(NoteEndpoint.Notes, {
-          query: { ...NOTES_LIST_QUERY, page, pageSize: NOTES_PAGE_SIZE },
+          query: { ...query, page, pageSize: NOTES_PAGE_SIZE },
         }),
       );
       notes.push(...response.items.map(toNote));
       if (response.items.length === 0 || page + 1 >= response.totalPages) break;
     }
-    return sortByUpdatedAtDesc(notes);
+    return notes;
   }
 
   /**
@@ -90,11 +115,29 @@ export class NoteApiClient {
   }
 
   /**
-   * Soft-deletes notes
+   * Moves notes to the trash (soft delete)
    * @param ids - note ids
-   * @returns number of deleted notes
+   * @returns number of notes moved
    */
   async remove(ids: number[]): Promise<number> {
     return this.http.delete<number>(NoteEndpoint.Notes, ids);
+  }
+
+  /**
+   * Takes notes out of the trash
+   * @param ids - note ids
+   * @returns number of restored notes
+   */
+  async restore(ids: number[]): Promise<number> {
+    return this.http.patch<number>(NoteEndpoint.Restore, ids);
+  }
+
+  /**
+   * Deletes trashed notes for good; notes not in the trash are ignored
+   * @param ids - note ids
+   * @returns number of deleted notes
+   */
+  async removePermanently(ids: number[]): Promise<number> {
+    return this.http.delete<number>(NoteEndpoint.Permanent, ids);
   }
 }

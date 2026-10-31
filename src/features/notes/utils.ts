@@ -1,5 +1,7 @@
 import {
+  DAY_MS,
   NOTE_DATE_FORMAT,
+  TRASH_RETENTION_DAYS,
   RELATIVE_DATE_MAX_MS,
   RELATIVE_DATE_UNITS,
 } from "./constants";
@@ -25,3 +27,17 @@ export const formatNoteDate = (
       return relative.format(-Math.floor(elapsed / size), unit);
   return relative.format(0, "second");
 };
+
+/**
+ * @param deletedAt - epoch ms the note went to the trash
+ * @param now - current epoch ms
+ * @returns whole days left before the server purges it (0 = today)
+ */
+export const getDaysUntilPurge = (
+  deletedAt: number,
+  now: number = Date.now(),
+): number =>
+  Math.max(
+    0,
+    TRASH_RETENTION_DAYS - Math.floor(Math.max(0, now - deletedAt) / DAY_MS),
+  );

@@ -1,13 +1,12 @@
 import { useTranslation } from "react-i18next";
 
-// @sito/ui
-import { Dialog, DialogActions } from "@sito/ui";
+// components
+import { ConfirmDialog } from "@/shared/components/organisms/ConfirmDialog";
 
 // constants
 import { TRASH_RETENTION_DAYS } from "@/features/notes/constants";
 
 import type { RemoveNoteDialogProps } from "./types";
-import "./styles.css";
 
 /** Asks before moving a note to the trash */
 function RemoveNoteDialog(props: RemoveNoteDialogProps) {
@@ -16,28 +15,20 @@ function RemoveNoteDialog(props: RemoveNoteDialogProps) {
   const { t } = useTranslation();
 
   return (
-    <Dialog
+    <ConfirmDialog
       open={open}
       title={t("_pages:trash.confirm.title")}
-      onClose={onClose}
+      description={t("_pages:trash.confirm.description", {
+        days: TRASH_RETENTION_DAYS,
+      })}
+      confirmText={t("_pages:trash.confirm.submit")}
+      cancelText={t("_pages:trash.confirm.cancel")}
       closeLabel={t("_accessibility:buttons.close")}
-      closeOnBackdropClick={!isLoading}
-      closeOnEscape={!isLoading}
-    >
-      <p className="remove-note-dialog-description">
-        {t("_pages:trash.confirm.description", { days: TRASH_RETENTION_DAYS })}
-      </p>
-      <DialogActions
-        alignEnd
-        primaryText={t("_pages:trash.confirm.submit")}
-        cancelText={t("_pages:trash.confirm.cancel")}
-        onPrimaryClick={onConfirm}
-        onCancel={onClose}
-        isLoading={isLoading}
-        disabled={isLoading}
-        primaryProps={{ color: "error", variant: "submit" }}
-      />
-    </Dialog>
+      onConfirm={onConfirm}
+      onClose={onClose}
+      isLoading={isLoading}
+      danger
+    />
   );
 }
 

@@ -136,6 +136,28 @@
       "description": "La nota se queda en la papelera {{days}} días. Hasta entonces puedes recuperarla desde allí; después se borra para siempre.",
       "submit": "Mover a la papelera",
       "cancel": "Cancelar"
+    },
+    "title": "Papelera",
+    "description": "Las notas se quedan aquí {{days}} días; después se borran para siempre.",
+    "empty": "Vaciar papelera",
+    "emptyState": "La papelera está vacía",
+    "restore": "Restaurar",
+    "deleteForever": "Borrar para siempre",
+    "deletedAt": "Borrada {{date}}",
+    "purgeIn_one": "Se borra en {{count}} día",
+    "purgeIn_other": "Se borra en {{count}} días",
+    "purgeToday": "Se borra hoy",
+    "restored_one": "Nota restaurada",
+    "restored_other": "{{count}} notas restauradas",
+    "deleted_one": "Nota borrada para siempre",
+    "deleted_other": "{{count}} notas borradas para siempre",
+    "confirmDelete": {
+      "title": "¿Borrar para siempre?",
+      "description": "La nota se borrará para siempre. No se puede deshacer."
+    },
+    "confirmEmpty": {
+      "title": "¿Vaciar la papelera?",
+      "description": "Las {{count}} notas de la papelera se borrarán para siempre. No se puede deshacer."
     }
   }
 }

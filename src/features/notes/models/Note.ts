@@ -14,6 +14,8 @@ export interface Note {
   favorite: boolean;
   createdAt: number;
   updatedAt: number;
+  /** When it was moved to the trash (only for trashed notes) */
+  deletedAt?: number;
 }
 
 export interface NoteCategoryDto {

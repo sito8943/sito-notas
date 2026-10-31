@@ -5,6 +5,7 @@ export const ReactQueryKeys = {
 export const NoteQueryScope = {
   List: "list",
   Detail: "detail",
+  Trash: "trash",
 } as const;
 
 /**
@@ -13,6 +14,13 @@ export const NoteQueryScope = {
  */
 export const getNotesListKey = (userId: number | undefined) =>
   [ReactQueryKeys.Notes, NoteQueryScope.List, userId] as const;
+
+/**
+ * @param userId - owner of the trash
+ * @returns query key of the user's trashed notes
+ */
+export const getTrashKey = (userId: number | undefined) =>
+  [ReactQueryKeys.Notes, NoteQueryScope.Trash, userId] as const;
 
 /**
  * @param id - note id
@@ -35,7 +43,8 @@ export const NOTE_DATE_FORMAT: Intl.DateTimeFormatOptions = {
 
 const MINUTE = 60 * 1000;
 const HOUR = 60 * MINUTE;
-const DAY = 24 * HOUR;
+export const DAY_MS = 24 * HOUR;
+const DAY = DAY_MS;
 
 /** Largest unit first: the first one the elapsed time reaches is used */
 export const RELATIVE_DATE_UNITS: [Intl.RelativeTimeFormatUnit, number][] = [

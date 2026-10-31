@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { formatNoteDate } from "./utils";
+import { formatNoteDate, getDaysUntilPurge } from "./utils";
 
 const NOW = Date.UTC(2026, 9, 30, 12, 0, 0);
 const HOUR = 60 * 60 * 1000;
@@ -24,5 +24,19 @@ describe("formatNoteDate", () => {
 
   it("treats future dates (clock skew) as now", () => {
     expect(formatNoteDate(NOW + HOUR, "en", NOW)).toBe("now");
+  });
+});
+
+describe("getDaysUntilPurge", () => {
+  const DAY = 24 * HOUR;
+
+  it("counts down the 30 days of the trash", () => {
+    expect(getDaysUntilPurge(NOW, NOW)).toBe(30);
+    expect(getDaysUntilPurge(NOW - DAY - HOUR, NOW)).toBe(29);
+    expect(getDaysUntilPurge(NOW - 29 * DAY, NOW)).toBe(1);
+  });
+
+  it("never goes below zero", () => {
+    expect(getDaysUntilPurge(NOW - 45 * DAY, NOW)).toBe(0);
   });
 });

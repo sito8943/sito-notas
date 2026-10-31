@@ -1,33 +1,5 @@
 @reference "@/styles/global.css";
 
-.note-header {
-  @apply flex w-full items-center gap-3 border-b border-border px-10 py-3 sm:px-3;
-}
-
-.note-header-nav {
-  @apply min-w-0 flex-1;
-}
-
-.note-header-crumbs {
-  @apply flex min-w-0 items-center gap-2 text-sm;
-}
-
-.note-header-crumb-link {
-  @apply shrink-0 text-text-muted transition-colors hover:text-text;
-}
-
-.note-header-crumb-separator {
-  @apply shrink-0 text-xs text-text-muted;
-}
-
-.note-header-crumb-current {
-  @apply min-w-0 truncate text-text;
-}
-
-.note-header-actions {
-  @apply flex shrink-0 items-center gap-1;
-}
-
 .note-header-action {
   @apply text-text-muted;
 }
