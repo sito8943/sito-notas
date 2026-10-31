@@ -41,8 +41,9 @@
   @apply text-sm font-semibold text-text-muted;
 }
 
+/* No inner scroll: it would clip the permission lists */
 .share-note-list {
-  @apply flex max-h-60 flex-col gap-1 overflow-y-auto;
+  @apply flex flex-col gap-1;
 }
 
 .share-note-person {

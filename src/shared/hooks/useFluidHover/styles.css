@@ -1,0 +1,8 @@
+@reference "@/styles/global.css";
+
+/* Gliding background under the hovered item, behind its content */
+.fluid-highlight {
+  @apply pointer-events-none absolute top-0 left-0 -z-10 rounded-lg bg-base-dark opacity-0;
+  @apply transition-[transform,width,height,opacity] duration-200 ease-out;
+  @apply data-jump:transition-opacity motion-reduce:transition-opacity;
+}
