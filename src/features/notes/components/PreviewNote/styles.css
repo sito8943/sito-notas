@@ -16,10 +16,6 @@
   line-height: 1.375;
 }
 
-.preview-note-excerpt {
-  @apply line-clamp-6 text-sm wrap-anywhere text-text-muted;
-}
-
 .preview-note-date {
   @apply text-xs text-text-muted;
 }
