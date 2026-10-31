@@ -12,6 +12,15 @@ import {
 // @sito/ui
 import { Button, Dialog, ICON_BUTTON_SIZES, IconButton } from "@sito/ui";
 
+// components
+import { SharePermissionSelect } from "@/features/notes/components/SharePermissionSelect";
+
+// models
+import {
+  SharePermission,
+  type SharePermissionValue,
+} from "@/features/notes/models";
+
 // hooks
 import { useNoteShares } from "@/features/notes/hooks/useNoteShares";
 import { useShareNote } from "@/features/notes/hooks/useShareNote";
@@ -21,14 +30,24 @@ import { getShareInitial, getShareName } from "./utils";
 import "./styles.css";
 
 /**
- * Share a note with other Sito Notas users by email (read only), see and
- * remove who has access, or send a copy with the system share sheet.
+ * Share a note with other Sito Notas users by email (view or edit), change
+ * or remove who has access, or send a copy with the system share sheet.
  */
 function ShareNoteDialog({ note, onClose }: ShareNoteDialogProps) {
   const { t } = useTranslation();
   const [email, setEmail] = useState("");
-  const { shares, isLoading, loadErrorKey, add, remove, addErrorKey } =
-    useNoteShares(note?.id ?? null);
+  const [permission, setPermission] = useState<SharePermissionValue>(
+    SharePermission.Read,
+  );
+  const {
+    shares,
+    isLoading,
+    loadErrorKey,
+    add,
+    changePermission,
+    remove,
+    addErrorKey,
+  } = useNoteShares(note?.id ?? null);
   const sendCopy = useShareNote();
 
   const title = note?.title || t("_pages:home.notes.untitled");
@@ -43,7 +62,10 @@ function ShareNoteDialog({ note, onClose }: ShareNoteDialogProps) {
   const submit = (event: FormEvent) => {
     event.preventDefault();
     if (!trimmed || add.isPending) return;
-    add.mutate(trimmed, { onSuccess: () => setEmail("") });
+    add.mutate(
+      { email: trimmed, permission },
+      { onSuccess: () => setEmail("") },
+    );
   };
 
   return (
@@ -69,6 +91,11 @@ function ShareNoteDialog({ note, onClose }: ShareNoteDialogProps) {
             aria-label={t("_pages:share.emailLabel")}
             aria-invalid={addErrorKey !== null}
             className={`share-note-input ${addErrorKey ? "invalid" : ""}`}
+          />
+          <SharePermissionSelect
+            value={permission}
+            onChange={setPermission}
+            label={t("_pages:share.permissionLabel")}
           />
           <Button
             type="submit"
@@ -115,9 +142,16 @@ function ShareNoteDialog({ note, onClose }: ShareNoteDialogProps) {
                         </span>
                       ) : null}
                     </span>
-                    <span className="share-note-permission">
-                      {t("_pages:share.permission.read")}
-                    </span>
+                    <SharePermissionSelect
+                      value={share.permission}
+                      onChange={(next) =>
+                        changePermission.mutate({
+                          userId: share.userId,
+                          permission: next,
+                        })
+                      }
+                      label={t("_pages:share.permissionFor", { name })}
+                    />
                     <IconButton
                       size={ICON_BUTTON_SIZES.SM}
                       aria-label={t("_pages:share.remove", { name })}

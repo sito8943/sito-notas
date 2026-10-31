@@ -193,7 +193,7 @@
     "emailLabel": "Person's email",
     "emailPlaceholder": "email@example.com",
     "submit": "Share",
-    "hint": "Only with people who already use Sito Notas. They can view it, not edit it.",
+    "hint": "Only with people who already use Sito Notas. Choose whether they can view or edit.",
     "people": "People with access",
     "onlyYou": "Only you can access this note.",
     "remove": "Remove access for {{name}}",
@@ -206,12 +206,15 @@
       "notFound": "No Sito Notas user has that email",
       "self": "You can't share a note with yourself",
       "alreadyShared": "This note is already shared with that person"
-    }
+    },
+    "permissionLabel": "Permission",
+    "permissionFor": "{{name}}'s permission"
   },
   "shared": {
-    "description": "Notes other people shared with you. You can view them, not edit them.",
+    "description": "Notes other people shared with you.",
     "emptyState": "Nobody has shared a note with you yet.",
     "from": "From {{name}}",
-    "readOnly": "Read only"
+    "readOnly": "Read only",
+    "canEdit": "You can edit"
   }
 }

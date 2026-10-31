@@ -98,9 +98,13 @@ function useNoteEditor(noteId: number | undefined): UseNoteEditorResult {
       pendingRef.current = null;
       appApiClient.Note.update(pending)
         .then(() =>
-          queryClient.invalidateQueries({
-            queryKey: [ReactQueryKeys.Notes, NoteQueryScope.List],
-          }),
+          Promise.all(
+            [NoteQueryScope.List, NoteQueryScope.Shared].map((scope) =>
+              queryClient.invalidateQueries({
+                queryKey: [ReactQueryKeys.Notes, scope],
+              }),
+            ),
+          ),
         )
         .catch((flushError: unknown) => console.error(flushError));
     },

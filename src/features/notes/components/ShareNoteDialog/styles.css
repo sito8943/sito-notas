@@ -65,10 +65,6 @@
   @apply truncate text-xs text-text-muted;
 }
 
-.share-note-permission {
-  @apply shrink-0 text-xs text-text-muted;
-}
-
 .share-note-empty {
   @apply text-sm text-text-muted;
 }

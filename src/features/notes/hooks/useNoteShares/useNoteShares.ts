@@ -15,12 +15,18 @@ import { useAppApiClient } from "@/shared/providers/ApiClientProvider";
 // models
 import type { NoteShare } from "@/features/notes/models";
 
-import type { RemoveShareContext, UseNoteSharesResult } from "./types";
+import type {
+  AddShareVariables,
+  ChangePermissionVariables,
+  RemoveShareContext,
+  UseNoteSharesResult,
+} from "./types";
 import { getShareErrorKey } from "./utils";
 
 /**
- * Users a note is shared with: load, add by email and remove. Removing
- * changes the list at once and rolls back on error.
+ * Users a note is shared with: load, add by email, change permission and
+ * remove. Changing and removing update the list at once and roll back on
+ * error.
  * @param noteId - note being shared; null loads nothing
  * @returns the shares and both mutations
  */
@@ -37,8 +43,8 @@ function useNoteShares(noteId: number | null): UseNoteSharesResult {
   });
 
   const add = useMutation({
-    mutationFn: (email: string) =>
-      appApiClient.Note.share({ noteId: noteId ?? 0, email }),
+    mutationFn: ({ email, permission }: AddShareVariables) =>
+      appApiClient.Note.share({ noteId: noteId ?? 0, email, permission }),
     onSuccess: (share) =>
       queryClient.setQueryData<NoteShare[]>(sharesKey, (shares) => [
         ...(shares ?? []),
@@ -47,22 +53,54 @@ function useNoteShares(noteId: number | null): UseNoteSharesResult {
     onError: (mutationError) => console.error(mutationError),
   });
 
+  const snapshot = async (): Promise<RemoveShareContext> => {
+    await queryClient.cancelQueries({ queryKey: sharesKey });
+    return { previous: queryClient.getQueryData<NoteShare[]>(sharesKey) };
+  };
+
+  const rollback = (mutationError: Error, context?: RemoveShareContext) => {
+    console.error(mutationError);
+    queryClient.setQueryData(sharesKey, context?.previous);
+    toast({ message: t(getRequestErrorKey(mutationError)), color: "error" });
+  };
+
+  const changePermission = useMutation<
+    NoteShare,
+    Error,
+    ChangePermissionVariables,
+    RemoveShareContext
+  >({
+    mutationFn: ({ userId, permission }) =>
+      appApiClient.Note.setSharePermission({
+        noteId: noteId ?? 0,
+        userId,
+        permission,
+      }),
+    onMutate: async ({ userId, permission }) => {
+      const context = await snapshot();
+      queryClient.setQueryData<NoteShare[]>(sharesKey, (shares) =>
+        shares?.map((share) =>
+          share.userId === userId ? { ...share, permission } : share,
+        ),
+      );
+      return context;
+    },
+    onError: (mutationError, _variables, context) =>
+      rollback(mutationError, context),
+  });
+
   const remove = useMutation<number, Error, number, RemoveShareContext>({
     mutationFn: (userId) =>
       appApiClient.Note.unshare({ noteId: noteId ?? 0, userId }),
     onMutate: async (userId) => {
-      await queryClient.cancelQueries({ queryKey: sharesKey });
-      const previous = queryClient.getQueryData<NoteShare[]>(sharesKey);
+      const context = await snapshot();
       queryClient.setQueryData<NoteShare[]>(sharesKey, (shares) =>
         shares?.filter((share) => share.userId !== userId),
       );
-      return { previous };
+      return context;
     },
-    onError: (mutationError, _userId, context) => {
-      console.error(mutationError);
-      queryClient.setQueryData(sharesKey, context?.previous);
-      toast({ message: t(getRequestErrorKey(mutationError)), color: "error" });
-    },
+    onError: (mutationError, _userId, context) =>
+      rollback(mutationError, context),
   });
 
   return {
@@ -70,6 +108,7 @@ function useNoteShares(noteId: number | null): UseNoteSharesResult {
     isLoading: query.isLoading,
     loadErrorKey: query.error ? getRequestErrorKey(query.error) : null,
     add,
+    changePermission,
     remove,
     addErrorKey: add.error ? getShareErrorKey(add.error) : null,
   };

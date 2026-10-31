@@ -8,10 +8,11 @@ import type { NoteMetaProps } from "./types";
 import "./styles.css";
 
 /**
- * "Updated today · Saved" under the note title; shared notes show
- * "From Ana · Read only" instead of the save status
+ * "Updated today · Saved" under the note title; shared notes add
+ * "From Ana · Can edit" (read-only ones show no save status)
  */
-function NoteMeta({ updatedAt, status, owner }: NoteMetaProps) {
+function NoteMeta(props: NoteMetaProps) {
+  const { updatedAt, status, owner, readOnly = false } = props;
   const { t, i18n } = useTranslation();
 
   const statusKey = SAVE_STATUS_LABEL_KEYS[status];
@@ -26,9 +27,10 @@ function NoteMeta({ updatedAt, status, owner }: NoteMetaProps) {
       {owner ? (
         <span className="note-meta-shared" title={owner.email}>
           {t("_pages:shared.from", { name: getOwnerName(owner) })} ·{" "}
-          {t("_pages:shared.readOnly")}
+          {readOnly ? t("_pages:shared.readOnly") : t("_pages:shared.canEdit")}
         </span>
-      ) : (
+      ) : null}
+      {readOnly ? null : (
         /* Announced to screen readers when the save status changes */
         <span role="status" className={`note-meta-status ${status}`}>
           {statusKey ? t(statusKey) : null}

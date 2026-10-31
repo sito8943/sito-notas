@@ -1,0 +1,5 @@
+@reference "@/styles/global.css";
+
+.share-permission-select {
+  @apply shrink-0 cursor-pointer rounded-lg border border-border bg-base-light px-2 py-2 text-xs text-text outline-none focus:border-text-muted disabled:opacity-50;
+}

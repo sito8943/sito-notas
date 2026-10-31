@@ -14,6 +14,7 @@ import type {
   CreateNoteInput,
   SetFavoriteInput,
   SetNoteTagsInput,
+  SetSharePermissionInput,
   ShareNoteInput,
   UnshareNoteInput,
   UpdateNoteInput,
@@ -191,8 +192,8 @@ export class NoteApiClient {
   }
 
   /**
-   * Shares a note (read only) with another Sito Notas user
-   * @param input - note id and the user's email
+   * Shares a note with another Sito Notas user
+   * @param input - note id, the user's email and what they may do
    * @returns the new share
    * @throws HttpError 404 (no user with that email), 400 (own email),
    * 409 (already shared)
@@ -201,7 +202,23 @@ export class NoteApiClient {
     return toNoteShare(
       await this.http.post<unknown>(getNoteSharesEndpoint(input.noteId), {
         email: input.email,
+        permission: input.permission,
       }),
+    );
+  }
+
+  /**
+   * Changes what a user may do with a shared note
+   * @param input - note id, user id and the new permission
+   * @returns the updated share
+   * @throws HttpError 404 when the note is not shared with that user
+   */
+  async setSharePermission(input: SetSharePermissionInput): Promise<NoteShare> {
+    return toNoteShare(
+      await this.http.patch<unknown>(
+        `${getNoteSharesEndpoint(input.noteId)}/${input.userId}`,
+        { permission: input.permission },
+      ),
     );
   }
 

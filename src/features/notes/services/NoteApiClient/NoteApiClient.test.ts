@@ -249,9 +249,9 @@ describe("NoteApiClient shares", () => {
       .mockResolvedValueOnce(jsonResponse(200, 1));
 
     await expect(client.listShares(5)).resolves.toEqual([]);
-    await expect(client.share({ noteId: 5, email: "a@b.c" })).resolves.toEqual(
-      expect.objectContaining({ userId: 3 }),
-    );
+    await expect(
+      client.share({ noteId: 5, email: "a@b.c", permission: "EDIT" }),
+    ).resolves.toEqual(expect.objectContaining({ userId: 3 }));
     await expect(client.unshare({ noteId: 5, userId: 3 })).resolves.toBe(1);
 
     const calls = fetchFn.mock.calls.map(([url, init]) => [
@@ -261,7 +261,11 @@ describe("NoteApiClient shares", () => {
     ]);
     expect(calls).toEqual([
       ["https://api.test/notes/5/shares", "GET", undefined],
-      ["https://api.test/notes/5/shares", "POST", '{"email":"a@b.c"}'],
+      [
+        "https://api.test/notes/5/shares",
+        "POST",
+        '{"email":"a@b.c","permission":"EDIT"}',
+      ],
       ["https://api.test/notes/5/shares/3", "DELETE", undefined],
     ]);
   });

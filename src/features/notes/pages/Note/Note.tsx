@@ -21,6 +21,9 @@ import {
   type NoteEditorModeValue,
 } from "@/features/notes/components/NoteEditor";
 
+// models
+import { SharePermission } from "@/features/notes/models";
+
 // hooks
 import { useEscapeKey } from "@/shared/hooks";
 import {
@@ -54,8 +57,9 @@ function Note() {
   } = useNoteEditor(noteId);
 
   const [mode, setMode] = useState<NoteEditorModeValue>(NoteEditorMode.Rich);
-  // Notes shared with the user are read only (F2: no edit permission yet)
+  // Shared with the user: no owner actions; read only without EDIT
   const shared = note?.owner !== undefined;
+  const readOnly = shared && note?.permission !== SharePermission.Edit;
 
   // Escape: Markdown source back to the editor, then out of the note
   useEscapeKey(() => {
@@ -129,7 +133,7 @@ function Note() {
           ) : (
             <>
               <div className="note-heading">
-                {shared ? (
+                {readOnly ? (
                   <h1 className="note-title">{displayTitle}</h1>
                 ) : (
                   <input
@@ -146,10 +150,11 @@ function Note() {
                   updatedAt={note.updatedAt}
                   status={status}
                   owner={note.owner}
+                  readOnly={readOnly}
                 />
                 {shared ? null : <NoteTags note={note} />}
               </div>
-              {shared ? (
+              {readOnly ? (
                 <NoteEditor
                   key={note.id}
                   content={content}

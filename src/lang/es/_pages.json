@@ -200,7 +200,7 @@
     "emailLabel": "Correo de la persona",
     "emailPlaceholder": "correo@ejemplo.com",
     "submit": "Compartir",
-    "hint": "Solo con personas que ya usan Sito Notas. Podrán verla, no editarla.",
+    "hint": "Solo con personas que ya usan Sito Notas. Elige si pueden ver o editar.",
     "people": "Personas con acceso",
     "onlyYou": "Solo tú tienes acceso a esta nota.",
     "remove": "Quitar acceso a {{name}}",
@@ -213,12 +213,15 @@
       "notFound": "No hay ningún usuario de Sito Notas con ese correo",
       "self": "No puedes compartir una nota contigo",
       "alreadyShared": "Ya compartiste esta nota con esa persona"
-    }
+    },
+    "permissionLabel": "Permiso",
+    "permissionFor": "Permiso de {{name}}"
   },
   "shared": {
-    "description": "Notas que otras personas compartieron contigo. Puedes verlas, no editarlas.",
+    "description": "Notas que otras personas compartieron contigo.",
     "emptyState": "Nadie ha compartido una nota contigo todavía.",
     "from": "De {{name}}",
-    "readOnly": "Solo lectura"
+    "readOnly": "Solo lectura",
+    "canEdit": "Puedes editar"
   }
 }
