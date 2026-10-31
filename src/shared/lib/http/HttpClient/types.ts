@@ -19,8 +19,11 @@ export interface RequestOptions {
   /** Sent as JSON */
   body?: unknown;
   query?: QueryParams;
-  /** Attach the Bearer token, refresh it and retry once after a 401 (default: true) */
-  auth?: boolean;
+  /**
+   * Attach the Bearer token, refresh it and retry once after a 401
+   * (default: true). "optional" attaches it only when there is a session.
+   */
+  auth?: boolean | "optional";
   headers?: Record<string, string>;
   signal?: AbortSignal;
 }

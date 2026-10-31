@@ -9,7 +9,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLinkSlash } from "@fortawesome/free-solid-svg-icons";
 
 // routes
-import { AppRoute } from "@/shared/routes";
+import { AppRoute, getNoteRoute } from "@/shared/routes";
+
+// providers
+import { useAccount } from "@/features/auth";
 
 // components
 import { LogoMark } from "@/shared/components/atoms/LogoMark";
@@ -29,6 +32,19 @@ function PublicNote() {
   const { token } = useParams();
   const { t, i18n } = useTranslation();
   const { note, isLoading, notFound, isError } = usePublicNote(token);
+  const { account } = useAccount();
+
+  // Owner or shared user: open it in the app; signed in: their notes;
+  // otherwise sign in
+  const action =
+    note?.noteId !== undefined
+      ? {
+          to: getNoteRoute(note.noteId),
+          label: t("_pages:publicNote.openNote"),
+        }
+      : account.user
+        ? { to: AppRoute.Home, label: t("_pages:publicNote.myNotes") }
+        : { to: AppRoute.Auth, label: t("_pages:publicNote.signIn") };
 
   const title = note?.title || t("_pages:home.notes.untitled");
 
@@ -43,12 +59,12 @@ function PublicNote() {
           <ThemeToggle />
           <Button
             as={Link}
-            to={AppRoute.Auth}
+            to={action.to}
             variant="outlined"
             color="primary"
-            className="public-note-sign-in"
+            className="public-note-action"
           >
-            {t("_pages:publicNote.signIn")}
+            {action.label}
           </Button>
         </div>
       </header>

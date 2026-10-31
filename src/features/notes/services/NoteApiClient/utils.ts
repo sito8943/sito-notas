@@ -203,6 +203,7 @@ export const toLinkToken = (value: unknown): string | null =>
 export const toPublicNote = (value: unknown): PublicNote => {
   if (!isRecord(value)) throw new Error("Invalid public note");
   return {
+    ...(typeof value.noteId === "number" ? { noteId: value.noteId } : {}),
     title: typeof value.title === "string" ? value.title : "",
     content: typeof value.content === "string" ? value.content : "",
     updatedAt: parseApiDate(value.updatedAt),

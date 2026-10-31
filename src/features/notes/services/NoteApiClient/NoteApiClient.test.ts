@@ -333,7 +333,7 @@ describe("NoteApiClient public links", () => {
     });
   });
 
-  it("reads a public note without a session", async () => {
+  it("reads a public note without a session (none in tests)", async () => {
     const { client, fetchFn } = setup();
     fetchFn.mockResolvedValueOnce(
       jsonResponse(200, { title: "T", content: "C", ownerName: "ana" }),

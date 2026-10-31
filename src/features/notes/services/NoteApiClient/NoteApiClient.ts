@@ -256,7 +256,8 @@ export class NoteApiClient {
   }
 
   /**
-   * Reads a note by its public link, without login
+   * Reads a note by its public link; no login needed, but a signed-in
+   * owner or user it is shared with also gets its id
    * @param token - public link token
    * @returns the note
    * @throws HttpError 404 when the link does not exist, was disabled or the
@@ -265,7 +266,7 @@ export class NoteApiClient {
   async getPublic(token: string): Promise<PublicNote> {
     return toPublicNote(
       await this.http.get<unknown>(getPublicNoteEndpoint(token), {
-        auth: false,
+        auth: "optional",
       }),
     );
   }
