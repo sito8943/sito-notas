@@ -43,12 +43,12 @@ function PublicNote() {
           <ThemeToggle />
           <Button
             as={Link}
-            to={AppRoute.Home}
+            to={AppRoute.Auth}
             variant="outlined"
             color="primary"
-            className="public-note-open"
+            className="public-note-sign-in"
           >
-            {t("_pages:publicNote.open")}
+            {t("_pages:publicNote.signIn")}
           </Button>
         </div>
       </header>

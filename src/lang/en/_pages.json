@@ -231,7 +231,7 @@
     "by": "By {{name}}",
     "updated": "Edited {{date}}",
     "notFound": "This link doesn't exist or was turned off",
-    "open": "Open Sito Notas",
-    "contentLabel": "Note content"
+    "contentLabel": "Note content",
+    "signIn": "Sign in"
   }
 }

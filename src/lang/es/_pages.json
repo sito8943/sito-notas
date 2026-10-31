@@ -238,7 +238,7 @@
     "by": "De {{name}}",
     "updated": "Editado {{date}}",
     "notFound": "Este enlace no existe o fue desactivado",
-    "open": "Abrir Sito Notas",
-    "contentLabel": "Contenido de la nota"
+    "contentLabel": "Contenido de la nota",
+    "signIn": "Iniciar sesión"
   }
 }

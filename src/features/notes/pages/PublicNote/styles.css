@@ -24,7 +24,7 @@
   @apply flex items-center gap-2;
 }
 
-.public-note-open {
+.public-note-sign-in {
   @apply text-sm;
 }
 
