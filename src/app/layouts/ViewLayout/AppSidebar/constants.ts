@@ -38,6 +38,7 @@ export const SIDEBAR_ITEMS: AppSidebarItemConfig[] = [
     labelKey: "_pages:routes.shared",
     icon: faUserGroup,
     route: AppRoute.Shared,
+    unseenSharedBadge: true,
   },
   {
     id: "trash",

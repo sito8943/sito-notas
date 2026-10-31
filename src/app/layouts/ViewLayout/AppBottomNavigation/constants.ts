@@ -23,6 +23,7 @@ export const BOTTOM_NAVIGATION_ITEMS: AppBottomNavigationItemConfig[] = [
     labelKey: "_pages:routes.shared",
     icon: faUserGroup,
     route: AppRoute.Shared,
+    unseenSharedBadge: true,
   },
   {
     id: "trash",

@@ -9,6 +9,7 @@ export const NoteQueryScope = {
   Trash: "trash",
   Shares: "shares",
   Shared: "shared",
+  Unseen: "unseen",
   Link: "link",
   Public: "public",
 } as const;
@@ -40,6 +41,13 @@ export const getNoteDetailKey = (id: number) =>
  */
 export const getSharedNotesKey = (userId: number | undefined) =>
   [ReactQueryKeys.Notes, NoteQueryScope.Shared, userId] as const;
+
+/**
+ * @param userId - user the notes are shared with
+ * @returns query key of how many shared notes are new for the user
+ */
+export const getUnseenSharedKey = (userId: number | undefined) =>
+  [ReactQueryKeys.Notes, NoteQueryScope.Unseen, userId] as const;
 
 /**
  * @param id - note id

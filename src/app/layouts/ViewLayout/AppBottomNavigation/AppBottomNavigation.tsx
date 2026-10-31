@@ -13,7 +13,7 @@ import { BottomNavigation } from "@/shared/components/molecules/BottomNavigation
 import { getNoteRoute } from "@/shared/routes";
 
 // features
-import { useAddNote } from "@/features/notes";
+import { useAddNote, useUnseenShared } from "@/features/notes";
 
 import { BOTTOM_NAVIGATION_ITEMS } from "./constants";
 import { toBottomNavigationItems } from "./utils";
@@ -26,9 +26,11 @@ function AppBottomNavigation() {
   // The new note opens right away, wherever it was created from
   const addNote = useAddNote({ onCreated: (id) => navigate(getNoteRoute(id)) });
 
+  const unseenShared = useUnseenShared();
+
   const items = useMemo(
-    () => toBottomNavigationItems(BOTTOM_NAVIGATION_ITEMS, t),
-    [t],
+    () => toBottomNavigationItems(BOTTOM_NAVIGATION_ITEMS, t, unseenShared),
+    [t, unseenShared],
   );
 
   return (

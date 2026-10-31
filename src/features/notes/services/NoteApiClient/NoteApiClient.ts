@@ -30,6 +30,7 @@ import {
   toNoteShares,
   toLinkToken,
   toPublicNote,
+  toUnseenCount,
 } from "./utils";
 
 /**
@@ -68,6 +69,23 @@ export class NoteApiClient {
     if (!Array.isArray(response))
       throw new Error("Invalid shared notes response");
     return response.map(toNote);
+  }
+
+  /**
+   * @returns how many notes shared with the user they have not seen yet
+   */
+  async countUnseenShared(): Promise<number> {
+    return toUnseenCount(
+      await this.http.get<unknown>(NoteEndpoint.SharedUnseen),
+    );
+  }
+
+  /**
+   * Marks every note shared with the user as seen
+   * @returns how many changed
+   */
+  async markSharedSeen(): Promise<number> {
+    return this.http.post<number>(NoteEndpoint.SharedSeen);
   }
 
   /**

@@ -210,3 +210,12 @@ export const toPublicNote = (value: unknown): PublicNote => {
     ownerName: typeof value.ownerName === "string" ? value.ownerName : "",
   };
 };
+
+/**
+ * @param value - body of the unseen count endpoint
+ * @returns how many shared notes are new (0 when malformed)
+ */
+export const toUnseenCount = (value: unknown): number =>
+  isRecord(value) && typeof value.count === "number" && value.count > 0
+    ? value.count
+    : 0;

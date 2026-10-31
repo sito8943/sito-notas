@@ -4,6 +4,8 @@ export const NoteEndpoint = {
   Permanent: "/notes/permanent",
   Reorder: "/notes/reorder",
   Shared: "/notes/shared",
+  SharedUnseen: "/notes/shared/unseen",
+  SharedSeen: "/notes/shared/seen",
 } as const;
 
 /**

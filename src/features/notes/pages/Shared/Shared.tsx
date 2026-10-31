@@ -10,6 +10,7 @@ import { AppRoute } from "@/shared/routes";
 // hooks
 import { useGoBack } from "@/shared/hooks";
 import { useSharedNotes } from "@/features/notes/hooks/useSharedNotes";
+import { useMarkSharedSeen } from "@/features/notes/hooks/useMarkSharedSeen";
 
 // components
 import { PageHeader } from "@/shared/components/molecules/PageHeader";
@@ -22,6 +23,8 @@ function Shared() {
   const { t } = useTranslation();
   const goBack = useGoBack(AppRoute.Home);
   const { notes, isLoading, isError } = useSharedNotes();
+  // Opening the page clears the "new" badge
+  useMarkSharedSeen();
 
   return (
     <main className="shared">

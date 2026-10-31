@@ -25,8 +25,9 @@
   @apply flex-1 truncate;
 }
 
+/* Count in the danger color (notification style), as the tab counts */
 .sidebar-item-badge {
-  @apply flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1.5 text-xs text-on-brand;
+  @apply flex h-5 min-w-5 items-center justify-center rounded-full bg-bg-error px-1.5 text-[11px] leading-none font-semibold text-error tabular-nums;
 }
 
 .sidebar-item.collapsed .sidebar-item-badge {

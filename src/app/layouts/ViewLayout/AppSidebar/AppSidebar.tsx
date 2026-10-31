@@ -12,6 +12,9 @@ import { Sidebar } from "@/shared/components/molecules/Sidebar";
 // providers
 import { useSidebar } from "@/shared/providers";
 
+// features
+import { useUnseenShared } from "@/features/notes";
+
 import { SIDEBAR_FOOTER_ITEMS, SIDEBAR_ITEMS } from "./constants";
 import { toNavItems } from "./utils";
 
@@ -20,7 +23,12 @@ function AppSidebar() {
   const { t } = useTranslation();
   const { open, toggleOpen } = useSidebar();
 
-  const items = useMemo(() => toNavItems(SIDEBAR_ITEMS, t), [t]);
+  const unseenShared = useUnseenShared();
+
+  const items = useMemo(
+    () => toNavItems(SIDEBAR_ITEMS, t, unseenShared),
+    [t, unseenShared],
+  );
   const footerItems = useMemo(() => toNavItems(SIDEBAR_FOOTER_ITEMS, t), [t]);
 
   return (

@@ -10,6 +10,7 @@ import {
   getNoteDetailKey,
   getNotesListKey,
   getSharedNotesKey,
+  getUnseenSharedKey,
 } from "@/features/notes/constants";
 
 // models
@@ -21,7 +22,7 @@ import { toNoteEvent, withNoteUpdate, withNoteUpdateInList } from "./utils";
 /**
  * Keeps notes live while signed in: saves by other users (or the owner)
  * land in the open note and the lists; access changes reload the shared
- * list and the note. Own saves are skipped (already applied locally).
+ * list, its "new" count and the note. Own saves are skipped (already applied locally).
  */
 function useNoteEvents() {
   const appApiClient = useAppApiClient();
@@ -42,6 +43,9 @@ function useNoteEvents() {
         });
         void queryClient.invalidateQueries({
           queryKey: getNoteDetailKey(event.noteId),
+        });
+        void queryClient.invalidateQueries({
+          queryKey: getUnseenSharedKey(userId),
         });
         return;
       }

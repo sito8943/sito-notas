@@ -11,6 +11,7 @@ import {
   toNote,
   toNoteShare,
   toPublicNote,
+  toUnseenCount,
 } from "./utils";
 
 const dto = (id: number, updatedAt: string) => ({
@@ -345,5 +346,27 @@ describe("NoteApiClient public links", () => {
     const [url, init] = fetchFn.mock.calls[0] ?? [];
     expect(String(url)).toBe("https://api.test/public/notes/a%20b");
     expect(new Headers(init?.headers).has("Authorization")).toBe(false);
+  });
+});
+
+describe("NoteApiClient unseen shared notes", () => {
+  it("maps the count and marks them seen", async () => {
+    expect(toUnseenCount({ count: 3 })).toBe(3);
+    expect(toUnseenCount({ count: -1 })).toBe(0);
+    expect(toUnseenCount(null)).toBe(0);
+
+    const { client, fetchFn } = setup();
+    fetchFn
+      .mockResolvedValueOnce(jsonResponse(200, { count: 2 }))
+      .mockResolvedValueOnce(jsonResponse(200, 2));
+
+    await expect(client.countUnseenShared()).resolves.toBe(2);
+    await expect(client.markSharedSeen()).resolves.toBe(2);
+    expect(
+      fetchFn.mock.calls.map(([url, init]) => [String(url), init?.method]),
+    ).toEqual([
+      ["https://api.test/notes/shared/unseen", "GET"],
+      ["https://api.test/notes/shared/seen", "POST"],
+    ]);
   });
 });

@@ -11,4 +11,6 @@ export interface AppSidebarItemConfig {
   end?: boolean;
   /** Section without page yet: shown but not navigable */
   disabled?: boolean;
+  /** Shows the "new shared notes" count */
+  unseenSharedBadge?: boolean;
 }
