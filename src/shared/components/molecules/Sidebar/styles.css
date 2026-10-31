@@ -9,6 +9,7 @@
   @apply w-64 items-stretch px-4;
 }
 
+/* Brand + toggle: stacked on the rail, one row when open */
 .sidebar-header {
   @apply flex flex-col items-center gap-3;
 }
@@ -17,13 +18,25 @@
   @apply flex-row;
 }
 
-/* max-w-none: the img must keep its size while the width animates */
-.sidebar-avatar {
-  @apply h-10 w-10 max-w-none shrink-0 rounded-full object-cover;
+.sidebar-brand {
+  @apply flex min-w-0 items-center gap-3;
 }
 
-.sidebar-name {
-  @apply flex-1 truncate font-bold capitalize;
+.sidebar.open .sidebar-brand {
+  @apply flex-1;
+}
+
+/* Fixed size so the mark does not jump while the width animates */
+.sidebar-brand-mark {
+  @apply flex h-10 w-10 shrink-0 items-center justify-center;
+}
+
+.sidebar-brand-mark svg {
+  @apply h-7 w-7;
+}
+
+.sidebar-brand-name {
+  @apply truncate font-[family-name:Poppins] text-lg font-bold;
 }
 
 .sidebar-action {
@@ -38,6 +51,7 @@
   @apply flex flex-col gap-1;
 }
 
+/* Pinned to the bottom: settings and sign out */
 .sidebar-list.footer {
   @apply mt-auto border-t border-border pt-4;
 }

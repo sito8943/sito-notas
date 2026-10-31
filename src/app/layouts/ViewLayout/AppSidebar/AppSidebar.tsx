@@ -6,24 +6,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 // components
+import { LogoMark } from "@/shared/components/atoms/LogoMark";
 import { Sidebar } from "@/shared/components/molecules/Sidebar";
 
 // providers
 import { useSidebar } from "@/shared/providers";
 
-// features
-import { useAccount } from "@/features/auth";
-
-// images
-import noPhoto from "@/assets/images/no-photo.webp";
-
 import { SIDEBAR_FOOTER_ITEMS, SIDEBAR_ITEMS } from "./constants";
 import { toNavItems } from "./utils";
 
-/** Wires the Sidebar molecule to the account, routes and i18n */
+/** Wires the Sidebar molecule to the brand, routes and i18n */
 function AppSidebar() {
   const { t } = useTranslation();
-  const { account } = useAccount();
   const { open, toggleOpen } = useSidebar();
 
   const items = useMemo(() => toNavItems(SIDEBAR_ITEMS, t), [t]);
@@ -31,9 +25,9 @@ function AppSidebar() {
 
   return (
     <Sidebar
-      user={{
-        name: account.user?.username ?? "",
-        avatarSrc: noPhoto,
+      brand={{
+        name: t("_accessibility:appName"),
+        mark: <LogoMark />,
       }}
       // Visual only until categories exist
       action={{

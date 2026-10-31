@@ -49,6 +49,13 @@ export const SIDEBAR_ITEMS: AppSidebarItemConfig[] = [
     route: AppRoute.Shared,
     disabled: true,
   },
+  {
+    id: "trash",
+    labelKey: "_pages:routes.trash",
+    icon: faTrash,
+    route: AppRoute.Trash,
+    disabled: true,
+  },
 ];
 
 export const SIDEBAR_FOOTER_ITEMS: AppSidebarItemConfig[] = [
@@ -57,13 +64,6 @@ export const SIDEBAR_FOOTER_ITEMS: AppSidebarItemConfig[] = [
     labelKey: "_pages:routes.settings",
     icon: faGear,
     route: AppRoute.Settings,
-  },
-  {
-    id: "trash",
-    labelKey: "_pages:routes.trash",
-    icon: faTrash,
-    route: AppRoute.Trash,
-    disabled: true,
   },
   {
     id: "signOut",
