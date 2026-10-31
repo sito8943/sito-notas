@@ -1,0 +1,17 @@
+@reference "@/styles/global.css";
+
+.note-header-action {
+  @apply text-text-muted;
+}
+
+/* Danger variant of the @sito/ui menu item (0.10 has none); the library
+   class raises specificity over its own color and hover */
+.note-header-remove.sito-ui-context-menu__item,
+.note-header-remove .sito-ui-context-menu__leading {
+  @apply text-bg-error;
+}
+
+.note-header-remove.sito-ui-context-menu__item:hover:not(:disabled),
+.note-header-remove.sito-ui-context-menu__item:focus-visible {
+  background: color-mix(in srgb, var(--color-bg-error) 15%, transparent);
+}

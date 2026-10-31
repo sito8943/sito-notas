@@ -7,3 +7,4 @@ export * from "./PasswordInput";
 export * from "./Sidebar";
 export * from "./BottomNavigation";
 export * from "./Tabs";
+export * from "./PageHeader";

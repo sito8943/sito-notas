@@ -162,4 +162,56 @@ describe("NoteApiClient", () => {
     expect(init?.method).toBe("DELETE");
     expect(init?.body).toBe("[3]");
   });
+
+  it("restores with an id array body", async () => {
+    const { client, fetchFn } = setup();
+    fetchFn.mockResolvedValue(jsonResponse(200, 2));
+
+    await expect(client.restore([3, 4])).resolves.toBe(2);
+    const [url, init] = fetchFn.mock.calls[0] ?? [];
+    expect(String(url)).toBe("https://api.test/notes/restore");
+    expect(init?.method).toBe("PATCH");
+    expect(init?.body).toBe("[3,4]");
+  });
+
+  it("deletes trashed notes for good", async () => {
+    const { client, fetchFn } = setup();
+    fetchFn.mockResolvedValue(jsonResponse(200, 1));
+
+    await expect(client.removePermanently([3])).resolves.toBe(1);
+    const [url, init] = fetchFn.mock.calls[0] ?? [];
+    expect(String(url)).toBe("https://api.test/notes/permanent");
+    expect(init?.method).toBe("DELETE");
+    expect(init?.body).toBe("[3]");
+  });
+
+  it("lists the trash, most recently deleted first", async () => {
+    const { client, fetchFn } = setup();
+    fetchFn.mockResolvedValue(
+      jsonResponse(200, {
+        items: [
+          {
+            ...dto(1, "2026-10-02T08:00:00"),
+            deletedAt: "2026-10-03T08:00:00",
+          },
+          {
+            ...dto(2, "2026-10-02T08:00:00"),
+            deletedAt: "2026-10-05T08:00:00",
+          },
+        ],
+        currentPage: 0,
+        pageSize: NOTES_PAGE_SIZE,
+        totalElements: 2,
+        totalPages: 1,
+      }),
+    );
+
+    const notes = await client.listTrash();
+    expect(notes.map((note) => note.id)).toEqual([2, 1]);
+    expect(notes[0]?.deletedAt).toBe(Date.UTC(2026, 9, 5, 8, 0, 0));
+    const [url] = fetchFn.mock.calls[0] ?? [];
+    expect(new URL(String(url)).searchParams.get("softDeleteScope")).toBe(
+      "DELETED",
+    );
+  });
 });

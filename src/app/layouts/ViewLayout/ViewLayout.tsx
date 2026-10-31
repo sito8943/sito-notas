@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, matchPath, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 // routes
@@ -20,6 +20,7 @@ import { AppBottomNavigation } from "./AppBottomNavigation";
 import { AppSidebar } from "./AppSidebar";
 import { NavbarActions } from "./NavbarActions";
 import { NavbarBrand } from "./NavbarBrand";
+import { PAGE_HEADER_ROUTES } from "./constants";
 
 /**
  * Signed-in layout: requires an account and keeps notes fresh per route
@@ -31,6 +32,11 @@ function ViewLayout() {
 
   const { account } = useAccount();
   const { refresh } = useCache();
+
+  // Inner pages bring their own top bar (back + breadcrumb)
+  const hasPageHeader = PAGE_HEADER_ROUTES.some(
+    (route) => matchPath(route, pathname) !== null,
+  );
 
   useScrollReset();
 
@@ -49,6 +55,7 @@ function ViewLayout() {
       bottomNavigation={<AppBottomNavigation />}
       brand={<NavbarBrand />}
       actions={<NavbarActions />}
+      hideHeader={hasPageHeader}
       navLabel={t("_accessibility:ariaLabels.headerActions")}
     >
       <ErrorHandler>

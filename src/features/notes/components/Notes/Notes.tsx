@@ -1,17 +1,16 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import loadable from "@loadable/component";
-import { useIsMutating, useMutation } from "@tanstack/react-query";
+import { useIsMutating } from "@tanstack/react-query";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/ui
-import { useToast, Spinner } from "@sito/ui";
+import { Spinner } from "@sito/ui";
 
 // providers
-import { useAppApiClient } from "@/shared/providers/ApiClientProvider";
-import { getRequestErrorKey } from "@/shared/lib/errors";
 import { useSearch } from "@/features/notes/providers/SearchProvider";
 import { useCache } from "@/features/notes/providers/CacheProvider";
 
@@ -20,10 +19,12 @@ import {
   ADD_NOTE_MUTATION_KEY,
   useAddNote,
 } from "@/features/notes/hooks/useAddNote";
+import { useRemoveNote } from "@/features/notes/hooks/useRemoveNote";
 
 // components
 import { FAB } from "@/shared/components/atoms/FAB";
 import { Syncing } from "@/shared/components/atoms/Syncing";
+import { RemoveNoteDialog } from "@/features/notes/components/RemoveNoteDialog";
 
 // styles
 import "./styles.css";
@@ -38,23 +39,11 @@ function Notes() {
 
   const { searchFunction } = useSearch();
 
-  const toast = useToast();
+  const { cache, isLoading, isSyncing } = useCache();
 
-  const appApiClient = useAppApiClient();
-
-  const { cache, refresh, isLoading, isSyncing } = useCache();
-
-  const removeNote = useMutation({
-    mutationFn: (noteId: number) => appApiClient.Note.remove([noteId]),
-    onSuccess: () => {
-      refresh();
-      toast({ message: t("_pages:home.notes.deleted"), color: "success" });
-    },
-    onError: (mutationError) => {
-      console.error(mutationError);
-      toast({ message: t(getRequestErrorKey(mutationError)), color: "error" });
-    },
-  });
+  // Note waiting for the user to confirm the move to the trash
+  const [toRemove, setToRemove] = useState<number | null>(null);
+  const removeNote = useRemoveNote({ onRemoved: () => setToRemove(null) });
 
   const addNote = useAddNote();
   // Any add button (this FAB or the mobile bottom navigation)
@@ -85,11 +74,7 @@ function Notes() {
         : cache
             ?.filter(searchFunction)
             ?.map((note) => (
-              <PreviewNote
-                key={note.id}
-                note={note}
-                onDelete={(id) => removeNote.mutate(id)}
-              />
+              <PreviewNote key={note.id} note={note} onDelete={setToRemove} />
             ))}
       <div
         className={`notes-spinner primary ${
@@ -98,6 +83,12 @@ function Notes() {
       >
         <Spinner />
       </div>
+      <RemoveNoteDialog
+        open={toRemove !== null}
+        onConfirm={() => toRemove !== null && removeNote.mutate(toRemove)}
+        onClose={() => setToRemove(null)}
+        isLoading={removeNote.isPending}
+      />
     </section>
   );
 }

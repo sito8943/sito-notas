@@ -51,6 +51,7 @@ export const toNote = (value: unknown): Note => {
   if (!isRecord(value) || typeof value.id !== "number")
     throw new Error("Invalid note");
   const createdAt = parseApiDate(value.createdAt);
+  const deletedAt = parseApiDate(value.deletedAt);
   return {
     id: value.id,
     title: typeof value.title === "string" ? value.title : "",
@@ -59,6 +60,7 @@ export const toNote = (value: unknown): Note => {
     favorite: value.favorite === true,
     createdAt,
     updatedAt: parseApiDate(value.updatedAt) || createdAt,
+    ...(deletedAt ? { deletedAt } : {}),
   };
 };
 
@@ -87,3 +89,10 @@ export const parsePage = (value: unknown): PageDto<unknown> => {
  */
 export const sortByUpdatedAtDesc = (notes: Note[]): Note[] =>
   [...notes].sort((a, b) => b.updatedAt - a.updatedAt);
+
+/**
+ * @param notes - trashed notes
+ * @returns the notes, most recently deleted first
+ */
+export const sortByDeletedAtDesc = (notes: Note[]): Note[] =>
+  [...notes].sort((a, b) => (b.deletedAt ?? 0) - (a.deletedAt ?? 0));

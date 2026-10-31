@@ -14,7 +14,7 @@ import "./styles.css";
  */
 function Sidebar(props: SidebarProps) {
   const {
-    user,
+    brand,
     action,
     items,
     footerItems = [],
@@ -30,15 +30,17 @@ function Sidebar(props: SidebarProps) {
   return (
     <aside className={`sidebar ${open ? "open" : ""}`}>
       <div className="sidebar-header">
-        <img
-          src={user.avatarSrc}
-          alt=""
-          title={collapsed ? user.name : undefined}
-          className="sidebar-avatar"
-        />
-        {collapsed ? null : (
-          <span className="sidebar-name reveal-after-grow">{user.name}</span>
-        )}
+        <div
+          className="sidebar-brand primary"
+          title={collapsed ? brand.name : undefined}
+        >
+          <span className="sidebar-brand-mark">{brand.mark}</span>
+          {collapsed ? null : (
+            <span className="sidebar-brand-name reveal-after-grow">
+              {brand.name}
+            </span>
+          )}
+        </div>
         <IconButton
           color="primary"
           size={ICON_BUTTON_SIZES.SM}

@@ -30,7 +30,6 @@ export const BOTTOM_NAVIGATION_ITEMS: AppBottomNavigationItemConfig[] = [
     labelKey: "_pages:routes.trash",
     icon: faTrash,
     route: AppRoute.Trash,
-    disabled: true,
   },
   {
     id: "settings",

@@ -14,9 +14,10 @@ export interface SidebarNavItemData {
   disabled?: boolean;
 }
 
-export interface SidebarUser {
+export interface SidebarBrand {
   name: string;
-  avatarSrc: string;
+  /** App mark (logo); the name hides on the collapsed rail */
+  mark: ReactNode;
 }
 
 export interface SidebarAction {
@@ -26,12 +27,12 @@ export interface SidebarAction {
 }
 
 export interface SidebarProps {
-  user: SidebarUser;
-  /** Primary call to action under the user (e.g. add category) */
+  brand: SidebarBrand;
+  /** Primary call to action at the top (e.g. add category) */
   action?: SidebarAction;
   /** Main navigation */
   items: SidebarNavItemData[];
-  /** Navigation pinned to the bottom (settings, trash, sign out) */
+  /** Navigation pinned to the bottom, (settings, sign out) */
   footerItems?: SidebarNavItemData[];
   open: boolean;
   onToggle: () => void;

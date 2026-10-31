@@ -53,7 +53,7 @@
   },
   "home": {
     "notes": {
-      "deleted": "Nota eliminada",
+      "deleted": "Nota movida a la papelera",
       "defaultTitle": "Nueva nota",
       "defaultContent": "Escribe algo aquí",
       "untitled": "Nota sin título",
@@ -78,5 +78,86 @@
   },
   "sidebar": {
     "addCategory": "Añadir categoría"
+  },
+  "note": {
+    "titlePlaceholder": "Título",
+    "titleLabel": "Título de la nota",
+    "contentPlaceholder": "Empieza a escribir… también funciona Markdown",
+    "contentLabel": "Contenido de la nota",
+    "markdown": "Editar como Markdown",
+    "notFound": "Esta nota no existe o fue eliminada",
+    "status": {
+      "saving": "Guardando…",
+      "saved": "Guardado",
+      "error": "Sin guardar"
+    },
+    "toolbar": {
+      "label": "Formato",
+      "bold": "Negrita",
+      "italic": "Cursiva",
+      "strike": "Tachado",
+      "code": "Código en línea",
+      "heading1": "Título 1",
+      "heading2": "Título 2",
+      "heading3": "Título 3",
+      "bulletList": "Lista con viñetas",
+      "orderedList": "Lista numerada",
+      "taskList": "Lista de tareas",
+      "blockquote": "Cita",
+      "codeBlock": "Bloque de código",
+      "horizontalRule": "Separador",
+      "undo": "Deshacer",
+      "block": "Tipo de bloque",
+      "paragraph": "Texto",
+      "heading1Short": "H1",
+      "heading2Short": "H2",
+      "heading3Short": "H3",
+      "codeBlockShort": "Código",
+      "link": "Enlace"
+    },
+    "notes": "Notas",
+    "breadcrumb": "Ruta de navegación",
+    "more": "Más acciones",
+    "richText": "Editar con formato",
+    "updated": "Editado {{date}}",
+    "link": {
+      "title": "Enlace",
+      "url": "URL",
+      "apply": "Aplicar",
+      "cancel": "Cancelar",
+      "remove": "Quitar enlace",
+      "invalid": "Escribe un enlace web, de correo o de teléfono"
+    }
+  },
+  "trash": {
+    "moveToTrash": "Mover a la papelera",
+    "confirm": {
+      "title": "¿Mover a la papelera?",
+      "description": "La nota se queda en la papelera {{days}} días. Hasta entonces puedes recuperarla desde allí; después se borra para siempre.",
+      "submit": "Mover a la papelera",
+      "cancel": "Cancelar"
+    },
+    "title": "Papelera",
+    "description": "Las notas se quedan aquí {{days}} días; después se borran para siempre.",
+    "empty": "Vaciar papelera",
+    "emptyState": "La papelera está vacía",
+    "restore": "Restaurar",
+    "deleteForever": "Borrar para siempre",
+    "deletedAt": "Borrada {{date}}",
+    "purgeIn_one": "Se borra en {{count}} día",
+    "purgeIn_other": "Se borra en {{count}} días",
+    "purgeToday": "Se borra hoy",
+    "restored_one": "Nota restaurada",
+    "restored_other": "{{count}} notas restauradas",
+    "deleted_one": "Nota borrada para siempre",
+    "deleted_other": "{{count}} notas borradas para siempre",
+    "confirmDelete": {
+      "title": "¿Borrar para siempre?",
+      "description": "La nota se borrará para siempre. No se puede deshacer."
+    },
+    "confirmEmpty": {
+      "title": "¿Vaciar la papelera?",
+      "description": "Las {{count}} notas de la papelera se borrarán para siempre. No se puede deshacer."
+    }
   }
 }

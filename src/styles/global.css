@@ -222,6 +222,9 @@
   height: 100vh;
   height: 100svh;
   grid-template-rows: auto 1fr auto;
+  /* Without it the implicit column grows to the content min-width (long
+     unbroken words in notes) and the page scrolls horizontally */
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .card-shadow {

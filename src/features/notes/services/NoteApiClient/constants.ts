@@ -1,5 +1,7 @@
 export const NoteEndpoint = {
   Notes: "/notes",
+  Restore: "/notes/restore",
+  Permanent: "/notes/permanent",
 } as const;
 
 /** Page size used to load every note of the user */
@@ -12,4 +14,11 @@ export const NOTES_LIST_QUERY = {
   sort: "updatedAt",
   order: "DESC",
   softDeleteScope: "ACTIVE",
+} as const;
+
+/** Notes in the trash (soft-deleted) */
+export const TRASH_LIST_QUERY = {
+  sort: "updatedAt",
+  order: "DESC",
+  softDeleteScope: "DELETED",
 } as const;

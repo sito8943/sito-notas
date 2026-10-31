@@ -1,7 +1,38 @@
 @reference "@/styles/global.css";
 
-.workspace {
-  grid-template-rows: 45px 1fr;
+/* Header stays put; only the note scrolls (the toolbar sticks to its top) */
+.note {
+  @apply flex h-full min-h-0 flex-col;
+}
+
+.note-scroll {
+  @apply min-h-0 flex-1 overflow-auto;
+}
+
+/* Combined with the global .appear helper */
+.note-body {
+  @apply mx-auto flex w-full max-w-3xl flex-col gap-6 px-10 pt-10 pb-16 sm:px-3 sm:pt-6;
+}
+
+.note-heading {
+  @apply flex flex-col gap-2;
+}
+
+.note-title {
+  @apply w-full bg-transparent font-[family-name:Poppins] text-4xl font-bold text-text outline-none placeholder:text-text-muted sm:text-3xl;
+}
+
+/* Combined with the global .skeleton-box helper */
+.note-title-skeleton {
+  @apply h-12 w-2/3;
+}
+
+.note-source {
+  @apply min-h-[60vh] w-full resize-none rounded-xl border border-border bg-base-light p-4 font-mono text-sm leading-relaxed text-text outline-none focus:border-text-muted;
+}
+
+.note-not-found {
+  @apply py-10 text-center text-text-muted;
 }
 
 .note-syncing {
@@ -12,25 +43,7 @@
   @apply scale-100;
 }
 
-/* Combined with .workspace and the global .appear helper */
-.note-workspace {
-  @apply grid h-full flex-1 gap-5 p-10 sm:p-3;
-}
-
-/* Combined with the global .skeleton-box helper */
-.note-title-skeleton {
-  @apply h-[45px] w-full;
-}
-
-.note-title-input {
-  @apply text-2xl;
-}
-
 /* Combined with the global .skeleton-box helper */
 .note-content-skeleton {
-  @apply h-full min-h-[300px] w-full rounded-xl!;
-}
-
-.note-content-input {
-  @apply h-full min-h-[300px];
+  @apply h-[50vh] w-full rounded-xl!;
 }
