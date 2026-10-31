@@ -1,0 +1,26 @@
+@reference "@/styles/global.css";
+
+/* Stays visible while the note scrolls */
+.editor-toolbar {
+  @apply sticky top-0 z-10 flex items-center gap-1 overflow-x-auto rounded-xl border border-border bg-base-light p-1;
+}
+
+.editor-toolbar-group {
+  @apply flex shrink-0 items-center gap-0.5 border-r border-border pr-1;
+}
+
+.editor-toolbar-group:last-child {
+  @apply border-r-0 pr-0;
+}
+
+.editor-toolbar-button {
+  @apply text-text-muted;
+}
+
+.editor-toolbar-button.active {
+  @apply bg-base-dark text-text-primary;
+}
+
+.editor-toolbar-text {
+  @apply text-xs font-bold;
+}

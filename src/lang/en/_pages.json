@@ -71,5 +71,36 @@
   },
   "sidebar": {
     "addCategory": "Add category"
+  },
+  "note": {
+    "titlePlaceholder": "Title",
+    "titleLabel": "Note title",
+    "contentPlaceholder": "Start writing… Markdown works too",
+    "contentLabel": "Note content",
+    "markdown": "Edit as Markdown",
+    "notFound": "This note does not exist or was deleted",
+    "status": {
+      "saving": "Saving…",
+      "saved": "Saved",
+      "error": "Not saved"
+    },
+    "toolbar": {
+      "label": "Formatting",
+      "bold": "Bold",
+      "italic": "Italic",
+      "strike": "Strikethrough",
+      "code": "Inline code",
+      "heading1": "Heading 1",
+      "heading2": "Heading 2",
+      "heading3": "Heading 3",
+      "bulletList": "Bulleted list",
+      "orderedList": "Numbered list",
+      "taskList": "Checklist",
+      "blockquote": "Quote",
+      "codeBlock": "Code block",
+      "horizontalRule": "Divider",
+      "undo": "Undo",
+      "redo": "Redo"
+    }
   }
 }

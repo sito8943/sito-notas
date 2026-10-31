@@ -1,117 +1,136 @@
-import { useState, useEffect, type ChangeEvent } from "react";
-import { useParams } from "react-router-dom";
+import { useState, type ChangeEvent } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useDebounce } from "@/shared/hooks";
-import { useQuery, useMutation } from "@tanstack/react-query";
 
-// @sito/ui
-import { useToast } from "@sito/ui";
-
-// providers
-import { useAppApiClient } from "@/shared/providers/ApiClientProvider";
-import { getRequestErrorKey } from "@/shared/lib/errors";
+// routes
+import { AppRoute } from "@/shared/routes";
 
 // components
-import { InputControl } from "@/shared/components/molecules/InputControl";
-import { TextareaControl } from "@/shared/components/molecules/TextareaControl";
 import { Syncing } from "@/shared/components/atoms/Syncing";
+import { NoteHeader } from "@/features/notes/components/NoteHeader";
+import {
+  NoteEditor,
+  NoteEditorMode,
+  type NoteEditorModeValue,
+} from "@/features/notes/components/NoteEditor";
 
-// utils
-import { getNoteDetailKey } from "@/features/notes/constants";
-
-// services
-import type { UpdateNoteInput } from "@/features/notes/services";
+// hooks
+import {
+  NoteSaveStatus,
+  toNoteId,
+  useNoteEditor,
+} from "@/features/notes/hooks/useNoteEditor";
+import { useRemoveNote } from "@/features/notes/hooks/useRemoveNote";
+import { useShareNote } from "@/features/notes/hooks/useShareNote";
+import { useToggleFavorite } from "@/features/notes/hooks/useToggleFavorite";
 
 // styles
 import "./styles.css";
 
 function Note() {
   const { id } = useParams();
-  const noteId = Number(id);
-  const validId = Number.isInteger(noteId) && noteId > 0;
+  const noteId = toNoteId(id);
 
-  const appApiClient = useAppApiClient();
   const { t } = useTranslation();
-  const toast = useToast();
+  const navigate = useNavigate();
 
-  const [toUpdate, setToUpdate] = useState<UpdateNoteInput | undefined>(
-    undefined,
-  );
-  const debounced = useDebounce(toUpdate, 500);
+  const {
+    note,
+    isLoading,
+    notFound,
+    title,
+    content,
+    setTitle,
+    setContent,
+    status,
+    discard,
+  } = useNoteEditor(noteId);
 
-  const { data, isLoading } = useQuery({
-    queryKey: getNoteDetailKey(noteId),
-    queryFn: () => appApiClient.Note.getById(noteId),
-    enabled: validId,
+  const [mode, setMode] = useState<NoteEditorModeValue>(NoteEditorMode.Rich);
+
+  const share = useShareNote();
+  const toggleFavorite = useToggleFavorite();
+  const removeNote = useRemoveNote({
+    onRemoved: () => navigate(AppRoute.Home),
   });
 
-  const [title, setTitle] = useState(data?.title ?? "");
-  const [content, setContent] = useState(data?.content ?? "");
+  const displayTitle = title || t("_pages:home.notes.untitled");
+  const placeholder = t("_pages:note.contentPlaceholder");
+  const contentLabel = t("_pages:note.contentLabel");
 
-  useEffect(() => {
-    if (data) {
-      setTitle(data.title);
-      setContent(data.content);
-    }
-  }, [data]);
-
-  const updateNote = useMutation({
-    mutationFn: (note: UpdateNoteInput) => appApiClient.Note.update(note),
-    onError: (error) => {
-      console.error(error);
-      toast({
-        message: t(getRequestErrorKey(error)),
-        color: "error",
-      });
-    },
-  });
-
-  const handleContent = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(e.target.value);
-    if (!data) return;
-    setToUpdate({ id: data.id, title, content: e.target.value });
+  const remove = () => {
+    if (!note) return;
+    discard();
+    removeNote.mutate(note.id);
   };
-
-  const handleTitle = (e: ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
-    if (!data) return;
-    setToUpdate({ id: data.id, title: e.target.value, content });
-  };
-
-  useEffect(() => {
-    if (toUpdate) updateNote.mutate(toUpdate);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debounced]);
 
   return (
-    <main>
+    <main className="note">
+      <NoteHeader
+        status={status}
+        mode={mode}
+        onModeChange={setMode}
+        favorite={note?.favorite ?? false}
+        onToggleFavorite={() =>
+          note &&
+          toggleFavorite.mutate({ id: note.id, favorite: !note.favorite })
+        }
+        onShare={() => share(displayTitle, content)}
+        onRemove={remove}
+        disabled={!note}
+      />
       <div
         className={`note-syncing ${
-          isLoading || updateNote.isPending ? "visible" : ""
+          isLoading || status === NoteSaveStatus.Saving || removeNote.isPending
+            ? "visible"
+            : ""
         }`}
       >
         <Syncing />
       </div>
-      <div className="note-workspace workspace appear">
-        {isLoading ? (
-          <div className="note-title-skeleton skeleton-box" />
-        ) : (
-          <InputControl
-            value={title}
-            onChange={handleTitle}
-            className="note-title-input"
-          />
-        )}
-        {isLoading ? (
-          <div className="note-content-skeleton skeleton-box" />
-        ) : (
-          <TextareaControl
-            value={content}
-            onChange={handleContent}
-            containerClassName="h-full"
-            className="note-content-input"
-          />
-        )}
+      <div className="note-scroll">
+        <div className="note-body appear">
+          {notFound ? (
+            <p className="note-not-found">{t("_pages:note.notFound")}</p>
+          ) : isLoading || !note ? (
+            <>
+              <div className="note-title-skeleton skeleton-box" />
+              <div className="note-content-skeleton skeleton-box" />
+            </>
+          ) : (
+            <>
+              <input
+                value={title}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setTitle(e.target.value)
+                }
+                placeholder={t("_pages:note.titlePlaceholder")}
+                aria-label={t("_pages:note.titleLabel")}
+                className="note-title"
+              />
+              {mode === NoteEditorMode.Markdown ? (
+                <textarea
+                  value={content}
+                  onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                    setContent(e.target.value)
+                  }
+                  placeholder={placeholder}
+                  aria-label={contentLabel}
+                  spellCheck
+                  className="note-source"
+                />
+              ) : (
+                <NoteEditor
+                  key={note.id}
+                  content={content}
+                  onChange={setContent}
+                  placeholder={placeholder}
+                  label={contentLabel}
+                />
+              )}
+            </>
+          )}
+        </div>
       </div>
     </main>
   );

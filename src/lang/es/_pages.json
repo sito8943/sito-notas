@@ -78,5 +78,36 @@
   },
   "sidebar": {
     "addCategory": "Añadir categoría"
+  },
+  "note": {
+    "titlePlaceholder": "Título",
+    "titleLabel": "Título de la nota",
+    "contentPlaceholder": "Empieza a escribir… también funciona Markdown",
+    "contentLabel": "Contenido de la nota",
+    "markdown": "Editar como Markdown",
+    "notFound": "Esta nota no existe o fue eliminada",
+    "status": {
+      "saving": "Guardando…",
+      "saved": "Guardado",
+      "error": "Sin guardar"
+    },
+    "toolbar": {
+      "label": "Formato",
+      "bold": "Negrita",
+      "italic": "Cursiva",
+      "strike": "Tachado",
+      "code": "Código en línea",
+      "heading1": "Título 1",
+      "heading2": "Título 2",
+      "heading3": "Título 3",
+      "bulletList": "Lista con viñetas",
+      "orderedList": "Lista numerada",
+      "taskList": "Lista de tareas",
+      "blockquote": "Cita",
+      "codeBlock": "Bloque de código",
+      "horizontalRule": "Separador",
+      "undo": "Deshacer",
+      "redo": "Rehacer"
+    }
   }
 }

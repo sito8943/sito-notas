@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 // @sito/ui
-import { ICON_BUTTON_SIZES, IconButton, Tooltip, useToast } from "@sito/ui";
+import { ICON_BUTTON_SIZES, IconButton, Tooltip } from "@sito/ui";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,6 +19,7 @@ import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { getNoteRoute } from "@/shared/routes";
 
 // hooks
+import { useShareNote } from "@/features/notes/hooks/useShareNote";
 import { useToggleFavorite } from "@/features/notes/hooks/useToggleFavorite";
 
 import type { PreviewNoteProps } from "./types";
@@ -30,28 +31,13 @@ function PreviewNote(props: PreviewNoteProps) {
   const { id, title, content, categories, favorite, updatedAt } = note;
 
   const { t, i18n } = useTranslation();
-  const toast = useToast();
+  const shareNote = useShareNote();
   const toggleFavorite = useToggleFavorite();
 
   const excerpt = useMemo(() => toExcerpt(content), [content]);
   const date = formatNoteDate(updatedAt, i18n.language);
   const [tag] = categories;
   const displayTitle = title || t("_pages:home.notes.untitled");
-
-  const share = async () => {
-    try {
-      if (navigator.share) {
-        await navigator.share({ title: displayTitle, text: content });
-        return;
-      }
-      await navigator.clipboard.writeText(`${displayTitle}\n\n${content}`);
-      toast({ message: t("_pages:home.notes.copied"), color: "success" });
-    } catch (error) {
-      // Closing the share sheet is not an error
-      if (error instanceof DOMException && error.name === "AbortError") return;
-      console.error(error);
-    }
-  };
 
   const favoriteLabel = favorite
     ? t("_accessibility:ariaLabels.unfavorite")
@@ -84,7 +70,7 @@ function PreviewNote(props: PreviewNoteProps) {
               color="primary"
               size={ICON_BUTTON_SIZES.SM}
               aria-label={shareLabel}
-              onClick={share}
+              onClick={() => shareNote(displayTitle, content)}
               icon={<FontAwesomeIcon icon={faShareNodes} />}
             />
           </Tooltip>

@@ -1,0 +1,21 @@
+@reference "@/styles/global.css";
+
+.note-header {
+  @apply flex w-full items-center gap-3 px-10 py-2 sm:px-3;
+}
+
+.note-header-status {
+  @apply min-w-0 flex-1 truncate text-xs text-text-muted;
+}
+
+.note-header-status.error {
+  @apply text-bg-error;
+}
+
+.note-header-actions {
+  @apply flex shrink-0 items-center;
+}
+
+.note-header-toggle.active {
+  @apply bg-base-dark;
+}

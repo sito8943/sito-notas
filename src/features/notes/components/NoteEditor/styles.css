@@ -1,0 +1,89 @@
+@reference "@/styles/global.css";
+
+.note-editor {
+  @apply flex flex-1 flex-col gap-4;
+}
+
+/* ProseMirror root: the note text */
+.note-editor-content {
+  @apply min-h-[50vh] leading-relaxed text-text outline-none;
+}
+
+.note-editor-content > * + * {
+  @apply mt-3;
+}
+
+.note-editor-content h1 {
+  @apply mt-6 text-2xl font-bold;
+}
+
+.note-editor-content h2 {
+  @apply mt-5 text-xl font-bold;
+}
+
+.note-editor-content h3 {
+  @apply mt-4 text-lg font-bold;
+}
+
+.note-editor-content ul {
+  @apply list-disc pl-6;
+}
+
+.note-editor-content ol {
+  @apply list-decimal pl-6;
+}
+
+.note-editor-content li > p {
+  @apply my-0.5;
+}
+
+.note-editor-content blockquote {
+  @apply border-l-4 border-border pl-4 text-text-muted italic;
+}
+
+.note-editor-content code {
+  @apply rounded bg-base-dark px-1.5 py-0.5 font-mono text-sm;
+}
+
+.note-editor-content pre {
+  @apply overflow-x-auto rounded-xl bg-base-dark p-4 font-mono text-sm;
+}
+
+.note-editor-content pre code {
+  @apply bg-transparent p-0;
+}
+
+.note-editor-content hr {
+  @apply my-6 border-border;
+}
+
+.note-editor-content a {
+  @apply text-text-primary underline;
+}
+
+/* Checklists: checkbox next to the text, no bullet */
+.note-editor-content ul[data-type="taskList"] {
+  @apply list-none pl-0;
+}
+
+.note-editor-content ul[data-type="taskList"] li {
+  @apply flex items-start gap-2;
+}
+
+.note-editor-content ul[data-type="taskList"] li > label {
+  @apply mt-1 shrink-0;
+}
+
+.note-editor-content ul[data-type="taskList"] li > div {
+  @apply flex-1;
+}
+
+.note-editor-content ul[data-type="taskList"] li[data-checked="true"] > div {
+  @apply text-text-muted line-through;
+}
+
+/* Placeholder of the empty note (Placeholder extension) */
+.note-editor-content p.is-editor-empty:first-child::before {
+  @apply pointer-events-none float-left h-0 text-text-muted;
+  content: attr(data-placeholder);
+}
