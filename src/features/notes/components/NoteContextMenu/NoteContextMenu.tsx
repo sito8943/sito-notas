@@ -26,7 +26,7 @@ import type { NoteContextMenuProps } from "./types";
 import "./styles.css";
 
 /**
- * Actions of a note card (right click or long press): open, share,
+ * Actions of a note card (right click, wide screens): open, share,
  * favorite, add to tag and move to trash
  */
 function NoteContextMenu(props: NoteContextMenuProps) {

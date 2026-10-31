@@ -13,8 +13,8 @@
   @apply flex min-w-0 flex-1 flex-col;
 }
 
-/* Vertical pan stays native; a held touch starts the drag or the menu, so
-   no text selection or iOS link preview on long press */
+/* Vertical pan stays native; a held touch starts the drag, so no text
+   selection or iOS link preview on long press */
 .notes-grid-item {
   @apply relative rounded-xl select-none;
   touch-action: pan-y;

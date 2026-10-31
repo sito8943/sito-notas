@@ -15,14 +15,5 @@ export const NOTE_ID_ATTRIBUTE = "data-note-id";
 /** Touch: hold this long before a drag starts (shorter = page scroll) */
 export const TOUCH_DRAG_DELAY_MS = 250;
 
-/** Touch: holding still this long opens the card menu (moving = drag) */
-export const LONG_PRESS_MS = 500;
-
-/** Touch: moving more than this (px) before the menu opens cancels it */
-export const LONG_PRESS_TOLERANCE_PX = 8;
-
-/** Short buzz when the long-press menu opens (where supported) */
-export const LONG_PRESS_VIBRATION_MS = 10;
-
 /** Pressing these never starts a drag (card actions) */
 export const NO_DRAG_SELECTOR = "button, input, textarea, select";

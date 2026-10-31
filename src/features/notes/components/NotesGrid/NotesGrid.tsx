@@ -7,8 +7,8 @@ import { toColumns } from "./utils";
 import "./styles.css";
 
 /**
- * Masonry of note cards: drag & drop to reorder, right click or a still
- * long press (touch) for the card menu
+ * Masonry of note cards: drag & drop to reorder (touch: hold, then move);
+ * right click opens the card menu
  */
 function NotesGrid(props: NotesGridProps) {
   const { notes, renderNote, onMove, onMenu } = props;

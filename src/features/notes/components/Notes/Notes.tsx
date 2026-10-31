@@ -83,7 +83,7 @@ function Notes() {
     [cache, visible, reorder],
   );
 
-  // Card menu (right click / long press) and its "add to tag" dialog. Only
+  // Card menu (right click) and the "add to tag" dialog. Only
   // ids are kept so both always show the latest version of the note.
   const menu = useContextMenu<number>();
   const { openAt } = menu;
@@ -97,7 +97,13 @@ function Notes() {
   );
 
   const renderNote = useCallback(
-    (note: Note) => <PreviewNote note={note} onDelete={setToRemove} />,
+    (note: Note) => (
+      <PreviewNote
+        note={note}
+        onDelete={setToRemove}
+        onAddTags={setTagNoteId}
+      />
+    ),
     [],
   );
 

@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHeart as faHeartSolid,
   faShareNodes,
+  faTag,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
@@ -37,7 +38,7 @@ import type { PreviewNoteProps } from "./types";
 import "./styles.css";
 
 function PreviewNote(props: PreviewNoteProps) {
-  const { note, onDelete } = props;
+  const { note, onDelete, onAddTags } = props;
   const { id, title, content, categories, favorite, updatedAt } = note;
 
   const { t, i18n } = useTranslation();
@@ -54,6 +55,7 @@ function PreviewNote(props: PreviewNoteProps) {
     : t("_accessibility:ariaLabels.favorite");
   const shareLabel = t("_accessibility:ariaLabels.share");
   const removeLabel = t("_pages:trash.moveToTrash");
+  const addTagLabel = t("_pages:tags.addToTag");
 
   return (
     <article className="preview-note appear sito-ui-pressable">
@@ -80,6 +82,15 @@ function PreviewNote(props: PreviewNoteProps) {
           ) : null}
         </div>
         <div className="preview-note-actions">
+          <Tooltip label={addTagLabel} className="preview-note-add-tag">
+            <IconButton
+              color="primary"
+              size={ICON_BUTTON_SIZES.SM}
+              aria-label={addTagLabel}
+              onClick={() => onAddTags(id)}
+              icon={<FontAwesomeIcon icon={faTag} />}
+            />
+          </Tooltip>
           <Tooltip label={shareLabel}>
             <IconButton
               color="primary"

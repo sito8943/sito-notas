@@ -42,3 +42,8 @@
 .preview-note-actions {
   @apply -mr-2 flex shrink-0 items-center;
 }
+
+/* Small screens only: wide screens add tags from the right-click menu */
+.preview-note-add-tag {
+  @apply hidden md:inline-flex;
+}
