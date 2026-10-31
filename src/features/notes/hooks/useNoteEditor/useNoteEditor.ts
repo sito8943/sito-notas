@@ -111,6 +111,18 @@ function useNoteEditor(noteId: number | undefined): UseNoteEditorResult {
     [appApiClient],
   );
 
+  // A save from someone else replaced the note: show it unless there are
+  // edits of our own still to send (ours then win and reach them too)
+  useEffect(() => {
+    if (!note || pendingRef.current || isPending) return;
+    setDraft((current) =>
+      current &&
+      (current.title !== note.title || current.content !== note.content)
+        ? null
+        : current,
+    );
+  }, [note, isPending]);
+
   const title = draft?.title ?? note?.title ?? "";
   const content = draft?.content ?? note?.content ?? "";
 
@@ -146,7 +158,8 @@ function useNoteEditor(noteId: number | undefined): UseNoteEditorResult {
   }, []);
 
   let status: SaveStatus = NoteSaveStatus.Idle;
-  if (draft !== debouncedDraft || isPending) status = NoteSaveStatus.Saving;
+  if ((draft !== null && draft !== debouncedDraft) || isPending)
+    status = NoteSaveStatus.Saving;
   else if (saveFailed) status = NoteSaveStatus.Error;
   else if (isSuccess) status = NoteSaveStatus.Saved;
 

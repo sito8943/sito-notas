@@ -7,8 +7,9 @@ import { createEditorExtensions } from "./utils";
 import "./styles.css";
 
 /**
- * Formatted-text editor that reads and writes Markdown. It reads `content`
- * once: remount it (key) to load another note.
+ * Formatted-text editor that reads and writes Markdown. Remount it (key)
+ * to load another note; a new `content` for the same note (someone else
+ * saved) replaces the document and keeps the cursor where it fits.
  */
 function NoteEditor(props: NoteEditorProps) {
   const { content, onChange, placeholder, label, readOnly = false } = props;
@@ -41,6 +42,21 @@ function NoteEditor(props: NoteEditorProps) {
     onUpdate: ({ editor: current }) =>
       onChangeRef.current(current.getMarkdown()),
   });
+
+  useEffect(() => {
+    if (!editor || editor.isDestroyed || content === editor.getMarkdown())
+      return;
+    const { from, to } = editor.state.selection;
+    editor.commands.setContent(content, {
+      contentType: "markdown",
+      emitUpdate: false,
+    });
+    const end = editor.state.doc.content.size;
+    editor.commands.setTextSelection({
+      from: Math.min(from, end),
+      to: Math.min(to, end),
+    });
+  }, [editor, content]);
 
   return (
     <div className="note-editor">

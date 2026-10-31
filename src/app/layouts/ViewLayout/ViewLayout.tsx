@@ -14,7 +14,7 @@ import { useScrollReset } from "@/shared/hooks";
 
 // features
 import { useAccount } from "@/features/auth";
-import { useCache } from "@/features/notes";
+import { useCache, useNoteEvents } from "@/features/notes";
 
 import { AppBottomNavigation } from "./AppBottomNavigation";
 import { AppSidebar } from "./AppSidebar";
@@ -24,6 +24,7 @@ import { PAGE_HEADER_ROUTES } from "./constants";
 
 /**
  * Signed-in layout: requires an account and keeps notes fresh per route
+ * and live (socket events)
  */
 function ViewLayout() {
   const { t } = useTranslation();
@@ -39,6 +40,7 @@ function ViewLayout() {
   );
 
   useScrollReset();
+  useNoteEvents();
 
   // Signed out (sign-out, failed refresh, other tab): back to sign-in
   useEffect(() => {
