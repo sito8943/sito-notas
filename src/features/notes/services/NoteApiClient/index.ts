@@ -9,5 +9,7 @@ export type {
   CreateNoteInput,
   SetFavoriteInput,
   SetNoteTagsInput,
+  ShareNoteInput,
+  UnshareNoteInput,
   UpdateNoteInput,
 } from "./types";

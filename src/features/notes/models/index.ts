@@ -5,3 +5,5 @@ export type {
   NoteDto,
   PageDto,
 } from "./Note";
+export { SharePermission } from "./NoteShare";
+export type { NoteShare, SharePermissionValue } from "./NoteShare";

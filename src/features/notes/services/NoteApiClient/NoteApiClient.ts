@@ -1,6 +1,6 @@
 import type { HttpClient } from "@/shared/lib/http";
 
-import type { Note } from "@/features/notes/models";
+import type { Note, NoteShare } from "@/features/notes/models";
 
 import {
   MAX_NOTE_PAGES,
@@ -8,11 +8,14 @@ import {
   NOTES_PAGE_SIZE,
   NoteEndpoint,
   TRASH_LIST_QUERY,
+  getNoteSharesEndpoint,
 } from "./constants";
 import type {
   CreateNoteInput,
   SetFavoriteInput,
   SetNoteTagsInput,
+  ShareNoteInput,
+  UnshareNoteInput,
   UpdateNoteInput,
 } from "./types";
 import {
@@ -20,6 +23,8 @@ import {
   sortByDeletedAtDesc,
   sortByPosition,
   toNote,
+  toNoteShare,
+  toNoteShares,
 } from "./utils";
 
 /**
@@ -161,5 +166,42 @@ export class NoteApiClient {
    */
   async removePermanently(ids: number[]): Promise<number> {
     return this.http.delete<number>(NoteEndpoint.Permanent, ids);
+  }
+
+  /**
+   * @param noteId - id of one of the user's notes
+   * @returns users the note is shared with, oldest first
+   * @throws HttpError 404 when the note is not the user's or is trashed
+   */
+  async listShares(noteId: number): Promise<NoteShare[]> {
+    return toNoteShares(
+      await this.http.get<unknown>(getNoteSharesEndpoint(noteId)),
+    );
+  }
+
+  /**
+   * Shares a note (read only) with another Sito Notas user
+   * @param input - note id and the user's email
+   * @returns the new share
+   * @throws HttpError 404 (no user with that email), 400 (own email),
+   * 409 (already shared)
+   */
+  async share(input: ShareNoteInput): Promise<NoteShare> {
+    return toNoteShare(
+      await this.http.post<unknown>(getNoteSharesEndpoint(input.noteId), {
+        email: input.email,
+      }),
+    );
+  }
+
+  /**
+   * Stops sharing a note with a user
+   * @param input - note id and the user's id
+   * @returns 1, or 0 when it was not shared with them
+   */
+  async unshare(input: UnshareNoteInput): Promise<number> {
+    return this.http.delete<number>(
+      `${getNoteSharesEndpoint(input.noteId)}/${input.userId}`,
+    );
   }
 }

@@ -194,5 +194,25 @@
     },
     "addToTag": "Añadir a etiqueta…",
     "dialogTitle": "Etiquetas de «{{title}}»"
+  },
+  "share": {
+    "title": "Compartir «{{title}}»",
+    "emailLabel": "Correo de la persona",
+    "emailPlaceholder": "correo@ejemplo.com",
+    "submit": "Compartir",
+    "hint": "Solo con personas que ya usan Sito Notas. Podrán verla, no editarla.",
+    "people": "Personas con acceso",
+    "onlyYou": "Solo tú tienes acceso a esta nota.",
+    "remove": "Quitar acceso a {{name}}",
+    "permission": {
+      "read": "Puede ver",
+      "edit": "Puede editar"
+    },
+    "sendCopy": "Enviar una copia",
+    "errors": {
+      "notFound": "No hay ningún usuario de Sito Notas con ese correo",
+      "self": "No puedes compartir una nota contigo",
+      "alreadyShared": "Ya compartiste esta nota con esa persona"
+    }
   }
 }

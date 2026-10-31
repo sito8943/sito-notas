@@ -6,4 +6,6 @@ export interface PreviewNoteProps {
   /** Opens the tag dialog (button shown on small screens only; wide
    *  screens use the right-click menu) */
   onAddTags: (id: number) => void;
+  /** Opens the share dialog */
+  onShare: (id: number) => void;
 }

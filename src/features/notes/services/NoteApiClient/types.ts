@@ -11,3 +11,14 @@ export interface SetNoteTagsInput {
   /** Every tag the note keeps ([] removes them all) */
   tagIds: number[];
 }
+
+export interface ShareNoteInput {
+  noteId: number;
+  /** Email of a Sito Notas user */
+  email: string;
+}
+
+export interface UnshareNoteInput {
+  noteId: number;
+  userId: number;
+}

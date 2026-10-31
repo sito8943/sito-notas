@@ -33,6 +33,7 @@ import { RemoveNoteDialog } from "@/features/notes/components/RemoveNoteDialog";
 import { NotesGrid } from "@/features/notes/components/NotesGrid";
 import { NoteContextMenu } from "@/features/notes/components/NoteContextMenu";
 import { NoteTagsDialog } from "@/features/notes/components/NoteTagsDialog";
+import { ShareNoteDialog } from "@/features/notes/components/ShareNoteDialog";
 
 // models
 import type { Note } from "@/features/notes/models";
@@ -83,13 +84,15 @@ function Notes() {
     [cache, visible, reorder],
   );
 
-  // Card menu (right click) and the "add to tag" dialog. Only
+  // Card menu (right click), "add to tag" and "share" dialogs. Only
   // ids are kept so both always show the latest version of the note.
   const menu = useContextMenu<number>();
   const { openAt } = menu;
   const [tagNoteId, setTagNoteId] = useState<number | null>(null);
   const menuNote = cache?.find((note) => note.id === menu.payload) ?? null;
+  const [shareNoteId, setShareNoteId] = useState<number | null>(null);
   const tagNote = cache?.find((note) => note.id === tagNoteId) ?? null;
+  const shareNote = cache?.find((note) => note.id === shareNoteId) ?? null;
 
   const openMenu = useCallback(
     (noteId: number, x: number, y: number) => openAt(x, y, noteId),
@@ -102,6 +105,7 @@ function Notes() {
         note={note}
         onDelete={setToRemove}
         onAddTags={setTagNoteId}
+        onShare={setShareNoteId}
       />
     ),
     [],
@@ -167,9 +171,11 @@ function Notes() {
         note={menuNote}
         onClose={menu.close}
         onAddTags={(note) => setTagNoteId(note.id)}
+        onShare={(note) => setShareNoteId(note.id)}
         onDelete={setToRemove}
       />
       <NoteTagsDialog note={tagNote} onClose={() => setTagNoteId(null)} />
+      <ShareNoteDialog note={shareNote} onClose={() => setShareNoteId(null)} />
       <RemoveNoteDialog
         open={toRemove !== null}
         onConfirm={() => toRemove !== null && removeNote.mutate(toRemove)}

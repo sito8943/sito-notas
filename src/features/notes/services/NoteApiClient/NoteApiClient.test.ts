@@ -5,7 +5,7 @@ import { jsonResponse } from "@/test/http";
 
 import { NoteApiClient } from "./NoteApiClient";
 import { NOTES_PAGE_SIZE } from "./constants";
-import { parseApiDate, toNote } from "./utils";
+import { parseApiDate, toNote, toNoteShare } from "./utils";
 
 const dto = (id: number, updatedAt: string) => ({
   id,
@@ -213,5 +213,56 @@ describe("NoteApiClient", () => {
     expect(new URL(String(url)).searchParams.get("softDeleteScope")).toBe(
       "DELETED",
     );
+  });
+});
+
+describe("NoteApiClient shares", () => {
+  it("maps a NoteShareDTO and defaults unknown permissions to read", () => {
+    expect(
+      toNoteShare({
+        userId: 3,
+        email: "a@b.c",
+        username: "ana",
+        permission: "READ",
+        createdAt: "2026-10-01T10:00:00",
+      }),
+    ).toEqual({
+      userId: 3,
+      email: "a@b.c",
+      username: "ana",
+      permission: "READ",
+      createdAt: Date.UTC(2026, 9, 1, 10, 0, 0),
+    });
+    expect(
+      toNoteShare({ userId: 3, email: "a@b.c", username: "", permission: "X" }),
+    ).toEqual({ userId: 3, email: "a@b.c", permission: "READ", createdAt: 0 });
+    expect(() => toNoteShare({ email: "a@b.c" })).toThrow();
+  });
+
+  it("calls the share endpoints of the note", async () => {
+    const { client, fetchFn } = setup();
+    fetchFn
+      .mockResolvedValueOnce(jsonResponse(200, []))
+      .mockResolvedValueOnce(
+        jsonResponse(200, { userId: 3, email: "a@b.c", permission: "READ" }),
+      )
+      .mockResolvedValueOnce(jsonResponse(200, 1));
+
+    await expect(client.listShares(5)).resolves.toEqual([]);
+    await expect(client.share({ noteId: 5, email: "a@b.c" })).resolves.toEqual(
+      expect.objectContaining({ userId: 3 }),
+    );
+    await expect(client.unshare({ noteId: 5, userId: 3 })).resolves.toBe(1);
+
+    const calls = fetchFn.mock.calls.map(([url, init]) => [
+      String(url),
+      init?.method,
+      init?.body,
+    ]);
+    expect(calls).toEqual([
+      ["https://api.test/notes/5/shares", "GET", undefined],
+      ["https://api.test/notes/5/shares", "POST", '{"email":"a@b.c"}'],
+      ["https://api.test/notes/5/shares/3", "DELETE", undefined],
+    ]);
   });
 });

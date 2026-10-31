@@ -1,4 +1,10 @@
-import type { Note, NoteCategory, PageDto } from "@/features/notes/models";
+import {
+  SharePermission,
+  type Note,
+  type NoteCategory,
+  type NoteShare,
+  type PageDto,
+} from "@/features/notes/models";
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === "object" && value !== null;
@@ -112,3 +118,40 @@ export const sortByPosition = (notes: Note[]): Note[] =>
  */
 export const sortByDeletedAtDesc = (notes: Note[]): Note[] =>
   [...notes].sort((a, b) => (b.deletedAt ?? 0) - (a.deletedAt ?? 0));
+
+/**
+ * Validates and maps a NoteShareDTO
+ * @param value - one share of the API response
+ * @returns the share
+ * @throws Error when the user id or email is missing
+ */
+export const toNoteShare = (value: unknown): NoteShare => {
+  if (
+    !isRecord(value) ||
+    typeof value.userId !== "number" ||
+    typeof value.email !== "string"
+  )
+    throw new Error("Invalid note share");
+  return {
+    userId: value.userId,
+    email: value.email,
+    ...(typeof value.username === "string" && value.username
+      ? { username: value.username }
+      : {}),
+    permission:
+      value.permission === SharePermission.Edit
+        ? SharePermission.Edit
+        : SharePermission.Read,
+    createdAt: parseApiDate(value.createdAt),
+  };
+};
+
+/**
+ * @param value - parsed response body
+ * @returns the well-formed shares
+ * @throws Error when it is not a list
+ */
+export const toNoteShares = (value: unknown): NoteShare[] => {
+  if (!Array.isArray(value)) throw new Error("Invalid note shares response");
+  return value.map(toNoteShare);
+};

@@ -1,0 +1,87 @@
+@reference "@/styles/global.css";
+
+.share-note {
+  @apply flex flex-col gap-3;
+}
+
+.share-note-form {
+  @apply flex items-center gap-2;
+}
+
+.share-note-input {
+  @apply min-w-0 flex-1 rounded-lg border border-border bg-base-light px-3 py-2 text-text outline-none placeholder:text-text-muted focus:border-text-muted;
+}
+
+.share-note-input.invalid {
+  @apply border-bg-error;
+}
+
+/* Small screens: only the icon */
+.share-note-submit {
+  @apply shrink-0 gap-2;
+}
+
+.share-note-submit-label {
+  @apply md:hidden;
+}
+
+.share-note-hint {
+  @apply -mt-1 text-xs text-text-muted;
+}
+
+.share-note-error {
+  @apply -mt-1 text-xs text-bg-error;
+}
+
+.share-note-people {
+  @apply flex flex-col gap-2;
+}
+
+.share-note-subtitle {
+  @apply text-sm font-semibold text-text-muted;
+}
+
+.share-note-list {
+  @apply flex max-h-60 flex-col gap-1 overflow-y-auto;
+}
+
+.share-note-person {
+  @apply flex items-center gap-3 rounded-lg px-1 py-1;
+}
+
+.share-note-avatar {
+  @apply flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-base-dark text-sm font-semibold text-text-primary;
+}
+
+.share-note-person-text {
+  @apply flex min-w-0 flex-1 flex-col;
+}
+
+.share-note-person-name {
+  @apply truncate text-sm text-text;
+}
+
+.share-note-person-email {
+  @apply truncate text-xs text-text-muted;
+}
+
+.share-note-permission {
+  @apply shrink-0 text-xs text-text-muted;
+}
+
+.share-note-empty {
+  @apply text-sm text-text-muted;
+}
+
+/* Combined with the global .skeleton-box helper */
+.share-note-skeleton {
+  @apply h-10 w-full rounded-lg!;
+}
+
+.share-note-footer {
+  @apply flex justify-end border-t border-border pt-3;
+}
+
+.share-note-copy {
+  @apply gap-2;
+}

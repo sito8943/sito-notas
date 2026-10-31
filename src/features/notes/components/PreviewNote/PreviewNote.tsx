@@ -31,18 +31,16 @@ import { TagChip } from "@/features/notes/components/TagChip";
 import { CARD_MAX_TAGS } from "@/features/notes/constants";
 
 // hooks
-import { useShareNote } from "@/features/notes/hooks/useShareNote";
 import { useToggleFavorite } from "@/features/notes/hooks/useToggleFavorite";
 
 import type { PreviewNoteProps } from "./types";
 import "./styles.css";
 
 function PreviewNote(props: PreviewNoteProps) {
-  const { note, onDelete, onAddTags } = props;
+  const { note, onDelete, onAddTags, onShare } = props;
   const { id, title, content, categories, favorite, updatedAt } = note;
 
   const { t, i18n } = useTranslation();
-  const shareNote = useShareNote();
   const toggleFavorite = useToggleFavorite();
 
   const date = formatNoteDate(updatedAt, i18n.language);
@@ -96,7 +94,7 @@ function PreviewNote(props: PreviewNoteProps) {
               color="primary"
               size={ICON_BUTTON_SIZES.SM}
               aria-label={shareLabel}
-              onClick={() => shareNote(displayTitle, content)}
+              onClick={() => onShare(id)}
               icon={<FontAwesomeIcon icon={faShareNodes} />}
             />
           </Tooltip>

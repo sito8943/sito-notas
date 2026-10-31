@@ -14,6 +14,7 @@ import { RemoveNoteDialog } from "@/features/notes/components/RemoveNoteDialog";
 import { NoteHeader } from "@/features/notes/components/NoteHeader";
 import { NoteMeta } from "@/features/notes/components/NoteMeta";
 import { NoteTags } from "@/features/notes/components/NoteTags";
+import { ShareNoteDialog } from "@/features/notes/components/ShareNoteDialog";
 import {
   NoteEditor,
   NoteEditorMode,
@@ -28,7 +29,6 @@ import {
   useNoteEditor,
 } from "@/features/notes/hooks/useNoteEditor";
 import { useRemoveNote } from "@/features/notes/hooks/useRemoveNote";
-import { useShareNote } from "@/features/notes/hooks/useShareNote";
 import { useToggleFavorite } from "@/features/notes/hooks/useToggleFavorite";
 
 // styles
@@ -62,7 +62,7 @@ function Note() {
   });
 
   const removeDialog = useDialog();
-  const share = useShareNote();
+  const [sharing, setSharing] = useState(false);
   const toggleFavorite = useToggleFavorite();
   const removeNote = useRemoveNote({
     onRemoved: () => navigate(AppRoute.Home),
@@ -89,7 +89,7 @@ function Note() {
           note &&
           toggleFavorite.mutate({ id: note.id, favorite: !note.favorite })
         }
-        onShare={() => share(displayTitle, content)}
+        onShare={() => setSharing(true)}
         onRemove={removeDialog.handleOpen}
         disabled={!note}
       />
@@ -102,6 +102,12 @@ function Note() {
       >
         <Syncing />
       </div>
+      <ShareNoteDialog
+        note={
+          sharing && note ? { id: note.id, title: displayTitle, content } : null
+        }
+        onClose={() => setSharing(false)}
+      />
       <RemoveNoteDialog
         open={removeDialog.open}
         onConfirm={remove}

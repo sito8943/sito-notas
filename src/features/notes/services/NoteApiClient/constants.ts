@@ -5,6 +5,13 @@ export const NoteEndpoint = {
   Reorder: "/notes/reorder",
 } as const;
 
+/**
+ * @param noteId - note id
+ * @returns endpoint of the users the note is shared with
+ */
+export const getNoteSharesEndpoint = (noteId: number) =>
+  `${NoteEndpoint.Notes}/${noteId}/shares`;
+
 /** Page size used to load every note of the user */
 export const NOTES_PAGE_SIZE = 100;
 

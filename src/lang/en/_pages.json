@@ -187,5 +187,25 @@
     },
     "addToTag": "Add to tag…",
     "dialogTitle": "Tags of “{{title}}”"
+  },
+  "share": {
+    "title": "Share “{{title}}”",
+    "emailLabel": "Person's email",
+    "emailPlaceholder": "email@example.com",
+    "submit": "Share",
+    "hint": "Only with people who already use Sito Notas. They can view it, not edit it.",
+    "people": "People with access",
+    "onlyYou": "Only you can access this note.",
+    "remove": "Remove access for {{name}}",
+    "permission": {
+      "read": "Can view",
+      "edit": "Can edit"
+    },
+    "sendCopy": "Send a copy",
+    "errors": {
+      "notFound": "No Sito Notas user has that email",
+      "self": "You can't share a note with yourself",
+      "alreadyShared": "This note is already shared with that person"
+    }
   }
 }
