@@ -1,7 +1,7 @@
 @reference "@/styles/global.css";
 
 .page-header {
-  @apply flex w-full items-center gap-2 border-b border-border px-10 py-3 sm:px-3;
+  @apply flex h-app-header w-full shrink-0 items-center gap-2 border-b border-border px-10 sm:px-3;
 }
 
 .page-header-back {

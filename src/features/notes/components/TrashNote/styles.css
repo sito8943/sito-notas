@@ -11,8 +11,9 @@
   line-height: 1.375;
 }
 
-.trash-note-excerpt {
-  @apply line-clamp-4 text-sm wrap-anywhere text-text-muted;
+/* Shorter preview than the list cards */
+.trash-note .trash-note-excerpt {
+  @apply max-h-28;
 }
 
 .trash-note-footer {

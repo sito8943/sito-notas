@@ -1,4 +1,4 @@
-import { memo, useMemo } from "react";
+import { memo } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -21,12 +21,14 @@ import { getNoteRoute } from "@/shared/routes";
 // utils
 import { formatNoteDate } from "@/features/notes/utils";
 
+// components
+import { MarkdownPreview } from "@/features/notes/components/MarkdownPreview";
+
 // hooks
 import { useShareNote } from "@/features/notes/hooks/useShareNote";
 import { useToggleFavorite } from "@/features/notes/hooks/useToggleFavorite";
 
 import type { PreviewNoteProps } from "./types";
-import { toExcerpt } from "./utils";
 import "./styles.css";
 
 function PreviewNote(props: PreviewNoteProps) {
@@ -37,7 +39,6 @@ function PreviewNote(props: PreviewNoteProps) {
   const shareNote = useShareNote();
   const toggleFavorite = useToggleFavorite();
 
-  const excerpt = useMemo(() => toExcerpt(content), [content]);
   const date = formatNoteDate(updatedAt, i18n.language);
   const [tag] = categories;
   const displayTitle = title || t("_pages:home.notes.untitled");
@@ -52,7 +53,7 @@ function PreviewNote(props: PreviewNoteProps) {
     <article className="preview-note appear">
       <Link to={getNoteRoute(id)} className="preview-note-link">
         <h3 className="preview-note-title">{displayTitle}</h3>
-        {excerpt ? <p className="preview-note-excerpt">{excerpt}</p> : null}
+        <MarkdownPreview content={content} />
       </Link>
       <p className="preview-note-date">{date}</p>
       <footer className="preview-note-footer">

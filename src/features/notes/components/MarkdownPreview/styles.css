@@ -1,0 +1,61 @@
+@reference "@/styles/global.css";
+
+/* Compact, read-only version of the editor typography; fades out when cut */
+.markdown-preview {
+  @apply max-h-40 overflow-hidden text-sm leading-relaxed wrap-anywhere text-text-muted;
+  mask-image: linear-gradient(to bottom, black 70%, transparent);
+}
+
+.markdown-preview > * + * {
+  @apply mt-1.5;
+}
+
+.markdown-preview h1,
+.markdown-preview h2,
+.markdown-preview h3,
+.markdown-preview h4,
+.markdown-preview h5,
+.markdown-preview h6 {
+  @apply font-semibold text-text;
+}
+
+.markdown-preview strong {
+  @apply font-semibold text-text;
+}
+
+.markdown-preview ul {
+  @apply list-disc pl-5;
+}
+
+.markdown-preview ol {
+  @apply list-decimal pl-5;
+}
+
+/* Checklist items: checkbox instead of bullet */
+.markdown-preview li:has(> input[type="checkbox"]) {
+  @apply -ml-5 list-none;
+}
+
+.markdown-preview input[type="checkbox"] {
+  @apply pointer-events-none mr-1.5 align-middle;
+}
+
+.markdown-preview blockquote {
+  @apply border-l-2 border-border pl-3 italic;
+}
+
+.markdown-preview code {
+  @apply rounded bg-base-dark px-1 font-mono text-xs;
+}
+
+.markdown-preview pre {
+  @apply overflow-hidden rounded-lg bg-base-dark p-2 font-mono text-xs;
+}
+
+.markdown-preview pre code {
+  @apply bg-transparent p-0;
+}
+
+.markdown-preview hr {
+  @apply border-border;
+}

@@ -2,7 +2,7 @@
 
 /* Desktop only: small screens use the bottom navigation */
 .sidebar {
-  @apply flex h-full w-16 shrink-0 flex-col items-center gap-5 overflow-x-hidden overflow-y-auto border-r border-border bg-base-light px-2 py-5 whitespace-nowrap transition-[width] duration-200 md:hidden;
+  @apply flex h-full w-16 shrink-0 flex-col items-center gap-5 overflow-x-hidden overflow-y-auto border-r border-border bg-base-light px-2 pb-5 whitespace-nowrap transition-[width] duration-200 md:hidden;
 }
 
 .sidebar.open {
@@ -18,8 +18,9 @@
   @apply flex-row;
 }
 
+/* Same height as the top bar of the page, so both share one line */
 .sidebar-brand {
-  @apply flex min-w-0 items-center gap-3;
+  @apply flex h-app-header min-w-0 shrink-0 items-center gap-3;
 }
 
 .sidebar.open .sidebar-brand {

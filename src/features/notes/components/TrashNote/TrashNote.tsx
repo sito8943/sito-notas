@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 // @sito/ui
@@ -8,8 +7,10 @@ import { ICON_BUTTON_SIZES, IconButton, Tooltip } from "@sito/ui";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRotateLeft, faTrash } from "@fortawesome/free-solid-svg-icons";
 
+// components
+import { MarkdownPreview } from "@/features/notes/components/MarkdownPreview";
+
 // utils
-import { toExcerpt } from "@/features/notes/components/PreviewNote";
 import { formatNoteDate, getDaysUntilPurge } from "@/features/notes/utils";
 
 import type { TrashNoteProps } from "./types";
@@ -22,7 +23,6 @@ function TrashNote(props: TrashNoteProps) {
 
   const { t, i18n } = useTranslation();
 
-  const excerpt = useMemo(() => toExcerpt(content), [content]);
   const daysLeft = getDaysUntilPurge(deletedAt);
 
   const restoreLabel = t("_pages:trash.restore");
@@ -33,7 +33,7 @@ function TrashNote(props: TrashNoteProps) {
       <h3 className="trash-note-title">
         {title || t("_pages:home.notes.untitled")}
       </h3>
-      {excerpt ? <p className="trash-note-excerpt">{excerpt}</p> : null}
+      <MarkdownPreview content={content} className="trash-note-excerpt" />
       <footer className="trash-note-footer">
         <p className="trash-note-meta">
           <span>

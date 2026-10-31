@@ -10,7 +10,7 @@
 }
 
 .app-shell-header {
-  @apply flex w-full items-center justify-between px-10 py-3 sm:px-3;
+  @apply flex h-app-header w-full shrink-0 items-center justify-between px-10 sm:px-3;
 }
 
 .app-shell-brand,
