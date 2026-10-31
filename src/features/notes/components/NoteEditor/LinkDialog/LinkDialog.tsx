@@ -1,6 +1,10 @@
 import { useState, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
 
+// icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+
 // @sito/ui
 import { DIALOG_INITIAL_FOCUS, Dialog, DialogActions } from "@sito/ui";
 
@@ -63,6 +67,7 @@ function LinkDialog(props: LinkDialogProps) {
 
   return (
     <Dialog
+      closeIcon={<FontAwesomeIcon icon={faXmark} />}
       open={open}
       title={t("_pages:note.link.title")}
       onClose={onClose}

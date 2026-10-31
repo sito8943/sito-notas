@@ -12,7 +12,17 @@
 }
 
 .tabs-tab {
-  @apply shrink-0 rounded-lg border border-border bg-base-light px-3 py-1.5 text-sm font-medium text-text-muted transition-colors hover:border-text-muted hover:text-text focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--sito-ui-color-primary-default);
+  @apply inline-flex shrink-0 items-center rounded-lg border border-border bg-base-light px-3 py-1.5 text-sm font-medium text-text-muted transition-[color,background-color,border-color,scale] hover:border-text-muted hover:text-text focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--sito-ui-color-primary-default);
+}
+
+/* Count badge in the danger color (notification style) */
+.tabs-tab-count {
+  @apply ml-1.5 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-bg-error px-1.5 text-[11px] leading-none font-semibold text-error tabular-nums;
+}
+
+/* Nothing to show: no hover, not clickable */
+.tabs-tab:disabled {
+  @apply cursor-not-allowed opacity-40 hover:border-border hover:text-text-muted;
 }
 
 .tabs-tab.selected {

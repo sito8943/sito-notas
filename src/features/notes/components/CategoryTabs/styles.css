@@ -1,0 +1,19 @@
+@reference "@/styles/global.css";
+
+/* Chips scroll; the manage link stays visible at the end */
+.category-tabs {
+  @apply flex items-center gap-2;
+}
+
+.category-tabs-list {
+  @apply min-w-0 flex-1;
+}
+
+/* Dashed chip: an action, not a filter. Small screens: icon only, square */
+.category-tabs-edit {
+  @apply inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-dashed border-border px-3 py-1.5 text-sm text-text-muted transition-[color,background-color,border-color,scale] hover:border-text-muted hover:text-text md:h-8 md:w-8 md:justify-center md:p-0;
+}
+
+.category-tabs-edit-label {
+  @apply md:hidden;
+}

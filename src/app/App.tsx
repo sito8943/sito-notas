@@ -33,6 +33,7 @@ const Home = loadable(() => import("@/features/notes/pages/Home/Home"));
 const NotFound = loadable(() => import("@/app/pages/NotFound/NotFound"));
 const Note = loadable(() => import("@/features/notes/pages/Note/Note"));
 const Trash = loadable(() => import("@/features/notes/pages/Trash/Trash"));
+const Tags = loadable(() => import("@/features/notes/pages/Tags/Tags"));
 const Settings = loadable(
   () => import("@/features/settings/pages/Settings/Settings"),
 );
@@ -79,6 +80,7 @@ function App() {
               <Route index element={<Home />} />
               <Route path={AppRoute.Note} element={<Note />} />
               <Route path={AppRoute.Trash} element={<Trash />} />
+              <Route path={AppRoute.Tags} element={<Tags />} />
               <Route path={AppRoute.Settings} element={<Settings />} />
             </Route>
 

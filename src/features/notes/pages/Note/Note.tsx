@@ -13,6 +13,7 @@ import { Syncing } from "@/shared/components/atoms/Syncing";
 import { RemoveNoteDialog } from "@/features/notes/components/RemoveNoteDialog";
 import { NoteHeader } from "@/features/notes/components/NoteHeader";
 import { NoteMeta } from "@/features/notes/components/NoteMeta";
+import { NoteTags } from "@/features/notes/components/NoteTags";
 import {
   NoteEditor,
   NoteEditorMode,
@@ -129,6 +130,7 @@ function Note() {
                   className="note-title"
                 />
                 <NoteMeta updatedAt={note.updatedAt} status={status} />
+                <NoteTags note={note} />
               </div>
               {mode === NoteEditorMode.Markdown ? (
                 <textarea

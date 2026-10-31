@@ -8,5 +8,6 @@ export {
 export type {
   CreateNoteInput,
   SetFavoriteInput,
+  SetNoteTagsInput,
   UpdateNoteInput,
 } from "./types";

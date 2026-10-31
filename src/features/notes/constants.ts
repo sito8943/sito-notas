@@ -1,5 +1,6 @@
 export const ReactQueryKeys = {
   Notes: "notes",
+  Tags: "tags",
 } as const;
 
 export const NoteQueryScope = {
@@ -28,6 +29,31 @@ export const getTrashKey = (userId: number | undefined) =>
  */
 export const getNoteDetailKey = (id: number) =>
   [ReactQueryKeys.Notes, NoteQueryScope.Detail, id] as const;
+
+/**
+ * @param userId - owner of the tags
+ * @returns query key of the user's tags
+ */
+export const getTagsKey = (userId: number | undefined) =>
+  [ReactQueryKeys.Tags, userId] as const;
+
+/** Tag colors: readable on light and dark surfaces (#RRGGBB for the API) */
+export const TAG_COLORS = [
+  "#3B82F6",
+  "#22C55E",
+  "#F59E0B",
+  "#EF4444",
+  "#A855F7",
+  "#EC4899",
+  "#14B8A6",
+  "#F97316",
+] as const;
+
+/** Longest tag name accepted */
+export const TAG_NAME_MAX_LENGTH = 40;
+
+/** Tags shown on a note card before "+N" */
+export const CARD_MAX_TAGS = 2;
 
 /** localStorage key holding the cached notes list */
 export const NOTES_STORAGE_KEY = "notes_cache";

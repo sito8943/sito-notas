@@ -329,3 +329,18 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+/* View Transitions (withViewTransition): list items slide to their new
+   place and fade in/out; quick enough not to slow edits down */
+::view-transition-group(*) {
+  animation-duration: 250ms;
+  animation-timing-function: ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none;
+  }
+}

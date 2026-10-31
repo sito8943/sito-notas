@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
 
 // @sito/ui
-import { Spinner } from "@sito/ui";
+import { Spinner, useContextMenu } from "@sito/ui";
 
 // providers
 import { useSearch } from "@/features/notes/providers/SearchProvider";
@@ -31,6 +31,8 @@ import { FAB } from "@/shared/components/atoms/FAB";
 import { Syncing } from "@/shared/components/atoms/Syncing";
 import { RemoveNoteDialog } from "@/features/notes/components/RemoveNoteDialog";
 import { NotesGrid } from "@/features/notes/components/NotesGrid";
+import { NoteContextMenu } from "@/features/notes/components/NoteContextMenu";
+import { NoteTagsDialog } from "@/features/notes/components/NoteTagsDialog";
 
 // models
 import type { Note } from "@/features/notes/models";
@@ -46,7 +48,7 @@ const PreviewNote = loadable(
 function Notes() {
   const { t } = useTranslation();
 
-  const { searchFunction, favoritesOnly } = useSearch();
+  const { searchFunction, favoritesOnly, categoryId } = useSearch();
 
   const { cache, isLoading, isSyncing } = useCache();
 
@@ -79,6 +81,19 @@ function Notes() {
       );
     },
     [cache, visible, reorder],
+  );
+
+  // Card menu (right click / long press) and its "add to tag" dialog. Only
+  // ids are kept so both always show the latest version of the note.
+  const menu = useContextMenu<number>();
+  const { openAt } = menu;
+  const [tagNoteId, setTagNoteId] = useState<number | null>(null);
+  const menuNote = cache?.find((note) => note.id === menu.payload) ?? null;
+  const tagNote = cache?.find((note) => note.id === tagNoteId) ?? null;
+
+  const openMenu = useCallback(
+    (noteId: number, x: number, y: number) => openAt(x, y, noteId),
+    [openAt],
   );
 
   const renderNote = useCallback(
@@ -119,10 +134,19 @@ function Notes() {
             <div key={skeleton} className="notes-skeleton skeleton-box" />
           ))}
         </div>
-      ) : favoritesOnly && !visible.length ? (
-        <p className="notes-empty">{t("_pages:home.notes.noFavorites")}</p>
+      ) : (favoritesOnly || categoryId !== null) && !visible.length ? (
+        <p className="notes-empty">
+          {favoritesOnly
+            ? t("_pages:home.notes.noFavorites")
+            : t("_pages:home.notes.noTagged")}
+        </p>
       ) : (
-        <NotesGrid notes={visible} renderNote={renderNote} onMove={moveNote} />
+        <NotesGrid
+          notes={visible}
+          renderNote={renderNote}
+          onMove={moveNote}
+          onMenu={openMenu}
+        />
       )}
       <div
         className={`notes-spinner primary ${
@@ -131,6 +155,15 @@ function Notes() {
       >
         <Spinner />
       </div>
+      <NoteContextMenu
+        open={menu.open}
+        position={menu.position}
+        note={menuNote}
+        onClose={menu.close}
+        onAddTags={(note) => setTagNoteId(note.id)}
+        onDelete={setToRemove}
+      />
+      <NoteTagsDialog note={tagNote} onClose={() => setTagNoteId(null)} />
       <RemoveNoteDialog
         open={toRemove !== null}
         onConfirm={() => toRemove !== null && removeNote.mutate(toRemove)}

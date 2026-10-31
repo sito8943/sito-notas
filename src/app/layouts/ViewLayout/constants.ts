@@ -4,5 +4,6 @@ import { AppRoute } from "@/shared/routes";
 export const PAGE_HEADER_ROUTES: AppRoute[] = [
   AppRoute.Note,
   AppRoute.Trash,
+  AppRoute.Tags,
   AppRoute.Settings,
 ];

@@ -1,0 +1,27 @@
+@reference "@/styles/global.css";
+
+/* Name | colors | delete; colors drop below the name on small screens */
+.tag-row {
+  @apply flex flex-wrap items-center gap-x-4 gap-y-2 rounded-xl bg-base-light px-4 py-3;
+}
+
+.tag-row-main {
+  @apply flex min-w-40 flex-1 flex-col gap-0.5;
+}
+
+/* Looks like text until focused */
+.tag-row-name {
+  @apply w-full rounded-lg border border-transparent bg-transparent px-1 py-0.5 font-medium text-text outline-none hover:border-border focus:border-text-muted;
+}
+
+.tag-row-name.invalid {
+  @apply border-bg-error;
+}
+
+.tag-row-meta {
+  @apply px-1 text-xs text-text-muted;
+}
+
+.tag-row-meta.error {
+  @apply text-bg-error;
+}

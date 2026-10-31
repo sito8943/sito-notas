@@ -7,6 +7,8 @@ export interface NotesGridProps {
   renderNote: (note: Note) => ReactNode;
   /** A card was dropped on another one */
   onMove: (fromId: number, toId: number) => void;
+  /** Right click, or a still long press on touch, on a card */
+  onMenu: (noteId: number, x: number, y: number) => void;
 }
 
 export interface GridDragState {

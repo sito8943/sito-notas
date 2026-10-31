@@ -10,7 +10,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHeart as faHeartSolid,
   faShareNodes,
-  faTag,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
@@ -23,6 +22,12 @@ import { formatNoteDate } from "@/features/notes/utils";
 
 // components
 import { MarkdownPreview } from "@/features/notes/components/MarkdownPreview";
+
+// components
+import { TagChip } from "@/features/notes/components/TagChip";
+
+// constants
+import { CARD_MAX_TAGS } from "@/features/notes/constants";
 
 // hooks
 import { useShareNote } from "@/features/notes/hooks/useShareNote";
@@ -40,7 +45,8 @@ function PreviewNote(props: PreviewNoteProps) {
   const toggleFavorite = useToggleFavorite();
 
   const date = formatNoteDate(updatedAt, i18n.language);
-  const [tag] = categories;
+  const shownTags = categories.slice(0, CARD_MAX_TAGS);
+  const hiddenTags = categories.length - shownTags.length;
   const displayTitle = title || t("_pages:home.notes.untitled");
 
   const favoriteLabel = favorite
@@ -50,24 +56,29 @@ function PreviewNote(props: PreviewNoteProps) {
   const removeLabel = t("_pages:trash.moveToTrash");
 
   return (
-    <article className="preview-note appear">
+    <article className="preview-note appear sito-ui-pressable">
       <Link to={getNoteRoute(id)} className="preview-note-link">
         <h3 className="preview-note-title">{displayTitle}</h3>
         <MarkdownPreview content={content} />
       </Link>
       <p className="preview-note-date">{date}</p>
       <footer className="preview-note-footer">
-        {tag ? (
-          <span className="preview-note-tag">
-            <FontAwesomeIcon
-              icon={faTag}
-              style={tag.color ? { color: tag.color } : undefined}
-            />
-            <span className="preview-note-tag-name">{tag.name}</span>
-          </span>
-        ) : (
-          <span />
-        )}
+        <div className="preview-note-tags">
+          {shownTags.map((tag) => (
+            <TagChip key={tag.id} tag={tag} className="preview-note-tag" />
+          ))}
+          {hiddenTags > 0 ? (
+            <span
+              className="preview-note-more-tags"
+              title={categories
+                .slice(CARD_MAX_TAGS)
+                .map((tag) => tag.name)
+                .join(", ")}
+            >
+              +{hiddenTags}
+            </span>
+          ) : null}
+        </div>
         <div className="preview-note-actions">
           <Tooltip label={shareLabel}>
             <IconButton

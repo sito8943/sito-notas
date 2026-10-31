@@ -1,0 +1,14 @@
+@reference "@/styles/global.css";
+
+.tag-picker {
+  @apply relative;
+}
+
+/* Dashed chip: an action, not a tag */
+.tag-picker-trigger {
+  @apply inline-flex items-center gap-1.5 rounded-lg border border-dashed border-border px-2 py-0.5 text-xs text-text-muted transition-[color,background-color,border-color,scale] hover:border-text-muted hover:text-text disabled:cursor-not-allowed disabled:opacity-50;
+}
+
+.tag-picker-panel {
+  @apply absolute top-full left-0 z-30 mt-2 w-64 rounded-xl border border-border bg-base-light p-2 shadow-xl;
+}

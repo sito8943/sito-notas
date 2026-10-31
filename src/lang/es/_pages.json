@@ -57,7 +57,8 @@
       "defaultContent": "Escribe algo aquí",
       "untitled": "Nota sin título",
       "copied": "Nota copiada",
-      "noFavorites": "Aún no tienes notas favoritas. Márcalas con el corazón."
+      "noFavorites": "Aún no tienes notas favoritas. Márcalas con el corazón.",
+      "noTagged": "Ninguna nota tiene esta etiqueta todavía."
     },
     "welcome": "Bienvenido {{user}}",
     "tabs": {
@@ -128,7 +129,9 @@
       "cancel": "Cancelar",
       "remove": "Quitar enlace",
       "invalid": "Escribe un enlace web, de correo o de teléfono"
-    }
+    },
+    "open": "Abrir",
+    "actions": "Acciones de «{{title}}»"
   },
   "trash": {
     "moveToTrash": "Mover a la papelera",
@@ -160,5 +163,36 @@
       "title": "¿Vaciar la papelera?",
       "description": "Las {{count}} notas de la papelera se borrarán para siempre. No se puede deshacer."
     }
+  },
+  "tags": {
+    "add": "Etiqueta",
+    "searchOrCreate": "Buscar o crear…",
+    "create": "Crear «{{name}}»",
+    "noTags": "Aún no tienes etiquetas",
+    "remove": "Quitar {{name}}",
+    "manage": "Editar",
+    "description": "Renombra, cambia el color o borra tus etiquetas. Al borrar una se quita de sus notas; las notas no se borran.",
+    "newLabel": "Nueva etiqueta",
+    "newPlaceholder": "Nombre de la nueva etiqueta",
+    "createButton": "Crear",
+    "nameLabel": "Nombre de la etiqueta",
+    "colorLabel": "Color de {{name}}",
+    "count_one": "{{count}} nota",
+    "count_other": "{{count}} notas",
+    "delete": "Borrar etiqueta",
+    "deleted_one": "Etiqueta borrada",
+    "deleted_other": "{{count}} etiquetas borradas",
+    "emptyState": "Aún no tienes etiquetas. Crea una aquí o desde una nota.",
+    "errors": {
+      "exists": "Ya tienes una etiqueta con ese nombre"
+    },
+    "confirmDelete": {
+      "title": "¿Borrar «{{name}}»?",
+      "description_zero": "Ninguna nota la usa. No se puede deshacer.",
+      "description_one": "Se quitará de {{count}} nota; la nota no se borra. No se puede deshacer.",
+      "description_other": "Se quitará de {{count}} notas; las notas no se borran. No se puede deshacer."
+    },
+    "addToTag": "Añadir a etiqueta…",
+    "dialogTitle": "Etiquetas de «{{title}}»"
   }
 }

@@ -1,0 +1,64 @@
+@reference "@/styles/global.css";
+
+/* Header stays put; only the content scrolls (same as trash/settings) */
+.tags {
+  @apply flex h-full min-h-0 flex-col;
+}
+
+.tags-content {
+  @apply mx-auto flex min-h-0 w-full max-w-3xl flex-1 flex-col gap-4 overflow-auto p-10 sm:p-3;
+}
+
+.tags-heading {
+  @apply flex flex-col gap-1;
+}
+
+.tags-title {
+  @apply text-3xl md:text-2xl;
+}
+
+.tags-description {
+  @apply text-sm text-text-muted;
+}
+
+.tags-form {
+  @apply flex items-center gap-2;
+}
+
+.tags-form-input {
+  @apply min-w-0 flex-1 rounded-lg border border-border bg-base-light px-3 py-2 text-text outline-none placeholder:text-text-muted focus:border-text-muted;
+}
+
+/* Small screens: only the "+" icon */
+.tags-form-submit {
+  @apply shrink-0 gap-2;
+}
+
+.tags-form-submit-label {
+  @apply md:hidden;
+}
+
+.tags-form-input.invalid {
+  @apply border-bg-error;
+}
+
+.tags-form-error {
+  @apply -mt-2 text-xs text-bg-error;
+}
+
+.tags-list {
+  @apply flex flex-col gap-2;
+}
+
+/* Combined with the global .skeleton-box helper */
+.tags-skeleton {
+  @apply h-16 w-full rounded-xl!;
+}
+
+.tags-empty {
+  @apply flex flex-col items-center justify-center gap-3 py-20 text-center text-text-muted;
+}
+
+.tags-empty-icon {
+  @apply text-5xl;
+}

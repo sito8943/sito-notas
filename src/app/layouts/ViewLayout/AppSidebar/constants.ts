@@ -25,7 +25,6 @@ export const SIDEBAR_ITEMS: AppSidebarItemConfig[] = [
     labelKey: "_pages:routes.tags",
     icon: faTag,
     route: AppRoute.Tags,
-    disabled: true,
   },
   {
     id: "calendar",

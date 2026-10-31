@@ -7,19 +7,18 @@ import { toColumns } from "./utils";
 import "./styles.css";
 
 /**
- * Masonry of note cards that can be reordered by drag & drop (mouse, or
- * press and hold on touch screens)
+ * Masonry of note cards: drag & drop to reorder, right click or a still
+ * long press (touch) for the card menu
  */
 function NotesGrid(props: NotesGridProps) {
-  const { notes, renderNote, onMove } = props;
+  const { notes, renderNote, onMove, onMenu } = props;
 
   const columns = useMediaColumns(NOTES_GRID_COLUMNS, NOTES_GRID_MAX_COLUMNS);
-  const { bind, draggingId, overId, onClickCapture } = useGridDrag(onMove);
+  const { handlers, draggingId, overId } = useGridDrag(onMove, onMenu);
 
   return (
     <div
-      {...bind()}
-      onClickCapture={onClickCapture}
+      {...handlers}
       onDragStart={(event) => event.preventDefault()}
       className={`notes-grid ${draggingId !== null ? "dragging" : ""}`}
     >

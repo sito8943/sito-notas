@@ -12,6 +12,7 @@ import {
 import type {
   CreateNoteInput,
   SetFavoriteInput,
+  SetNoteTagsInput,
   UpdateNoteInput,
 } from "./types";
 import {
@@ -111,6 +112,18 @@ export class NoteApiClient {
     return this.http.patch<number>(`${NoteEndpoint.Notes}/${input.id}`, {
       id: input.id,
       favorite: input.favorite,
+    });
+  }
+
+  /**
+   * Replaces the tags of a note; title, content and favorite are kept
+   * @param input - note id and every tag id it keeps
+   * @returns id of the note
+   */
+  async setTags(input: SetNoteTagsInput): Promise<number> {
+    return this.http.patch<number>(`${NoteEndpoint.Notes}/${input.id}`, {
+      id: input.id,
+      categoryIds: [...new Set(input.tagIds)],
     });
   }
 

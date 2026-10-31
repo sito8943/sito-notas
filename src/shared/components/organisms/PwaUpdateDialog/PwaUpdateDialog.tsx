@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useRegisterSW } from "virtual:pwa-register/react";
 
+// icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+
 // @sito/ui
 import { Dialog, DialogActions, useToast } from "@sito/ui";
 
@@ -43,6 +47,7 @@ function PwaUpdateDialog() {
 
   return (
     <Dialog
+      closeIcon={<FontAwesomeIcon icon={faXmark} />}
       open={needRefresh}
       title={t("_accessibility:pwa.update.title")}
       onClose={() => setNeedRefresh(false)}
