@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 // @sito/ui
@@ -27,24 +27,24 @@ import { formatNoteDate } from "@/features/notes/utils";
 
 import "./styles.css";
 
-/** A note opened through its public link: read only, no account needed */
+/**
+ * A note opened through its public link: read only, no account needed.
+ * Its owner and users it is shared with go to the normal note view.
+ */
 function PublicNote() {
   const { token } = useParams();
   const { t, i18n } = useTranslation();
   const { note, isLoading, notFound, isError } = usePublicNote(token);
   const { account } = useAccount();
 
-  // Owner or shared user: open it in the app; signed in: their notes;
-  // otherwise sign in
-  const action =
-    note?.noteId !== undefined
-      ? {
-          to: getNoteRoute(note.noteId),
-          label: t("_pages:publicNote.openNote"),
-        }
-      : account.user
-        ? { to: AppRoute.Home, label: t("_pages:publicNote.myNotes") }
-        : { to: AppRoute.Auth, label: t("_pages:publicNote.signIn") };
+  // Signed in: their notes; otherwise sign in
+  const action = account.user
+    ? { to: AppRoute.Home, label: t("_pages:publicNote.myNotes") }
+    : { to: AppRoute.Auth, label: t("_pages:publicNote.signIn") };
+
+  // Owner or shared user: the normal note view instead
+  if (note?.noteId !== undefined)
+    return <Navigate to={getNoteRoute(note.noteId)} replace />;
 
   const title = note?.title || t("_pages:home.notes.untitled");
 

@@ -233,7 +233,6 @@
     "notFound": "This link doesn't exist or was turned off",
     "contentLabel": "Note content",
     "signIn": "Sign in",
-    "openNote": "Open note",
     "myNotes": "Go to my notes"
   }
 }
