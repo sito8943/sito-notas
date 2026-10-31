@@ -3,6 +3,7 @@ export const NoteEndpoint = {
   Restore: "/notes/restore",
   Permanent: "/notes/permanent",
   Reorder: "/notes/reorder",
+  Shared: "/notes/shared",
 } as const;
 
 /**

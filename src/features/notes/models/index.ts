@@ -3,6 +3,7 @@ export type {
   NoteCategory,
   NoteCategoryDto,
   NoteDto,
+  NoteOwner,
   PageDto,
 } from "./Note";
 export { SharePermission } from "./NoteShare";

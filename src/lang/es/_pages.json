@@ -214,5 +214,11 @@
       "self": "No puedes compartir una nota contigo",
       "alreadyShared": "Ya compartiste esta nota con esa persona"
     }
+  },
+  "shared": {
+    "description": "Notas que otras personas compartieron contigo. Puedes verlas, no editarlas.",
+    "emptyState": "Nadie ha compartido una nota contigo todavía.",
+    "from": "De {{name}}",
+    "readOnly": "Solo lectura"
   }
 }

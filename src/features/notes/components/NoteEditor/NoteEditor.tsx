@@ -11,7 +11,7 @@ import "./styles.css";
  * once: remount it (key) to load another note.
  */
 function NoteEditor(props: NoteEditorProps) {
-  const { content, onChange, placeholder, label } = props;
+  const { content, onChange, placeholder, label, readOnly = false } = props;
 
   // The editor keeps its first options: read the latest callback from a ref
   const onChangeRef = useRef(onChange);
@@ -28,11 +28,13 @@ function NoteEditor(props: NoteEditorProps) {
     extensions,
     content,
     contentType: "markdown",
+    editable: !readOnly,
     editorProps: {
       attributes: {
         class: "note-editor-content",
         "aria-label": label,
         "aria-multiline": "true",
+        "aria-readonly": String(readOnly),
         role: "textbox",
       },
     },
@@ -42,7 +44,7 @@ function NoteEditor(props: NoteEditorProps) {
 
   return (
     <div className="note-editor">
-      <EditorToolbar editor={editor} />
+      {readOnly ? null : <EditorToolbar editor={editor} />}
       <EditorContent editor={editor} />
     </div>
   );

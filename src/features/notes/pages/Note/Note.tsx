@@ -54,11 +54,13 @@ function Note() {
   } = useNoteEditor(noteId);
 
   const [mode, setMode] = useState<NoteEditorModeValue>(NoteEditorMode.Rich);
+  // Notes shared with the user are read only (F2: no edit permission yet)
+  const shared = note?.owner !== undefined;
 
   // Escape: Markdown source back to the editor, then out of the note
   useEscapeKey(() => {
     if (mode === NoteEditorMode.Markdown) setMode(NoteEditorMode.Rich);
-    else navigate(AppRoute.Home);
+    else navigate(shared ? AppRoute.Shared : AppRoute.Home);
   });
 
   const removeDialog = useDialog();
@@ -92,6 +94,7 @@ function Note() {
         onShare={() => setSharing(true)}
         onRemove={removeDialog.handleOpen}
         disabled={!note}
+        shared={shared}
       />
       <div
         className={`note-syncing ${
@@ -126,19 +129,36 @@ function Note() {
           ) : (
             <>
               <div className="note-heading">
-                <input
-                  value={title}
-                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                    setTitle(event.target.value)
-                  }
-                  placeholder={t("_pages:note.titlePlaceholder")}
-                  aria-label={t("_pages:note.titleLabel")}
-                  className="note-title"
+                {shared ? (
+                  <h1 className="note-title">{displayTitle}</h1>
+                ) : (
+                  <input
+                    value={title}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                      setTitle(event.target.value)
+                    }
+                    placeholder={t("_pages:note.titlePlaceholder")}
+                    aria-label={t("_pages:note.titleLabel")}
+                    className="note-title"
+                  />
+                )}
+                <NoteMeta
+                  updatedAt={note.updatedAt}
+                  status={status}
+                  owner={note.owner}
                 />
-                <NoteMeta updatedAt={note.updatedAt} status={status} />
-                <NoteTags note={note} />
+                {shared ? null : <NoteTags note={note} />}
               </div>
-              {mode === NoteEditorMode.Markdown ? (
+              {shared ? (
+                <NoteEditor
+                  key={note.id}
+                  content={content}
+                  onChange={setContent}
+                  placeholder=""
+                  label={contentLabel}
+                  readOnly
+                />
+              ) : mode === NoteEditorMode.Markdown ? (
                 <textarea
                   value={content}
                   onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>

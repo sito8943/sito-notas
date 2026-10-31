@@ -2,6 +2,7 @@ import {
   SharePermission,
   type Note,
   type NoteCategory,
+  type NoteOwner,
   type NoteShare,
   type PageDto,
 } from "@/features/notes/models";
@@ -48,6 +49,23 @@ export const toNoteCategories = (value: unknown): NoteCategory[] =>
     : [];
 
 /**
+ * @param value - `owner` of a shared NoteDTO
+ * @returns the owner, or undefined when missing/malformed
+ */
+export const toNoteOwner = (value: unknown): NoteOwner | undefined =>
+  isRecord(value) &&
+  typeof value.id === "number" &&
+  typeof value.email === "string"
+    ? {
+        id: value.id,
+        email: value.email,
+        ...(typeof value.username === "string" && value.username
+          ? { username: value.username }
+          : {}),
+      }
+    : undefined;
+
+/**
  * Validates and maps a NoteDTO
  * @param value - one item of the API response
  * @returns the UI note
@@ -58,6 +76,7 @@ export const toNote = (value: unknown): Note => {
     throw new Error("Invalid note");
   const createdAt = parseApiDate(value.createdAt);
   const deletedAt = parseApiDate(value.deletedAt);
+  const owner = toNoteOwner(value.owner);
   return {
     id: value.id,
     title: typeof value.title === "string" ? value.title : "",
@@ -68,6 +87,15 @@ export const toNote = (value: unknown): Note => {
     updatedAt: parseApiDate(value.updatedAt) || createdAt,
     ...(deletedAt ? { deletedAt } : {}),
     ...(typeof value.position === "number" ? { position: value.position } : {}),
+    ...(owner
+      ? {
+          owner,
+          permission:
+            value.permission === SharePermission.Edit
+              ? SharePermission.Edit
+              : SharePermission.Read,
+        }
+      : {}),
   };
 };
 

@@ -207,5 +207,11 @@
       "self": "You can't share a note with yourself",
       "alreadyShared": "This note is already shared with that person"
     }
+  },
+  "shared": {
+    "description": "Notes other people shared with you. You can view them, not edit them.",
+    "emptyState": "Nobody has shared a note with you yet.",
+    "from": "From {{name}}",
+    "readOnly": "Read only"
   }
 }

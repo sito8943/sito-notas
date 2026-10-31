@@ -55,6 +55,17 @@ export class NoteApiClient {
   }
 
   /**
+   * Loads the notes other users shared with this one
+   * @returns active shared notes (with owner and permission), last edited first
+   */
+  async listShared(): Promise<Note[]> {
+    const response = await this.http.get<unknown>(NoteEndpoint.Shared);
+    if (!Array.isArray(response))
+      throw new Error("Invalid shared notes response");
+    return response.map(toNote);
+  }
+
+  /**
    * Pages through a note listing until the last page
    * @param query - listing filters
    * @returns every note of the listing

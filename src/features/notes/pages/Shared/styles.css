@@ -1,0 +1,44 @@
+@reference "@/styles/global.css";
+
+/* Header stays put; only the list scrolls (same as trash) */
+.shared {
+  @apply flex h-full min-h-0 flex-col;
+}
+
+.shared-content {
+  @apply flex min-h-0 flex-1 flex-col gap-6 overflow-auto p-10 sm:p-3;
+}
+
+.shared-heading {
+  @apply flex flex-col gap-1;
+}
+
+.shared-title {
+  @apply text-3xl md:text-2xl;
+}
+
+.shared-description {
+  @apply text-sm text-text-muted;
+}
+
+/* Masonry: same columns as the notes list */
+.shared-list {
+  @apply columns-4 gap-5 xl:columns-3 lg:columns-2 sm:columns-1;
+}
+
+/* Combined with the global .skeleton-box helper */
+.shared-skeleton {
+  @apply mb-5 h-[180px] w-full break-inside-avoid rounded-xl!;
+}
+
+.shared-empty {
+  @apply flex flex-1 flex-col items-center justify-center gap-3 py-20 text-center text-text-muted;
+}
+
+.shared-empty-icon {
+  @apply text-5xl;
+}
+
+.shared-error {
+  @apply text-sm text-bg-error;
+}

@@ -266,3 +266,39 @@ describe("NoteApiClient shares", () => {
     ]);
   });
 });
+
+describe("NoteApiClient shared notes", () => {
+  it("maps owner and permission of a shared note", () => {
+    expect(
+      toNote({
+        ...dto(9, "2026-10-02T08:30:00"),
+        categories: [],
+        owner: { id: 1, email: "o@b.c", username: "owner" },
+        permission: "READ",
+      }),
+    ).toEqual(
+      expect.objectContaining({
+        id: 9,
+        owner: { id: 1, email: "o@b.c", username: "owner" },
+        permission: "READ",
+      }),
+    );
+    expect(toNote(dto(9, "2026-10-02T08:30:00"))).not.toHaveProperty("owner");
+  });
+
+  it("loads the notes shared with the user", async () => {
+    const { client, fetchFn } = setup();
+    fetchFn.mockResolvedValueOnce(
+      jsonResponse(200, [
+        { ...dto(9, "2026-10-02T08:30:00"), owner: { id: 1, email: "o@b.c" } },
+      ]),
+    );
+
+    const notes = await client.listShared();
+
+    expect(notes.map((note) => note.owner?.email)).toEqual(["o@b.c"]);
+    expect(String(fetchFn.mock.calls[0]?.[0])).toBe(
+      "https://api.test/notes/shared",
+    );
+  });
+});
