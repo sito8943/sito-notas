@@ -87,9 +87,11 @@
   --color-base-dark: #0b0f16;
   --color-base: #0f141c;
   --color-base-light: #1a212c;
-  --color-text: #e6e9ef;
+  /* Softer than near-white: less glare on the dark surfaces, ~12:1 page, ~10:1 cards (was ~15:1) */
+  --color-text: #c9ced8;
   --color-border: #343d4b;
-  --color-text-muted: #a0a8b6;
+  /* Keeps the step below --color-text (~6:1 page, ~5:1 cards; AA) */
+  --color-text-muted: #8a92a0;
   --color-bg-info: #1f6fb0;
   --color-info: #f1f5fb;
   --color-bg-success: #1f8a55;
