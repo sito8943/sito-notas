@@ -187,5 +187,52 @@
     },
     "addToTag": "Add to tag…",
     "dialogTitle": "Tags of “{{title}}”"
+  },
+  "share": {
+    "title": "Share “{{title}}”",
+    "emailLabel": "Person's email",
+    "emailPlaceholder": "email@example.com",
+    "submit": "Share",
+    "hint": "Only with people who already use Sito Notas. Choose whether they can view or edit.",
+    "people": "People with access",
+    "onlyYou": "Only you can access this note.",
+    "remove": "Remove access for {{name}}",
+    "permission": {
+      "read": "Can view",
+      "edit": "Can edit"
+    },
+    "sendCopy": "Send a copy",
+    "errors": {
+      "notFound": "No Sito Notas user has that email",
+      "self": "You can't share a note with yourself",
+      "alreadyShared": "This note is already shared with that person"
+    },
+    "permissionLabel": "Permission",
+    "permissionFor": "{{name}}'s permission",
+    "link": {
+      "title": "Public link",
+      "off": "Anyone with the link can read the note, without an account and without editing it.",
+      "create": "Create link",
+      "copy": "Copy link",
+      "copied": "Link copied",
+      "remove": "Turn off",
+      "removeLabel": "Turn off the public link",
+      "urlLabel": "Public link of the note"
+    }
+  },
+  "shared": {
+    "description": "Notes other people shared with you.",
+    "emptyState": "Nobody has shared a note with you yet.",
+    "from": "From {{name}}",
+    "readOnly": "Read only",
+    "canEdit": "You can edit"
+  },
+  "publicNote": {
+    "by": "By {{name}}",
+    "updated": "Edited {{date}}",
+    "notFound": "This link doesn't exist or was turned off",
+    "contentLabel": "Note content",
+    "signIn": "Sign in",
+    "myNotes": "Go to my notes"
   }
 }

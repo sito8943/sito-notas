@@ -14,11 +14,15 @@ import { RemoveNoteDialog } from "@/features/notes/components/RemoveNoteDialog";
 import { NoteHeader } from "@/features/notes/components/NoteHeader";
 import { NoteMeta } from "@/features/notes/components/NoteMeta";
 import { NoteTags } from "@/features/notes/components/NoteTags";
+import { ShareNoteDialog } from "@/features/notes/components/ShareNoteDialog";
 import {
   NoteEditor,
   NoteEditorMode,
   type NoteEditorModeValue,
 } from "@/features/notes/components/NoteEditor";
+
+// models
+import { SharePermission } from "@/features/notes/models";
 
 // hooks
 import { useEscapeKey } from "@/shared/hooks";
@@ -28,7 +32,6 @@ import {
   useNoteEditor,
 } from "@/features/notes/hooks/useNoteEditor";
 import { useRemoveNote } from "@/features/notes/hooks/useRemoveNote";
-import { useShareNote } from "@/features/notes/hooks/useShareNote";
 import { useToggleFavorite } from "@/features/notes/hooks/useToggleFavorite";
 
 // styles
@@ -54,15 +57,18 @@ function Note() {
   } = useNoteEditor(noteId);
 
   const [mode, setMode] = useState<NoteEditorModeValue>(NoteEditorMode.Rich);
+  // Shared with the user: no owner actions; read only without EDIT
+  const shared = note?.owner !== undefined;
+  const readOnly = shared && note?.permission !== SharePermission.Edit;
 
   // Escape: Markdown source back to the editor, then out of the note
   useEscapeKey(() => {
     if (mode === NoteEditorMode.Markdown) setMode(NoteEditorMode.Rich);
-    else navigate(AppRoute.Home);
+    else navigate(shared ? AppRoute.Shared : AppRoute.Home);
   });
 
   const removeDialog = useDialog();
-  const share = useShareNote();
+  const [sharing, setSharing] = useState(false);
   const toggleFavorite = useToggleFavorite();
   const removeNote = useRemoveNote({
     onRemoved: () => navigate(AppRoute.Home),
@@ -89,9 +95,10 @@ function Note() {
           note &&
           toggleFavorite.mutate({ id: note.id, favorite: !note.favorite })
         }
-        onShare={() => share(displayTitle, content)}
+        onShare={() => setSharing(true)}
         onRemove={removeDialog.handleOpen}
         disabled={!note}
+        shared={shared}
       />
       <div
         className={`note-syncing ${
@@ -102,6 +109,12 @@ function Note() {
       >
         <Syncing />
       </div>
+      <ShareNoteDialog
+        note={
+          sharing && note ? { id: note.id, title: displayTitle, content } : null
+        }
+        onClose={() => setSharing(false)}
+      />
       <RemoveNoteDialog
         open={removeDialog.open}
         onConfirm={remove}
@@ -120,19 +133,37 @@ function Note() {
           ) : (
             <>
               <div className="note-heading">
-                <input
-                  value={title}
-                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                    setTitle(event.target.value)
-                  }
-                  placeholder={t("_pages:note.titlePlaceholder")}
-                  aria-label={t("_pages:note.titleLabel")}
-                  className="note-title"
+                {readOnly ? (
+                  <h1 className="note-title">{displayTitle}</h1>
+                ) : (
+                  <input
+                    value={title}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                      setTitle(event.target.value)
+                    }
+                    placeholder={t("_pages:note.titlePlaceholder")}
+                    aria-label={t("_pages:note.titleLabel")}
+                    className="note-title"
+                  />
+                )}
+                <NoteMeta
+                  updatedAt={note.updatedAt}
+                  status={status}
+                  owner={note.owner}
+                  readOnly={readOnly}
                 />
-                <NoteMeta updatedAt={note.updatedAt} status={status} />
-                <NoteTags note={note} />
+                {shared ? null : <NoteTags note={note} />}
               </div>
-              {mode === NoteEditorMode.Markdown ? (
+              {readOnly ? (
+                <NoteEditor
+                  key={note.id}
+                  content={content}
+                  onChange={setContent}
+                  placeholder=""
+                  label={contentLabel}
+                  readOnly
+                />
+              ) : mode === NoteEditorMode.Markdown ? (
                 <textarea
                   value={content}
                   onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>

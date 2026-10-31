@@ -10,6 +10,8 @@ export interface BottomNavigationItemData {
   end?: boolean;
   /** Section without page yet: shown but not navigable */
   disabled?: boolean;
+  /** Counter on the icon (hidden when 0 or missing) */
+  badge?: number;
 }
 
 export interface BottomNavigationAction {

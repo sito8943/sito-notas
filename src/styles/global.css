@@ -5,6 +5,7 @@
 @import "./animations/grow.css";
 @import "./animations/shake.css";
 @import "./animations/reveal.css";
+@import "./animations/pop-in.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -23,6 +24,9 @@
   /* Height of the top bars (home header, page header, sidebar brand row) so
      they share one top line */
   --spacing-app-header: 4rem;
+
+  /* Menus and select lists opening (animations/pop-in.css) */
+  --animate-pop-in: pop-in 120ms ease-out;
 
   /* Palette shared with Sito Wallet (wallet/src/styles/variables.css) */
   --color-primary: #041e42;

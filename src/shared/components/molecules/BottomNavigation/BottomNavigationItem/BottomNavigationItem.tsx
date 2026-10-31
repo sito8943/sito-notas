@@ -5,7 +5,7 @@ import "./styles.css";
 
 /** Icon-only entry of the bottom bar; the label is its accessible name */
 function BottomNavigationItem({ item }: BottomNavigationItemProps) {
-  const { label, icon, to, end, disabled } = item;
+  const { label, icon, to, end, disabled, badge } = item;
 
   if (disabled)
     return (
@@ -23,13 +23,18 @@ function BottomNavigationItem({ item }: BottomNavigationItemProps) {
     <NavLink
       to={to}
       end={end}
-      aria-label={label}
+      aria-label={badge ? `${label} (${badge})` : label}
       title={label}
       className={({ isActive }) =>
         `bottom-nav-item ${isActive ? "active" : ""}`
       }
     >
       {icon}
+      {badge ? (
+        <span aria-hidden="true" className="bottom-nav-item-badge">
+          {badge}
+        </span>
+      ) : null}
     </NavLink>
   );
 }

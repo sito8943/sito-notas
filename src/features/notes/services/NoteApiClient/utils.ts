@@ -1,4 +1,12 @@
-import type { Note, NoteCategory, PageDto } from "@/features/notes/models";
+import {
+  SharePermission,
+  type Note,
+  type NoteCategory,
+  type NoteOwner,
+  type NoteShare,
+  type PublicNote,
+  type PageDto,
+} from "@/features/notes/models";
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === "object" && value !== null;
@@ -42,6 +50,23 @@ export const toNoteCategories = (value: unknown): NoteCategory[] =>
     : [];
 
 /**
+ * @param value - `owner` of a shared NoteDTO
+ * @returns the owner, or undefined when missing/malformed
+ */
+export const toNoteOwner = (value: unknown): NoteOwner | undefined =>
+  isRecord(value) &&
+  typeof value.id === "number" &&
+  typeof value.email === "string"
+    ? {
+        id: value.id,
+        email: value.email,
+        ...(typeof value.username === "string" && value.username
+          ? { username: value.username }
+          : {}),
+      }
+    : undefined;
+
+/**
  * Validates and maps a NoteDTO
  * @param value - one item of the API response
  * @returns the UI note
@@ -52,6 +77,7 @@ export const toNote = (value: unknown): Note => {
     throw new Error("Invalid note");
   const createdAt = parseApiDate(value.createdAt);
   const deletedAt = parseApiDate(value.deletedAt);
+  const owner = toNoteOwner(value.owner);
   return {
     id: value.id,
     title: typeof value.title === "string" ? value.title : "",
@@ -62,6 +88,15 @@ export const toNote = (value: unknown): Note => {
     updatedAt: parseApiDate(value.updatedAt) || createdAt,
     ...(deletedAt ? { deletedAt } : {}),
     ...(typeof value.position === "number" ? { position: value.position } : {}),
+    ...(owner
+      ? {
+          owner,
+          permission:
+            value.permission === SharePermission.Edit
+              ? SharePermission.Edit
+              : SharePermission.Read,
+        }
+      : {}),
   };
 };
 
@@ -112,3 +147,75 @@ export const sortByPosition = (notes: Note[]): Note[] =>
  */
 export const sortByDeletedAtDesc = (notes: Note[]): Note[] =>
   [...notes].sort((a, b) => (b.deletedAt ?? 0) - (a.deletedAt ?? 0));
+
+/**
+ * Validates and maps a NoteShareDTO
+ * @param value - one share of the API response
+ * @returns the share
+ * @throws Error when the user id or email is missing
+ */
+export const toNoteShare = (value: unknown): NoteShare => {
+  if (
+    !isRecord(value) ||
+    typeof value.userId !== "number" ||
+    typeof value.email !== "string"
+  )
+    throw new Error("Invalid note share");
+  return {
+    userId: value.userId,
+    email: value.email,
+    ...(typeof value.username === "string" && value.username
+      ? { username: value.username }
+      : {}),
+    permission:
+      value.permission === SharePermission.Edit
+        ? SharePermission.Edit
+        : SharePermission.Read,
+    createdAt: parseApiDate(value.createdAt),
+  };
+};
+
+/**
+ * @param value - parsed response body
+ * @returns the well-formed shares
+ * @throws Error when it is not a list
+ */
+export const toNoteShares = (value: unknown): NoteShare[] => {
+  if (!Array.isArray(value)) throw new Error("Invalid note shares response");
+  return value.map(toNoteShare);
+};
+
+/**
+ * @param value - body of the link endpoints
+ * @returns the link token, or null when the note has no public link
+ */
+export const toLinkToken = (value: unknown): string | null =>
+  isRecord(value) && typeof value.token === "string" && value.token
+    ? value.token
+    : null;
+
+/**
+ * Validates and maps a PublicNoteDTO
+ * @param value - parsed response body
+ * @returns the public note
+ * @throws Error when it is not an object
+ */
+export const toPublicNote = (value: unknown): PublicNote => {
+  if (!isRecord(value)) throw new Error("Invalid public note");
+  return {
+    ...(typeof value.noteId === "number" ? { noteId: value.noteId } : {}),
+    title: typeof value.title === "string" ? value.title : "",
+    content: typeof value.content === "string" ? value.content : "",
+    updatedAt: parseApiDate(value.updatedAt),
+    ownerName: typeof value.ownerName === "string" ? value.ownerName : "",
+  };
+};
+
+/**
+ * @param value - body of the unseen count endpoint
+ * @returns how many shared notes are new (0 when malformed)
+ */
+export const toUnseenCount = (value: unknown): number =>
+  isRecord(value) && typeof value.count === "number" && value.count > 0
+    ? value.count
+    : 0;

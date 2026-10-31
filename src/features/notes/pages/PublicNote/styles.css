@@ -1,0 +1,62 @@
+@reference "@/styles/global.css";
+
+.public-note {
+  @apply flex min-h-screen flex-col bg-base;
+}
+
+.public-note-header {
+  @apply flex h-app-header items-center justify-between gap-3 border-b border-border px-6 sm:px-3;
+}
+
+.public-note-brand {
+  @apply flex items-center gap-2 text-text-primary;
+}
+
+.public-note-logo {
+  @apply h-8 w-8;
+}
+
+.public-note-app {
+  @apply text-lg font-bold xs:hidden;
+}
+
+.public-note-actions {
+  @apply flex items-center gap-2;
+}
+
+.public-note-action {
+  @apply text-sm;
+}
+
+.public-note-body {
+  @apply mx-auto flex w-full max-w-3xl flex-1 flex-col gap-6 p-10 sm:p-4;
+}
+
+.public-note-heading {
+  @apply flex flex-col gap-2;
+}
+
+.public-note-title {
+  @apply text-3xl wrap-anywhere text-text md:text-2xl;
+}
+
+.public-note-meta {
+  @apply text-sm text-text-muted;
+}
+
+/* Combined with the global .skeleton-box helper */
+.public-note-title-skeleton {
+  @apply h-10 w-2/3 rounded-lg!;
+}
+
+.public-note-content-skeleton {
+  @apply h-64 w-full rounded-xl!;
+}
+
+.public-note-missing {
+  @apply flex flex-1 flex-col items-center justify-center gap-3 text-center text-text-muted;
+}
+
+.public-note-missing-icon {
+  @apply text-5xl;
+}

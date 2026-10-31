@@ -7,7 +7,7 @@ import {
   TAG_COLORS,
   TAG_NAME_MAX_LENGTH,
 } from "./constants";
-import type { Note, NoteCategory } from "./models";
+import type { Note, NoteCategory, NoteOwner } from "./models";
 
 /**
  * "2 days ago" for recent notes, the date for older ones
@@ -124,3 +124,10 @@ export const countTagUses = (notes: Note[]): Map<number, number> => {
       counts.set(tag.id, (counts.get(tag.id) ?? 0) + 1);
   return counts;
 };
+
+/**
+ * @param owner - owner of a shared note
+ * @returns name to show: username, else the email
+ */
+export const getOwnerName = (owner: NoteOwner): string =>
+  owner.username || owner.email;

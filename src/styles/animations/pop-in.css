@@ -1,0 +1,7 @@
+/* Menus and select lists opening */
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    scale: 0.97;
+  }
+}

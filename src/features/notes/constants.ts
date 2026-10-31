@@ -7,6 +7,11 @@ export const NoteQueryScope = {
   List: "list",
   Detail: "detail",
   Trash: "trash",
+  Shares: "shares",
+  Shared: "shared",
+  Unseen: "unseen",
+  Link: "link",
+  Public: "public",
 } as const;
 
 /**
@@ -29,6 +34,41 @@ export const getTrashKey = (userId: number | undefined) =>
  */
 export const getNoteDetailKey = (id: number) =>
   [ReactQueryKeys.Notes, NoteQueryScope.Detail, id] as const;
+
+/**
+ * @param userId - user the notes are shared with
+ * @returns query key of the notes shared with the user
+ */
+export const getSharedNotesKey = (userId: number | undefined) =>
+  [ReactQueryKeys.Notes, NoteQueryScope.Shared, userId] as const;
+
+/**
+ * @param userId - user the notes are shared with
+ * @returns query key of how many shared notes are new for the user
+ */
+export const getUnseenSharedKey = (userId: number | undefined) =>
+  [ReactQueryKeys.Notes, NoteQueryScope.Unseen, userId] as const;
+
+/**
+ * @param id - note id
+ * @returns query key of the note's public link
+ */
+export const getNoteLinkKey = (id: number) =>
+  [ReactQueryKeys.Notes, NoteQueryScope.Link, id] as const;
+
+/**
+ * @param token - public link token
+ * @returns query key of a note read by its public link
+ */
+export const getPublicNoteKey = (token: string) =>
+  [ReactQueryKeys.Notes, NoteQueryScope.Public, token] as const;
+
+/**
+ * @param id - note id
+ * @returns query key of the users a note is shared with
+ */
+export const getNoteSharesKey = (id: number) =>
+  [ReactQueryKeys.Notes, NoteQueryScope.Shares, id] as const;
 
 /**
  * @param userId - owner of the tags

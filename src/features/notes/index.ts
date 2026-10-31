@@ -5,3 +5,5 @@ export { ReactQueryKeys, getNoteDetailKey, getNotesListKey } from "./constants";
 export * from "./models";
 export * from "./hooks/useAddNote";
 export * from "./hooks/useToggleFavorite";
+export { useNoteEvents } from "./hooks/useNoteEvents";
+export { useUnseenShared } from "./hooks/useUnseenShared";

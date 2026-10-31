@@ -11,4 +11,6 @@ export interface NoteEditorProps {
   placeholder: string;
   /** Accessible name of the writing area */
   label: string;
+  /** View only: no toolbar, no edits */
+  readOnly?: boolean;
 }

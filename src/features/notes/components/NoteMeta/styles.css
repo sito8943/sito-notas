@@ -1,7 +1,7 @@
 @reference "@/styles/global.css";
 
 .note-meta {
-  @apply flex items-center gap-2 text-sm text-text-muted;
+  @apply flex min-w-0 items-center gap-2 text-sm text-text-muted;
 }
 
 /* Separator only when there is a status (stays mounted as a live region) */
@@ -12,4 +12,13 @@
 
 .note-meta-status.error {
   @apply text-bg-error;
+}
+
+.note-meta-shared {
+  @apply truncate;
+}
+
+.note-meta-shared::before {
+  @apply mr-2;
+  content: "·";
 }

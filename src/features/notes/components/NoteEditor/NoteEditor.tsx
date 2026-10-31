@@ -7,11 +7,12 @@ import { createEditorExtensions } from "./utils";
 import "./styles.css";
 
 /**
- * Formatted-text editor that reads and writes Markdown. It reads `content`
- * once: remount it (key) to load another note.
+ * Formatted-text editor that reads and writes Markdown. Remount it (key)
+ * to load another note; a new `content` for the same note (someone else
+ * saved) replaces the document and keeps the cursor where it fits.
  */
 function NoteEditor(props: NoteEditorProps) {
-  const { content, onChange, placeholder, label } = props;
+  const { content, onChange, placeholder, label, readOnly = false } = props;
 
   // The editor keeps its first options: read the latest callback from a ref
   const onChangeRef = useRef(onChange);
@@ -28,11 +29,13 @@ function NoteEditor(props: NoteEditorProps) {
     extensions,
     content,
     contentType: "markdown",
+    editable: !readOnly,
     editorProps: {
       attributes: {
         class: "note-editor-content",
         "aria-label": label,
         "aria-multiline": "true",
+        "aria-readonly": String(readOnly),
         role: "textbox",
       },
     },
@@ -40,9 +43,24 @@ function NoteEditor(props: NoteEditorProps) {
       onChangeRef.current(current.getMarkdown()),
   });
 
+  useEffect(() => {
+    if (!editor || editor.isDestroyed || content === editor.getMarkdown())
+      return;
+    const { from, to } = editor.state.selection;
+    editor.commands.setContent(content, {
+      contentType: "markdown",
+      emitUpdate: false,
+    });
+    const end = editor.state.doc.content.size;
+    editor.commands.setTextSelection({
+      from: Math.min(from, end),
+      to: Math.min(to, end),
+    });
+  }, [editor, content]);
+
   return (
     <div className="note-editor">
-      <EditorToolbar editor={editor} />
+      {readOnly ? null : <EditorToolbar editor={editor} />}
       <EditorContent editor={editor} />
     </div>
   );

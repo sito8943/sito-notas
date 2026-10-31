@@ -1,7 +1,7 @@
 @reference "@/styles/global.css";
 
 .bottom-nav-item {
-  @apply flex h-12 w-12 items-center justify-center rounded-lg text-xl text-text-muted transition-colors hover:text-text;
+  @apply relative flex h-12 w-12 items-center justify-center rounded-lg text-xl text-text-muted transition-colors hover:text-text;
 }
 
 .bottom-nav-item.active {
@@ -10,4 +10,9 @@
 
 .bottom-nav-item.disabled {
   @apply cursor-not-allowed opacity-50 hover:text-text-muted;
+}
+
+/* Count in the danger color (notification style), on the icon's corner */
+.bottom-nav-item-badge {
+  @apply absolute top-1 right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-bg-error px-1 text-[10px] leading-none font-semibold text-error tabular-nums;
 }

@@ -10,6 +10,7 @@ export const AppRoute = {
   Auth: "/auth",
   Recovery: "/auth/recovery",
   UpdatePassword: "/auth/update-password",
+  PublicNote: "/s/:token",
   NotFound: "/*",
 } as const;
 
@@ -38,8 +39,15 @@ export const getNoteRoute = (id: number): string =>
   AppRoute.Note.replace(":id", String(id));
 
 /**
+ * @param token - public link token of a note
+ * @returns public (no login) route of the note
+ */
+export const getPublicNoteRoute = (token: string): string =>
+  AppRoute.PublicNote.replace(":token", encodeURIComponent(token));
+
+/**
  * @param route - app route
  * @returns absolute URL of the route on the current origin
  */
-export const getAbsoluteRoute = (route: AppRoute): string =>
+export const getAbsoluteRoute = (route: string): string =>
   new URL(route, window.location.origin).toString();

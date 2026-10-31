@@ -5,7 +5,14 @@ import { jsonResponse } from "@/test/http";
 
 import { NoteApiClient } from "./NoteApiClient";
 import { NOTES_PAGE_SIZE } from "./constants";
-import { parseApiDate, toNote } from "./utils";
+import {
+  parseApiDate,
+  toLinkToken,
+  toNote,
+  toNoteShare,
+  toPublicNote,
+  toUnseenCount,
+} from "./utils";
 
 const dto = (id: number, updatedAt: string) => ({
   id,
@@ -213,5 +220,153 @@ describe("NoteApiClient", () => {
     expect(new URL(String(url)).searchParams.get("softDeleteScope")).toBe(
       "DELETED",
     );
+  });
+});
+
+describe("NoteApiClient shares", () => {
+  it("maps a NoteShareDTO and defaults unknown permissions to read", () => {
+    expect(
+      toNoteShare({
+        userId: 3,
+        email: "a@b.c",
+        username: "ana",
+        permission: "READ",
+        createdAt: "2026-10-01T10:00:00",
+      }),
+    ).toEqual({
+      userId: 3,
+      email: "a@b.c",
+      username: "ana",
+      permission: "READ",
+      createdAt: Date.UTC(2026, 9, 1, 10, 0, 0),
+    });
+    expect(
+      toNoteShare({ userId: 3, email: "a@b.c", username: "", permission: "X" }),
+    ).toEqual({ userId: 3, email: "a@b.c", permission: "READ", createdAt: 0 });
+    expect(() => toNoteShare({ email: "a@b.c" })).toThrow();
+  });
+
+  it("calls the share endpoints of the note", async () => {
+    const { client, fetchFn } = setup();
+    fetchFn
+      .mockResolvedValueOnce(jsonResponse(200, []))
+      .mockResolvedValueOnce(
+        jsonResponse(200, { userId: 3, email: "a@b.c", permission: "READ" }),
+      )
+      .mockResolvedValueOnce(jsonResponse(200, 1));
+
+    await expect(client.listShares(5)).resolves.toEqual([]);
+    await expect(
+      client.share({ noteId: 5, email: "a@b.c", permission: "EDIT" }),
+    ).resolves.toEqual(expect.objectContaining({ userId: 3 }));
+    await expect(client.unshare({ noteId: 5, userId: 3 })).resolves.toBe(1);
+
+    const calls = fetchFn.mock.calls.map(([url, init]) => [
+      String(url),
+      init?.method,
+      init?.body,
+    ]);
+    expect(calls).toEqual([
+      ["https://api.test/notes/5/shares", "GET", undefined],
+      [
+        "https://api.test/notes/5/shares",
+        "POST",
+        '{"email":"a@b.c","permission":"EDIT"}',
+      ],
+      ["https://api.test/notes/5/shares/3", "DELETE", undefined],
+    ]);
+  });
+});
+
+describe("NoteApiClient shared notes", () => {
+  it("maps owner and permission of a shared note", () => {
+    expect(
+      toNote({
+        ...dto(9, "2026-10-02T08:30:00"),
+        categories: [],
+        owner: { id: 1, email: "o@b.c", username: "owner" },
+        permission: "READ",
+      }),
+    ).toEqual(
+      expect.objectContaining({
+        id: 9,
+        owner: { id: 1, email: "o@b.c", username: "owner" },
+        permission: "READ",
+      }),
+    );
+    expect(toNote(dto(9, "2026-10-02T08:30:00"))).not.toHaveProperty("owner");
+  });
+
+  it("loads the notes shared with the user", async () => {
+    const { client, fetchFn } = setup();
+    fetchFn.mockResolvedValueOnce(
+      jsonResponse(200, [
+        { ...dto(9, "2026-10-02T08:30:00"), owner: { id: 1, email: "o@b.c" } },
+      ]),
+    );
+
+    const notes = await client.listShared();
+
+    expect(notes.map((note) => note.owner?.email)).toEqual(["o@b.c"]);
+    expect(String(fetchFn.mock.calls[0]?.[0])).toBe(
+      "https://api.test/notes/shared",
+    );
+  });
+});
+
+describe("NoteApiClient public links", () => {
+  it("maps link tokens and public notes", () => {
+    expect(toLinkToken({ token: "abc" })).toBe("abc");
+    expect(toLinkToken({ token: null })).toBeNull();
+    expect(toLinkToken({ token: "" })).toBeNull();
+    expect(
+      toPublicNote({
+        title: "T",
+        content: "C",
+        updatedAt: "2026-10-01T10:00:00",
+        ownerName: "ana",
+      }),
+    ).toEqual({
+      title: "T",
+      content: "C",
+      updatedAt: Date.UTC(2026, 9, 1, 10, 0, 0),
+      ownerName: "ana",
+    });
+  });
+
+  it("reads a public note without a session (none in tests)", async () => {
+    const { client, fetchFn } = setup();
+    fetchFn.mockResolvedValueOnce(
+      jsonResponse(200, { title: "T", content: "C", ownerName: "ana" }),
+    );
+
+    await expect(client.getPublic("a b")).resolves.toMatchObject({
+      title: "T",
+    });
+    const [url, init] = fetchFn.mock.calls[0] ?? [];
+    expect(String(url)).toBe("https://api.test/public/notes/a%20b");
+    expect(new Headers(init?.headers).has("Authorization")).toBe(false);
+  });
+});
+
+describe("NoteApiClient unseen shared notes", () => {
+  it("maps the count and marks them seen", async () => {
+    expect(toUnseenCount({ count: 3 })).toBe(3);
+    expect(toUnseenCount({ count: -1 })).toBe(0);
+    expect(toUnseenCount(null)).toBe(0);
+
+    const { client, fetchFn } = setup();
+    fetchFn
+      .mockResolvedValueOnce(jsonResponse(200, { count: 2 }))
+      .mockResolvedValueOnce(jsonResponse(200, 2));
+
+    await expect(client.countUnseenShared()).resolves.toBe(2);
+    await expect(client.markSharedSeen()).resolves.toBe(2);
+    expect(
+      fetchFn.mock.calls.map(([url, init]) => [String(url), init?.method]),
+    ).toEqual([
+      ["https://api.test/notes/shared/unseen", "GET"],
+      ["https://api.test/notes/shared/seen", "POST"],
+    ]);
   });
 });

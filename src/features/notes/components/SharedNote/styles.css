@@ -1,0 +1,37 @@
+@reference "@/styles/global.css";
+
+/* Masonry item (same look as the note cards); combined with the global .appear */
+.shared-note {
+  @apply mb-5 flex w-full break-inside-avoid flex-col gap-3 rounded-xl bg-base-light p-5 transition hover:-translate-y-1;
+}
+
+.shared-note-link {
+  @apply flex flex-col gap-3;
+}
+
+.shared-note-title {
+  @apply text-text wrap-anywhere;
+  /* Not `text-base`: with the shared palette that resolves to the surface color */
+  font-size: 1rem;
+  line-height: 1.375;
+}
+
+.shared-note-footer {
+  @apply flex items-center justify-between gap-2 text-xs text-text-muted;
+}
+
+.shared-note-owner {
+  @apply flex min-w-0 items-center gap-1.5;
+}
+
+.shared-note-owner-icon {
+  @apply shrink-0;
+}
+
+.shared-note-owner-name {
+  @apply truncate;
+}
+
+.shared-note-date {
+  @apply shrink-0;
+}

@@ -49,11 +49,12 @@ function NoteHeader(props: NoteHeaderProps) {
     onShare,
     onRemove,
     disabled = false,
+    shared = false,
   } = props;
 
   const { t } = useTranslation();
   const menu = useContextMenu<null>();
-  const goBack = useGoBack(AppRoute.Home);
+  const goBack = useGoBack(shared ? AppRoute.Shared : AppRoute.Home);
 
   const isMarkdown = mode === NoteEditorMode.Markdown;
 
@@ -73,14 +74,16 @@ function NoteHeader(props: NoteHeaderProps) {
   return (
     <PageHeader
       crumbs={[
-        { label: t("_pages:note.notes"), to: AppRoute.Home },
+        shared
+          ? { label: t("_pages:routes.shared"), to: AppRoute.Shared }
+          : { label: t("_pages:note.notes"), to: AppRoute.Home },
         { label: title },
       ]}
       onBack={goBack}
       backLabel={t("_accessibility:buttons.back")}
       navLabel={t("_pages:note.breadcrumb")}
       actions={
-        disabled ? null : (
+        disabled || shared ? null : (
           <>
             <Tooltip label={shareLabel}>
               <IconButton

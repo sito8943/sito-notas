@@ -60,6 +60,8 @@ const buildDevProxy = (env: Record<string, string>) => {
     proxy[path] = {
       target,
       changeOrigin: true,
+      // Also the Notes socket (/ws)
+      ws: true,
       rewrite: (url) => url.slice(path.length),
       // Same-origin for the server: drop Origin so CORS checks do not apply
       configure: (server) =>

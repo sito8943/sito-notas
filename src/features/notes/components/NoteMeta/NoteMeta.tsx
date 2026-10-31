@@ -1,14 +1,18 @@
 import { useTranslation } from "react-i18next";
 
 // utils
-import { formatNoteDate } from "@/features/notes/utils";
+import { formatNoteDate, getOwnerName } from "@/features/notes/utils";
 
 import { SAVE_STATUS_LABEL_KEYS } from "./constants";
 import type { NoteMetaProps } from "./types";
 import "./styles.css";
 
-/** "Updated today · Saved" under the note title */
-function NoteMeta({ updatedAt, status }: NoteMetaProps) {
+/**
+ * "Updated today · Saved" under the note title; shared notes add
+ * "From Ana · Can edit" (read-only ones show no save status)
+ */
+function NoteMeta(props: NoteMetaProps) {
+  const { updatedAt, status, owner, readOnly = false } = props;
   const { t, i18n } = useTranslation();
 
   const statusKey = SAVE_STATUS_LABEL_KEYS[status];
@@ -20,10 +24,18 @@ function NoteMeta({ updatedAt, status }: NoteMetaProps) {
           date: formatNoteDate(updatedAt, i18n.language),
         })}
       </span>
-      {/* Announced to screen readers when the save status changes */}
-      <span role="status" className={`note-meta-status ${status}`}>
-        {statusKey ? t(statusKey) : null}
-      </span>
+      {owner ? (
+        <span className="note-meta-shared" title={owner.email}>
+          {t("_pages:shared.from", { name: getOwnerName(owner) })} ·{" "}
+          {readOnly ? t("_pages:shared.readOnly") : t("_pages:shared.canEdit")}
+        </span>
+      ) : null}
+      {readOnly ? null : (
+        /* Announced to screen readers when the save status changes */
+        <span role="status" className={`note-meta-status ${status}`}>
+          {statusKey ? t(statusKey) : null}
+        </span>
+      )}
     </p>
   );
 }

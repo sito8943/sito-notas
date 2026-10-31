@@ -1,8 +1,8 @@
 import {
-  faCalendar,
   faGear,
   faNoteSticky,
   faTrash,
+  faUserGroup,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { AppRoute } from "@/shared/routes";
@@ -19,11 +19,11 @@ export const BOTTOM_NAVIGATION_ITEMS: AppBottomNavigationItemConfig[] = [
     end: true,
   },
   {
-    id: "calendar",
-    labelKey: "_pages:routes.calendar",
-    icon: faCalendar,
-    route: AppRoute.Calendar,
-    disabled: true,
+    id: "shared",
+    labelKey: "_pages:routes.shared",
+    icon: faUserGroup,
+    route: AppRoute.Shared,
+    unseenSharedBadge: true,
   },
   {
     id: "trash",

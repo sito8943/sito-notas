@@ -11,4 +11,6 @@ export interface NoteHeaderProps {
   onRemove: () => void;
   /** Loading or missing note: no note actions */
   disabled?: boolean;
+  /** Note shared with the user: breadcrumb under "Shared with me", no actions */
+  shared?: boolean;
 }

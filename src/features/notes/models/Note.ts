@@ -1,3 +1,12 @@
+import type { SharePermissionValue } from "./NoteShare";
+
+/** Owner of a note shared with the user */
+export interface NoteOwner {
+  id: number;
+  email: string;
+  username?: string;
+}
+
 /** Tag of a note (the API calls them categories) */
 export interface NoteCategory {
   id: number;
@@ -18,6 +27,10 @@ export interface Note {
   deletedAt?: number;
   /** Manual order in the list (lower first); unset until the user reorders */
   position?: number;
+  /** Only on notes shared with the user: who owns it */
+  owner?: NoteOwner;
+  /** Only on notes shared with the user: what they may do */
+  permission?: SharePermissionValue;
 }
 
 export interface NoteCategoryDto {

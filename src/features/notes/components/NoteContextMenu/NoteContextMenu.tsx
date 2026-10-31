@@ -19,7 +19,6 @@ import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { getNoteRoute } from "@/shared/routes";
 
 // hooks
-import { useShareNote } from "@/features/notes/hooks/useShareNote";
 import { useToggleFavorite } from "@/features/notes/hooks/useToggleFavorite";
 
 import type { NoteContextMenuProps } from "./types";
@@ -30,11 +29,10 @@ import "./styles.css";
  * favorite, add to tag and move to trash
  */
 function NoteContextMenu(props: NoteContextMenuProps) {
-  const { open, position, note, onClose, onAddTags, onDelete } = props;
+  const { open, position, note, onClose, onAddTags, onShare, onDelete } = props;
 
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const shareNote = useShareNote();
   const toggleFavorite = useToggleFavorite();
 
   const choose = (action: () => void) => () => {
@@ -61,7 +59,7 @@ function NoteContextMenu(props: NoteContextMenuProps) {
           </ContextMenuItem>
           <ContextMenuItem
             leading={<FontAwesomeIcon icon={faShareNodes} />}
-            onClick={choose(() => shareNote(title, note.content))}
+            onClick={choose(() => onShare(note))}
           >
             {t("_accessibility:ariaLabels.share")}
           </ContextMenuItem>

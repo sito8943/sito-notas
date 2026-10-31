@@ -60,6 +60,7 @@ export class HttpClient {
     if (!auth || !this.session) return this.send<T>(path, options, null);
 
     const token = await this.session.getAccessToken();
+    if (!token && auth === "optional") return this.send<T>(path, options, null);
     if (!token) throw new HttpError(401, NO_SESSION_MESSAGE);
 
     try {

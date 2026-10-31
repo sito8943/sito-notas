@@ -1,6 +1,6 @@
 import type { HttpClient } from "@/shared/lib/http";
 
-import type { Note } from "@/features/notes/models";
+import type { Note, NoteShare, PublicNote } from "@/features/notes/models";
 
 import {
   MAX_NOTE_PAGES,
@@ -8,11 +8,17 @@ import {
   NOTES_PAGE_SIZE,
   NoteEndpoint,
   TRASH_LIST_QUERY,
+  getNoteLinkEndpoint,
+  getNoteSharesEndpoint,
+  getPublicNoteEndpoint,
 } from "./constants";
 import type {
   CreateNoteInput,
   SetFavoriteInput,
   SetNoteTagsInput,
+  SetSharePermissionInput,
+  ShareNoteInput,
+  UnshareNoteInput,
   UpdateNoteInput,
 } from "./types";
 import {
@@ -20,6 +26,11 @@ import {
   sortByDeletedAtDesc,
   sortByPosition,
   toNote,
+  toNoteShare,
+  toNoteShares,
+  toLinkToken,
+  toPublicNote,
+  toUnseenCount,
 } from "./utils";
 
 /**
@@ -47,6 +58,34 @@ export class NoteApiClient {
    */
   async listTrash(): Promise<Note[]> {
     return sortByDeletedAtDesc(await this.listPages(TRASH_LIST_QUERY));
+  }
+
+  /**
+   * Loads the notes other users shared with this one
+   * @returns active shared notes (with owner and permission), last edited first
+   */
+  async listShared(): Promise<Note[]> {
+    const response = await this.http.get<unknown>(NoteEndpoint.Shared);
+    if (!Array.isArray(response))
+      throw new Error("Invalid shared notes response");
+    return response.map(toNote);
+  }
+
+  /**
+   * @returns how many notes shared with the user they have not seen yet
+   */
+  async countUnseenShared(): Promise<number> {
+    return toUnseenCount(
+      await this.http.get<unknown>(NoteEndpoint.SharedUnseen),
+    );
+  }
+
+  /**
+   * Marks every note shared with the user as seen
+   * @returns how many changed
+   */
+  async markSharedSeen(): Promise<number> {
+    return this.http.post<number>(NoteEndpoint.SharedSeen);
   }
 
   /**
@@ -161,5 +200,103 @@ export class NoteApiClient {
    */
   async removePermanently(ids: number[]): Promise<number> {
     return this.http.delete<number>(NoteEndpoint.Permanent, ids);
+  }
+
+  /**
+   * @param noteId - id of one of the user's notes
+   * @returns users the note is shared with, oldest first
+   * @throws HttpError 404 when the note is not the user's or is trashed
+   */
+  async listShares(noteId: number): Promise<NoteShare[]> {
+    return toNoteShares(
+      await this.http.get<unknown>(getNoteSharesEndpoint(noteId)),
+    );
+  }
+
+  /**
+   * Shares a note with another Sito Notas user
+   * @param input - note id, the user's email and what they may do
+   * @returns the new share
+   * @throws HttpError 404 (no user with that email), 400 (own email),
+   * 409 (already shared)
+   */
+  async share(input: ShareNoteInput): Promise<NoteShare> {
+    return toNoteShare(
+      await this.http.post<unknown>(getNoteSharesEndpoint(input.noteId), {
+        email: input.email,
+        permission: input.permission,
+      }),
+    );
+  }
+
+  /**
+   * Changes what a user may do with a shared note
+   * @param input - note id, user id and the new permission
+   * @returns the updated share
+   * @throws HttpError 404 when the note is not shared with that user
+   */
+  async setSharePermission(input: SetSharePermissionInput): Promise<NoteShare> {
+    return toNoteShare(
+      await this.http.patch<unknown>(
+        `${getNoteSharesEndpoint(input.noteId)}/${input.userId}`,
+        { permission: input.permission },
+      ),
+    );
+  }
+
+  /**
+   * @param noteId - id of one of the user's notes
+   * @returns token of its public link, or null when it has none
+   */
+  async getLink(noteId: number): Promise<string | null> {
+    return toLinkToken(
+      await this.http.get<unknown>(getNoteLinkEndpoint(noteId)),
+    );
+  }
+
+  /**
+   * Creates the public read-only link (or returns the existing one)
+   * @param noteId - id of one of the user's notes
+   * @returns the link token
+   */
+  async createLink(noteId: number): Promise<string | null> {
+    return toLinkToken(
+      await this.http.post<unknown>(getNoteLinkEndpoint(noteId)),
+    );
+  }
+
+  /**
+   * Disables the public link; creating it again gives a new one
+   * @param noteId - id of one of the user's notes
+   */
+  async removeLink(noteId: number): Promise<void> {
+    await this.http.delete<unknown>(getNoteLinkEndpoint(noteId));
+  }
+
+  /**
+   * Reads a note by its public link; no login needed, but a signed-in
+   * owner or user it is shared with also gets its id
+   * @param token - public link token
+   * @returns the note
+   * @throws HttpError 404 when the link does not exist, was disabled or the
+   * note is in the trash
+   */
+  async getPublic(token: string): Promise<PublicNote> {
+    return toPublicNote(
+      await this.http.get<unknown>(getPublicNoteEndpoint(token), {
+        auth: "optional",
+      }),
+    );
+  }
+
+  /**
+   * Stops sharing a note with a user
+   * @param input - note id and the user's id
+   * @returns 1, or 0 when it was not shared with them
+   */
+  async unshare(input: UnshareNoteInput): Promise<number> {
+    return this.http.delete<number>(
+      `${getNoteSharesEndpoint(input.noteId)}/${input.userId}`,
+    );
   }
 }

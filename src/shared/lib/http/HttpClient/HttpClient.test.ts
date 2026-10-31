@@ -152,6 +152,18 @@ describe("HttpClient", () => {
     expect(fetchFn).not.toHaveBeenCalled();
   });
 
+  it("optional auth sends the token only when signed in", async () => {
+    const { http, fetchFn, session } = setup();
+    fetchFn.mockImplementation(async () => jsonResponse(200, {}));
+
+    await http.get("/a", { auth: "optional" });
+    session.clear();
+    await http.get("/a", { auth: "optional" });
+
+    expect(authHeader(fetchFn, 0)).toBe("Bearer access-1");
+    expect(authHeader(fetchFn, 1)).toBeUndefined();
+  });
+
   it("maps network failures to status 0", async () => {
     const { http, fetchFn } = setup();
     fetchFn.mockRejectedValue(new TypeError("Failed to fetch"));

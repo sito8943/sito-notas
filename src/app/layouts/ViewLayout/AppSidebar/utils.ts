@@ -9,17 +9,22 @@ import type { AppSidebarItemConfig } from "./types";
 /**
  * @param items - sidebar config
  * @param t - translator
+ * @param unseenShared - new shared notes, for the item that shows them
  * @returns items ready for the Sidebar molecule
  */
 export const toNavItems = (
   items: AppSidebarItemConfig[],
   t: TFunction,
+  unseenShared = 0,
 ): SidebarNavItemData[] =>
-  items.map(({ id, labelKey, icon, route, end, disabled }) => ({
-    id,
-    label: t(labelKey),
-    icon: createElement(FontAwesomeIcon, { icon }),
-    to: route,
-    end,
-    disabled,
-  }));
+  items.map(
+    ({ id, labelKey, icon, route, end, disabled, unseenSharedBadge }) => ({
+      id,
+      label: t(labelKey),
+      icon: createElement(FontAwesomeIcon, { icon }),
+      to: route,
+      end,
+      disabled,
+      ...(unseenSharedBadge ? { badge: unseenShared } : {}),
+    }),
+  );

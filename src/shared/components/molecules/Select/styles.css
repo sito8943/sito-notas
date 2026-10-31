@@ -1,0 +1,58 @@
+@reference "@/styles/global.css";
+
+.select {
+  @apply relative shrink-0;
+}
+
+.select-trigger {
+  @apply flex w-full items-center gap-2 rounded-lg border border-border bg-base-light px-3 py-2 text-sm text-text outline-none transition-colors;
+  @apply hover:bg-base-dark focus-visible:border-text-muted disabled:opacity-50 aria-expanded:border-text-muted;
+}
+
+.select-icon {
+  @apply text-text-muted;
+}
+
+.select-value {
+  @apply flex-1 truncate text-left;
+}
+
+.select-chevron {
+  @apply text-xs text-text-muted transition-transform motion-reduce:transition-none;
+}
+
+.select-trigger[aria-expanded="true"] .select-chevron {
+  @apply rotate-180;
+}
+
+/* Matches @sito/ui menus; data-placement says where it opens from the trigger */
+.select-list {
+  @apply absolute isolate z-(--sito-ui-z-index-context-menu) max-h-64 min-w-full animate-pop-in overflow-y-auto;
+  @apply rounded-(--sito-ui-radius-context-menu) border border-border bg-base-light p-1 shadow-(--sito-ui-shadow-context-menu) outline-none motion-reduce:animate-none;
+}
+
+.select-list[data-placement="bottom-start"] {
+  @apply top-full left-0 mt-1;
+}
+
+.select-list[data-placement="bottom-end"] {
+  @apply top-full right-0 mt-1;
+}
+
+.select-list[data-placement="top-start"] {
+  @apply bottom-full left-0 mb-1;
+}
+
+.select-list[data-placement="top-end"] {
+  @apply right-0 bottom-full mb-1;
+}
+
+.select-option {
+  @apply flex cursor-pointer items-center gap-2 rounded-(--sito-ui-radius-context-menu-item) py-1.5 pr-3 pl-2 text-sm whitespace-nowrap text-text;
+  @apply aria-selected:text-text-primary;
+}
+
+/* The check shows on the chosen option only */
+.select-option[aria-selected="false"] .select-check {
+  @apply invisible;
+}

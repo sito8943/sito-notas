@@ -194,5 +194,52 @@
     },
     "addToTag": "Añadir a etiqueta…",
     "dialogTitle": "Etiquetas de «{{title}}»"
+  },
+  "share": {
+    "title": "Compartir «{{title}}»",
+    "emailLabel": "Correo de la persona",
+    "emailPlaceholder": "correo@ejemplo.com",
+    "submit": "Compartir",
+    "hint": "Solo con personas que ya usan Sito Notas. Elige si pueden ver o editar.",
+    "people": "Personas con acceso",
+    "onlyYou": "Solo tú tienes acceso a esta nota.",
+    "remove": "Quitar acceso a {{name}}",
+    "permission": {
+      "read": "Puede ver",
+      "edit": "Puede editar"
+    },
+    "sendCopy": "Enviar una copia",
+    "errors": {
+      "notFound": "No hay ningún usuario de Sito Notas con ese correo",
+      "self": "No puedes compartir una nota contigo",
+      "alreadyShared": "Ya compartiste esta nota con esa persona"
+    },
+    "permissionLabel": "Permiso",
+    "permissionFor": "Permiso de {{name}}",
+    "link": {
+      "title": "Enlace público",
+      "off": "Cualquiera con el enlace podrá leer la nota, sin cuenta y sin poder editarla.",
+      "create": "Crear enlace",
+      "copy": "Copiar enlace",
+      "copied": "Enlace copiado",
+      "remove": "Desactivar",
+      "removeLabel": "Desactivar el enlace público",
+      "urlLabel": "Enlace público de la nota"
+    }
+  },
+  "shared": {
+    "description": "Notas que otras personas compartieron contigo.",
+    "emptyState": "Nadie ha compartido una nota contigo todavía.",
+    "from": "De {{name}}",
+    "readOnly": "Solo lectura",
+    "canEdit": "Puedes editar"
+  },
+  "publicNote": {
+    "by": "De {{name}}",
+    "updated": "Editado {{date}}",
+    "notFound": "Este enlace no existe o fue desactivado",
+    "contentLabel": "Contenido de la nota",
+    "signIn": "Iniciar sesión",
+    "myNotes": "Ir a mis notas"
   }
 }
