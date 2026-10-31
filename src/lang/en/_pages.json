@@ -5,7 +5,6 @@
     "signUp": "Sign Up",
     "signOut": "Sign Out",
     "settings": "Settings",
-    "notes": "All notes",
     "tags": "Tags",
     "calendar": "Calendar",
     "shared": "Shared with me",
@@ -50,11 +49,14 @@
       "defaultTitle": "New note",
       "defaultContent": "Write something here",
       "untitled": "Untitled note",
-      "copied": "Note copied"
+      "copied": "Note copied",
+      "noFavorites": "No favorite notes yet. Mark them with the heart.",
+      "noTagged": "No note has this tag yet."
     },
     "welcome": "Welcome {{user}}",
     "tabs": {
-      "all": "All"
+      "all": "All",
+      "favorites": "Favorites"
     }
   },
   "settings": {
@@ -120,7 +122,9 @@
       "cancel": "Cancel",
       "remove": "Remove link",
       "invalid": "Enter a web, email or phone link"
-    }
+    },
+    "open": "Open",
+    "actions": "Actions for “{{title}}”"
   },
   "trash": {
     "moveToTrash": "Move to trash",
@@ -152,5 +156,36 @@
       "title": "Empty the trash?",
       "description": "The {{count}} notes in the trash will be deleted for good. This cannot be undone."
     }
+  },
+  "tags": {
+    "add": "Tag",
+    "searchOrCreate": "Search or create…",
+    "create": "Create “{{name}}”",
+    "noTags": "No tags yet",
+    "remove": "Remove {{name}}",
+    "manage": "Edit",
+    "description": "Rename, recolor or delete your tags. Deleting one removes it from its notes; the notes are kept.",
+    "newLabel": "New tag",
+    "newPlaceholder": "Name of the new tag",
+    "createButton": "Create",
+    "nameLabel": "Tag name",
+    "colorLabel": "Color of {{name}}",
+    "count_one": "{{count}} note",
+    "count_other": "{{count}} notes",
+    "delete": "Delete tag",
+    "deleted_one": "Tag deleted",
+    "deleted_other": "{{count}} tags deleted",
+    "emptyState": "No tags yet. Create one here or from a note.",
+    "errors": {
+      "exists": "You already have a tag with that name"
+    },
+    "confirmDelete": {
+      "title": "Delete “{{name}}”?",
+      "description_zero": "No note uses it. This cannot be undone.",
+      "description_one": "It will be removed from {{count}} note; the note is kept. This cannot be undone.",
+      "description_other": "It will be removed from {{count}} notes; the notes are kept. This cannot be undone."
+    },
+    "addToTag": "Add to tag…",
+    "dialogTitle": "Tags of “{{title}}”"
   }
 }

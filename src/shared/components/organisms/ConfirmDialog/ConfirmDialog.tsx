@@ -1,3 +1,7 @@
+// icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+
 // @sito/ui
 import { Dialog, DialogActions } from "@sito/ui";
 
@@ -21,6 +25,7 @@ function ConfirmDialog(props: ConfirmDialogProps) {
 
   return (
     <Dialog
+      closeIcon={<FontAwesomeIcon icon={faXmark} />}
       open={open}
       title={title}
       onClose={onClose}

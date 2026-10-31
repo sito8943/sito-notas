@@ -25,14 +25,25 @@
 }
 
 /* Color comes from the tag (inline), muted when it has none */
-.preview-note-tag {
-  @apply flex min-w-0 items-center gap-1.5 text-xs text-text-muted;
+/* Up to CARD_MAX_TAGS chips, then "+N"; shrinks before the actions */
+.preview-note-tags {
+  @apply flex min-w-0 flex-1 items-center gap-1 overflow-hidden;
 }
 
-.preview-note-tag-name {
-  @apply truncate text-text-muted;
+/* Chips share the row and truncate their names */
+.preview-note-tag {
+  @apply min-w-0 shrink;
+}
+
+.preview-note-more-tags {
+  @apply shrink-0 text-xs text-text-muted;
 }
 
 .preview-note-actions {
   @apply -mr-2 flex shrink-0 items-center;
+}
+
+/* Small screens only: wide screens add tags from the right-click menu */
+.preview-note-add-tag {
+  @apply hidden md:inline-flex;
 }

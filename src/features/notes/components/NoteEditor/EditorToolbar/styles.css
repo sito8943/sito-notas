@@ -1,9 +1,22 @@
 @reference "@/styles/global.css";
 
-/* Stays visible while the note scrolls. No overflow clipping: tooltips are
-   drawn inside the buttons, so narrow screens wrap instead of scrolling */
+/* Stays visible while the note scrolls. Desktop wraps (tooltips are drawn
+   inside the buttons and an overflow container would clip them); small
+   screens keep one row that scrolls sideways and have no tooltips */
 .editor-toolbar {
-  @apply sticky top-2 z-10 flex flex-wrap items-center gap-1 rounded-2xl bg-base-light px-2 py-1.5;
+  @apply sticky top-2 z-10 flex flex-wrap items-center gap-1 rounded-2xl bg-base-light px-2 py-1.5 md:flex-nowrap md:overflow-x-auto md:overscroll-x-contain;
+  scrollbar-width: none;
+}
+
+.editor-toolbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Touch: no hover, and a tooltip opened on tap would be clipped */
+@variant md {
+  .editor-toolbar .sito-ui-tooltip__content {
+    display: none;
+  }
 }
 
 .editor-toolbar-group {

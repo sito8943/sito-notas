@@ -1,6 +1,5 @@
 export const AppRoute = {
   Home: "/",
-  Notes: "/notes",
   Note: "/note/:id",
   Tags: "/tags",
   Calendar: "/calendar",

@@ -13,6 +13,7 @@ import { Syncing } from "@/shared/components/atoms/Syncing";
 import { RemoveNoteDialog } from "@/features/notes/components/RemoveNoteDialog";
 import { NoteHeader } from "@/features/notes/components/NoteHeader";
 import { NoteMeta } from "@/features/notes/components/NoteMeta";
+import { NoteTags } from "@/features/notes/components/NoteTags";
 import {
   NoteEditor,
   NoteEditorMode,
@@ -20,6 +21,7 @@ import {
 } from "@/features/notes/components/NoteEditor";
 
 // hooks
+import { useEscapeKey } from "@/shared/hooks";
 import {
   NoteSaveStatus,
   toNoteId,
@@ -52,6 +54,12 @@ function Note() {
   } = useNoteEditor(noteId);
 
   const [mode, setMode] = useState<NoteEditorModeValue>(NoteEditorMode.Rich);
+
+  // Escape: Markdown source back to the editor, then out of the note
+  useEscapeKey(() => {
+    if (mode === NoteEditorMode.Markdown) setMode(NoteEditorMode.Rich);
+    else navigate(AppRoute.Home);
+  });
 
   const removeDialog = useDialog();
   const share = useShareNote();
@@ -122,6 +130,7 @@ function Note() {
                   className="note-title"
                 />
                 <NoteMeta updatedAt={note.updatedAt} status={status} />
+                <NoteTags note={note} />
               </div>
               {mode === NoteEditorMode.Markdown ? (
                 <textarea

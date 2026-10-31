@@ -14,14 +14,10 @@ import { AppRoute } from "@/shared/routes";
 // features
 import { useAccount } from "@/features/auth";
 
-// images
-import noPhoto from "@/assets/images/no-photo.webp";
-
 import "./styles.css";
 
 /**
- * Back button on inner pages; on home, the greeting (plus the avatar on small
- * screens, where the sidebar is hidden)
+ * Back button on inner pages; on home, the greeting (no avatar anywhere)
  */
 function NavbarBrand() {
   const { t } = useTranslation();
@@ -31,11 +27,6 @@ function NavbarBrand() {
   if (pathname === AppRoute.Home)
     return (
       <div className="navbar-user">
-        <img
-          src={noPhoto}
-          alt={account.user?.username ?? ""}
-          className="navbar-user-avatar"
-        />
         <h1 className="navbar-user-welcome">
           {t("_pages:home.welcome", { user: account.user?.username })}
         </h1>

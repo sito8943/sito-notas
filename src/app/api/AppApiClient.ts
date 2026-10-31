@@ -2,7 +2,7 @@ import config from "@/shared/config";
 import { HttpClient, SessionManager } from "@/shared/lib/http";
 
 import { UserApiClient } from "@/features/auth";
-import { NoteApiClient } from "@/features/notes";
+import { CategoryApiClient, NoteApiClient } from "@/features/notes";
 
 /**
  * Composition root of the API layer: one SessionManager shared by the
@@ -12,6 +12,7 @@ import { NoteApiClient } from "@/features/notes";
 export class AppApiClient {
   private readonly user: UserApiClient;
   private readonly note: NoteApiClient;
+  private readonly category: CategoryApiClient;
 
   constructor() {
     const session = new SessionManager();
@@ -20,6 +21,7 @@ export class AppApiClient {
 
     this.user = new UserApiClient(authHttp, session);
     this.note = new NoteApiClient(apiHttp);
+    this.category = new CategoryApiClient(apiHttp);
     session.setRefresher((refreshToken) => this.user.refresh(refreshToken));
   }
 
@@ -30,6 +32,10 @@ export class AppApiClient {
   get Note(): NoteApiClient {
     return this.note;
   }
+
+  get Category(): CategoryApiClient {
+    return this.category;
+  }
 }
 
 // Types the client that shared/ApiClientProvider exposes to features
@@ -37,5 +43,6 @@ declare module "@/shared/providers/ApiClientProvider/types" {
   interface ApiClient {
     readonly User: UserApiClient;
     readonly Note: NoteApiClient;
+    readonly Category: CategoryApiClient;
   }
 }

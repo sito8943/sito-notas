@@ -11,9 +11,11 @@ import type { SearchProviderProps } from "./types";
 function SearchProvider({ children }: SearchProviderProps) {
   const [searchValue, setSearchValue] = useState("");
   const [categoryId, setCategoryId] = useState<number | null>(null);
+  const [favoritesOnly, setFavoritesOnly] = useState(false);
 
   const searchFunction = useCallback(
     (note: Note) => {
+      if (favoritesOnly && !note.favorite) return false;
       if (
         categoryId !== null &&
         !note.categories.some((category) => category.id === categoryId)
@@ -27,7 +29,7 @@ function SearchProvider({ children }: SearchProviderProps) {
           SEARCH_SIMILARITY_THRESHOLD || title.includes(toSearch)
       );
     },
-    [searchValue, categoryId],
+    [searchValue, categoryId, favoritesOnly],
   );
 
   const value = useMemo(
@@ -37,8 +39,10 @@ function SearchProvider({ children }: SearchProviderProps) {
       setSearchValue,
       categoryId,
       setCategoryId,
+      favoritesOnly,
+      setFavoritesOnly,
     }),
-    [searchFunction, searchValue, categoryId],
+    [searchFunction, searchValue, categoryId, favoritesOnly],
   );
 
   return (

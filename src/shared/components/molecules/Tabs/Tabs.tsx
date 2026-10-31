@@ -1,7 +1,7 @@
 import type { TabsProps } from "./types";
 import "./styles.css";
 
-/** Text tabs (Notes / Favorite style) that select one value */
+/** Chip tabs that select one value (filters such as All / Favorites / tags) */
 function Tabs<T extends string | number>(props: TabsProps<T>) {
   const { tabs, value, onChange, label, className = "" } = props;
 
@@ -15,10 +15,14 @@ function Tabs<T extends string | number>(props: TabsProps<T>) {
             type="button"
             role="tab"
             aria-selected={selected}
+            disabled={tab.disabled}
             onClick={() => onChange(tab.value)}
-            className={`tabs-tab ${selected ? "selected" : ""}`}
+            className={`tabs-tab sito-ui-pressable ${selected ? "selected" : ""}`}
           >
             {tab.label}
+            {tab.count ? (
+              <span className="tabs-tab-count">{tab.count}</span>
+            ) : null}
           </button>
         );
       })}

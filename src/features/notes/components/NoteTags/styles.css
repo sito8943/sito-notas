@@ -1,0 +1,5 @@
+@reference "@/styles/global.css";
+
+.note-tags {
+  @apply flex flex-wrap items-center gap-1.5;
+}

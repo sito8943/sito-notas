@@ -1,0 +1,37 @@
+@reference "@/styles/global.css";
+
+.tag-selector {
+  @apply flex flex-col gap-1;
+}
+
+.tag-selector-search {
+  @apply w-full rounded-lg border border-border bg-transparent px-2 py-1.5 text-sm text-text outline-none placeholder:text-text-muted focus:border-text-muted;
+}
+
+.tag-selector-list {
+  @apply flex max-h-60 flex-col overflow-y-auto;
+}
+
+.tag-selector-option {
+  @apply flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-sm text-text transition-colors hover:bg-base-dark disabled:opacity-50;
+}
+
+.tag-selector-option.create {
+  @apply text-text-primary;
+}
+
+.tag-selector-dot {
+  @apply h-2.5 w-2.5 shrink-0 rounded-full bg-text-muted;
+}
+
+.tag-selector-name {
+  @apply min-w-0 flex-1 truncate;
+}
+
+.tag-selector-check {
+  @apply shrink-0 text-xs text-text-primary;
+}
+
+.tag-selector-empty {
+  @apply px-2 py-1.5 text-sm text-text-muted;
+}

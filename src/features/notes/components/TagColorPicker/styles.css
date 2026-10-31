@@ -1,0 +1,14 @@
+@reference "@/styles/global.css";
+
+.tag-color-picker {
+  @apply flex flex-wrap items-center gap-1.5;
+}
+
+.tag-color-picker-dot {
+  @apply h-5 w-5 shrink-0 rounded-full transition-transform hover:scale-110 disabled:cursor-not-allowed disabled:opacity-50;
+}
+
+/* Ring in the text color marks the current one */
+.tag-color-picker-dot.selected {
+  @apply outline-2 outline-offset-2 outline-text;
+}

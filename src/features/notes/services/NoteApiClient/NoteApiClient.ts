@@ -12,12 +12,13 @@ import {
 import type {
   CreateNoteInput,
   SetFavoriteInput,
+  SetNoteTagsInput,
   UpdateNoteInput,
 } from "./types";
 import {
   parsePage,
   sortByDeletedAtDesc,
-  sortByUpdatedAtDesc,
+  sortByPosition,
   toNote,
 } from "./utils";
 
@@ -34,10 +35,10 @@ export class NoteApiClient {
 
   /**
    * Loads every active note, paging until the last page
-   * @returns notes sorted by last update, newest first
+   * @returns notes in the user's manual order, then newest update first
    */
   async list(): Promise<Note[]> {
-    return sortByUpdatedAtDesc(await this.listPages(NOTES_LIST_QUERY));
+    return sortByPosition(await this.listPages(NOTES_LIST_QUERY));
   }
 
   /**
@@ -115,12 +116,33 @@ export class NoteApiClient {
   }
 
   /**
+   * Replaces the tags of a note; title, content and favorite are kept
+   * @param input - note id and every tag id it keeps
+   * @returns id of the note
+   */
+  async setTags(input: SetNoteTagsInput): Promise<number> {
+    return this.http.patch<number>(`${NoteEndpoint.Notes}/${input.id}`, {
+      id: input.id,
+      categoryIds: [...new Set(input.tagIds)],
+    });
+  }
+
+  /**
    * Moves notes to the trash (soft delete)
    * @param ids - note ids
    * @returns number of notes moved
    */
   async remove(ids: number[]): Promise<number> {
     return this.http.delete<number>(NoteEndpoint.Notes, ids);
+  }
+
+  /**
+   * Saves the manual order of the notes; trashed or foreign ids are skipped
+   * @param ids - every active note id, top first
+   * @returns number of notes updated
+   */
+  async reorder(ids: number[]): Promise<number> {
+    return this.http.patch<number>(NoteEndpoint.Reorder, ids);
   }
 
   /**

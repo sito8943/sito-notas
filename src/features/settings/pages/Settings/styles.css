@@ -1,11 +1,12 @@
 @reference "@/styles/global.css";
 
+/* Header stays put; only the content scrolls (same as the trash page) */
 .settings {
-  @apply flex flex-col;
+  @apply flex h-full min-h-0 flex-col;
 }
 
 .settings-content {
-  @apply flex h-full flex-1 flex-col gap-5 overflow-auto p-10 sm:p-3;
+  @apply flex min-h-0 flex-1 flex-col gap-6 overflow-auto p-10 sm:p-3;
 }
 
 .settings-syncing {
@@ -16,10 +17,7 @@
   @apply scale-100;
 }
 
-.settings-header {
-  @apply flex items-center;
-}
-
+/* Same size as the trash title */
 .settings-title {
-  @apply text-6xl md:text-5xl sm:text-4xl xs:text-3xl;
+  @apply text-3xl md:text-2xl;
 }

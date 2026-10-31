@@ -16,6 +16,8 @@ export interface Note {
   updatedAt: number;
   /** When it was moved to the trash (only for trashed notes) */
   deletedAt?: number;
+  /** Manual order in the list (lower first); unset until the user reorders */
+  position?: number;
 }
 
 export interface NoteCategoryDto {
@@ -34,6 +36,7 @@ export interface NoteDto {
   createdAt: string | null;
   updatedAt: string | null;
   deletedAt?: string | null;
+  position?: number | null;
 }
 
 export interface PageDto<T> {
