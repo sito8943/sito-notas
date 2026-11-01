@@ -78,9 +78,6 @@
   "notFound": {
     "title": "Página no encontrada"
   },
-  "sidebar": {
-    "addCategory": "Añadir categoría"
-  },
   "note": {
     "titlePlaceholder": "Título",
     "titleLabel": "Título de la nota",

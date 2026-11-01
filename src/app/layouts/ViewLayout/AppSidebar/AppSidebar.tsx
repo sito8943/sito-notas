@@ -1,10 +1,6 @@
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-// icons
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-
 // components
 import { LogoMark } from "@/shared/components/atoms/LogoMark";
 import { Sidebar } from "@/shared/components/molecules/Sidebar";
@@ -36,11 +32,6 @@ function AppSidebar() {
       brand={{
         name: t("_accessibility:appName"),
         mark: <LogoMark />,
-      }}
-      // Visual only until categories exist
-      action={{
-        label: t("_pages:sidebar.addCategory"),
-        icon: <FontAwesomeIcon icon={faPlus} />,
       }}
       items={items}
       footerItems={footerItems}
