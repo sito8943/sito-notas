@@ -157,9 +157,12 @@ function useNoteEditor(noteId: number | undefined): UseNoteEditorResult {
     setDraft(null);
   }, []);
 
+  // Saving only while a request is in flight; edits still waiting for the
+  // pause show no status (a stale "Saved" would be wrong, a spinner noisy)
+  const waiting = draft !== null && draft !== debouncedDraft;
   let status: SaveStatus = NoteSaveStatus.Idle;
-  if ((draft !== null && draft !== debouncedDraft) || isPending)
-    status = NoteSaveStatus.Saving;
+  if (isPending) status = NoteSaveStatus.Saving;
+  else if (waiting) status = NoteSaveStatus.Idle;
   else if (saveFailed) status = NoteSaveStatus.Error;
   else if (isSuccess) status = NoteSaveStatus.Saved;
 
