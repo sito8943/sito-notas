@@ -1,5 +1,7 @@
 import type { NoteEditorMode as NoteEditorModeValues } from "./constants";
 
+import type { Editor } from "@tiptap/react";
+
 export type NoteEditorMode =
   (typeof NoteEditorModeValues)[keyof typeof NoteEditorModeValues];
 
@@ -13,4 +15,6 @@ export interface NoteEditorProps {
   label: string;
   /** View only: no toolbar, no edits */
   readOnly?: boolean;
+  /** Receives the editor once it exists, and null on unmount */
+  onEditorChange?: (editor: Editor | null) => void;
 }

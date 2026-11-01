@@ -12,7 +12,14 @@ import "./styles.css";
  * saved) replaces the document and keeps the cursor where it fits.
  */
 function NoteEditor(props: NoteEditorProps) {
-  const { content, onChange, placeholder, label, readOnly = false } = props;
+  const {
+    content,
+    onChange,
+    placeholder,
+    label,
+    readOnly = false,
+    onEditorChange,
+  } = props;
 
   // The editor keeps its first options: read the latest callback from a ref
   const onChangeRef = useRef(onChange);
@@ -42,6 +49,13 @@ function NoteEditor(props: NoteEditorProps) {
     onUpdate: ({ editor: current }) =>
       onChangeRef.current(current.getMarkdown()),
   });
+
+  // Lets the page put editor actions (undo) in its header
+  useEffect(() => {
+    if (!onEditorChange) return;
+    onEditorChange(editor);
+    return () => onEditorChange(null);
+  }, [editor, onEditorChange]);
 
   useEffect(() => {
     if (!editor || editor.isDestroyed || content === editor.getMarkdown())

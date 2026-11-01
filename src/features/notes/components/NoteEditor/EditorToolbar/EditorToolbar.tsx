@@ -14,7 +14,6 @@ import {
   INLINE_ACTIONS,
   LIST_ACTIONS,
   TOOLBAR_TOOLTIP_SIDE,
-  UNDO_ACTION,
 } from "./constants";
 import type { EditorToolbarAction, EditorToolbarProps } from "./types";
 import { formatHotkey, getToolbarState, isApplePlatform } from "./utils";
@@ -86,9 +85,6 @@ function EditorToolbar({ editor }: EditorToolbarProps) {
           />
         </Tooltip>
         {renderAction(CODE_ACTION, editor)}
-      </div>
-      <div className="editor-toolbar-end">
-        {renderAction(UNDO_ACTION, editor)}
       </div>
       <LinkDialog
         editor={editor}
