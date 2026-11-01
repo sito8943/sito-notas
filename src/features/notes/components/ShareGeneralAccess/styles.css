@@ -1,0 +1,34 @@
+@reference "@/styles/global.css";
+
+.share-access {
+  @apply flex flex-col gap-2 border-t border-border pt-3;
+}
+
+.share-access-title {
+  @apply text-sm font-semibold text-text-muted;
+}
+
+.share-access-row {
+  @apply flex items-start gap-3 px-1;
+}
+
+.share-access-icon {
+  @apply mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-base-dark text-sm text-text-muted;
+}
+
+.share-access-icon.public {
+  @apply text-text-primary;
+}
+
+.share-access-text {
+  @apply flex min-w-0 flex-1 flex-col items-start gap-0.5;
+}
+
+.share-access-hint {
+  @apply px-1 text-xs text-text-muted;
+}
+
+/* Combined with the global .skeleton-box helper */
+.share-access-skeleton {
+  @apply h-12 w-full rounded-lg!;
+}

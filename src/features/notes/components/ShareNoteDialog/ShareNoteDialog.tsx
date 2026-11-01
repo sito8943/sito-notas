@@ -14,7 +14,8 @@ import { Button, Dialog, ICON_BUTTON_SIZES, IconButton } from "@sito/ui";
 
 // components
 import { SharePermissionSelect } from "@/features/notes/components/SharePermissionSelect";
-import { ShareLinkSection } from "@/features/notes/components/ShareLinkSection";
+import { ShareGeneralAccess } from "@/features/notes/components/ShareGeneralAccess";
+import { ShareCopyLinkButton } from "@/features/notes/components/ShareCopyLinkButton";
 
 // models
 import {
@@ -174,9 +175,10 @@ function ShareNoteDialog(props: ShareNoteDialogProps) {
           )}
         </section>
 
-        <ShareLinkSection noteId={note?.id ?? null} />
+        <ShareGeneralAccess noteId={note?.id ?? null} />
 
         <footer className="share-note-footer">
+          <ShareCopyLinkButton noteId={note?.id ?? null} />
           <Button
             type="button"
             variant="outlined"

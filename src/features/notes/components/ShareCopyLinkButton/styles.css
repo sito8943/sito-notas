@@ -1,0 +1,5 @@
+@reference "@/styles/global.css";
+
+.share-copy-link {
+  @apply gap-2;
+}

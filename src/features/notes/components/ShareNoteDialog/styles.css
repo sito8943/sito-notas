@@ -76,7 +76,7 @@
 }
 
 .share-note-footer {
-  @apply flex justify-end border-t border-border pt-3;
+  @apply flex flex-wrap items-center justify-between gap-2 border-t border-border pt-3;
 }
 
 .share-note-copy {
