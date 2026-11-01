@@ -13,6 +13,8 @@ permissions:
 env:
   VITE_AUTH_URL: ${{ secrets.VITE_AUTH_URL }}
   VITE_API_URL: ${{ secrets.VITE_API_URL }}
+  # Share links host (nginx → API /s/<token>); not a secret
+  VITE_SHARE_URL: https://share.notes.sito8943.com
   FIREBASE_PROJECT_ID: sitonotas
 
 jobs:

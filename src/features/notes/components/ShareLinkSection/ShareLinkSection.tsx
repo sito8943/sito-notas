@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy, faLink } from "@fortawesome/free-solid-svg-icons";
 
 // routes
-import { getAbsoluteRoute, getPublicNoteRoute } from "@/shared/routes";
+import { getPublicNoteShareUrl } from "@/shared/routes";
 
 // hooks
 import { useNoteLink } from "@/features/notes/hooks/useNoteLink";
@@ -22,7 +22,7 @@ function ShareLinkSection({ noteId }: ShareLinkSectionProps) {
   const toast = useToast();
   const { token, isLoading, create, remove } = useNoteLink(noteId);
 
-  const url = token ? getAbsoluteRoute(getPublicNoteRoute(token)) : "";
+  const url = token ? getPublicNoteShareUrl(token) : "";
   const busy = create.isPending || remove.isPending;
 
   const copy = async () => {
