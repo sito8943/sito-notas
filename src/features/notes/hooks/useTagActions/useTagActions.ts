@@ -57,7 +57,10 @@ function useTagActions(): UseTagActionsResult {
     mutationFn: (input: CreateTagInput) => appApiClient.Category.create(input),
     onSuccess: (id, input) => {
       changeTags(tagsKey, (tags) => [...tags, { id, ...input }]);
-      return refreshTagsAndNotes();
+      // Not awaited: callers' onSuccess (clear the input, add the tag to
+      // the note) must run as soon as the tag exists, not after the refetch
+      // (meanwhile the Tags page showed "name taken" for the typed name)
+      void refreshTagsAndNotes();
     },
     onError: (mutationError) => onError(mutationError, undefined),
   });
