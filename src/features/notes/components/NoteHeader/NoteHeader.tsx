@@ -32,7 +32,10 @@ import { useGoBack } from "@/shared/hooks";
 
 // components
 import { PageHeader } from "@/shared/components/molecules/PageHeader";
-import { NoteEditorMode } from "@/features/notes/components/NoteEditor";
+import {
+  NoteEditorMode,
+  UndoButton,
+} from "@/features/notes/components/NoteEditor";
 
 import { MENU_OFFSET_PX } from "./constants";
 import type { NoteHeaderProps } from "./types";
@@ -50,6 +53,7 @@ function NoteHeader(props: NoteHeaderProps) {
     onRemove,
     disabled = false,
     shared = false,
+    editor = null,
   } = props;
 
   const { t } = useTranslation();
@@ -83,67 +87,76 @@ function NoteHeader(props: NoteHeaderProps) {
       backLabel={t("_accessibility:buttons.back")}
       navLabel={t("_pages:note.breadcrumb")}
       actions={
-        disabled || shared ? null : (
+        disabled ? null : (
           <>
-            <Tooltip label={shareLabel}>
-              <IconButton
-                size={ICON_BUTTON_SIZES.SM}
-                aria-label={shareLabel}
-                onClick={onShare}
-                icon={<FontAwesomeIcon icon={faShareNodes} />}
-                className="note-header-action"
-              />
-            </Tooltip>
-            <Tooltip label={moreLabel} align="end">
-              <IconButton
-                size={ICON_BUTTON_SIZES.SM}
-                aria-label={moreLabel}
-                aria-haspopup="menu"
-                aria-expanded={menu.open}
-                onClick={openMenu}
-                icon={<FontAwesomeIcon icon={faEllipsis} />}
-                className="note-header-action"
-              />
-            </Tooltip>
-            <ContextMenu
-              open={menu.open}
-              position={menu.position}
-              onClose={menu.close}
-              ariaLabel={moreLabel}
-            >
-              <ContextMenuItem
-                leading={
-                  <FontAwesomeIcon icon={favorite ? faHeartSolid : faHeart} />
-                }
-                onClick={choose(onToggleFavorite)}
-              >
-                {favorite
-                  ? t("_accessibility:ariaLabels.unfavorite")
-                  : t("_accessibility:ariaLabels.favorite")}
-              </ContextMenuItem>
-              <ContextMenuItem
-                leading={
-                  <FontAwesomeIcon icon={isMarkdown ? faPen : faMarkdown} />
-                }
-                onClick={choose(() =>
-                  onModeChange(
-                    isMarkdown ? NoteEditorMode.Rich : NoteEditorMode.Markdown,
-                  ),
-                )}
-              >
-                {isMarkdown
-                  ? t("_pages:note.richText")
-                  : t("_pages:note.markdown")}
-              </ContextMenuItem>
-              <ContextMenuSeparator />
-              <ContextMenuItem
-                leading={<FontAwesomeIcon icon={faTrash} />}
-                onClick={choose(onRemove)}
-                className="note-header-remove"
-              >
-                {t("_pages:trash.moveToTrash")}
-              </ContextMenuItem>
-            </ContextMenu>
+            <UndoButton editor={editor} className="note-header-action" />
+            {shared ? null : (
+              <>
+                <Tooltip label={shareLabel}>
+                  <IconButton
+                    size={ICON_BUTTON_SIZES.SM}
+                    aria-label={shareLabel}
+                    onClick={onShare}
+                    icon={<FontAwesomeIcon icon={faShareNodes} />}
+                    className="note-header-action"
+                  />
+                </Tooltip>
+                <Tooltip label={moreLabel} align="end">
+                  <IconButton
+                    size={ICON_BUTTON_SIZES.SM}
+                    aria-label={moreLabel}
+                    aria-haspopup="menu"
+                    aria-expanded={menu.open}
+                    onClick={openMenu}
+                    icon={<FontAwesomeIcon icon={faEllipsis} />}
+                    className="note-header-action"
+                  />
+                </Tooltip>
+                <ContextMenu
+                  open={menu.open}
+                  position={menu.position}
+                  onClose={menu.close}
+                  ariaLabel={moreLabel}
+                >
+                  <ContextMenuItem
+                    leading={
+                      <FontAwesomeIcon
+                        icon={favorite ? faHeartSolid : faHeart}
+                      />
+                    }
+                    onClick={choose(onToggleFavorite)}
+                  >
+                    {favorite
+                      ? t("_accessibility:ariaLabels.unfavorite")
+                      : t("_accessibility:ariaLabels.favorite")}
+                  </ContextMenuItem>
+                  <ContextMenuItem
+                    leading={
+                      <FontAwesomeIcon icon={isMarkdown ? faPen : faMarkdown} />
+                    }
+                    onClick={choose(() =>
+                      onModeChange(
+                        isMarkdown
+                          ? NoteEditorMode.Rich
+                          : NoteEditorMode.Markdown,
+                      ),
+                    )}
+                  >
+                    {isMarkdown
+                      ? t("_pages:note.richText")
+                      : t("_pages:note.markdown")}
+                  </ContextMenuItem>
+                  <ContextMenuSeparator />
+                  <ContextMenuItem
+                    leading={<FontAwesomeIcon icon={faTrash} />}
+                    onClick={choose(onRemove)}
+                    className="note-header-remove"
+                  >
+                    {t("_pages:trash.moveToTrash")}
+                  </ContextMenuItem>
+                </ContextMenu>
+              </>
+            )}
           </>
         )
       }
