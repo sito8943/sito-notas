@@ -76,7 +76,7 @@ export const CODE_ACTION: EditorToolbarAction = {
   isActive: (editor) => editor.isActive("code"),
 };
 
-/** Redo stays on Mod-Shift-Z */
+/** Lives in the page header (UndoButton); redo stays on Mod-Shift-Z */
 export const UNDO_ACTION: EditorToolbarAction = {
   id: "undo",
   hotkey: "Mod-Z",
@@ -90,7 +90,6 @@ export const TOOLBAR_ACTIONS: EditorToolbarAction[] = [
   ...INLINE_ACTIONS,
   ...LIST_ACTIONS,
   CODE_ACTION,
-  UNDO_ACTION,
 ];
 
 export const PARAGRAPH_BLOCK_ID = "paragraph";

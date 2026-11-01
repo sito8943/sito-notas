@@ -1,4 +1,5 @@
 import { useState, type ChangeEvent } from "react";
+import type { Editor } from "@tiptap/react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -57,6 +58,8 @@ function Note() {
   } = useNoteEditor(noteId);
 
   const [mode, setMode] = useState<NoteEditorModeValue>(NoteEditorMode.Rich);
+  // Rich editor while it is mounted, for the header's undo
+  const [editor, setEditor] = useState<Editor | null>(null);
   // Shared with the user: no owner actions; read only without EDIT
   const shared = note?.owner !== undefined;
   const readOnly = shared && note?.permission !== SharePermission.Edit;
@@ -99,6 +102,7 @@ function Note() {
         onRemove={removeDialog.handleOpen}
         disabled={!note}
         shared={shared}
+        editor={editor}
       />
       <div
         className={`note-syncing ${
@@ -181,6 +185,7 @@ function Note() {
                   onChange={setContent}
                   placeholder={placeholder}
                   label={contentLabel}
+                  onEditorChange={setEditor}
                 />
               )}
             </>
