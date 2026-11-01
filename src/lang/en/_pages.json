@@ -207,14 +207,15 @@
     "permissionLabel": "Permission",
     "permissionFor": "{{name}}'s permission",
     "link": {
-      "title": "Public link",
-      "off": "Anyone with the link can read the note, without an account and without editing it.",
-      "create": "Create link",
+      "title": "General access",
+      "label": "Who can open the note",
+      "restricted": "Restricted",
+      "public": "Anyone with the link",
+      "restrictedHint": "Only the people with access can open it.",
+      "publicHint": "Anyone with the link can read it, without an account. They can't edit it.",
       "copy": "Copy link",
       "copied": "Link copied",
-      "remove": "Turn off",
-      "removeLabel": "Turn off the public link",
-      "urlLabel": "Public link of the note"
+      "turnedOff": "Public link turned off. Links shared before no longer work."
     }
   },
   "shared": {
