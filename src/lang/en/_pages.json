@@ -71,9 +71,6 @@
   "notFound": {
     "title": "Page not found"
   },
-  "sidebar": {
-    "addCategory": "Add category"
-  },
   "note": {
     "titlePlaceholder": "Title",
     "titleLabel": "Note title",
