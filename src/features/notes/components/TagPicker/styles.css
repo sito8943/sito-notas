@@ -9,6 +9,21 @@
   @apply inline-flex items-center gap-1.5 rounded-lg border border-dashed border-border px-2 py-0.5 text-xs text-text-muted transition-[color,background-color,border-color,scale] hover:border-text-muted hover:text-text disabled:cursor-not-allowed disabled:opacity-50;
 }
 
+/* Max height comes from the free room above/below (keyboard aware) */
 .tag-picker-panel {
-  @apply absolute top-full left-0 z-30 mt-2 w-64 rounded-xl border border-border bg-base-light p-2 shadow-xl;
+  @apply absolute left-0 z-30 flex w-64 flex-col rounded-xl border border-border bg-base-light p-2 shadow-xl;
+  max-height: var(--tag-picker-max-height, none);
+}
+
+.tag-picker-panel.below {
+  @apply top-full mt-2;
+}
+
+.tag-picker-panel.above {
+  @apply bottom-full mb-2;
+}
+
+/* Lets the tag list shrink (and scroll) when the panel is capped */
+.tag-picker-selector {
+  @apply min-h-0 flex-1;
 }
