@@ -9,7 +9,7 @@
 }
 
 .tag-selector-list {
-  @apply flex max-h-60 flex-col overflow-y-auto;
+  @apply flex max-h-60 min-h-0 flex-col overflow-y-auto;
 }
 
 .tag-selector-option {

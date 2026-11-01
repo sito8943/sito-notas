@@ -1,12 +1,28 @@
+import { useEffect, useRef } from "react";
+
+import { revealTab } from "./utils";
 import type { TabsProps } from "./types";
 import "./styles.css";
 
 /** Chip tabs that select one value (filters such as All / Favorites / tags) */
 function Tabs<T extends string | number>(props: TabsProps<T>) {
   const { tabs, value, onChange, label, className = "" } = props;
+  const listRef = useRef<HTMLDivElement>(null);
+
+  // Selected tab (clicked or set from outside) is shown whole
+  useEffect(() => {
+    const list = listRef.current;
+    const tab = list?.querySelector<HTMLElement>('[aria-selected="true"]');
+    if (list && tab) revealTab(list, tab);
+  }, [value]);
 
   return (
-    <div role="tablist" aria-label={label} className={`tabs ${className}`}>
+    <div
+      ref={listRef}
+      role="tablist"
+      aria-label={label}
+      className={`tabs ${className}`}
+    >
       {tabs.map((tab) => {
         const selected = tab.value === value;
         return (

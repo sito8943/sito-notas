@@ -5,3 +5,4 @@ export * from "./useEscapeKey";
 export * from "./useMediaColumns";
 export * from "./useFluidHover";
 export * from "./useSelect";
+export * from "./useViewportSpace";
