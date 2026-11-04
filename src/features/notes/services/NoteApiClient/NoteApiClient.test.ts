@@ -131,6 +131,16 @@ describe("NoteApiClient", () => {
     );
   });
 
+  it("creates with starting tags", async () => {
+    const { client, fetchFn } = setup();
+    fetchFn.mockResolvedValue(jsonResponse(200, 43));
+
+    await client.create({ title: "t", content: "c", tagIds: [7, 7] });
+    expect(fetchFn.mock.calls[0]?.[1]?.body).toBe(
+      JSON.stringify({ title: "t", content: "c", categoryIds: [7] }),
+    );
+  });
+
   it("sets favorite with a partial patch", async () => {
     const { client, fetchFn } = setup();
     fetchFn.mockResolvedValue(jsonResponse(200, 5));

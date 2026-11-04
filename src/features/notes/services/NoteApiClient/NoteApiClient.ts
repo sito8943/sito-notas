@@ -119,13 +119,14 @@ export class NoteApiClient {
   }
 
   /**
-   * @param input - title and content
+   * @param input - title, content and optional starting tags
    * @returns id of the new note
    */
   async create(input: CreateNoteInput): Promise<number> {
     return this.http.post<number>(NoteEndpoint.Notes, {
-      ...input,
-      categoryIds: [],
+      title: input.title,
+      content: input.content,
+      categoryIds: [...new Set(input.tagIds ?? [])],
     });
   }
 
