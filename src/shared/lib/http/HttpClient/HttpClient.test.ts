@@ -76,6 +76,25 @@ describe("HttpClient", () => {
     expect(authHeader(fetchFn)).toBeUndefined();
   });
 
+  it("sends FormData as is, without a JSON Content-Type", async () => {
+    const { http, fetchFn } = setup();
+    fetchFn.mockResolvedValue(jsonResponse(200, "ok"));
+    const form = new FormData();
+    form.append("file", new Blob(["x"]), "x.png");
+
+    await http.post("/notes/1/images", form);
+
+    const init = fetchFn.mock.calls[0]?.[1];
+    expect(init?.body).toBe(form);
+    const headers = init?.headers as Record<string, string> | undefined;
+    expect(headers?.["Content-Type"]).toBeUndefined();
+  });
+
+  it("resolves absolute URLs on its server", () => {
+    const { http } = setup();
+    expect(http.resolveUrl("files/a.png")).toBe("https://api.test/files/a.png");
+  });
+
   it("refreshes proactively before the token expires", async () => {
     const { http, fetchFn, refresher } = setup(NOW + 10_000);
     fetchFn.mockResolvedValue(jsonResponse(200, []));

@@ -51,6 +51,14 @@ export class HttpClient {
 
   /**
    * @param path - path relative to the base URL
+   * @returns the absolute URL of that path on this server
+   */
+  resolveUrl(path: string): string {
+    return buildUrl(this.baseUrl, path);
+  }
+
+  /**
+   * @param path - path relative to the base URL
    * @param options - request options
    * @returns parsed response body
    * @throws HttpError on non-2xx responses and network failures
@@ -86,7 +94,10 @@ export class HttpClient {
       Accept: "application/json",
       ...headers,
     };
-    if (body !== undefined) requestHeaders["Content-Type"] = "application/json";
+    // FormData sets its own multipart Content-Type (with the boundary)
+    const isForm = body instanceof FormData;
+    if (body !== undefined && !isForm)
+      requestHeaders["Content-Type"] = "application/json";
     if (token) requestHeaders.Authorization = `Bearer ${token}`;
 
     let response: Response;
@@ -94,7 +105,7 @@ export class HttpClient {
       response = await this.fetchFn(buildUrl(this.baseUrl, path, query), {
         method,
         headers: requestHeaders,
-        body: body === undefined ? undefined : JSON.stringify(body),
+        body: body === undefined || isForm ? body : JSON.stringify(body),
         signal,
       });
     } catch (error) {

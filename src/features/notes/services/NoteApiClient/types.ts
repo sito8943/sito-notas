@@ -32,3 +32,8 @@ export interface UnshareNoteInput {
   noteId: number;
   userId: number;
 }
+
+export interface UploadNoteImageInput {
+  noteId: number;
+  file: File;
+}

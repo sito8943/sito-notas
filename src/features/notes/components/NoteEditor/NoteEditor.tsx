@@ -19,6 +19,7 @@ function NoteEditor(props: NoteEditorProps) {
     label,
     readOnly = false,
     onEditorChange,
+    onUploadImage,
   } = props;
 
   // The editor keeps its first options: read the latest callback from a ref
@@ -27,8 +28,13 @@ function NoteEditor(props: NoteEditorProps) {
     onChangeRef.current = onChange;
   }, [onChange]);
 
+  const onUploadImageRef = useRef(onUploadImage);
+  useEffect(() => {
+    onUploadImageRef.current = readOnly ? undefined : onUploadImage;
+  }, [onUploadImage, readOnly]);
+
   const extensions = useMemo(
-    () => createEditorExtensions(placeholder),
+    () => createEditorExtensions(placeholder, () => onUploadImageRef.current),
     [placeholder],
   );
 

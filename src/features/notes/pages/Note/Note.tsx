@@ -33,6 +33,7 @@ import {
   useNoteEditor,
 } from "@/features/notes/hooks/useNoteEditor";
 import { useRemoveNote } from "@/features/notes/hooks/useRemoveNote";
+import { useNoteImageUpload } from "@/features/notes/hooks/useNoteImageUpload";
 import { useToggleFavorite } from "@/features/notes/hooks/useToggleFavorite";
 
 // styles
@@ -68,6 +69,12 @@ function Note() {
   useEscapeKey(() => {
     if (mode === NoteEditorMode.Markdown) setMode(NoteEditorMode.Rich);
     else navigate(shared ? AppRoute.Shared : AppRoute.Home);
+  });
+
+  const imageUpload = useNoteImageUpload({
+    noteId: note?.id ?? null,
+    content,
+    setContent,
   });
 
   const removeDialog = useDialog();
@@ -106,7 +113,10 @@ function Note() {
       />
       <div
         className={`note-syncing ${
-          isLoading || status === NoteSaveStatus.Saving || removeNote.isPending
+          isLoading ||
+          status === NoteSaveStatus.Saving ||
+          removeNote.isPending ||
+          imageUpload.isUploading
             ? "visible"
             : ""
         }`}
@@ -173,6 +183,7 @@ function Note() {
                   onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
                     setContent(event.target.value)
                   }
+                  onPaste={imageUpload.onSourcePaste}
                   placeholder={placeholder}
                   aria-label={contentLabel}
                   spellCheck
@@ -186,6 +197,7 @@ function Note() {
                   placeholder={placeholder}
                   label={contentLabel}
                   onEditorChange={setEditor}
+                  onUploadImage={imageUpload.upload}
                 />
               )}
             </>

@@ -33,6 +33,7 @@
     "@tanstack/query-sync-storage-persister": "^5.56.2",
     "@tanstack/react-query": "^5.40.0",
     "@tanstack/react-query-persist-client": "^5.56.2",
+    "@tiptap/extension-image": "3.32.0",
     "@tiptap/extension-list": "3.32.0",
     "@tiptap/extensions": "3.32.0",
     "@tiptap/markdown": "3.32.0",

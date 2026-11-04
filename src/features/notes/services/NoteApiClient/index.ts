@@ -13,4 +13,5 @@ export type {
   ShareNoteInput,
   UnshareNoteInput,
   UpdateNoteInput,
+  UploadNoteImageInput,
 } from "./types";

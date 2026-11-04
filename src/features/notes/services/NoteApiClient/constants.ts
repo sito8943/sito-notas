@@ -29,6 +29,16 @@ export const getPublicNoteEndpoint = (token: string) =>
 export const getNoteSharesEndpoint = (noteId: number) =>
   `${NoteEndpoint.Notes}/${noteId}/shares`;
 
+/**
+ * @param noteId - note id
+ * @returns endpoint that uploads images of the note
+ */
+export const getNoteImagesEndpoint = (noteId: number) =>
+  `${NoteEndpoint.Notes}/${noteId}/images`;
+
+/** Multipart field the image file is sent in */
+export const NOTE_IMAGE_FIELD = "file";
+
 /** Page size used to load every note of the user */
 export const NOTES_PAGE_SIZE = 100;
 
