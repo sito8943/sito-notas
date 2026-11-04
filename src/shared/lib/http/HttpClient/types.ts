@@ -16,7 +16,7 @@ export interface HttpClientOptions {
 
 export interface RequestOptions {
   method?: HttpMethod;
-  /** Sent as JSON */
+  /** Sent as JSON; FormData is sent as multipart */
   body?: unknown;
   query?: QueryParams;
   /**

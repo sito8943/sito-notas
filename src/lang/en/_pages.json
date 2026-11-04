@@ -121,7 +121,11 @@
       "invalid": "Enter a web, email or phone link"
     },
     "open": "Open",
-    "actions": "Actions for “{{title}}”"
+    "actions": "Actions for “{{title}}”",
+    "image": {
+      "invalidType": "Only JPG, PNG, WebP or GIF images can be pasted",
+      "tooLarge": "The image is larger than 5 MB"
+    }
   },
   "trash": {
     "moveToTrash": "Move to trash",

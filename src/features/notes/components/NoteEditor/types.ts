@@ -2,6 +2,8 @@ import type { NoteEditorMode as NoteEditorModeValues } from "./constants";
 
 import type { Editor } from "@tiptap/react";
 
+import type { ImageUploader } from "./PasteImage";
+
 export type NoteEditorMode =
   (typeof NoteEditorModeValues)[keyof typeof NoteEditorModeValues];
 
@@ -17,4 +19,6 @@ export interface NoteEditorProps {
   readOnly?: boolean;
   /** Receives the editor once it exists, and null on unmount */
   onEditorChange?: (editor: Editor | null) => void;
+  /** Uploads pasted/dropped images; without it they are ignored */
+  onUploadImage?: ImageUploader;
 }

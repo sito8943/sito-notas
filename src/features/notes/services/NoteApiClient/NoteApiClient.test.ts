@@ -131,6 +131,30 @@ describe("NoteApiClient", () => {
     );
   });
 
+  it("creates with starting tags", async () => {
+    const { client, fetchFn } = setup();
+    fetchFn.mockResolvedValue(jsonResponse(200, 43));
+
+    await client.create({ title: "t", content: "c", tagIds: [7, 7] });
+    expect(fetchFn.mock.calls[0]?.[1]?.body).toBe(
+      JSON.stringify({ title: "t", content: "c", categoryIds: [7] }),
+    );
+  });
+
+  it("uploads an image and returns its absolute URL", async () => {
+    const { client, fetchFn } = setup();
+    fetchFn.mockResolvedValue(jsonResponse(200, "files/note-images/9_x.png"));
+    const file = new File(["x"], "x.png", { type: "image/png" });
+
+    const url = await client.uploadImage({ noteId: 9, file });
+
+    const [requestUrl, init] = fetchFn.mock.calls[0] ?? [];
+    expect(String(requestUrl)).toMatch(/\/notes\/9\/images$/);
+    const body = init?.body as FormData | undefined;
+    expect(body?.get("file")).toBeInstanceOf(File);
+    expect(url).toMatch(/\/files\/note-images\/9_x\.png$/);
+  });
+
   it("sets favorite with a partial patch", async () => {
     const { client, fetchFn } = setup();
     fetchFn.mockResolvedValue(jsonResponse(200, 5));

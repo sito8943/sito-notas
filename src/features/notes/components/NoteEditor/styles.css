@@ -53,6 +53,14 @@
   @apply bg-transparent p-0;
 }
 
+.note-editor-content .note-editor-image {
+  @apply h-auto max-w-full rounded-xl;
+}
+
+.note-editor-content .note-editor-image.ProseMirror-selectednode {
+  @apply outline-2 outline-offset-2 outline-primary;
+}
+
 .note-editor-content hr {
   @apply my-6 border-border;
 }

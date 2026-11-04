@@ -1,6 +1,9 @@
 import type { Note, SharePermissionValue } from "@/features/notes/models";
 
-export type CreateNoteInput = Pick<Note, "title" | "content">;
+export interface CreateNoteInput extends Pick<Note, "title" | "content"> {
+  /** Tags the note starts with (none by default) */
+  tagIds?: number[];
+}
 
 export type UpdateNoteInput = Pick<Note, "id" | "title" | "content">;
 
@@ -28,4 +31,9 @@ export interface SetSharePermissionInput {
 export interface UnshareNoteInput {
   noteId: number;
   userId: number;
+}
+
+export interface UploadNoteImageInput {
+  noteId: number;
+  file: File;
 }

@@ -8,6 +8,8 @@ import {
   NOTES_PAGE_SIZE,
   NoteEndpoint,
   TRASH_LIST_QUERY,
+  NOTE_IMAGE_FIELD,
+  getNoteImagesEndpoint,
   getNoteLinkEndpoint,
   getNoteSharesEndpoint,
   getPublicNoteEndpoint,
@@ -20,6 +22,7 @@ import type {
   ShareNoteInput,
   UnshareNoteInput,
   UpdateNoteInput,
+  UploadNoteImageInput,
 } from "./types";
 import {
   parsePage,
@@ -119,13 +122,14 @@ export class NoteApiClient {
   }
 
   /**
-   * @param input - title and content
+   * @param input - title, content and optional starting tags
    * @returns id of the new note
    */
   async create(input: CreateNoteInput): Promise<number> {
     return this.http.post<number>(NoteEndpoint.Notes, {
-      ...input,
-      categoryIds: [],
+      title: input.title,
+      content: input.content,
+      categoryIds: [...new Set(input.tagIds ?? [])],
     });
   }
 
@@ -164,6 +168,22 @@ export class NoteApiClient {
       id: input.id,
       categoryIds: [...new Set(input.tagIds)],
     });
+  }
+
+  /**
+   * Uploads an image for a note (owner or EDIT permission)
+   * @param input - note id and image file (jpeg, png, webp or gif, max 5 MB)
+   * @returns absolute URL of the image, public and permanent
+   * @throws HttpError 400 for an invalid file, 403/404 without edit access
+   */
+  async uploadImage(input: UploadNoteImageInput): Promise<string> {
+    const form = new FormData();
+    form.append(NOTE_IMAGE_FIELD, input.file);
+    const path = await this.http.post<string>(
+      getNoteImagesEndpoint(input.noteId),
+      form,
+    );
+    return this.http.resolveUrl(path);
   }
 
   /**

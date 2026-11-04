@@ -48,3 +48,11 @@ describe("createEditorExtensions", () => {
     expect(roundTrip(markdown)).toBe(markdown);
   });
 });
+
+describe("images", () => {
+  it("keeps markdown images", () => {
+    const markdown =
+      "before\n\n![](https://api.test/files/note-images/1_a.png)";
+    expect(roundTrip(markdown)).toBe(markdown);
+  });
+});
