@@ -15,6 +15,9 @@ env:
   VITE_API_URL: ${{ secrets.VITE_API_URL }}
   # Share links host (nginx → API /s/<token>); not a secret
   VITE_SHARE_URL: https://share.notes.sito8943.com
+  # Anonymous feature usage (only after the user accepts it)
+  VITE_USAGE_URL: https://api.usage.sito8943.com
+  VITE_USAGE_KEY: ${{ secrets.VITE_USAGE_KEY }}
   FIREBASE_PROJECT_ID: sitonotas
 
 jobs:

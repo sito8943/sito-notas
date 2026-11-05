@@ -1,0 +1,21 @@
+@reference "@/styles/global.css";
+
+.privacy-settings {
+  @apply flex max-w-md flex-col gap-3;
+}
+
+.privacy-settings-title {
+  @apply text-xl;
+}
+
+.privacy-settings-field {
+  @apply flex flex-col items-start gap-2;
+}
+
+.privacy-settings-label {
+  @apply text-sm font-medium;
+}
+
+.privacy-settings-helper {
+  @apply text-sm text-text-muted;
+}
