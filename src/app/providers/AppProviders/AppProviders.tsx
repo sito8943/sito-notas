@@ -11,6 +11,7 @@ import {
 // features
 import { AccountProvider } from "@/features/auth";
 import { CacheProvider, SearchProvider } from "@/features/notes";
+import { ConsentProvider, FeatureUsageProvider } from "@/features/privacy";
 
 // api
 import { AppApiClient } from "@/app/api";
@@ -20,17 +21,21 @@ const appApiClient = new AppApiClient();
 function AppProviders({ children }: { children: ReactNode }) {
   return (
     <ThemeProvider>
-      <ApiClientProvider client={appApiClient}>
-        <AccountProvider>
-          <CacheProvider>
-            <NotificationsProvider>
-              <SearchProvider>
-                <SidebarProvider>{children}</SidebarProvider>
-              </SearchProvider>
-            </NotificationsProvider>
-          </CacheProvider>
-        </AccountProvider>
-      </ApiClientProvider>
+      <ConsentProvider>
+        <FeatureUsageProvider>
+          <ApiClientProvider client={appApiClient}>
+            <AccountProvider>
+              <CacheProvider>
+                <NotificationsProvider>
+                  <SearchProvider>
+                    <SidebarProvider>{children}</SidebarProvider>
+                  </SearchProvider>
+                </NotificationsProvider>
+              </CacheProvider>
+            </AccountProvider>
+          </ApiClientProvider>
+        </FeatureUsageProvider>
+      </ConsentProvider>
     </ThemeProvider>
   );
 }

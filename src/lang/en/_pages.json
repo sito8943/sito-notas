@@ -236,5 +236,22 @@
     "contentLabel": "Note content",
     "signIn": "Sign in",
     "myNotes": "Go to my notes"
+  },
+  "privacy": {
+    "notice": {
+      "title": "Your privacy",
+      "body": "Sito Notas stores on your device only what it needs to work: your session, your theme and your notes for offline use. With your permission, it also counts anonymously which screens are used, with no data about you, your notes or your device, to know what to improve. You can change it at any time in Settings.",
+      "accept": "Accept",
+      "reject": "Reject"
+    },
+    "settings": {
+      "title": "Privacy",
+      "label": "Anonymous usage analytics",
+      "helper": "Counts which screens are used and on which day, with no data about you, your notes or your device. Withdrawing it deletes the counts not yet sent.",
+      "values": {
+        "allowed": "Allowed",
+        "denied": "Not allowed"
+      }
+    }
   }
 }

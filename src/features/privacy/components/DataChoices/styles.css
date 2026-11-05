@@ -1,0 +1,22 @@
+@reference "@/styles/global.css";
+
+/* Above the mobile bottom navigation (z-30), below dialogs and the splash */
+.data-choices {
+  @apply fixed inset-x-3 bottom-4 z-40 mx-auto flex max-w-3xl items-center gap-3 rounded-2xl border border-border bg-base-light p-4 text-text shadow-lg md:bottom-20 md:flex-col md:items-stretch;
+}
+
+.data-choices-text {
+  @apply flex flex-1 flex-col gap-1 text-sm;
+}
+
+.data-choices-title {
+  @apply text-base text-text;
+}
+
+.data-choices-actions {
+  @apply flex gap-2;
+}
+
+.data-choices-button {
+  @apply justify-center whitespace-nowrap md:flex-1;
+}

@@ -13,6 +13,7 @@ import { PageHeader } from "@/shared/components/molecules/PageHeader";
 
 // sections
 import { Password } from "@/features/settings/components/Password";
+import { PrivacySettings } from "@/features/privacy";
 
 import "./styles.css";
 
@@ -40,6 +41,7 @@ function Settings() {
         </div>
         <h1 className="settings-title">{t("_pages:settings.title")}</h1>
         <Password />
+        <PrivacySettings />
       </div>
     </main>
   );

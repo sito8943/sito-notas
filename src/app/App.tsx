@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 
 // providers
 import { useAccount } from "@/features/auth";
+import { DataChoices, PageUsageTracker } from "@/features/privacy";
 
 // layouts
 import { AuthLayout } from "@/app/layouts/AuthLayout";
@@ -70,7 +71,9 @@ function App() {
           }
         />
         <PwaUpdateDialog />
+        <DataChoices />
         <BrowserRouter>
+          <PageUsageTracker />
           <Routes>
             <Route path={AppRoute.Auth} element={<AuthLayout />}>
               <Route index element={<SignIn />} />

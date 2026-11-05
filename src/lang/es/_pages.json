@@ -243,5 +243,22 @@
     "contentLabel": "Contenido de la nota",
     "signIn": "Iniciar sesión",
     "myNotes": "Ir a mis notas"
+  },
+  "privacy": {
+    "notice": {
+      "title": "Tu privacidad",
+      "body": "Sito Notas guarda en tu dispositivo solo lo necesario para funcionar: tu sesión, tu tema y tus notas para usarlas sin conexión. Con tu permiso, también cuenta de forma anónima qué pantallas se usan, sin datos sobre ti, tus notas ni tu dispositivo, para saber qué mejorar. Puedes cambiarlo cuando quieras en Configuración.",
+      "accept": "Aceptar",
+      "reject": "Rechazar"
+    },
+    "settings": {
+      "title": "Privacidad",
+      "label": "Estadísticas de uso anónimas",
+      "helper": "Cuenta qué pantallas se usan y qué día, sin datos sobre ti, tus notas ni tu dispositivo. Al retirarlo se borran los conteos aún no enviados.",
+      "values": {
+        "allowed": "Permitidas",
+        "denied": "No permitidas"
+      }
+    }
   }
 }

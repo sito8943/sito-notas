@@ -32,6 +32,9 @@ importers:
       '@loadable/component':
         specifier: 5.16.7
         version: 5.16.7(react@19.2.7)
+      '@sito/feature-usage':
+        specifier: github:sito8943/sito-feature-usage-js#v0.1.0-alpha.2
+        version: https://codeload.github.com/sito8943/sito-feature-usage-js/tar.gz/5bd0b62a3c8087bc09bf95fa1e70552d2a9634bb(react@19.2.7)
       '@sito/ui':
         specifier: 0.10.1
         version: 0.10.1(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -1304,6 +1307,15 @@ packages:
     resolution: {integrity: sha512-xA+neBh1bqkqaS3b48T2UHZnDsTIpb9B0h+TdBzynjF/ymCpYndhfY10RqW0qSKB1HqqQA83mINVhAdwA+mETg==}
     cpu: [x64]
     os: [win32]
+
+  '@sito/feature-usage@https://codeload.github.com/sito8943/sito-feature-usage-js/tar.gz/5bd0b62a3c8087bc09bf95fa1e70552d2a9634bb':
+    resolution: {gitHosted: true, tarball: https://codeload.github.com/sito8943/sito-feature-usage-js/tar.gz/5bd0b62a3c8087bc09bf95fa1e70552d2a9634bb}
+    version: 0.1.0-alpha.2
+    peerDependencies:
+      react: ^19.0.0
+    peerDependenciesMeta:
+      react:
+        optional: true
 
   '@sito/ui@0.10.1':
     resolution: {integrity: sha512-WMhiswb5ohOgJatYh1TUGyqbxbjARCrnNd3Xv6szP8To7c+CHRCIokBCJpRizE23sJGW4lk2YL1BTa4mbs0zeA==}
@@ -4526,6 +4538,10 @@ snapshots:
 
   '@rollup/rollup-win32-x64-msvc@4.66.0':
     optional: true
+
+  '@sito/feature-usage@https://codeload.github.com/sito8943/sito-feature-usage-js/tar.gz/5bd0b62a3c8087bc09bf95fa1e70552d2a9634bb(react@19.2.7)':
+    optionalDependencies:
+      react: 19.2.7
 
   '@sito/ui@0.10.1(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:
