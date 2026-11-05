@@ -10,7 +10,7 @@
 }
 
 .data-choices-title {
-  @apply text-base;
+  @apply text-base text-text;
 }
 
 .data-choices-actions {
