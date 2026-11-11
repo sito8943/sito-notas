@@ -9,7 +9,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 // @sito/ui
 import { Dialog, DialogActions, useToast } from "@sito/ui";
 
-import { scheduleUpdateChecks } from "./utils";
+import { isPageControlledBySW, scheduleUpdateChecks } from "./utils";
 import "./styles.css";
 
 /**
@@ -33,6 +33,18 @@ function PwaUpdateDialog() {
     },
   });
 
+  const isControlled = isPageControlledBySW();
+
+  // After a hard reload the page already runs the new build, but the new
+  // worker is still waiting. vite-plugin-pwa only reloads on `controlling`
+  // when the page was controlled at load, so prompting here never finishes.
+  // Activate the waiting worker silently instead.
+  useEffect(() => {
+    if (!needRefresh || isControlled) return;
+    setNeedRefresh(false);
+    void updateServiceWorker();
+  }, [needRefresh, isControlled, setNeedRefresh, updateServiceWorker]);
+
   useEffect(() => {
     if (!offlineReady) return;
     toast({ message: t("_accessibility:pwa.offlineReady"), color: "success" });
@@ -48,7 +60,7 @@ function PwaUpdateDialog() {
   return (
     <Dialog
       closeIcon={<FontAwesomeIcon icon={faXmark} />}
-      open={needRefresh}
+      open={needRefresh && isControlled}
       title={t("_accessibility:pwa.update.title")}
       onClose={() => setNeedRefresh(false)}
       closeLabel={t("_accessibility:buttons.close")}
