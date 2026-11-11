@@ -20,3 +20,10 @@ export const scheduleUpdateChecks = (
     if (response.status === 200) await registration.update();
   }, SW_UPDATE_CHECK_INTERVAL_MS);
 };
+
+/**
+ * False after a hard reload (Ctrl/Cmd+Shift+R): the browser bypasses the
+ * service worker, so the page has no controller and already runs the latest build.
+ */
+export const isPageControlledBySW = (): boolean =>
+  Boolean(navigator.serviceWorker?.controller);
