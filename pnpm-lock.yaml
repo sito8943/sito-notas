@@ -36,8 +36,8 @@ importers:
         specifier: github:sito8943/sito-feature-usage-js#v0.1.0-alpha.2
         version: https://codeload.github.com/sito8943/sito-feature-usage-js/tar.gz/5bd0b62a3c8087bc09bf95fa1e70552d2a9634bb(react@19.2.7)
       '@sito/ui':
-        specifier: 0.10.3
-        version: 0.10.3(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: 0.11.0
+        version: 0.11.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@stomp/stompjs':
         specifier: 7.3.0
         version: 7.3.0
@@ -1317,8 +1317,8 @@ packages:
       react:
         optional: true
 
-  '@sito/ui@0.10.3':
-    resolution: {integrity: sha512-ONFfpRZ2ne68t2sbhnMN3dUrx2kxMAW0fThxOLkYW16r1UQK/2AqUI4pUhDfjm1KJzFEYWYWVl5gfQmgWCI8KQ==}
+  '@sito/ui@0.11.0':
+    resolution: {integrity: sha512-FCkwgOiOy6MO09bO/3ECRyZxvV5O9n9HHGzbj5DPIqn4I2oqdNC9vL0xoywYBDhxwDdpnkX4HvhWPf+dXKD8Gw==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
     peerDependencies:
       react: ^19.0.0
@@ -4543,7 +4543,7 @@ snapshots:
     optionalDependencies:
       react: 19.2.7
 
-  '@sito/ui@0.10.3(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+  '@sito/ui@0.11.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
     dependencies:
       react: 19.2.7
       react-dom: 19.2.7(react@19.2.7)
