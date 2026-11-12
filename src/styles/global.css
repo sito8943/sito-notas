@@ -144,9 +144,8 @@
 
   --sito-ui-color-error-text: var(--color-error);
   --sito-ui-color-error-default: var(--color-bg-error);
-  /* A successful toast takes the brand, as in Sito Presentation Deck */
-  --sito-ui-color-success-text: var(--color-on-brand);
-  --sito-ui-color-success-default: var(--color-primary);
+  --sito-ui-color-success-text: var(--color-success);
+  --sito-ui-color-success-default: var(--color-bg-success);
   --sito-ui-color-warning-text: var(--color-warning);
   --sito-ui-color-warning-default: var(--color-bg-warning);
   --sito-ui-color-info-text: var(--color-info);
