@@ -3,7 +3,7 @@ import { EditorContent, useEditor } from "@tiptap/react";
 
 import { EditorToolbar } from "./EditorToolbar";
 import type { NoteEditorProps } from "./types";
-import { createEditorExtensions } from "./utils";
+import { createEditorExtensions, serializeClipboardText } from "./utils";
 import "./styles.css";
 
 /**
@@ -51,6 +51,7 @@ function NoteEditor(props: NoteEditorProps) {
         "aria-readonly": String(readOnly),
         role: "textbox",
       },
+      clipboardTextSerializer: serializeClipboardText,
     },
     onUpdate: ({ editor: current }) =>
       onChangeRef.current(current.getMarkdown()),
