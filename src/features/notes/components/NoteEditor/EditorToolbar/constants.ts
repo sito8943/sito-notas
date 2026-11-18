@@ -94,19 +94,6 @@ export const TOOLBAR_ACTIONS: EditorToolbarAction[] = [
 
 export const PARAGRAPH_BLOCK_ID = "paragraph";
 
-/** How Tiptap key names are shown on each platform */
-export const HOTKEY_SYMBOLS_MAC: Record<string, string> = {
-  Mod: "⌘",
-  Shift: "⇧",
-  Alt: "⌥",
-};
-
-export const HOTKEY_SYMBOLS_OTHER: Record<string, string> = {
-  Mod: "Ctrl",
-  Shift: "Shift",
-  Alt: "Alt",
-};
-
 /** Tooltips open below: above the toolbar they would leave the scroll area */
 export const TOOLBAR_TOOLTIP_SIDE = "bottom";
 
