@@ -15,6 +15,7 @@ import {
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faCheck,
   faEllipsis,
   faHeart as faHeartSolid,
   faPen,
@@ -64,6 +65,7 @@ function NoteHeader(props: NoteHeaderProps) {
 
   const shareLabel = t("_accessibility:ariaLabels.share");
   const moreLabel = t("_pages:note.more");
+  const doneLabel = t("_pages:note.doneMarkdown");
 
   const openMenu = (event: MouseEvent<HTMLButtonElement>) => {
     const rect = event.currentTarget.getBoundingClientRect();
@@ -92,6 +94,17 @@ function NoteHeader(props: NoteHeaderProps) {
             <UndoButton editor={editor} className="note-header-action" />
             {shared ? null : (
               <>
+                {isMarkdown ? (
+                  <Tooltip label={doneLabel}>
+                    <IconButton
+                      size={ICON_BUTTON_SIZES.SM}
+                      aria-label={doneLabel}
+                      onClick={() => onModeChange(NoteEditorMode.Rich)}
+                      icon={<FontAwesomeIcon icon={faCheck} />}
+                      className="note-header-done"
+                    />
+                  </Tooltip>
+                ) : null}
                 <Tooltip label={shareLabel}>
                   <IconButton
                     size={ICON_BUTTON_SIZES.SM}

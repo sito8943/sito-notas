@@ -118,6 +118,7 @@
     "breadcrumb": "Ruta de navegación",
     "more": "Más acciones",
     "richText": "Editar con formato",
+    "doneMarkdown": "Terminar edición Markdown",
     "updated": "Editado {{date}}",
     "link": {
       "title": "Enlace",
