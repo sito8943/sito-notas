@@ -14,3 +14,19 @@ export const TabAriaShortcut = {
   New: "Alt+T",
   Close: "Alt+W",
 } as const;
+
+/** Tab shortcuts with what they do (listed in Settings) */
+export const TAB_SHORTCUTS = [
+  { hotkey: "Alt-T", labelKey: "_pages:settings.sections.shortcuts.newTab" },
+  { hotkey: "Alt-W", labelKey: "_pages:settings.sections.shortcuts.closeTab" },
+  { hotkey: "Alt-1–8", labelKey: "_pages:settings.sections.shortcuts.goToTab" },
+  { hotkey: "Alt-9", labelKey: "_pages:settings.sections.shortcuts.lastTab" },
+  {
+    hotkey: "Alt-Shift-←",
+    labelKey: "_pages:settings.sections.shortcuts.previousTab",
+  },
+  {
+    hotkey: "Alt-Shift-→",
+    labelKey: "_pages:settings.sections.shortcuts.nextTab",
+  },
+] as const;

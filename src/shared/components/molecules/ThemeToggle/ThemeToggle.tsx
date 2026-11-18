@@ -16,9 +16,9 @@ function ThemeToggle(props: ThemeToggleProps) {
   const { color = "primary", size, tooltipSide = "bottom", className } = props;
 
   const { t } = useTranslation();
-  const { mode, toggleMode } = useTheme();
+  const { resolvedMode, toggleMode } = useTheme();
 
-  const isDark = mode === ThemeMode.Dark;
+  const isDark = resolvedMode === ThemeMode.Dark;
   const label = isDark
     ? t("_accessibility:ariaLabels.lightMode")
     : t("_accessibility:ariaLabels.darkMode");

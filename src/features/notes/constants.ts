@@ -123,3 +123,9 @@ export const RELATIVE_DATE_MAX_MS = RELATIVE_DATE_MAX_DAYS * DAY;
 
 /** Days a deleted note stays in the trash before the server purges it */
 export const TRASH_RETENTION_DAYS = 30;
+
+/** Note list and page shortcuts outside the editor (listed in Settings) */
+export const NOTE_SHORTCUTS = [
+  { hotkey: "N", labelKey: "_pages:settings.sections.shortcuts.newNote" },
+  { hotkey: "Esc", labelKey: "_pages:settings.sections.shortcuts.escape" },
+] as const;

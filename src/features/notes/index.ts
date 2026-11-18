@@ -1,7 +1,14 @@
 export * from "./providers/CacheProvider";
 export * from "./providers/SearchProvider";
 export * from "./services";
-export { ReactQueryKeys, getNoteDetailKey, getNotesListKey } from "./constants";
+export {
+  NOTE_SHORTCUTS,
+  ReactQueryKeys,
+  getNoteDetailKey,
+  getNotesListKey,
+} from "./constants";
+// Straight from utils: the NoteEditor index would load the editor eagerly
+export { getEditorShortcuts } from "./components/NoteEditor/EditorToolbar/utils";
 export * from "./models";
 export * from "./hooks/useAddNote";
 export * from "./hooks/useNewNoteShortcut";

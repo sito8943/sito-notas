@@ -1,0 +1,14 @@
+@reference "@/styles/global.css";
+
+/* Same title as the security and privacy sections; the page sets the width */
+.settings-section {
+  @apply flex flex-col items-start gap-3;
+}
+
+.settings-section-title {
+  @apply text-xl;
+}
+
+.settings-section-helper {
+  @apply text-sm text-text-muted;
+}
