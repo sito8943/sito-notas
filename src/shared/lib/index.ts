@@ -3,3 +3,4 @@ export * from "./storage";
 export * from "./errors";
 export * from "./http";
 export * from "./viewTransition";
+export * from "./hotkeys";

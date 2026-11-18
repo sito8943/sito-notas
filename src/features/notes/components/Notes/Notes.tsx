@@ -19,6 +19,7 @@ import {
   ADD_NOTE_MUTATION_KEY,
   useAddNote,
 } from "@/features/notes/hooks/useAddNote";
+import { NEW_NOTE_ARIA_SHORTCUT } from "@/features/notes/hooks/useNewNoteShortcut";
 import { useRemoveNote } from "@/features/notes/hooks/useRemoveNote";
 import {
   mergeVisibleOrder,
@@ -134,6 +135,7 @@ function Notes() {
         disabled={isAdding}
         position="bottom-right"
         aria-label={t("_accessibility:buttons.add")}
+        aria-keyshortcuts={NEW_NOTE_ARIA_SHORTCUT}
         icon={<FontAwesomeIcon icon={faAdd} />}
         color="secondary"
         className="notes-fab"

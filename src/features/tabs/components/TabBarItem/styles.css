@@ -1,0 +1,29 @@
+@reference "@/styles/global.css";
+
+/* Tab shape: rounded top, joins the page below when active */
+.tab-bar-item {
+  @apply flex h-9 max-w-56 min-w-28 shrink-0 items-center rounded-t-lg border border-b-0 border-transparent text-sm text-text-muted transition-colors hover:bg-base-light hover:text-text;
+}
+
+.tab-bar-item.active {
+  @apply border-border bg-base-light text-text;
+}
+
+.tab-bar-item-label {
+  @apply h-full min-w-0 flex-1 truncate pr-1 pl-3 text-left outline-none focus-visible:underline;
+}
+
+/* Only on hover / on the active tab, like browser tabs */
+.tab-bar-item-close {
+  @apply mr-1.5 flex h-5 w-5 shrink-0 items-center justify-center rounded text-xs opacity-0 transition-opacity outline-none hover:bg-base-dark focus-visible:opacity-100 focus-visible:outline-2 focus-visible:outline-(--sito-ui-color-primary-default);
+}
+
+.tab-bar-item:hover .tab-bar-item-close,
+.tab-bar-item.active .tab-bar-item-close {
+  @apply opacity-100;
+}
+
+/* Only tab, without close button: same room on both sides */
+.tab-bar-item-label:last-child {
+  @apply pr-3;
+}

@@ -9,6 +9,8 @@ export interface AppShellTemplateProps {
   hideHeader?: boolean;
   /** Accessible name of the header navigation */
   navLabel?: string;
+  /** Bar over the header and content (e.g. open tabs) */
+  tabBar?: ReactNode;
   /** Side navigation, left of the header and content */
   sidebar?: ReactNode;
   /** Navigation fixed to the bottom on small screens */

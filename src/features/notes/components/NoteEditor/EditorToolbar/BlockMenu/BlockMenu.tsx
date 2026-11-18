@@ -17,7 +17,7 @@ import {
   MENU_OFFSET_PX,
   TOOLBAR_TOOLTIP_SIDE,
 } from "@/features/notes/components/NoteEditor/EditorToolbar/constants";
-import { formatHotkey } from "@/features/notes/components/NoteEditor/EditorToolbar/utils";
+import { formatHotkey } from "@/shared/lib/hotkeys";
 import type { BlockMenuProps } from "./types";
 import "./styles.css";
 

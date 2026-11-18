@@ -14,7 +14,8 @@ import { useScrollReset } from "@/shared/hooks";
 
 // features
 import { useAccount } from "@/features/auth";
-import { useCache, useNoteEvents } from "@/features/notes";
+import { TabBar, TabsProvider } from "@/features/tabs";
+import { useCache, useNewNoteShortcut, useNoteEvents } from "@/features/notes";
 
 import { AppBottomNavigation } from "./AppBottomNavigation";
 import { AppSidebar } from "./AppSidebar";
@@ -41,6 +42,7 @@ function ViewLayout() {
 
   useScrollReset();
   useNoteEvents();
+  useNewNoteShortcut();
 
   // Signed out (sign-out, failed refresh, other tab): back to sign-in
   useEffect(() => {
@@ -52,18 +54,21 @@ function ViewLayout() {
   }, [pathname, refresh]);
 
   return (
-    <AppShellTemplate
-      sidebar={<AppSidebar />}
-      bottomNavigation={<AppBottomNavigation />}
-      brand={<NavbarBrand />}
-      actions={<NavbarActions />}
-      hideHeader={hasPageHeader}
-      navLabel={t("_accessibility:ariaLabels.headerActions")}
-    >
-      <ErrorHandler>
-        <Outlet />
-      </ErrorHandler>
-    </AppShellTemplate>
+    <TabsProvider key={account.user?.id} userId={account.user?.id}>
+      <AppShellTemplate
+        tabBar={<TabBar />}
+        sidebar={<AppSidebar />}
+        bottomNavigation={<AppBottomNavigation />}
+        brand={<NavbarBrand />}
+        actions={<NavbarActions />}
+        hideHeader={hasPageHeader}
+        navLabel={t("_accessibility:ariaLabels.headerActions")}
+      >
+        <ErrorHandler>
+          <Outlet />
+        </ErrorHandler>
+      </AppShellTemplate>
+    </TabsProvider>
   );
 }
 

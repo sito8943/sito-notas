@@ -16,7 +16,9 @@ import {
   TOOLBAR_TOOLTIP_SIDE,
 } from "./constants";
 import type { EditorToolbarAction, EditorToolbarProps } from "./types";
-import { formatHotkey, getToolbarState, isApplePlatform } from "./utils";
+import { formatHotkey, isApplePlatform } from "@/shared/lib/hotkeys";
+
+import { getToolbarState } from "./utils";
 import "./styles.css";
 
 /** Formatting bar of the note editor */

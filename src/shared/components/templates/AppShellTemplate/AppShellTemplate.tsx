@@ -8,6 +8,7 @@ function AppShellTemplate(props: AppShellTemplateProps) {
     actions,
     hideHeader = false,
     navLabel,
+    tabBar,
     sidebar,
     bottomNavigation,
     children,
@@ -17,6 +18,7 @@ function AppShellTemplate(props: AppShellTemplateProps) {
     <div className="app-shell">
       {sidebar}
       <div className="app-shell-main">
+        {tabBar}
         {hideHeader ? null : (
           <header className="app-shell-header">
             <div className="app-shell-brand">{brand}</div>

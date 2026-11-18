@@ -6,10 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ICON_BUTTON_SIZES, IconButton, Tooltip } from "@sito/ui";
 
 import { UNDO_ACTION } from "@/features/notes/components/NoteEditor/EditorToolbar/constants";
-import {
-  formatHotkey,
-  isApplePlatform,
-} from "@/features/notes/components/NoteEditor/EditorToolbar/utils";
+import { formatHotkey, isApplePlatform } from "@/shared/lib/hotkeys";
 import type { UndoButtonProps } from "./types";
 
 /** Undo of the rich editor, shown in the page header */
