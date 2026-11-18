@@ -253,5 +253,10 @@
         "denied": "Not allowed"
       }
     }
+  },
+  "tabs": {
+    "label": "Open tabs",
+    "new": "New note in a new tab",
+    "close": "Close {{title}}"
   }
 }

@@ -6,3 +6,5 @@ export * from "./useMediaColumns";
 export * from "./useFluidHover";
 export * from "./useSelect";
 export * from "./useViewportSpace";
+export * from "./useKeyShortcut";
+export * from "./useAltShortcut";

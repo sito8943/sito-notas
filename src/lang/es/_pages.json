@@ -260,5 +260,10 @@
         "denied": "No permitidas"
       }
     }
+  },
+  "tabs": {
+    "label": "Pestañas abiertas",
+    "new": "Nota nueva en otra pestaña",
+    "close": "Cerrar {{title}}"
   }
 }

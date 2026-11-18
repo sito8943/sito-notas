@@ -1,0 +1,20 @@
+@reference "@/styles/global.css";
+
+/* Desktop only: the bottom navigation covers small screens */
+.tab-bar {
+  @apply flex shrink-0 items-end gap-1 border-b border-border px-4 pt-2 md:hidden;
+}
+
+/* Scrolls sideways when the tabs do not fit */
+.tab-bar-list {
+  @apply flex min-w-0 items-end gap-0.5 overflow-x-auto;
+  scrollbar-width: none;
+}
+
+.tab-bar-list::-webkit-scrollbar {
+  display: none;
+}
+
+.tab-bar-new {
+  @apply mb-1 shrink-0 text-text-muted;
+}
