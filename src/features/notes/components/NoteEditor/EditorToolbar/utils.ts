@@ -1,6 +1,14 @@
 import type { Editor } from "@tiptap/react";
 
-import { BLOCK_TYPES, PARAGRAPH_BLOCK_ID, TOOLBAR_ACTIONS } from "./constants";
+import type { ShortcutInfo } from "@/shared/lib/hotkeys";
+
+import {
+  BLOCK_TYPES,
+  EXTRA_EDITOR_SHORTCUTS,
+  PARAGRAPH_BLOCK_ID,
+  TOOLBAR_ACTIONS,
+  UNDO_ACTION,
+} from "./constants";
 import type { EditorToolbarState } from "./types";
 
 /**
@@ -24,3 +32,15 @@ export const getToolbarState = (editor: Editor): EditorToolbarState => ({
     )?.id ?? PARAGRAPH_BLOCK_ID,
   linkHref: (editor.getAttributes("link").href as string | undefined) ?? "",
 });
+
+/**
+ * Light on purpose (no editor code): the feature index exports it.
+ * @returns every editor shortcut with what it does: toolbar actions, undo,
+ * block types and the extra ones (move list items, open links)
+ */
+export const getEditorShortcuts = (): ShortcutInfo[] => [
+  ...[...TOOLBAR_ACTIONS, UNDO_ACTION, ...BLOCK_TYPES].flatMap(
+    ({ hotkey, labelKey }) => (hotkey ? [{ hotkey, labelKey }] : []),
+  ),
+  ...EXTRA_EDITOR_SHORTCUTS,
+];

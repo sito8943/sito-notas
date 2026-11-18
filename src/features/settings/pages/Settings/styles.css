@@ -6,18 +6,29 @@
 }
 
 .settings-content {
-  @apply flex min-h-0 flex-1 flex-col gap-6 overflow-auto p-10 sm:p-3;
-}
-
-.settings-syncing {
-  @apply pointer-events-none fixed bottom-1 left-1 z-20 md:bottom-20 h-10 w-10 scale-0 rounded-full bg-(--sito-ui-color-primary-default) text-(--sito-ui-color-primary-text) transition-all duration-300 ease-in-out;
-}
-
-.settings-syncing.visible {
-  @apply scale-100;
+  @apply flex min-h-0 flex-1 flex-col gap-8 overflow-auto p-10 pb-16 sm:p-3 sm:pb-16;
 }
 
 /* Same size as the trash title */
 .settings-title {
   @apply text-3xl md:text-2xl;
+}
+
+/* Two columns of cards on wide screens, one below lg; the page decides the
+   layout, so each section stays a plain <section> */
+.settings-grid {
+  @apply grid w-full max-w-6xl grid-cols-2 items-start gap-6 lg:grid-cols-1;
+}
+
+.settings-column {
+  @apply flex min-w-0 flex-col gap-6;
+}
+
+.settings-wide {
+  @apply col-span-2 min-w-0 lg:col-span-1;
+}
+
+.settings-column > section,
+.settings-wide > section {
+  @apply w-full max-w-none rounded-2xl border border-border bg-base-light p-6 sm:p-4;
 }

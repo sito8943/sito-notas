@@ -1,0 +1,30 @@
+@reference "@/styles/global.css";
+
+/* Side by side when there is room */
+.keyboard-shortcuts-groups {
+  @apply grid w-full grid-cols-3 items-start gap-6 xl:grid-cols-2 md:grid-cols-1;
+}
+
+.keyboard-shortcuts-group {
+  @apply flex w-full flex-col gap-2;
+}
+
+.keyboard-shortcuts-group-title {
+  @apply text-sm font-semibold text-text-muted;
+}
+
+.keyboard-shortcuts-list {
+  @apply flex w-full flex-col divide-y divide-border rounded-xl border border-border;
+}
+
+.keyboard-shortcuts-row {
+  @apply flex items-center justify-between gap-4 px-3 py-2;
+}
+
+.keyboard-shortcuts-label {
+  @apply text-sm;
+}
+
+.keyboard-shortcuts-keys {
+  @apply shrink-0 rounded-md border border-border bg-base-light px-2 py-0.5 font-mono text-xs whitespace-nowrap text-text;
+}

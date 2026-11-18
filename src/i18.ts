@@ -2,6 +2,7 @@ import i18n from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
 import { namespaces } from "@/lang/nameSpaces";
+import { FALLBACK_LANGUAGE, Language } from "@/lang/constants";
 
 // resources
 // es
@@ -20,8 +21,8 @@ i18n
   // init i18next
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
-    fallbackLng: "en",
-    supportedLngs: ["en", "es"],
+    fallbackLng: FALLBACK_LANGUAGE,
+    supportedLngs: Object.values(Language),
     ns: namespaces,
     defaultNS: "_pages",
     resources: {
@@ -35,5 +36,12 @@ i18n
       },
     },
   });
+
+// Screen readers and the browser spell checker read the page language
+const setDocumentLanguage = (language: string) => {
+  document.documentElement.lang = language;
+};
+i18n.on("languageChanged", setDocumentLanguage);
+if (i18n.resolvedLanguage) setDocumentLanguage(i18n.resolvedLanguage);
 
 export default i18n;

@@ -73,6 +73,47 @@
       "security": {
         "title": "Seguridad",
         "updated": "Contraseña actualizada. Inicia sesión de nuevo."
+      },
+      "account": {
+        "title": "Cuenta",
+        "username": "Usuario",
+        "email": "Email",
+        "unconfirmed": "Sin confirmar"
+      },
+      "appearance": {
+        "title": "Apariencia",
+        "label": "Tema",
+        "helper": "Sistema sigue el modo claro u oscuro de tu dispositivo.",
+        "values": {
+          "light": "Claro",
+          "dark": "Oscuro",
+          "system": "Sistema"
+        }
+      },
+      "language": {
+        "title": "Idioma",
+        "label": "Idioma de la app",
+        "helper": "Se guarda en este navegador."
+      },
+      "shortcuts": {
+        "title": "Atajos de teclado",
+        "helper": "Las pestañas solo están en escritorio. N no hace nada mientras escribes en un campo.",
+        "groups": {
+          "notes": "Notas",
+          "tabs": "Pestañas",
+          "editor": "Editor"
+        },
+        "newNote": "Nota nueva",
+        "escape": "Salir del Markdown, o volver a la lista",
+        "newTab": "Nota nueva en otra pestaña",
+        "closeTab": "Cerrar pestaña",
+        "goToTab": "Ir a la pestaña 1–8",
+        "lastTab": "Ir a la última pestaña",
+        "previousTab": "Pestaña anterior",
+        "nextTab": "Pestaña siguiente",
+        "moveItemUp": "Subir elemento de la lista",
+        "moveItemDown": "Bajar elemento de la lista",
+        "openLink": "Abrir un enlace"
       }
     }
   },

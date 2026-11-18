@@ -66,6 +66,47 @@
       "security": {
         "title": "Security",
         "updated": "Password updated. Sign in again."
+      },
+      "account": {
+        "title": "Account",
+        "username": "Username",
+        "email": "Email",
+        "unconfirmed": "Not confirmed"
+      },
+      "appearance": {
+        "title": "Appearance",
+        "label": "Theme",
+        "helper": "System follows your device's light or dark setting.",
+        "values": {
+          "light": "Light",
+          "dark": "Dark",
+          "system": "System"
+        }
+      },
+      "language": {
+        "title": "Language",
+        "label": "App language",
+        "helper": "Saved in this browser."
+      },
+      "shortcuts": {
+        "title": "Keyboard shortcuts",
+        "helper": "Tabs are only on desktop. N does nothing while you type in a field.",
+        "groups": {
+          "notes": "Notes",
+          "tabs": "Tabs",
+          "editor": "Editor"
+        },
+        "newNote": "New note",
+        "escape": "Leave the Markdown source, or go back to the list",
+        "newTab": "New note in a new tab",
+        "closeTab": "Close tab",
+        "goToTab": "Go to tab 1–8",
+        "lastTab": "Go to the last tab",
+        "previousTab": "Previous tab",
+        "nextTab": "Next tab",
+        "moveItemUp": "Move list item up",
+        "moveItemDown": "Move list item down",
+        "openLink": "Open a link"
       }
     }
   },

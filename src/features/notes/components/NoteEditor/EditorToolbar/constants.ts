@@ -141,3 +141,19 @@ export const BLOCK_TYPES: EditorBlockType[] = [
 
 /** Space between a menu and the button that opens it */
 export const MENU_OFFSET_PX = 6;
+
+/** Editor shortcuts that are not toolbar actions (listed in Settings) */
+export const EXTRA_EDITOR_SHORTCUTS = [
+  {
+    hotkey: "Alt-↑",
+    labelKey: "_pages:settings.sections.shortcuts.moveItemUp",
+  },
+  {
+    hotkey: "Alt-↓",
+    labelKey: "_pages:settings.sections.shortcuts.moveItemDown",
+  },
+  {
+    hotkey: "Mod-Click",
+    labelKey: "_pages:settings.sections.shortcuts.openLink",
+  },
+] as const;

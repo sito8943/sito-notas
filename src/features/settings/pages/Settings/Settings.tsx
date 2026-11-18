@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 // routes
@@ -8,10 +7,13 @@ import { AppRoute } from "@/shared/routes";
 import { useGoBack } from "@/shared/hooks";
 
 // components
-import { Syncing } from "@/shared/components/atoms/Syncing";
 import { PageHeader } from "@/shared/components/molecules/PageHeader";
 
 // sections
+import { AccountSettings } from "@/features/settings/components/AccountSettings";
+import { AppearanceSettings } from "@/features/settings/components/AppearanceSettings";
+import { KeyboardShortcuts } from "@/features/settings/components/KeyboardShortcuts";
+import { LanguageSettings } from "@/features/settings/components/LanguageSettings";
 import { Password } from "@/features/settings/components/Password";
 import { PrivacySettings } from "@/features/privacy";
 
@@ -21,8 +23,6 @@ import "./styles.css";
 function Settings() {
   const { t } = useTranslation();
   const goBack = useGoBack(AppRoute.Home);
-
-  const [sync] = useState(false);
 
   return (
     <main className="settings">
@@ -36,12 +36,21 @@ function Settings() {
         navLabel={t("_pages:note.breadcrumb")}
       />
       <div className="settings-content">
-        <div className={`settings-syncing ${sync ? "visible" : ""}`}>
-          <Syncing />
-        </div>
         <h1 className="settings-title">{t("_pages:settings.title")}</h1>
-        <Password />
-        <PrivacySettings />
+        <div className="settings-grid">
+          <div className="settings-column">
+            <AccountSettings />
+            <Password />
+          </div>
+          <div className="settings-column">
+            <AppearanceSettings />
+            <LanguageSettings />
+            <PrivacySettings />
+          </div>
+          <div className="settings-wide">
+            <KeyboardShortcuts />
+          </div>
+        </div>
       </div>
     </main>
   );
