@@ -111,6 +111,7 @@
     "breadcrumb": "Breadcrumb",
     "more": "More actions",
     "richText": "Edit with formatting",
+    "doneMarkdown": "Done editing Markdown",
     "updated": "Updated {{date}}",
     "link": {
       "title": "Link",
