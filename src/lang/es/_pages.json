@@ -64,7 +64,8 @@
     "tabs": {
       "all": "Todas",
       "favorites": "Favoritas"
-    }
+    },
+    "searchPlaceholder": "Buscar en títulos y contenido"
   },
   "settings": {
     "title": "Configuración",

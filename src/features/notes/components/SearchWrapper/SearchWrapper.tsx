@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useDebounce } from "@/shared/hooks";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,6 +14,7 @@ import { useSearch } from "@/features/notes/providers/SearchProvider";
 import "./styles.css";
 
 function SearchWrapper() {
+  const { t } = useTranslation();
   const { setSearchValue } = useSearch();
 
   const [toSearch, setToSearch] = useState("");
@@ -30,6 +32,8 @@ function SearchWrapper() {
           <FontAwesomeIcon className="search-wrapper-icon" icon={faSearch} />
         }
         type="search"
+        placeholder={t("_pages:home.searchPlaceholder")}
+        aria-label={t("_pages:home.searchPlaceholder")}
         value={toSearch}
         onChange={(e) => setToSearch(e.target.value)}
       />

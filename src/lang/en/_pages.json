@@ -57,7 +57,8 @@
     "tabs": {
       "all": "All",
       "favorites": "Favorites"
-    }
+    },
+    "searchPlaceholder": "Search in titles and content"
   },
   "settings": {
     "title": "Settings",
