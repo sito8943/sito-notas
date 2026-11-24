@@ -8,8 +8,8 @@ const manifestForPlugIn: Partial<VitePWAOptions> = {
   registerType: "prompt",
   includeAssets: ["favicon.ico", "favicon.svg", "apple-touch-icon.png"],
   manifest: {
-    name: "Sito Notas",
-    short_name: "Sito Notas",
+    name: "Sito Notas Web",
+    short_name: "Sito Notas Web",
     description: "Aplicación de gestión de notas de Sito",
     icons: [
       {
